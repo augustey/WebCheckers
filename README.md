@@ -8,7 +8,7 @@ a web micro-framework.
 
 - Yaqim Auguste
 - MEMBER2
-- MEMBER3
+- Jim Logan
 - MEMBER4
 
 
