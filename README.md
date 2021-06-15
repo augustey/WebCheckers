@@ -7,7 +7,7 @@ a web micro-framework.
 ## Team
 
 - Yaqim Auguste
-- Willima Dabney
+- William Dabney
 - MEMBER3
 - MEMBER4
 
