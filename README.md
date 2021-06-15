@@ -6,7 +6,7 @@ a web micro-framework.
 
 ## Team
 
-- MEMBER1
+- Yaqim Auguste
 - MEMBER2
 - MEMBER3
 - MEMBER4
