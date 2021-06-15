@@ -9,7 +9,7 @@ a web micro-framework.
 - Yaqim Auguste
 - Willima Dabney
 - Jim Logan
-- MEMBER4
+- Neel Raj
 
 
 ## Prerequisites
