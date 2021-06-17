@@ -7,9 +7,9 @@ a web micro-framework.
 ## Team
 
 - Yaqim Auguste
-- MEMBER2
-- MEMBER3
-- MEMBER4
+- Willima Dabney
+- Jim Logan
+- Neel Raj
 
 
 ## Prerequisites
