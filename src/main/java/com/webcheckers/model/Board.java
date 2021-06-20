@@ -2,7 +2,7 @@ package com.webcheckers.model;
 
 import java.util.Iterator;
 
-public class BoardView implements Iterable<Row>{
+public class Board implements Iterable<Row>{
 
     private final int BOARD_DIM = 8;//the size of the board
 
@@ -10,7 +10,7 @@ public class BoardView implements Iterable<Row>{
     public Iterator<Row> iterator() {
         return null;
     }
-    public BoardView(){
+    public Board(){
         //new row
         //new spaces
         //fill spaces with pieces
