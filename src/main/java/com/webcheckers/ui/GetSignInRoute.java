@@ -30,6 +30,7 @@ public class GetSignInRoute implements Route
         vm.put(TITLE_ATTR, TITLE);
 
         vm.put(PostSignInRoute.NOT_VALID_USERNAME, false);
+        vm.put(PostSignInRoute.SIGNED_IN, false);
 
         return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
     }

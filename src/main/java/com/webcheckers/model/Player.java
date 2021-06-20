@@ -1,6 +1,9 @@
 package com.webcheckers.model;
 
+import com.webcheckers.util.Message;
+
 import java.util.Objects;
+import java.util.logging.Logger;
 
 /**
  * Value class, holds the unique name for the player

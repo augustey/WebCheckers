@@ -28,7 +28,7 @@ public class PlayerLobby
     }
 
     /**
-     * Given a name, signs the player in and returnes the proper
+     * Given a name, signs the player in and returns the proper
      * SignInResult enum response
      * @param player - player that was entered
      * @return the signin result

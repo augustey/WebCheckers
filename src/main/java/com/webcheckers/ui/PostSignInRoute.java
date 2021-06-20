@@ -8,10 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.webcheckers.ui.GetHomeRoute.PLAYER_KEY;
+
 public class PostSignInRoute implements Route
 {
     public static final String USERNAME_PARAM = "username";
     public static final String NOT_VALID_USERNAME = "notValid";
+    public static final String SIGNED_IN = "signedIn";
 
     public static final String NON_UNIQUE_USERNAME_ATTR = "The name you entered is already in the system";
     public static final String NON_ALPHANUMERIC_USERNAME_ATTR = "The name you entered does not contain a letter or a number";
@@ -43,15 +46,19 @@ public class PostSignInRoute implements Route
         switch (playerLobby.signIn(player))
         {
             case NON_UNIQUE:
-                vm.put("notValid", true);
+                vm.put(SIGNED_IN, false);
+                vm.put(NOT_VALID_USERNAME, true);
                 vm.put("invalidMessage", NON_UNIQUE_USERNAME_ATTR);
                 break;
             case NON_ALPHANUMERIC:
-                vm.put("notValid", true);
+                vm.put(SIGNED_IN, false);
+                vm.put(NOT_VALID_USERNAME, true);
                 vm.put("invalidMessage", NON_ALPHANUMERIC_USERNAME_ATTR);
                 break;
             case SUCCESS:
-                httpSession.attribute(GetHomeRoute.PLAYER_KEY, player);
+                httpSession.attribute(PLAYER_KEY, player);
+                vm.put(PLAYER_KEY, player);
+                vm.put(SIGNED_IN, true);
                 vm.put("notValid", false);
                 break;
         }
