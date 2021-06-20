@@ -1,10 +1,14 @@
 package com.webcheckers.model;
 
-public class Row {
-    private int index;//what row it is 0 - 7
-    private Space[] spaces;//array of the spaces that make up the row
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 
-    public Row(int index, Space[] spaces){
+public class Row implements Iterable<Space> {
+    private int index;//what row it is 0 - 7
+    private ArrayList<Space> spaces;//array of the spaces that make up the row
+
+    public Row(int index, ArrayList<Space> spaces){
         this.index = index;
         this.spaces = spaces;
     }
@@ -12,4 +16,12 @@ public class Row {
     public int getIndex(){
         return index;
     }
+
+    @Override
+    public Iterator<Space> iterator() {
+        return spaces.iterator();
+    }
+
+
+
 }
