@@ -29,6 +29,11 @@ public class Player
         return Objects.equals(name, player.name);
     }
 
+    public String getName()
+    {
+        return name;
+    }
+
     @Override
     public int hashCode()
     {

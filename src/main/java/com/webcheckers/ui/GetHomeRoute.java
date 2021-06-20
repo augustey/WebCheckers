@@ -23,6 +23,8 @@ public class GetHomeRoute implements Route {
 
   private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
+  public static final String PLAYER_KEY = "currentUser";
+
   private final TemplateEngine templateEngine;
 
   /**

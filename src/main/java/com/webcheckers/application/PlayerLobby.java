@@ -30,23 +30,19 @@ public class PlayerLobby
     /**
      * Given a name, signs the player in and returnes the proper
      * SignInResult enum response
-     * @param name - name that was entered
+     * @param player - player that was entered
      * @return the signin result
      */
-    public SignInResult signIn(String name)
+    public SignInResult signIn(Player player)
     {
-        if(!verifyAlphanumeric(name))
+        if(!verifyAlphanumeric(player.getName()))
         {
             return SignInResult.NON_ALPHANUMERIC;
         }
-
-        Player player = new Player(name);
-
         if(playerSet.contains(player))
         {
             return SignInResult.NON_UNIQUE;
         }
-
         playerSet.add(player);
 
         return SignInResult.SUCCESS;

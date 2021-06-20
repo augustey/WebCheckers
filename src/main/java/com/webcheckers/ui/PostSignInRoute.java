@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
@@ -30,11 +31,16 @@ public class PostSignInRoute implements Route
     @Override
     public Object handle(Request request, Response response) throws Exception
     {
+        final Session httpSession = request.session();
+
         final Map<String, Object> vm = new HashMap<>();
 
         final String nameString = request.queryParams(USERNAME_PARAM);
+        Player player = new Player(nameString);
 
-        switch (playerLobby.signIn(nameString))
+        vm.put(GetSignInRoute.TITLE_ATTR, GetSignInRoute.TITLE);
+
+        switch (playerLobby.signIn(player))
         {
             case NON_UNIQUE:
                 vm.put("notValid", true);
@@ -45,11 +51,10 @@ public class PostSignInRoute implements Route
                 vm.put("invalidMessage", NON_ALPHANUMERIC_USERNAME_ATTR);
                 break;
             case SUCCESS:
+                httpSession.attribute(GetHomeRoute.PLAYER_KEY, player);
                 vm.put("notValid", false);
                 break;
         }
-
-
 
         return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
     }
