@@ -35,7 +35,7 @@ public class PlayerLobby
      */
     public SignInResult signIn(String name)
     {
-        if(verifyAlphanumeric(name))
+        if(!verifyAlphanumeric(name))
         {
             return SignInResult.NON_ALPHANUMERIC;
         }
