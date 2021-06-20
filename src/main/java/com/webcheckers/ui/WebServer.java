@@ -60,6 +60,11 @@ public class WebServer {
    */
   public static final String SIGNIN_URL = "/signin";
 
+  /**
+   * The URL pattern to request the signout page
+   */
+  public static final String SIGNOUT_URL = "/signout";
+
 
   //
   // Attributes
@@ -152,6 +157,8 @@ public class WebServer {
     get(SIGNIN_URL, new GetSignInRoute(templateEngine));
 
     post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
+
+    post(SIGNOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
 
     //
     LOG.config("WebServer is initialized.");

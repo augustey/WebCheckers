@@ -48,6 +48,14 @@ public class PlayerLobby
         return SignInResult.SUCCESS;
     }
 
+    public synchronized void signOut(Player player)
+    {
+        if(playerSet.contains(player))
+        {
+            playerSet.remove(player);
+        }
+    }
+
     public synchronized Set<Player> getPlayerSet()
     {
         return playerSet;

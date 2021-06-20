@@ -19,10 +19,12 @@ import com.webcheckers.util.Message;
 public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
-  private static final Message WELCOME_MSG = Message.info("Welcome to the world of Online Checkers.");
+  public static final Message WELCOME_MSG = Message.info("Welcome to the world of Online Checkers.");
 
   public static final String PLAYER_KEY = "currentUser";
   public static final String ONLINE_COUNT_ATTR = "count";
+
+  public static final String TITLE = "Welcome!";
 
   private final PlayerLobby playerLobby;
   private final TemplateEngine templateEngine;
