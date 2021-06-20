@@ -48,6 +48,10 @@ public class PlayerLobby
         return SignInResult.SUCCESS;
     }
 
+    /**
+     * Removes the player from the set of signed in users
+     * @param player - player that is signing out
+     */
     public synchronized void signOut(Player player)
     {
         if(playerSet.contains(player))
@@ -56,6 +60,9 @@ public class PlayerLobby
         }
     }
 
+    /**
+     * @return playerSet
+     */
     public synchronized Set<Player> getPlayerSet()
     {
         return playerSet;

@@ -23,6 +23,8 @@ public class Player
         this.name = name;
     }
 
+
+    //Object methods
     @Override
     public boolean equals(Object o)
     {

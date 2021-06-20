@@ -10,18 +10,35 @@ import java.util.Objects;
 
 import static com.webcheckers.ui.GetHomeRoute.PLAYER_KEY;
 
+/**
+ * The UI Controller to POST the Signin page.
+ *
+ * @author <a href="mailto:jrl9984@rit.edu">Jim Logan</a>
+ */
 public class PostSignInRoute implements Route
 {
+    //Attributes
     public static final String USERNAME_PARAM = "username";
     public static final String NOT_VALID_USERNAME = "notValid";
     public static final String SIGNED_IN = "signedIn";
 
-    public static final String NON_UNIQUE_USERNAME_ATTR = "The name you entered is already in the system";
-    public static final String NON_ALPHANUMERIC_USERNAME_ATTR = "The name you entered does not contain a letter or a number";
+    //Text
+    public static final String NON_UNIQUE_USERNAME = "The name you entered is already in the system";
+    public static final String NON_ALPHANUMERIC_USERNAME = "The name you entered does not contain a letter or a number";
 
+    //State
     private PlayerLobby playerLobby;
     private TemplateEngine templateEngine;
 
+    /**
+     * Create the Spark Route (UI controller) to handle all {@code POST /signin} HTTP requests.
+     *
+     * @param playerLobby
+     *   the server wide lobby keeping track of all players
+     *
+     * @param templateEngine
+     *   the HTML template rendering engine
+     */
     public PostSignInRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine)
     {
         Objects.requireNonNull(playerLobby, "playerLobby must not be null");
@@ -31,8 +48,19 @@ public class PostSignInRoute implements Route
         this.templateEngine = templateEngine;
     }
 
+    /**
+     * Render the WebCheckers SignIn page.
+     *
+     * @param request
+     *   the HTTP request
+     * @param response
+     *   the HTTP response
+     *
+     * @return
+     *   the rendered HTML for the Signin page
+     */
     @Override
-    public Object handle(Request request, Response response) throws Exception
+    public Object handle(Request request, Response response)
     {
         final Session httpSession = request.session();
 
@@ -48,12 +76,12 @@ public class PostSignInRoute implements Route
             case NON_UNIQUE:
                 vm.put(SIGNED_IN, false);
                 vm.put(NOT_VALID_USERNAME, true);
-                vm.put("invalidMessage", NON_UNIQUE_USERNAME_ATTR);
+                vm.put("invalidMessage", NON_UNIQUE_USERNAME);
                 break;
             case NON_ALPHANUMERIC:
                 vm.put(SIGNED_IN, false);
                 vm.put(NOT_VALID_USERNAME, true);
-                vm.put("invalidMessage", NON_ALPHANUMERIC_USERNAME_ATTR);
+                vm.put("invalidMessage", NON_ALPHANUMERIC_USERNAME);
                 break;
             case SUCCESS:
                 httpSession.attribute(PLAYER_KEY, player);

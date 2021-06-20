@@ -7,22 +7,46 @@ import spark.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Route for signing out the player
+ *
+ * @author <a href="mailto:jrl9984@rit.edu">Jim Logan</a>
+ */
 public class PostSignOutRoute implements Route
 {
+    //Attributes
     private static final String TITLE_ATTR = "title";
 
-
-    private static final String TITLE = "Sign Out";
-
+    //State
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
 
+    /**
+     * Create the Spark Route (UI controller) to handle all {@code POST /signout} HTTP requests.
+     *
+     * @param playerLobby
+     *   the server wide lobby keeping track of all players
+     *
+     * @param templateEngine
+     *   the HTML template rendering engine
+     */
     public PostSignOutRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine)
     {
         this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
     }
 
+    /**
+     * Render the WebCheckers Signout page.
+     *
+     * @param request
+     *   the HTTP request
+     * @param response
+     *   the HTTP response
+     *
+     * @return
+     *   the rendered HTML for the Signout page
+     */
     @Override
     public Object handle(Request request, Response response)
     {
