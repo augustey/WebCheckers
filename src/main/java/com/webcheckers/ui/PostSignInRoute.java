@@ -60,6 +60,7 @@ public class PostSignInRoute implements Route
                 vm.put(PLAYER_KEY, player);
                 vm.put(SIGNED_IN, true);
                 vm.put("notValid", false);
+                response.redirect("./");
                 break;
         }
 
