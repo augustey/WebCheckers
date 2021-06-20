@@ -33,7 +33,7 @@ public class PlayerLobby
      * @param player - player that was entered
      * @return the signin result
      */
-    public SignInResult signIn(Player player)
+    public synchronized SignInResult signIn(Player player)
     {
         if(!verifyAlphanumeric(player.getName()))
         {
@@ -46,6 +46,11 @@ public class PlayerLobby
         playerSet.add(player);
 
         return SignInResult.SUCCESS;
+    }
+
+    public synchronized Set<Player> getPlayerSet()
+    {
+        return playerSet;
     }
 
     /**

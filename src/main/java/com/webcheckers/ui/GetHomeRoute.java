@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -18,10 +19,12 @@ import com.webcheckers.util.Message;
 public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
-  private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+  private static final Message WELCOME_MSG = Message.info("Welcome to the world of Online Checkers.");
 
   public static final String PLAYER_KEY = "currentUser";
+  public static final String ONLINE_COUNT_ATTR = "count";
 
+  private final PlayerLobby playerLobby;
   private final TemplateEngine templateEngine;
 
   /**
@@ -30,7 +33,8 @@ public class GetHomeRoute implements Route {
    * @param templateEngine
    *   the HTML template rendering engine
    */
-  public GetHomeRoute(final TemplateEngine templateEngine) {
+  public GetHomeRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+    this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
     //
     LOG.config("GetHomeRoute is initialized.");
@@ -59,7 +63,11 @@ public class GetHomeRoute implements Route {
     {
       Player player = httpSession.attribute(PLAYER_KEY);
       vm.put("currentUser", player);
+      vm.put("playerSet", playerLobby.getPlayerSet());
     }
+
+    int count = playerLobby.getPlayerSet().size();
+    vm.put(ONLINE_COUNT_ATTR, count);
 
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);
