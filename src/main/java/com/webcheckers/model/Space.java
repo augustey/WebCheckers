@@ -3,7 +3,7 @@ package com.webcheckers.model;
 public class Space {
 
     private int cellIdx;//the cells in a row 0 - 7
-    private boolean valid;//if the landing spot is valid
+    private boolean isValid;//if the landing spot is valid
     private Piece piece;
 
 
@@ -14,7 +14,7 @@ public class Space {
     public Space(int cellIdx){
         this.cellIdx = cellIdx;
         this.piece = null;
-        this.valid = false;
+        this.isValid = false;
     }
 
     public void setPiece( Piece piece){
@@ -29,13 +29,7 @@ public class Space {
         return cellIdx;
     }
 
-    /**
-     *
-     * @return
-     */
-    public boolean isValid(){
-        return valid;
-    }
+
 
     /**
      *
@@ -45,4 +39,11 @@ public class Space {
         return piece;
     }
 
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public void setIsValid(boolean isValid) {
+        this.isValid = isValid;
+    }
 }
