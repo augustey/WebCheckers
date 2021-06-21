@@ -21,6 +21,11 @@ public class GameCenter {
         this.activeGames = new HashMap<>();
     }
 
+    /**
+     * Check if player is currently in a game of checkers.
+     * @param player the player to search for.
+     * @return whether the specified player is in a game of checkers or not
+     */
     public boolean isInGame(Player player) {
         return activeGames.containsKey(player);
     }
