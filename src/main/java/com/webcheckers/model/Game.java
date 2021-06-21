@@ -24,7 +24,7 @@ public class Game {
 
     /**
      * Getter for redPlayer
-     * @return whitePlayer
+     * @return redPlayer
      */
     public Player getRedPlayer() {
         return redPlayer;
