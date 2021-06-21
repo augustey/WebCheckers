@@ -82,7 +82,7 @@ public class GetHomeRoute implements Route {
         //Check if their player service attribute is defined
         //If not this means another user requested a game with them
         //and needs to have a service for them created
-        if(playerService != null) {
+        if(playerService == null) {
           playerService = gameCenter.getPlayerService(player);
           httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY, playerService);
         }
