@@ -38,9 +38,17 @@ public class Board implements Iterable<Row>{
             }
             this.board.add(new Row(row, curRow));//creates a new row and adds it to the board
         }
-        System.out.println();
+
         System.out.println(toString());
     }
+    public boolean isValid(){
+        return true;
+    }
+    public void makeMove(){
+
+    }
+
+
 
     /**
      * puts the board in text format is used for debugging
@@ -48,38 +56,40 @@ public class Board implements Iterable<Row>{
      */
     @Override
     public String toString(){
-        String textBoard = "";
+        StringBuilder textBoard = new StringBuilder();
         Iterator<Row> rowIterator = board.iterator();
-        while (rowIterator.hasNext()){
+        while(rowIterator.hasNext()){
+
             Row curRow = rowIterator.next();
             Iterator<Space> colIterator = curRow.iterator();
-            while (colIterator.hasNext()){
+
+            while(colIterator.hasNext()){
                 Space curSpace = colIterator.next();
 
                 if(!curSpace.isValid()){
-                    textBoard = textBoard + ("*");//none playable spot
+                    textBoard.append("*");//none playable spot
                 }
                 else if(curSpace.getPiece() == null){//playable spot
-                    textBoard = textBoard + ("_");
+                    textBoard.append("_");
                 }
                 else if(curSpace.getPiece().getColor() == Piece.Color.RED && curSpace.getPiece().getType() == Piece.Type.SINGLE){//single red
-                    textBoard = textBoard + ("r");
+                    textBoard.append("r");
                 }
                 else if(curSpace.getPiece().getColor() == Piece.Color.WHITE && curSpace.getPiece().getType() == Piece.Type.SINGLE){//single white
-                    textBoard = textBoard + ("w");
+                    textBoard.append("w");
                 }
                 else if(curSpace.getPiece().getColor() == Piece.Color.RED && curSpace.getPiece().getType() == Piece.Type.KING){//king white
-                    textBoard = textBoard + ("R");
+                    textBoard.append("R");
                 }
                 else if(curSpace.getPiece().getColor() == Piece.Color.WHITE && curSpace.getPiece().getType() == Piece.Type.KING){//king red
-                    textBoard = textBoard + ("W");
+                    textBoard.append("W");
                 }
 
 
             }
-            textBoard = textBoard + "\n";
+            textBoard.append("\n");
         }
-        return textBoard;
+        return textBoard.toString();
     }
     public static void main(String[] args) {//for debugging purposes only
         new Board();
