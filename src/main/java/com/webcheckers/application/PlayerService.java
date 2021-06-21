@@ -21,4 +21,20 @@ public class PlayerService {
         this.whitePlayer = game.getWhitePlayer();
         this.game = game;
     }
+
+    /**
+     * getter for redPlayer
+     * @return redPlayer
+     */
+    public Player getRedPlayer() {
+        return redPlayer;
+    }
+
+    /**
+     * getter for whitePlayer
+     * @return whitePlayer
+     */
+    public Player getWhitePlayer() {
+        return whitePlayer;
+    }
 }
