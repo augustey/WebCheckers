@@ -5,11 +5,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.model.Player;
+import spark.*;
 
 import com.webcheckers.util.Message;
 
@@ -21,8 +19,14 @@ import com.webcheckers.util.Message;
 public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
-  private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+  public static final Message WELCOME_MSG = Message.info("Welcome to the world of Online Checkers.");
 
+  public static final String PLAYER_KEY = "currentUser";
+  public static final String ONLINE_COUNT_ATTR = "count";
+
+  public static final String TITLE = "Welcome!";
+
+  private final PlayerLobby playerLobby;
   private final TemplateEngine templateEngine;
 
   /**
@@ -31,7 +35,8 @@ public class GetHomeRoute implements Route {
    * @param templateEngine
    *   the HTML template rendering engine
    */
-  public GetHomeRoute(final TemplateEngine templateEngine) {
+  public GetHomeRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+    this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
     //
     LOG.config("GetHomeRoute is initialized.");
@@ -52,8 +57,19 @@ public class GetHomeRoute implements Route {
   public Object handle(Request request, Response response) {
     LOG.finer("GetHomeRoute is invoked.");
     //
+    final Session httpSession = request.session();
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", "Welcome!");
+
+    if(httpSession.attribute(PLAYER_KEY) != null)
+    {
+      Player player = httpSession.attribute(PLAYER_KEY);
+      vm.put("currentUser", player);
+      vm.put("playerSet", playerLobby.getPlayerSet());
+    }
+
+    int count = playerLobby.getPlayerSet().size();
+    vm.put(ONLINE_COUNT_ATTR, count);
 
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);
