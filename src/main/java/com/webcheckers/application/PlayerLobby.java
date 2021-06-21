@@ -85,4 +85,18 @@ public class PlayerLobby
         }
         return false;
     }
+
+    /**
+     * Get a specific player from the player lobby by name.
+     * @param name the name of the Player to find.
+     * @return the Player object corresponding with name.
+     */
+    public Player getPlayer(String name) {
+        for(Player player: playerSet) {
+            if(player.getName().equals(name))
+                return player;
+        }
+
+        return null;
+    }
 }
