@@ -112,7 +112,6 @@ public class GetGameRoute implements Route {
         vm.put(ACTIVE_COLOR_ATTR, ACTIVE_COLOR); //TODO: Add enumeration
         //TODO: Add board view attribute
 
-        templateEngine.render(new ModelAndView(vm , "game.ftl"));
-        return null;
+        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
 }
