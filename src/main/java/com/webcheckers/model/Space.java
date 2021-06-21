@@ -17,6 +17,10 @@ public class Space {
         this.valid = false;
     }
 
+    public void setPiece( Piece piece){
+        this.piece = piece;
+    }
+
     /**
      *
      * @return
