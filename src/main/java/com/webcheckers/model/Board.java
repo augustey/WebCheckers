@@ -25,11 +25,11 @@ public class Board implements Iterable<Row>{
                 space = new Space(col);//creates a blank space
                 if(col % 2 + row % 2 == 1){//is on valid spot if only row or col is even but not both
                     space.setIsValid(true);//because it is a valid spot it needs to be set as such
-                    if(row > BOARD_DIM - 3)//for white piece placement
+                    if(row > BOARD_DIM - 4)//for white piece placement 3 rows of them
                     {
                         space.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));//fills the blank space with a white piece
                     }
-                    else if(row < 3){//for red piece placement
+                    else if(row < 3){//for red piece placement 3 rows of them
                         space.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));//fills the blank space with a red piece
                     }
 
@@ -57,21 +57,21 @@ public class Board implements Iterable<Row>{
                 Space curSpace = colIterator.next();
 
                 if(!curSpace.isValid()){
-                    textBoard = textBoard + ("*");
+                    textBoard = textBoard + ("*");//none playable spot
                 }
-                else if(curSpace.getPiece() == null){
+                else if(curSpace.getPiece() == null){//playable spot
                     textBoard = textBoard + ("_");
                 }
-                else if(curSpace.getPiece().getColor() == Piece.Color.RED && curSpace.getPiece().getType() == Piece.Type.SINGLE){
+                else if(curSpace.getPiece().getColor() == Piece.Color.RED && curSpace.getPiece().getType() == Piece.Type.SINGLE){//single red
                     textBoard = textBoard + ("r");
                 }
-                else if(curSpace.getPiece().getColor() == Piece.Color.WHITE && curSpace.getPiece().getType() == Piece.Type.SINGLE){
+                else if(curSpace.getPiece().getColor() == Piece.Color.WHITE && curSpace.getPiece().getType() == Piece.Type.SINGLE){//single white
                     textBoard = textBoard + ("w");
                 }
-                else if(curSpace.getPiece().getColor() == Piece.Color.RED && curSpace.getPiece().getType() == Piece.Type.KING){
+                else if(curSpace.getPiece().getColor() == Piece.Color.RED && curSpace.getPiece().getType() == Piece.Type.KING){//king white
                     textBoard = textBoard + ("R");
                 }
-                else if(curSpace.getPiece().getColor() == Piece.Color.WHITE && curSpace.getPiece().getType() == Piece.Type.KING){
+                else if(curSpace.getPiece().getColor() == Piece.Color.WHITE && curSpace.getPiece().getType() == Piece.Type.KING){//king red
                     textBoard = textBoard + ("W");
                 }
 
