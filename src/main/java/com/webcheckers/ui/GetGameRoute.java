@@ -27,7 +27,21 @@ public class GetGameRoute implements Route {
     private final String OPPONENT_PARAM = "opponent";
 
     //Used to store and access player service in session object
-    public static final String PLAYER_SERVICE_ATTR = "PlayerService";
+    public static final String PLAYER_SERVICE_KEY = "PlayerService";
+
+    //Attributes for the freemarker template
+    private final String TITLE_ATTR = "title";
+    private final String USER_ATTR = "currentUser";
+    private final String VIEW_MODE_ATTR = "viewMode";
+    private final String RED_PLAYER_ATTR = "redPlayer";
+    private final String WHITE_PLAYER_ATTR = "whitePlayer";
+    private final String ACTIVE_COLOR_ATTR = "activeColor";
+    private final String BOARD_VIEW_ATTR = "board";
+
+    //Freemarker values
+    private final String TITLE = "Checkers";
+    private final String VIEW_MODE = "PLAY"; //TODO: Add enumeration
+    private final String ACTIVE_COLOR = "RED"; //TODO: Add enumeration
 
     /**
      * Constructor for GetGameRoute. Used to handle requests sent to "/game".
@@ -62,7 +76,7 @@ public class GetGameRoute implements Route {
         }
 
         //Attempt to retrieve playerService object
-        PlayerService playerService = httpSession.attribute(PLAYER_SERVICE_ATTR);
+        PlayerService playerService = httpSession.attribute(PLAYER_SERVICE_KEY);
 
         //If player service does not exist, attempt to create new game with opponent
         if(playerService == null) {
@@ -84,13 +98,21 @@ public class GetGameRoute implements Route {
             //Create a new game and get a player service for it
             playerService = gameCenter.requestNewGame(player, opponent);
 
-            httpSession.attribute(PLAYER_SERVICE_ATTR, playerService);
+            httpSession.attribute(PLAYER_SERVICE_KEY, playerService);
         }
 
-        //TODO: Add template variables
         Map<String, Object> vm = new HashMap<>();
 
-        response.redirect(WebServer.HOME_URL);//templateEngine.render(new ModelAndView(vm , "game.ftl"));
+        //Add template variables
+        vm.put(TITLE_ATTR, TITLE);
+        vm.put(USER_ATTR, player);
+        vm.put(RED_PLAYER_ATTR, playerService.getRedPlayer());
+        vm.put(WHITE_PLAYER_ATTR, playerService.getWhitePlayer());
+        vm.put(VIEW_MODE_ATTR, VIEW_MODE); //TODO: Add enumeration
+        vm.put(ACTIVE_COLOR_ATTR, ACTIVE_COLOR); //TODO: Add enumeration
+        //TODO: Add board view attribute
+
+        templateEngine.render(new ModelAndView(vm , "game.ftl"));
         return null;
     }
 }
