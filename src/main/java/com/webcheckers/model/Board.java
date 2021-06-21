@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.util.Message;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -41,8 +43,21 @@ public class Board implements Iterable<Row>{
 
         System.out.println(toString());
     }
-    public boolean isValid(){
-        return true;
+    public Message validateMove(ArrayList<Space> moves){
+        //row = cellIdx
+        //col = location in
+        Space startSpace;
+        Space endSpace;
+        if(moves.size() > 1) {
+            Iterator<Space> moveIterator = moves.iterator();//moves can be made up of 2+ spaces
+            startSpace = moveIterator.next();
+            while (moveIterator.hasNext()) {
+                endSpace = moveIterator.next();
+                //can eather be a move or a jump
+
+                startSpace = endSpace;
+            }
+        }
     }
     public void makeMove(){
 
