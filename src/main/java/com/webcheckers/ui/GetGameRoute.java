@@ -27,7 +27,7 @@ public class GetGameRoute implements Route {
     private final String OPPONENT_PARAM = "opponent";
 
     //Used to store and access player service in session object
-    public final String PLAYERSERVICE_ATTR = "PlayerService";
+    public static final String PLAYER_SERVICE_ATTR = "PlayerService";
 
     /**
      * Constructor for GetGameRoute. Used to handle requests sent to "/game".
@@ -41,7 +41,7 @@ public class GetGameRoute implements Route {
     }
 
     /**
-     * Render the WebCheckers Home page.
+     * Render the WebCheckers Game page.
      * @param request the HTTP request
      * @param response the HTTP response
      * @return the rendered HTML for the Home page
@@ -62,7 +62,7 @@ public class GetGameRoute implements Route {
         }
 
         //Attempt to retrieve playerService object
-        PlayerService playerService = httpSession.attribute(PLAYERSERVICE_ATTR);
+        PlayerService playerService = httpSession.attribute(PLAYER_SERVICE_ATTR);
 
         //If player service does not exist, attempt to create new game with opponent
         if(playerService == null) {
@@ -81,12 +81,13 @@ public class GetGameRoute implements Route {
                 return null;
             }
 
-            //Create a new game an get a player service for it
+            //Create a new game and get a player service for it
             playerService = gameCenter.requestNewGame(player, opponent);
 
-            httpSession.attribute(PLAYERSERVICE_ATTR, playerService);
+            httpSession.attribute(PLAYER_SERVICE_ATTR, playerService);
         }
 
+        //TODO: Add template variables
         Map<String, Object> vm = new HashMap<>();
 
         response.redirect(WebServer.HOME_URL);//templateEngine.render(new ModelAndView(vm , "game.ftl"));
