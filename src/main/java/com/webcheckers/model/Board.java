@@ -32,18 +32,50 @@ public class Board implements Iterable<Row>{
                     else if(row < 3){//for red piece placement
                         space.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));//fills the blank space with a red piece
                     }
-                    curRow.add(space);//puts space into the collection holding all spaces in row
-                }
 
+                }
+                curRow.add(space);//puts space into the collection holding all spaces in row
             }
             this.board.add(new Row(row, curRow));//creates a new row and adds it to the board
         }
-        System.out.println(board);
+        System.out.println();
+        System.out.println(toString());
     }
 
+    /**
+     * puts the board in text format is used for debugging
+     * @return
+     */
+    @Override
+    public String toString(){
+        String textBoard = "";
+        Iterator<Row> rowIterator = board.iterator();
+        while (rowIterator.hasNext()){
+            Row curRow = rowIterator.next();
+            Iterator<Space> colIterator = curRow.iterator();
+            while (colIterator.hasNext()){
+                Space curSpace = colIterator.next();
+
+                if(!curSpace.isValid()){
+                    textBoard = textBoard + ("*");
+                }
+                else if(curSpace.getPiece() == null){
+                    textBoard = textBoard + ("_");
+                }
+                else if(curSpace.getPiece().getColor() == Piece.Color.RED){
+                    textBoard = textBoard + ("r");
+                }
+                else if(curSpace.getPiece().getColor() == Piece.Color.WHITE){
+                    textBoard = textBoard + ("w");
+                }
+
+
+            }
+            textBoard = textBoard + "\n";
+        }
+        return textBoard;
+    }
     public static void main(String[] args) {//for debugging purposes only
         new Board();
-//        System.out.println(this.board);
-
     }
 }
