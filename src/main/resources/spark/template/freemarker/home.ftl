@@ -20,6 +20,9 @@
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl" />
 
+    <!-- Display online players -->
+    <#include "online.ftl" />
+
     <!-- TODO: future content on the Home:
             to start games,
             spectating active games,
