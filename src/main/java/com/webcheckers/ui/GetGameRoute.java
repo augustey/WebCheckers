@@ -1,5 +1,7 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
@@ -14,6 +16,7 @@ import java.util.logging.Logger;
 public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
     private final TemplateEngine templateEngine;
+    private final PlayerLobby playerLobby;
 
     //Used to send opponents name when selected in the list
     private final String OPPONENT_PARAM = "opponent";
@@ -22,7 +25,8 @@ public class GetGameRoute implements Route {
      * Constructor for GetGameRoute. Used to handle requests sent to "/game".
      * @param templateEngine Template engine used to render views.
      */
-    public GetGameRoute(final TemplateEngine templateEngine) {
+    public GetGameRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+        this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         LOG.config("GetGameRoute is initialized.");
     }
@@ -37,6 +41,16 @@ public class GetGameRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.finer("GetGameRoute is invoked.");
 
+        final Session httpSession = request.session();
+
+        Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
+
+        //If player object does not exist, redirect them to the sign in page.
+        if(player == null) {
+            response.redirect(WebServer.SIGNIN_URL);
+        }
+
+        //Player opponent =
         Map<String, Object> vm = new HashMap<>();
 
         response.redirect(WebServer.HOME_URL);//templateEngine.render(new ModelAndView(vm , "game.ftl"));
