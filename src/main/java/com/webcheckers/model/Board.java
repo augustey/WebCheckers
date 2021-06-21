@@ -31,14 +31,14 @@ public class Board implements Iterable<Row>{
                     {
                         piece = new Piece(Piece.Type.SINGLE, Piece.Color.WHITE);
                     }
-                    else if(row > 2){
+                    else if(row > 2){//for red piece placement
                         piece = new Piece(Piece.Type.SINGLE, Piece.Color.RED);
                     }
                 }
             }
 
         }
-        System.out.println("done");
+
     }
 
     public static void main(String[] args) {//for debugging purposes only
