@@ -15,6 +15,9 @@ public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
     private final TemplateEngine templateEngine;
 
+    //Used to send opponents name when selected in the list
+    private final String OPPONENT_PARAM = "opponent";
+
     /**
      * Constructor for GetGameRoute. Used to handle requests sent to "/game".
      * @param templateEngine Template engine used to render views.
@@ -36,6 +39,7 @@ public class GetGameRoute implements Route {
 
         Map<String, Object> vm = new HashMap<>();
 
-        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+        response.redirect(WebServer.HOME_URL);//templateEngine.render(new ModelAndView(vm , "game.ftl"));
+        return null;
     }
 }
