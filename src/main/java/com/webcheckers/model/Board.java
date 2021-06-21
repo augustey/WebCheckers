@@ -62,11 +62,17 @@ public class Board implements Iterable<Row>{
                 else if(curSpace.getPiece() == null){
                     textBoard = textBoard + ("_");
                 }
-                else if(curSpace.getPiece().getColor() == Piece.Color.RED){
+                else if(curSpace.getPiece().getColor() == Piece.Color.RED && curSpace.getPiece().getType() == Piece.Type.SINGLE){
                     textBoard = textBoard + ("r");
                 }
-                else if(curSpace.getPiece().getColor() == Piece.Color.WHITE){
+                else if(curSpace.getPiece().getColor() == Piece.Color.WHITE && curSpace.getPiece().getType() == Piece.Type.SINGLE){
                     textBoard = textBoard + ("w");
+                }
+                else if(curSpace.getPiece().getColor() == Piece.Color.RED && curSpace.getPiece().getType() == Piece.Type.KING){
+                    textBoard = textBoard + ("R");
+                }
+                else if(curSpace.getPiece().getColor() == Piece.Color.WHITE && curSpace.getPiece().getType() == Piece.Type.KING){
+                    textBoard = textBoard + ("W");
                 }
 
 
