@@ -69,16 +69,19 @@ public class Board implements Iterable<Row>{
         this.board = other;
     }
 
+    /**
+     * this methiod flips the board so that it is in the correct orientation for a player's move
+     */
     public void boardFlip(){
-        ArrayList<Row> flipedBoard = new ArrayList<Row>();
+        ArrayList<Row> flipedBoard = new ArrayList<Row>();//empty board collection that the flipped board will be put into
         for(int row = BOARD_DIM - 1; row >= 0; row--){
-            Row curRow = board.get(row);
-            ArrayList<Space> flipedRow = new ArrayList<Space>();
+            Row curRow = board.get(row);//retrieves the row that will be flipped
+            ArrayList<Space> flipedRow = new ArrayList<Space>();//empty row collection that the flipped row will be put into
             for(int col = BOARD_DIM - 1; col >= 0; col--){
                 flipedRow.add(curRow.getSpaces().get(col));
             }
-            curRow.setSpaces(flipedRow);
-            flipedBoard.add(curRow);
+            curRow.setSpaces(flipedRow);//changing the row that was being flipped to the flipped row
+            flipedBoard.add(curRow);//adds flipped row to board
         }
         copyBoard(flipedBoard);
     }
