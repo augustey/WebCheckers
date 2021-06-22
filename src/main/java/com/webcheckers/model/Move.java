@@ -4,12 +4,15 @@ package com.webcheckers.model;
  * this class handles moves
  */
 public class Move {
+
     private final Space start;
     private final Space end;
     private static Space jumped;
     private final Piece.Color activeColor;
+    private final boolean isValid;
 
-    public enum typeOfMove{SINGLE_MOVE, JUMP};
+    public enum TypeOfMove{SINGLE_MOVE, JUMP};
+    private TypeOfMove typeOfMove;
 //
 //    private TypeOfMove typeOfMove;
 
@@ -18,12 +21,13 @@ public class Move {
         this.start = start;
         this.end = end;
         this.activeColor = activeColor;
+        this.isValid = validateMove();
     }
 
     public boolean validateMove(){
         if(start.isValid() && end.isValid() &&
                 start.getPiece().getColor() == activeColor && end.getPiece() == null){
-            return (isJump() && isSingleMove() && direction());
+            return ((isJump() || isSingleMove()) && direction());
         }
         return false;
     }
@@ -36,7 +40,7 @@ public class Move {
         if(Math.abs(start.getRowIdx() - end.getRowIdx()) == 1 &&
                 Math.abs(start.getCellIdx() - end.getCellIdx()) == 1)//for singleMove the distance in the diagonal must be 1
         {
-//            typeOfMove = S
+            typeOfMove = TypeOfMove.SINGLE_MOVE;
             return true;
         }
         return false;
@@ -52,9 +56,12 @@ public class Move {
         {
 //            if()
             //need to check validity
-            return true;
+//            return true;
         }
         return false;
+    }
+    public boolean isValid(){
+        return isValid;
     }
 
     /**

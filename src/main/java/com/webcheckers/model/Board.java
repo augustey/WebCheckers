@@ -58,14 +58,19 @@ public class Board implements Iterable<Row>{
         Space startSpace;
         Space endSpace;
         if(moves.size() > 1) {
+            //TODO make copy of board
             Iterator<Space> moveIterator = moves.iterator();//moves can be made up of 2+ spaces
             startSpace = moveIterator.next();
             while (moveIterator.hasNext()) {
                 endSpace = moveIterator.next();
-                new Move(startSpace, endSpace, activeColor);
-
-
-                startSpace = endSpace;
+                Move curMove = new Move(startSpace, endSpace, activeColor);
+                if(curMove.isValid()) {
+                    //TODO change board copy
+                    startSpace = endSpace;
+                }
+                else{
+                    break;
+                }
             }
         }
 
