@@ -31,21 +31,15 @@ public class GameCenter {
     }
 
     public PlayerService requestNewGame(Player player, Player opponent) {
-        //If any of the players are in a game, don't create a new game
-        //and return null.
         if(isInGame(player) || isInGame(opponent)) {
             return null;
         }
 
-        //Create a new game with the requesting player as red
-        //and the other player as white.
         Game newGame = new Game(player, opponent);
 
-        //Add the two players to the map of games.
         activeGames.put(player, newGame);
         activeGames.put(opponent, newGame);
 
-        //Return a service object representing the game.
         return new PlayerService(newGame);
     }
 
@@ -56,12 +50,10 @@ public class GameCenter {
      * @return PlayerService object containing the players game if it exists.
      */
     public PlayerService getPlayerService(Player player) {
-        //If the requesting player is not in the game, return null.
         if(!isInGame(player)) {
             return null;
         }
 
-        //Get the game the player is in and return a service object representing it.
         Game game = activeGames.get(player);
         return new PlayerService(game);
     }

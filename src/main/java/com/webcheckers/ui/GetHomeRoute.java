@@ -25,6 +25,7 @@ public class GetHomeRoute implements Route {
 
   public static final Message WELCOME_MSG = Message.info("Welcome to the world of Online Checkers.");
 
+  public static final String MESSAGE_KEY = "message";
   public static final String PLAYER_KEY = "currentUser";
   public static final String ONLINE_COUNT_ATTR = "count";
 
@@ -97,8 +98,13 @@ public class GetHomeRoute implements Route {
     int count = playerLobby.getPlayerSet().size();
     vm.put(ONLINE_COUNT_ATTR, count);
 
+    Message message = httpSession.attribute(MESSAGE_KEY);
+    message = (message == null) ? WELCOME_MSG : message;
+
+    httpSession.removeAttribute(MESSAGE_KEY);
+
     // display a user message in the Home page
-    vm.put("message", WELCOME_MSG);
+    vm.put("message", message);
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));

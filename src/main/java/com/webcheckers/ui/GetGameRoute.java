@@ -3,7 +3,9 @@ package com.webcheckers.ui;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.PlayerService;
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -28,6 +30,10 @@ public class GetGameRoute implements Route {
 
     //Used to store and access player service in session object
     public static final String PLAYER_SERVICE_KEY = "PlayerService";
+
+    //Error messages
+    private final Message PLAYER_NULL_MSG = Message.error("That player does not exist.");
+    private final Message PLAYER_IN_GAME_MSG = Message.error("That player is already in a game.");
 
     //Attributes for the freemarker template
     private final String TITLE_ATTR = "title";
@@ -68,49 +74,46 @@ public class GetGameRoute implements Route {
 
         Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
 
-        //If player object does not exist, redirect them to the sign in page.
         if(player == null) {
             response.redirect(WebServer.SIGNIN_URL);
             halt();
             return null;
         }
 
-        //Attempt to retrieve playerService object
         PlayerService playerService = httpSession.attribute(PLAYER_SERVICE_KEY);
 
-        //If player service does not exist, attempt to create new game with opponent
         if(playerService == null) {
-            //Get the name of the opponent selected from the online list
             String opponentName = request.queryParams(OPPONENT_PARAM);
-
-            //Retrieve the corresponding player object
             Player opponent = playerLobby.getPlayer(opponentName);
 
-            //If the opponent is in the game then redirect them home
-            //with an error message
-            //TODO: Add error message functionality
             if (opponent == null || gameCenter.isInGame(opponent)) {
+                Message message = (opponent == null) ? PLAYER_NULL_MSG : PLAYER_IN_GAME_MSG;
+                httpSession.attribute(GetHomeRoute.MESSAGE_KEY, message);
+
                 response.redirect(WebServer.HOME_URL);
                 halt();
                 return null;
             }
 
-            //Create a new game and get a player service for it
             playerService = gameCenter.requestNewGame(player, opponent);
-
             httpSession.attribute(PLAYER_SERVICE_KEY, playerService);
         }
 
         Map<String, Object> vm = new HashMap<>();
 
-        //Add template variables
+        Player red = playerService.getRedPlayer();
+        Player white = playerService.getWhitePlayer();
+
         vm.put(TITLE_ATTR, TITLE);
         vm.put(USER_ATTR, player);
-        vm.put(RED_PLAYER_ATTR, playerService.getRedPlayer());
-        vm.put(WHITE_PLAYER_ATTR, playerService.getWhitePlayer());
+        vm.put(RED_PLAYER_ATTR, red);
+        vm.put(WHITE_PLAYER_ATTR, white);
         vm.put(VIEW_MODE_ATTR, VIEW_MODE); //TODO: Add enumeration
         vm.put(ACTIVE_COLOR_ATTR, ACTIVE_COLOR); //TODO: Add enumeration
-        //TODO: Add board view attribute
+
+        Board board = (player.equals(red)) ? playerService.getBoard() : playerService.getBoardFlipped();
+
+        vm.put(BOARD_VIEW_ATTR, board);
 
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
