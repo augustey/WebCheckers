@@ -11,7 +11,7 @@ public class Board implements Iterable<Row>{
 
     @Override
     public Iterator<Row> iterator() {
-        return null;
+        return board.iterator();
     }
 
     /**
