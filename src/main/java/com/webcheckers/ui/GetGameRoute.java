@@ -68,26 +68,18 @@ public class GetGameRoute implements Route {
 
         Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
 
-        //If player object does not exist, redirect them to the sign in page.
         if(player == null) {
             response.redirect(WebServer.SIGNIN_URL);
             halt();
             return null;
         }
 
-        //Attempt to retrieve playerService object
         PlayerService playerService = httpSession.attribute(PLAYER_SERVICE_KEY);
 
-        //If player service does not exist, attempt to create new game with opponent
         if(playerService == null) {
-            //Get the name of the opponent selected from the online list
             String opponentName = request.queryParams(OPPONENT_PARAM);
-
-            //Retrieve the corresponding player object
             Player opponent = playerLobby.getPlayer(opponentName);
 
-            //If the opponent is in the game then redirect them home
-            //with an error message
             //TODO: Add error message functionality
             if (opponent == null || gameCenter.isInGame(opponent)) {
                 response.redirect(WebServer.HOME_URL);
@@ -95,15 +87,12 @@ public class GetGameRoute implements Route {
                 return null;
             }
 
-            //Create a new game and get a player service for it
             playerService = gameCenter.requestNewGame(player, opponent);
-
             httpSession.attribute(PLAYER_SERVICE_KEY, playerService);
         }
 
         Map<String, Object> vm = new HashMap<>();
 
-        //Add template variables
         vm.put(TITLE_ATTR, TITLE);
         vm.put(USER_ATTR, player);
         vm.put(RED_PLAYER_ATTR, playerService.getRedPlayer());
