@@ -1,7 +1,5 @@
 package com.webcheckers.model;
 
-import com.webcheckers.util.Message;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -42,6 +40,8 @@ public class Board implements Iterable<Row>{
         }
 
         System.out.println(toString());
+
+        System.out.println(toString());
     }
     public void validateMove(ArrayList<Space> moves){
         //row = cellIdx
@@ -61,6 +61,21 @@ public class Board implements Iterable<Row>{
 
     }
     public void makeMove(){
+
+
+    }
+
+    public void boardFlip(){
+        ArrayList<Row> flipedBoard = new ArrayList<Row>();
+        for(int row = BOARD_DIM - 1; row >= 0; row--){
+            Row curRow = board.get(row);
+            ArrayList<Space> flipedRow = new ArrayList<Space>();
+            for(int col = BOARD_DIM - 1; col >= 0; col--){
+                flipedRow.add(curRow.getSpaces().get(col));
+            }
+//            flipedBoard.add(flipedRow.get(row));
+        }
+        board = flipedBoard;
 
     }
 

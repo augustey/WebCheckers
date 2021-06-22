@@ -30,6 +30,9 @@ public class Space {
     public int getCellIdx(){
         return cellIdx;
     }
+    public int getRowIdx(){
+        return rowIdx;
+    }
 
 
 
