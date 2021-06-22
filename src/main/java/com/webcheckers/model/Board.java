@@ -6,7 +6,7 @@ import java.util.Iterator;
 public class Board implements Iterable<Row>{
 
     private final int BOARD_DIM = 8;//the size of the board
-
+    private Piece.Color activeColor;
     private ArrayList<Row> board = new ArrayList<Row>();
 
     @Override
@@ -18,6 +18,7 @@ public class Board implements Iterable<Row>{
      * Makes the starting board
      */
     public Board(){
+        activeColor = Piece.Color.RED;
         Space space;
         for(int row = 0; row < BOARD_DIM; row++){
             ArrayList<Space> curRow = new ArrayList<Space>();//holds what will latter be put into a row object
@@ -42,8 +43,16 @@ public class Board implements Iterable<Row>{
         System.out.println(toString());
         boardFlip();
         System.out.println(toString());
+//        this.board = copyBoard().board;
+//        System.out.println(toString());
+
     }
-    public void validateMove(ArrayList<Space> moves){
+
+    /**
+     * This checks if the moves made durring a turn were valid
+     * @param moves
+     */
+    public void validateTurn(ArrayList<Space> moves){
         //row = cellIdx
         //col = location in
         Space startSpace;
@@ -53,7 +62,8 @@ public class Board implements Iterable<Row>{
             startSpace = moveIterator.next();
             while (moveIterator.hasNext()) {
                 endSpace = moveIterator.next();
-                //can eather be a move or a jump
+                new Move(startSpace, endSpace, activeColor);
+
 
                 startSpace = endSpace;
             }
@@ -65,27 +75,44 @@ public class Board implements Iterable<Row>{
 
     }
 
-    public void copyBoard (ArrayList<Row> other){
-        this.board = other;
-    }
+//    public Board( copyBoard){
+//
+//        for(int row = 0; row < BOARD_DIM; row++){
+//            Row curRow = board.get(row);
+//            ArrayList<Space> row1 = new ArrayList<Space>();//empty row collection that the flipped row will be put into
+//            for(int col = 0; col < BOARD_DIM>; col++){
+//                row1.add(curRow.getSpaces().get(col));
+//            }
+//            curRow.setSpaces(row1);
+//            board.add(curRow);//puts the board back together
+//        }
+//        copyBoard.board = board;
+//        return copyBoard;
+//    }
 
     /**
-     * this methiod flips the board so that it is in the correct orientation for a player's move
+     * this method flips the board so that it is in the correct orientation for a player's move
      */
     public void boardFlip(){
         ArrayList<Row> flipedBoard = new ArrayList<Row>();//empty board collection that the flipped board will be put into
         for(int row = BOARD_DIM - 1; row >= 0; row--){
-            Row curRow = board.get(row);//retrieves the row that will be flipped
+            Row curRow = board.get(row);
             ArrayList<Space> flipedRow = new ArrayList<Space>();//empty row collection that the flipped row will be put into
             for(int col = BOARD_DIM - 1; col >= 0; col--){
                 flipedRow.add(curRow.getSpaces().get(col));
             }
-            curRow.setSpaces(flipedRow);//changing the row that was being flipped to the flipped row
-            flipedBoard.add(curRow);//adds flipped row to board
+            curRow.setSpaces(flipedRow);
+            flipedBoard.add(curRow);//puts the board back together
         }
-        copyBoard(flipedBoard);
+        this.board = flipedBoard;
     }
 
+    public Piece.Color getActiveColor(){
+        return activeColor;
+    }
+//    public void setActiveColor(){
+//        this.activeColor =
+//    }
 
 
     /**
@@ -122,7 +149,6 @@ public class Board implements Iterable<Row>{
                 else if(curSpace.getPiece().getColor() == Piece.Color.WHITE && curSpace.getPiece().getType() == Piece.Type.KING){//king red
                     textBoard.append("W");
                 }
-
 
             }
             textBoard.append("\n");

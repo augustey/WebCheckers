@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class Row implements Iterable<Space> {
+public class Row implements Iterable<Space>{
     private int index;//what row it is 0 - 7
     private ArrayList<Space> spaces;//array of the spaces that make up the row
 
@@ -17,8 +17,7 @@ public class Row implements Iterable<Space> {
         return spaces;
     }
 
-    public void setSpaces(ArrayList<Space> spaces)
-    {
+    public void setSpaces(ArrayList<Space> spaces){
         this.spaces = spaces;
     }
     public int getIndex(){
@@ -26,7 +25,7 @@ public class Row implements Iterable<Space> {
     }
 
     @Override
-    public Iterator<Space> iterator() {
+    public Iterator<Space> iterator(){
         return spaces.iterator();
     }
 
