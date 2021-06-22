@@ -4,6 +4,7 @@ import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.PlayerService;
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -28,6 +29,10 @@ public class GetGameRoute implements Route {
 
     //Used to store and access player service in session object
     public static final String PLAYER_SERVICE_KEY = "PlayerService";
+
+    //Error messages
+    private final Message PLAYER_NULL_MSG = Message.error("That player does not exist.");
+    private final Message PLAYER_IN_GAME_MSG = Message.error("That player is already in a game.");
 
     //Attributes for the freemarker template
     private final String TITLE_ATTR = "title";
@@ -80,8 +85,10 @@ public class GetGameRoute implements Route {
             String opponentName = request.queryParams(OPPONENT_PARAM);
             Player opponent = playerLobby.getPlayer(opponentName);
 
-            //TODO: Add error message functionality
             if (opponent == null || gameCenter.isInGame(opponent)) {
+                Message message = (opponent == null) ? PLAYER_NULL_MSG : PLAYER_IN_GAME_MSG;
+                httpSession.attribute(GetHomeRoute.MESSAGE_KEY, message);
+
                 response.redirect(WebServer.HOME_URL);
                 halt();
                 return null;
