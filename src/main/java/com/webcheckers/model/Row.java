@@ -12,6 +12,9 @@ public class Row implements Iterable<Space>{
         this.index = index;
         this.spaces = spaces;
     }
+    public void changeSpace(int col, Space space){
+        spaces.set(col, space);
+    }
 
     public ArrayList<Space> getSpaces(){
         return spaces;

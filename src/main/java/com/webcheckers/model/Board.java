@@ -66,6 +66,7 @@ public class Board implements Iterable<Row>{
                 Move curMove = new Move(startSpace, endSpace, activeColor);
                 if(curMove.isValid()) {
                     //TODO change board copy
+                    makeMove(curMove);
                     startSpace = endSpace;
                 }
                 else{
@@ -75,7 +76,14 @@ public class Board implements Iterable<Row>{
         }
 
     }
-    public void makeMove(){
+    public void makeMove(Move curMove){
+       curMove.getEnd().setPiece(curMove.getStart().getPiece());
+       curMove.getStart().setPiece(null);
+
+
+//        board.set()
+//        board.get(curMove.getStart().getRowIdx()).changeSpace(curMove.getStart().getCellIdx(), curMove.getStart());
+
 
 
     }

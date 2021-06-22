@@ -73,6 +73,13 @@ public class Move {
                 (start.getRowIdx() - end.getRowIdx()) == -1;
     }
 
+    public Space getStart(){
+        return start;
+    }
+    public Space getEnd(){
+        return end;
+    }
+
 
     //check if land is empty
     //check if move
