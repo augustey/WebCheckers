@@ -12,7 +12,7 @@ public class Space {
      * constructor
      * @param cellIdx
      */
-    public Space(int cellIdx){
+    public Space(int rowIdx, int cellIdx){
         this.cellIdx = cellIdx;
         this.rowIdx = rowIdx;
         this.piece = null;

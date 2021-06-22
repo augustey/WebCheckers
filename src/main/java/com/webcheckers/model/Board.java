@@ -24,7 +24,7 @@ public class Board implements Iterable<Row>{
         for(int row = 0; row < BOARD_DIM; row++){
             ArrayList<Space> curRow = new ArrayList<Space>();//holds what will latter be put into a row object
             for(int col = 0; col < BOARD_DIM; col++){
-                space = new Space(col);//creates a blank space
+                space = new Space(row,col);//creates a blank space
                 if(col % 2 + row % 2 == 1){//is on valid spot if only row or col is even but not both
                     space.setIsValid(true);//because it is a valid spot it needs to be set as such
                     if(row > BOARD_DIM - 4)//for white piece placement 3 rows of them
@@ -43,7 +43,7 @@ public class Board implements Iterable<Row>{
 
         System.out.println(toString());
     }
-    public Message validateMove(ArrayList<Space> moves){
+    public void validateMove(ArrayList<Space> moves){
         //row = cellIdx
         //col = location in
         Space startSpace;
@@ -58,6 +58,7 @@ public class Board implements Iterable<Row>{
                 startSpace = endSpace;
             }
         }
+
     }
     public void makeMove(){
 
