@@ -40,7 +40,7 @@ public class Board implements Iterable<Row>{
         }
 
         System.out.println(toString());
-
+        boardFlip();
         System.out.println(toString());
     }
     public void validateMove(ArrayList<Space> moves){
@@ -65,6 +65,10 @@ public class Board implements Iterable<Row>{
 
     }
 
+    public void copyBoard (ArrayList<Row> other){
+        this.board = other;
+    }
+
     public void boardFlip(){
         ArrayList<Row> flipedBoard = new ArrayList<Row>();
         for(int row = BOARD_DIM - 1; row >= 0; row--){
@@ -73,10 +77,10 @@ public class Board implements Iterable<Row>{
             for(int col = BOARD_DIM - 1; col >= 0; col--){
                 flipedRow.add(curRow.getSpaces().get(col));
             }
-//            flipedBoard.add(flipedRow.get(row));
+            curRow.setSpaces(flipedRow);
+            flipedBoard.add(curRow);
         }
-        board = flipedBoard;
-
+        copyBoard(flipedBoard);
     }
 
 

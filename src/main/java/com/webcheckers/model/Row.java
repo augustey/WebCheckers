@@ -16,6 +16,11 @@ public class Row implements Iterable<Space> {
     public ArrayList<Space> getSpaces(){
         return spaces;
     }
+
+    public void setSpaces(ArrayList<Space> spaces)
+    {
+        this.spaces = spaces;
+    }
     public int getIndex(){
         return index;
     }
