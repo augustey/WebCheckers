@@ -28,10 +28,10 @@ public class Board implements Iterable<Row>{
                     space.setIsValid(true);//because it is a valid spot it needs to be set as such
                     if(row > BOARD_DIM - 4)//for white piece placement 3 rows of them
                     {
-                        space.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));//fills the blank space with a white piece
+                        space.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));//fills the blank space with a red piece
                     }
                     else if(row < 3){//for red piece placement 3 rows of them
-                        space.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));//fills the blank space with a red piece
+                        space.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));//fills the blank space with a white piece
                     }
 
                 }
@@ -41,8 +41,9 @@ public class Board implements Iterable<Row>{
         }
 
         System.out.println(toString());
-        boardFlip();
-        System.out.println(toString());
+//        boardFlip();
+//        System.out.println(toString());
+
 //        this.board = copyBoard().board;
 //        System.out.println(toString());
 
@@ -79,6 +80,8 @@ public class Board implements Iterable<Row>{
     public void makeMove(Move curMove){
        curMove.getEnd().setPiece(curMove.getStart().getPiece());
        curMove.getStart().setPiece(null);
+
+        System.out.println(toString());
 
 
 //        board.set()
@@ -170,5 +173,6 @@ public class Board implements Iterable<Row>{
     }
     public static void main(String[] args) {//for debugging purposes only
         new Board();
+
     }
 }
