@@ -1,5 +1,6 @@
 package com.webcheckers.application;
 
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
@@ -36,5 +37,25 @@ public class PlayerService {
      */
     public Player getWhitePlayer() {
         return whitePlayer;
+    }
+
+    /**
+     * getter for board
+     * @return board
+     */
+    public Board getBoard() {
+        //TEMPORARY
+        return new Board();
+    }
+
+    /**
+     * getter for board
+     * @return board
+     */
+    public Board getBoardFlipped() {
+        //TEMPORARY
+        Board board = new Board();
+        board.boardFlip();
+        return board;
     }
 }

@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.PlayerService;
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.*;
@@ -100,13 +101,19 @@ public class GetGameRoute implements Route {
 
         Map<String, Object> vm = new HashMap<>();
 
+        Player red = playerService.getRedPlayer();
+        Player white = playerService.getWhitePlayer();
+
         vm.put(TITLE_ATTR, TITLE);
         vm.put(USER_ATTR, player);
-        vm.put(RED_PLAYER_ATTR, playerService.getRedPlayer());
-        vm.put(WHITE_PLAYER_ATTR, playerService.getWhitePlayer());
+        vm.put(RED_PLAYER_ATTR, red);
+        vm.put(WHITE_PLAYER_ATTR, white);
         vm.put(VIEW_MODE_ATTR, VIEW_MODE); //TODO: Add enumeration
         vm.put(ACTIVE_COLOR_ATTR, ACTIVE_COLOR); //TODO: Add enumeration
-        //TODO: Add board view attribute
+
+        Board board = (player.equals(red)) ? playerService.getBoard() : playerService.getBoardFlipped();
+
+        vm.put(BOARD_VIEW_ATTR, board);
 
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
