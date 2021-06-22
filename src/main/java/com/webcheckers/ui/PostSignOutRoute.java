@@ -64,6 +64,8 @@ public class PostSignOutRoute implements Route
 
         vm.put("message", GetHomeRoute.WELCOME_MSG);
 
+        response.redirect("/");
+
         return templateEngine.render(new ModelAndView(vm , "home.ftl"));
     }
 }
