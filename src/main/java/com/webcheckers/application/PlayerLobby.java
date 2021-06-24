@@ -80,13 +80,23 @@ public class PlayerLobby
         {
             return false;
         }
+
+        boolean containsAplhaNum = false;
         for(Character c : a)
         {
-            if(!Character.isLetterOrDigit(c))
+            if(Character.isLetterOrDigit(c))
+            {
+                containsAplhaNum = true;
+            }
+            if(!Character.isLetterOrDigit(c) && !Character.isSpaceChar(c))
+            {
+                return false;
+            }
+            if(!containsAplhaNum && Character.isSpaceChar(c))
             {
                 return false;
             }
         }
-        return true;
+        return containsAplhaNum;
     }
 }
