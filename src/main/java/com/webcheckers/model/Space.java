@@ -36,6 +36,8 @@ public class Space {
 
 
 
+
+
     /**
      *
      * @return
@@ -45,7 +47,7 @@ public class Space {
     }
 
     public boolean isValid() {
-        return isValid;
+        return piece == null;
     }
 
     public void setIsValid(boolean isValid) {
