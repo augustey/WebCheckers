@@ -38,6 +38,9 @@ public class Space {
         return rowIdx;
     }
 
+    public void setColor(Space.Color color){
+        this.color = color;
+    }
 
 
 
