@@ -23,7 +23,7 @@ public class Game {
     }
 
     /**
-     * Getter for redPlayer
+     * Getter for redPlayer8
      * @return redPlayer
      */
     public Player getRedPlayer() {

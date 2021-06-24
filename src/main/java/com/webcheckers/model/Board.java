@@ -34,6 +34,7 @@ public class Board implements Iterable<Row>{
                         space.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));//fills the blank space with a white piece
                     }
 
+
                 }
                 curRow.add(space);//puts space into the collection holding all spaces in row
             }
@@ -53,7 +54,7 @@ public class Board implements Iterable<Row>{
      * This checks if the moves made durring a turn were valid
      * @param moves
      */
-    public void validateTurn(ArrayList<Space> moves){
+    public void isValid(ArrayList<Space> moves){
         //row = cellIdx
         //col = location in
         Space startSpace;
