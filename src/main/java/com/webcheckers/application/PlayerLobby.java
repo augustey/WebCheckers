@@ -76,14 +76,28 @@ public class PlayerLobby
     private boolean verifyAlphanumeric(String str)
     {
         char[] a = str.toCharArray();
+        if(a.length == 0)
+        {
+            return false;
+        }
+
+        boolean containsAplhaNum = false;
         for(Character c : a)
         {
             if(Character.isLetterOrDigit(c))
             {
-                return true;
+                containsAplhaNum = true;
+            }
+            if(!Character.isLetterOrDigit(c) && !Character.isSpaceChar(c))
+            {
+                return false;
+            }
+            if(!containsAplhaNum && Character.isSpaceChar(c))
+            {
+                return false;
             }
         }
-        return false;
+        return containsAplhaNum;
     }
 
     /**
