@@ -30,6 +30,13 @@ public class GameCenter {
         return activeGames.containsKey(player);
     }
 
+    /**
+     * Create a new game containing the two specified players.
+     * Both players must not be in a game for the game center to create it.
+     * @param player The requesting player.
+     * @param opponent The opponent the requesting player selected.
+     * @return The service object containing the newly created game.
+     */
     public PlayerService requestNewGame(Player player, Player opponent) {
         if(isInGame(player) || isInGame(opponent)) {
             return null;

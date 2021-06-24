@@ -74,21 +74,14 @@ public class GetHomeRoute implements Route {
       vm.put("currentUser", player);
       vm.put("playerSet", playerLobby.getPlayerSet());
 
-      //Attempt to get player service object
       PlayerService playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
 
-      //Check if the player is in a game
-      //If so then redirect them to their game page
       if(gameCenter.isInGame(player)) {
-        //Check if their player service attribute is defined
-        //If not this means another user requested a game with them
-        //and needs to have a service for them created
         if(playerService == null) {
           playerService = gameCenter.getPlayerService(player);
           httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY, playerService);
         }
 
-        //Redirect the player to the game page
         response.redirect(WebServer.GAME_URL);
         halt();
         return null;
