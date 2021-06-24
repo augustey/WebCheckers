@@ -6,6 +6,9 @@ public class Space {
     private int rowIdx;
     private boolean isValid;//if the landing spot is valid
     private Piece piece;
+    public enum Color{WHITE, BLACK};
+    private Space.Color color;
+
 
 
     /**
@@ -13,6 +16,7 @@ public class Space {
      * @param cellIdx
      */
     public Space(int rowIdx, int cellIdx){
+        this.color = Color.WHITE;
         this.cellIdx = cellIdx;
         this.rowIdx = rowIdx;
         this.piece = null;
@@ -47,7 +51,7 @@ public class Space {
     }
 
     public boolean isValid() {
-        return piece == null;
+        return piece == null && color == Color.BLACK;
     }
 
     public void setIsValid(boolean isValid) {
