@@ -24,7 +24,7 @@ public class PostSignInRoute implements Route
 
     //Text
     public static final String NON_UNIQUE_USERNAME = "The name you entered is already in the system";
-    public static final String NON_ALPHANUMERIC_USERNAME = "The name you entered does not contain a letter or a number";
+    public static final String NON_ALPHANUMERIC_USERNAME = "The name you entered contains a non alphanumeric character";
 
     //State
     private PlayerLobby playerLobby;

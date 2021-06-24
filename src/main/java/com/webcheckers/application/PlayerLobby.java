@@ -76,13 +76,17 @@ public class PlayerLobby
     private boolean verifyAlphanumeric(String str)
     {
         char[] a = str.toCharArray();
+        if(a.length == 0)
+        {
+            return false;
+        }
         for(Character c : a)
         {
-            if(Character.isLetterOrDigit(c))
+            if(!Character.isLetterOrDigit(c))
             {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 }
