@@ -9,13 +9,19 @@ import com.webcheckers.model.Player;
  * and offers services to access the game.
  */
 public class PlayerService {
+
+    // The Red Player.
     private final Player redPlayer;
+    // The White Player.
     private final Player whitePlayer;
+    // The single game between the two players.
     private final Game game;
 
     /**
      * Constructor for PlayerService
-     * @param game the game of checkers to provide services for.
+     *
+     * @param game
+     *     The game of checkers to provide services for.
      */
     public PlayerService(Game game) {
         this.redPlayer = game.getRedPlayer();
@@ -24,24 +30,28 @@ public class PlayerService {
     }
 
     /**
-     * getter for redPlayer
-     * @return redPlayer
+     * A getter method for the red player.
+     *
+     * @return
+     *     The red player.
      */
     public Player getRedPlayer() {
         return redPlayer;
     }
 
     /**
-     * getter for whitePlayer
-     * @return whitePlayer
+     * A getter method for the white player.
+     * @return
+     *     The white player.
      */
     public Player getWhitePlayer() {
         return whitePlayer;
     }
 
     /**
-     * getter for board
-     * @return board
+     * A getter method for a board.
+     * @return
+     *     A board.
      */
     public Board getBoard() {
         //TEMPORARY
@@ -49,8 +59,10 @@ public class PlayerService {
     }
 
     /**
-     * getter for board
-     * @return board
+     * A getter method for the flipped version of the board.
+     *
+     * @return
+     *     A flipped board.
      */
     public Board getBoardFlipped() {
         //TEMPORARY

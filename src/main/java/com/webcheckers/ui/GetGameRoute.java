@@ -17,7 +17,8 @@ import static spark.Spark.halt;
 
 /**
  * UI controller to get the game route.
- * @author Yaqim Auguste (yaa6681@rit.edu)
+ *
+ * @author <a href = 'mailto:yaa6681@rit.edu'> Yaqim Auguste</a>
  */
 public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
@@ -51,7 +52,9 @@ public class GetGameRoute implements Route {
 
     /**
      * Constructor for GetGameRoute. Used to handle requests sent to "/game".
-     * @param templateEngine Template engine used to render views.
+     *
+     * @param templateEngine
+     *     Template engine used to render views.
      */
     public GetGameRoute(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine) {
         this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
@@ -62,9 +65,15 @@ public class GetGameRoute implements Route {
 
     /**
      * Render the WebCheckers Game page.
-     * @param request the HTTP request
-     * @param response the HTTP response
-     * @return the rendered HTML for the Home page
+     *
+     * @param request
+     *     The HTTP request.
+     *
+     * @param response
+     *     The HTTP response.
+     *
+     * @return
+     *     The rendered HTML for the Home page.
      */
     @Override
     public Object handle(Request request, Response response) {

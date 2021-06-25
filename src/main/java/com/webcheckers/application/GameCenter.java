@@ -8,10 +8,13 @@ import java.util.Map;
 
 /**
  * Central class for creating and monitoring games of checkers.
+ *
  * @author <a href = 'mailto:yaa6681@rit.edu'> Yaqim Auguste</a>
  */
 public class GameCenter {
-    //Keep track of users and the games they're in.
+    /**
+     * A Map of the active games in the server.
+     */
     private final Map<Player, Game> activeGames;
 
     /**
@@ -23,8 +26,12 @@ public class GameCenter {
 
     /**
      * Check if player is currently in a game of checkers.
-     * @param player the player to search for.
-     * @return whether the specified player is in a game of checkers or not
+     *
+     * @param player
+     *     The player to search for.
+     *
+     * @return
+     *     Whether the specified player is in a game of checkers or not
      */
     public boolean isInGame(Player player) {
         return activeGames.containsKey(player);
@@ -33,9 +40,15 @@ public class GameCenter {
     /**
      * Create a new game containing the two specified players.
      * Both players must not be in a game for the game center to create it.
-     * @param player The requesting player.
-     * @param opponent The opponent the requesting player selected.
-     * @return The service object containing the newly created game.
+     *
+     * @param player
+     *     The requesting player.
+     *
+     * @param opponent
+     *     The opponent the requesting player selected.
+     *
+     * @return
+     *     The service object containing the newly created game.
      */
     public PlayerService requestNewGame(Player player, Player opponent) {
         if(isInGame(player) || isInGame(opponent)) {
@@ -53,8 +66,12 @@ public class GameCenter {
     /**
      * Get a PlayerService object representing the users active game
      * if it exists.
-     * @param player the requesting player
-     * @return PlayerService object containing the players game if it exists.
+     *
+     * @param player
+     *     The requesting player.
+     *
+     * @return
+     *     PlayerService object containing the players game if it exists.
      */
     public PlayerService getPlayerService(Player player) {
         if(!isInGame(player)) {
