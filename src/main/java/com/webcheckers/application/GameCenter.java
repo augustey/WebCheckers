@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Central class for creating and monitoring games of checkers.
  *
- * @author <a href = 'mailto:yaa6681@rit.edu'> Yaqim Auguste</a>
+ * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
  */
 public class GameCenter {
     /**

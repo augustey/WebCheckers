@@ -8,25 +8,26 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * The UI Controller to GET the Signin page.
+ * The UI Controller to GET the Sign-in page.
+ *
  * @author <a href="mailto:jrl9984@rit.edu">Jim Logan</a>
  */
 public class GetSignInRoute implements Route
 {
-    //Attributes
+    // Attributes
     public static final String TITLE_ATTR = "title";
 
-    //Text
+    // Text
     public static final String TITLE = "Sign In";
 
-    //State
+    // State
     private final TemplateEngine templateEngine;
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /signin} HTTP requests.
      *
      * @param templateEngine
-     *   the HTML template rendering engine
+     *     The HTML template rendering engine.
      */
     public GetSignInRoute(final TemplateEngine templateEngine)
     {
@@ -36,15 +37,16 @@ public class GetSignInRoute implements Route
     }
 
     /**
-     * Render the WebCheckers SignIn page.
+     * Render the WebCheckers Sign-in page.
      *
      * @param request
-     *   the HTTP request
+     *   The HTTP request.
+     *
      * @param response
-     *   the HTTP response
+     *   The HTTP response.
      *
      * @return
-     *   the rendered HTML for the Signin page
+     *   The rendered HTML for the Sign-in page.
      */
     @Override
     public Object handle(Request request, Response response)

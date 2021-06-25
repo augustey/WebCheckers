@@ -9,7 +9,7 @@ import java.util.Set;
  * This class holds sign-in information and verifies unique names
  * and alphanumeric names.
  *
- * @author <a href = 'mailto:jrl9984@rit.edu'> Jim Logan</a>
+ * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
  */
 public class PlayerLobby {
     /**
