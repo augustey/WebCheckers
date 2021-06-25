@@ -21,7 +21,7 @@ public class PlayerLobby {
     private final Set<Player> playerSet;
 
     /**
-     * Creates a new PlayerLobby that initializes the player set
+     * Creates a new PlayerLobby that initializes the player set.
      */
     public PlayerLobby() {
         playerSet = new HashSet<>();

@@ -18,7 +18,7 @@ public class GameCenter {
     private final Map<Player, Game> activeGames;
 
     /**
-     * Constructor for GameCenter
+     * Constructor for GameCenter that initializes the active games.
      */
     public GameCenter() {
         this.activeGames = new HashMap<>();
