@@ -18,7 +18,7 @@ import static spark.Spark.halt;
 /**
  * UI controller to get the game route.
  *
- * @author <a href = 'mailto:yaa6681@rit.edu'> Yaqim Auguste</a>
+ * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
  */
 public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());

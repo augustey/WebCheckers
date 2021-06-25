@@ -6,52 +6,50 @@ import java.util.Iterator;
 /**
  * This class is responsible for creating the board for a checkers game.
  *
- * @author <a href = 'mailto:whd8254@rit.edu'> William Dabney</a>
+ * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
+ * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
  */
 public class Board implements Iterable<Row>{
 
     // The length and width of a checkers board.
     private final int BOARD_DIM = 8;
-
-    private Piece.Color activeColor;
-
     // Array of Rows that form the board
     private ArrayList<Row> board = new ArrayList<>();
+    /**
+     * Enum for the color of spaces
+     */
+    public enum Color{WHITE, BLACK};
 
     /**
      * Constructor for the Board
      */
-    public Board(){
-        activeColor = Piece.Color.RED;
-        for(int row = 0; row < BOARD_DIM; row++){
-            ArrayList<Space> curRow = new ArrayList<>(); //holds what will later be put into a row object
+    public Board() {
+        for(int row = 0; row < BOARD_DIM; row++) {
+            ArrayList<Space> curRow = new ArrayList<>();
             for(int col = 0; col < BOARD_DIM; col++) {
-                Space space = new Space(row, col); //creates a blank space
-                if(col % 2 + row % 2 == 1) { //is on valid spot if only row or col is even but not both
-                    space.setColor(Space.Color.BLACK);//because it is a valid spot it needs to be set as such
-                    if(row > BOARD_DIM - 4) { //for white piece placement 3 rows of them
-                        space.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));//fills the blank space with a red piece
+                Space space;
+                if(col % 2 + row % 2 == 1) {
+                    space = new Space(col, Color.BLACK, null, true);
+                    if(row > BOARD_DIM - 4) {
+                        space.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
                     }
-                    else if(row < 3) { //for red piece placement 3 rows of them
-                        space.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));//fills the blank space with a white piece
+                    else if(row < 3) {
+                        space.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
                     }
                 }
-                curRow.add(space);//puts space into the collection holding all spaces in row
+                else {
+                    space = new Space(col, Color.WHITE, null, false);
+                }
+                curRow.add(space);
             }
-            this.board.add(new Row(row, curRow));//creates a new row and adds it to the board
+            this.board.add(new Row(row, curRow));
         }
-        System.out.println(toString());
-        // boardFlip();
-        // System.out.println(toString());
-
-        // this.board = copyBoard().board;
         // System.out.println(toString());
     }
 
     /**
      * This checks if the moves made during a turn were valid
-     * @param moves
-     */
+     *
     public void isValid(ArrayList<Space> moves) {
         //row = cellIdx
         //col = location in
@@ -75,7 +73,9 @@ public class Board implements Iterable<Row>{
             }
         }
     }
+    */
 
+    /**
     public void makeMove(Move curMove){
        curMove.getEnd().setPiece(curMove.getStart().getPiece());
        curMove.getStart().setPiece(null);
@@ -84,6 +84,7 @@ public class Board implements Iterable<Row>{
        // board.set()
        // board.get(curMove.getStart().getRowIdx()).changeSpace(curMove.getStart().getCellIdx(), curMove.getStart());
     }
+     */
 
 //    public Board( copyBoard){
 //
@@ -117,13 +118,6 @@ public class Board implements Iterable<Row>{
         this.board = flippedBoard;
     }
 
-    public Piece.Color getActiveColor() {
-        return activeColor;
-    }
-//    public void setActiveColor(){
-//        this.activeColor =
-//    }
-
     @Override
     public Iterator<Row> iterator() {
         return board.iterator();
@@ -136,31 +130,19 @@ public class Board implements Iterable<Row>{
     @Override
     public String toString() {
         StringBuilder textBoard = new StringBuilder();
-        Iterator<Row> rowIterator = board.iterator();
-        while(rowIterator.hasNext()) {
-
-            Row curRow = rowIterator.next();
-            Iterator<Space> colIterator = curRow.iterator();
-
-            while(colIterator.hasNext()) {
-                Space curSpace = colIterator.next();
-
-                if(!curSpace.isValid()) {
+        for (Row curRow : board) {
+            for (Space curSpace : curRow) {
+                if (!curSpace.isValid()) {
                     textBoard.append("*");//none playable spot
-                }
-                else if(curSpace.getPiece() == null) {//playable spot
+                } else if (curSpace.getPiece() == null) {//playable spot
                     textBoard.append("_");
-                }
-                else if(curSpace.getPiece().getColor() == Piece.Color.RED && curSpace.getPiece().getType() == Piece.Type.SINGLE) {//single red
+                } else if (curSpace.getPiece().getColor() == Piece.Color.RED && curSpace.getPiece().getType() == Piece.Type.SINGLE) {//single red
                     textBoard.append("r");
-                }
-                else if(curSpace.getPiece().getColor() == Piece.Color.WHITE && curSpace.getPiece().getType() == Piece.Type.SINGLE) {//single white
+                } else if (curSpace.getPiece().getColor() == Piece.Color.WHITE && curSpace.getPiece().getType() == Piece.Type.SINGLE) {//single white
                     textBoard.append("w");
-                }
-                else if(curSpace.getPiece().getColor() == Piece.Color.RED && curSpace.getPiece().getType() == Piece.Type.KING) {//king white
+                } else if (curSpace.getPiece().getColor() == Piece.Color.RED && curSpace.getPiece().getType() == Piece.Type.KING) {//king white
                     textBoard.append("R");
-                }
-                else if(curSpace.getPiece().getColor() == Piece.Color.WHITE && curSpace.getPiece().getType() == Piece.Type.KING) {//king red
+                } else if (curSpace.getPiece().getColor() == Piece.Color.WHITE && curSpace.getPiece().getType() == Piece.Type.KING) {//king red
                     textBoard.append("W");
                 }
             }
