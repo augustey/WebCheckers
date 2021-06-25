@@ -7,6 +7,8 @@ import com.webcheckers.model.Player;
 /**
  * This class manages a specific game of checkers
  * and offers services to access the game.
+ *
+ * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
  */
 public class PlayerService {
 
