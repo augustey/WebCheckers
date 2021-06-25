@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
+/**
+ * This class is responsible for creating a row.
+ *
+ * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
+ * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
+ */
 public class Row implements Iterable<Space> {
 
     private int index;//what row it is 0 - 7

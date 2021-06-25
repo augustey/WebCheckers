@@ -1,5 +1,11 @@
 package com.webcheckers.model;
 
+/**
+ * This class is responsible for creating a space.
+ *
+ * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
+ * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
+ */
 public class Space {
 
     // The cell index a space is in a row

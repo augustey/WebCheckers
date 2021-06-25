@@ -1,5 +1,11 @@
 package com.webcheckers.model;
 
+/**
+ * This class is responsible for creating a piece.
+ *
+ * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
+ * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
+ */
 public class Piece {
     /**
      * Enum for the type of pieces.
@@ -9,7 +15,6 @@ public class Piece {
      * Enum for the color of pieces.
      */
     public enum Color{RED, WHITE};
-
     // Type of piece
     private Type type;
     // Color of piece
