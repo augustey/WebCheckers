@@ -51,6 +51,6 @@ public class Space {
     }
 
     public boolean isValid() {
-        return piece == null && !isValid;
+        return piece == null && isValid;
     }
 }
