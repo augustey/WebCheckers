@@ -12,6 +12,7 @@ public class Row implements Iterable<Space>{
         this.index = index;
         this.spaces = spaces;
     }
+
     public void changeSpace(int col, Space space){
         spaces.set(col, space);
     }
@@ -23,6 +24,7 @@ public class Row implements Iterable<Space>{
     public void setSpaces(ArrayList<Space> spaces){
         this.spaces = spaces;
     }
+
     public int getIndex(){
         return index;
     }
@@ -31,7 +33,4 @@ public class Row implements Iterable<Space>{
     public Iterator<Space> iterator(){
         return spaces.iterator();
     }
-
-
-
 }

@@ -7,11 +7,9 @@ import java.util.Set;
 
 /**
  * Holds sign-in information and verifies unique names and alphanumeric names
- *
  * @author <a href = 'mailto:jrl9984@rit.edu'> Jim Logan</a>
  */
-public class PlayerLobby
-{
+public class PlayerLobby {
     /**
      * Enum that keeps track of the specific sign in result
      */
@@ -22,8 +20,7 @@ public class PlayerLobby
     /**
      * Creates a new PlayerLobby that initializes the player set
      */
-    public PlayerLobby()
-    {
+    public PlayerLobby() {
         playerSet = new HashSet<>();
     }
 
@@ -33,14 +30,11 @@ public class PlayerLobby
      * @param player - player that was entered
      * @return the signin result
      */
-    public synchronized SignInResult signIn(Player player)
-    {
-        if(!verifyAlphanumeric(player.getName()))
-        {
+    public synchronized SignInResult signIn(Player player) {
+        if(!verifyAlphanumeric(player.getName())) {
             return SignInResult.NON_ALPHANUMERIC;
         }
-        if(playerSet.contains(player))
-        {
+        if(playerSet.contains(player)) {
             return SignInResult.NON_UNIQUE;
         }
         playerSet.add(player);
@@ -52,19 +46,17 @@ public class PlayerLobby
      * Removes the player from the set of signed in users
      * @param player - player that is signing out
      */
-    public synchronized void signOut(Player player)
-    {
-        if(playerSet.contains(player))
-        {
+    public synchronized void signOut(Player player) {
+        if(playerSet.contains(player)) {
             playerSet.remove(player);
         }
     }
 
     /**
+     * getter for the playerSet
      * @return playerSet
      */
-    public synchronized Set<Player> getPlayerSet()
-    {
+    public synchronized Set<Player> getPlayerSet() {
         return playerSet;
     }
 
@@ -73,27 +65,21 @@ public class PlayerLobby
      * @param str - String that is being checked
      * @return true if it contains a letter of digit
      */
-    private boolean verifyAlphanumeric(String str)
-    {
+    private boolean verifyAlphanumeric(String str) {
         char[] a = str.toCharArray();
-        if(a.length == 0)
-        {
+        if(a.length == 0) {
             return false;
         }
 
         boolean containsAplhaNum = false;
-        for(Character c : a)
-        {
-            if(Character.isLetterOrDigit(c))
-            {
+        for(Character c : a) {
+            if(Character.isLetterOrDigit(c)) {
                 containsAplhaNum = true;
             }
-            if(!Character.isLetterOrDigit(c) && !Character.isSpaceChar(c))
-            {
+            if(!Character.isLetterOrDigit(c) && !Character.isSpaceChar(c)) {
                 return false;
             }
-            if(!containsAplhaNum && Character.isSpaceChar(c))
-            {
+            if(!containsAplhaNum && Character.isSpaceChar(c)) {
                 return false;
             }
         }

@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * Central class for creating and monitoring games of checkers.
- * @author Yaqim Auguste (yaa6681)
+ * @author <a href = 'mailto:yaa6681@rit.edu'> Yaqim Auguste</a>
  */
 public class GameCenter {
     //Keep track of users and the games they're in.

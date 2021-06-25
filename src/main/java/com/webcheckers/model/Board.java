@@ -15,15 +15,14 @@ public class Board implements Iterable<Row>{
     }
 
     /**
-     * Makes the starting board
+     * Constructor for the Board
      */
     public Board(){
         activeColor = Piece.Color.RED;
-        Space space;
         for(int row = 0; row < BOARD_DIM; row++){
-            ArrayList<Space> curRow = new ArrayList<Space>();//holds what will latter be put into a row object
+            ArrayList<Space> curRow = new ArrayList<Space>();//holds what will later be put into a row object
             for(int col = 0; col < BOARD_DIM; col++){
-                space = new Space(row,col);//creates a blank space
+                Space space = new Space(row, col);//creates a blank space
                 if(col % 2 + row % 2 == 1){//is on valid spot if only row or col is even but not both
                     space.setColor(Space.Color.BLACK);//because it is a valid spot it needs to be set as such
                     if(row > BOARD_DIM - 4)//for white piece placement 3 rows of them
@@ -33,14 +32,11 @@ public class Board implements Iterable<Row>{
                     else if(row < 3){//for red piece placement 3 rows of them
                         space.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));//fills the blank space with a white piece
                     }
-
-
                 }
                 curRow.add(space);//puts space into the collection holding all spaces in row
             }
             this.board.add(new Row(row, curRow));//creates a new row and adds it to the board
         }
-
         System.out.println(toString());
 //        boardFlip();
 //        System.out.println(toString());
@@ -51,7 +47,7 @@ public class Board implements Iterable<Row>{
     }
 
     /**
-     * This checks if the moves made durring a turn were valid
+     * This checks if the moves made during a turn were valid
      * @param moves
      */
     public void isValid(ArrayList<Space> moves){
