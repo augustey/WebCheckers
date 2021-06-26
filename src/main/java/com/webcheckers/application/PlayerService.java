@@ -14,13 +14,15 @@ public class PlayerService {
 
     // The Red Player.
     private final Player redPlayer;
+
     // The White Player.
     private final Player whitePlayer;
+
     // The single game between the two players.
     private final Game game;
 
     /**
-     * Constructor for PlayerService
+     * Constructor for PlayerService.
      *
      * @param game
      *     The game of checkers to provide services for.

@@ -13,11 +13,11 @@ import java.util.Set;
  */
 public class PlayerLobby {
     /**
-     * Enum that keeps track of the specific sign in result
+     * Enum that keeps track of the specific sign in result.
      */
     public enum SignInResult {NON_UNIQUE, NON_ALPHANUMERIC, SUCCESS}
 
-    //Set that holds unique Players
+    //Set that holds unique Players.
     private final Set<Player> playerSet;
 
     /**
@@ -51,15 +51,13 @@ public class PlayerLobby {
     }
 
     /**
-     * Removes the player from the set of signed in users
+     * Removes the player from the set of signed in users.
      *
      * @param player
      *     The player that is signing out.
      */
     public synchronized void signOut(Player player) {
-        if(playerSet.contains(player)) {
-            playerSet.remove(player);
-        }
+        playerSet.remove(player);
     }
 
     /**
@@ -86,20 +84,19 @@ public class PlayerLobby {
         if(a.length == 0) {
             return false;
         }
-
-        boolean containsAplhaNum = false;
+        boolean containsAlphaNum = false;
         for(Character c : a) {
             if(Character.isLetterOrDigit(c)) {
-                containsAplhaNum = true;
+                containsAlphaNum = true;
             }
             if(!Character.isLetterOrDigit(c) && !Character.isSpaceChar(c)) {
                 return false;
             }
-            if(!containsAplhaNum && Character.isSpaceChar(c)) {
+            if(!containsAlphaNum && Character.isSpaceChar(c)) {
                 return false;
             }
         }
-        return containsAplhaNum;
+        return containsAlphaNum;
     }
 
     /**
@@ -116,7 +113,6 @@ public class PlayerLobby {
             if(player.getName().equals(name))
                 return player;
         }
-
         return null;
     }
 }

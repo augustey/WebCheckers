@@ -7,18 +7,22 @@ package com.webcheckers.model;
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
  */
 public class Piece {
+
     /**
      * Enum for the type of pieces.
      */
-    public enum Type{SINGLE, KING};
+    public enum Type {SINGLE, KING}
+
     /**
      * Enum for the color of pieces.
      */
-    public enum Color{RED, WHITE};
-    // Type of piece
-    private Type type;
-    // Color of piece
-    private Color color;
+    public enum Color {RED, WHITE}
+
+    // Type of piece.
+    private final Type type;
+
+    // Color of piece.
+    private final Color color;
 
     /**
      * Constructor for a chess piece.

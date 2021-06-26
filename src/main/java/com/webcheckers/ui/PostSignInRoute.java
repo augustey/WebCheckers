@@ -3,11 +3,9 @@ package com.webcheckers.ui;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
 import static com.webcheckers.ui.GetHomeRoute.PLAYER_KEY;
 
 /**
@@ -17,16 +15,16 @@ import static com.webcheckers.ui.GetHomeRoute.PLAYER_KEY;
  */
 public class PostSignInRoute implements Route
 {
-    // Attributes
+    // Attributes.
     public static final String USERNAME_PARAM = "username";
     public static final String NOT_VALID_USERNAME = "notValid";
     public static final String SIGNED_IN = "signedIn";
 
-    // Text
+    // Text.
     public static final String NON_UNIQUE_USERNAME = "The name you entered is already in the system";
     public static final String NON_ALPHANUMERIC_USERNAME = "The name you entered does not contain a letter or a number";
 
-    // State
+    // State.
     private PlayerLobby playerLobby;
     private TemplateEngine templateEngine;
 
@@ -37,7 +35,7 @@ public class PostSignInRoute implements Route
      *     The server wide lobby keeping track of all players.
      *
      * @param templateEngine
-     *     The HTML template rendering engine
+     *     The HTML template rendering engine.
      */
     public PostSignInRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine)
     {

@@ -8,16 +8,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Route for signing out the player
+ * Route for signing out the player.
  *
  * @author <a href="mailto:jrl9984@rit.edu">Jim Logan</a>
  */
 public class PostSignOutRoute implements Route
 {
-    //Attributes
+    // Title attribute.
     private static final String TITLE_ATTR = "title";
 
-    //State
+    // State.
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
 
@@ -25,10 +25,10 @@ public class PostSignOutRoute implements Route
      * Create the Spark Route (UI controller) to handle all {@code POST /signout} HTTP requests.
      *
      * @param playerLobby
-     *   the server wide lobby keeping track of all players
+     *     The server wide lobby keeping track of all players.
      *
      * @param templateEngine
-     *   the HTML template rendering engine
+     *     The HTML template rendering engine.
      */
     public PostSignOutRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine)
     {
@@ -37,15 +37,16 @@ public class PostSignOutRoute implements Route
     }
 
     /**
-     * Render the WebCheckers Signout page.
+     * Render the WebCheckers Sign-out page.
      *
      * @param request
-     *   the HTTP request
+     *     The HTTP request.
+     *
      * @param response
-     *   the HTTP response
+     *     The HTTP response.
      *
      * @return
-     *   the rendered HTML for the Signout page
+     *     The rendered HTML for the Sign-out page.
      */
     @Override
     public Object handle(Request request, Response response)

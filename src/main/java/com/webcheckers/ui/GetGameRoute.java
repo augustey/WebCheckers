@@ -26,17 +26,17 @@ public class GetGameRoute implements Route {
     private final PlayerLobby playerLobby;
     private final GameCenter gameCenter;
 
-    //Used to send opponents name when selected in the list
+    // Used to send opponents name when selected in the list.
     private final String OPPONENT_PARAM = "opponent";
 
-    //Used to store and access player service in session object
+    // Used to store and access player service in session object.
     public static final String PLAYER_SERVICE_KEY = "PlayerService";
 
-    //Error messages
+    // Error messages
     private final Message PLAYER_NULL_MSG = Message.error("That player does not exist.");
     private final Message PLAYER_IN_GAME_MSG = Message.error("That player is already in a game.");
 
-    //Attributes for the freemarker template
+    // Attributes for the freemarker template.
     private final String TITLE_ATTR = "title";
     private final String USER_ATTR = "currentUser";
     private final String VIEW_MODE_ATTR = "viewMode";
@@ -45,7 +45,7 @@ public class GetGameRoute implements Route {
     private final String ACTIVE_COLOR_ATTR = "activeColor";
     private final String BOARD_VIEW_ATTR = "board";
 
-    //Freemarker values
+    // Freemarker values.
     private final String TITLE = "Checkers";
     private final String VIEW_MODE = "PLAY"; //TODO: Add enumeration
     private final String ACTIVE_COLOR = "RED"; //TODO: Add enumeration

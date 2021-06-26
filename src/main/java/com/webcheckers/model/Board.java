@@ -13,15 +13,12 @@ public class Board implements Iterable<Row>{
 
     // The length and width of a checkers board.
     private final int BOARD_DIM = 8;
-    // Array of Rows that form the board
+
+    // Array of Rows that form the board.
     private ArrayList<Row> board = new ArrayList<>();
-    /**
-     * Enum for the color of spaces
-     */
-    public enum Color{WHITE, BLACK};
 
     /**
-     * Constructor for the Board
+     * Constructor for the Board.
      */
     public Board() {
         for(int row = 0; row < BOARD_DIM; row++) {
@@ -29,7 +26,7 @@ public class Board implements Iterable<Row>{
             for(int col = 0; col < BOARD_DIM; col++) {
                 Space space;
                 if(col % 2 + row % 2 == 1) {
-                    space = new Space(col, Color.BLACK, null, true);
+                    space = new Space(col, null, true);
                     if(row > BOARD_DIM - 4) {
                         space.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
                     }
@@ -38,7 +35,7 @@ public class Board implements Iterable<Row>{
                     }
                 }
                 else {
-                    space = new Space(col, Color.WHITE, null, false);
+                    space = new Space(col, null, false);
                 }
                 curRow.add(space);
             }
@@ -47,7 +44,7 @@ public class Board implements Iterable<Row>{
         // System.out.println(toString());
     }
 
-    /**
+    /*
      * This checks if the moves made during a turn were valid
      *
     public void isValid(ArrayList<Space> moves) {
@@ -75,7 +72,7 @@ public class Board implements Iterable<Row>{
     }
     */
 
-    /**
+    /*
     public void makeMove(Move curMove){
        curMove.getEnd().setPiece(curMove.getStart().getPiece());
        curMove.getStart().setPiece(null);
@@ -86,34 +83,36 @@ public class Board implements Iterable<Row>{
     }
      */
 
-//    public Board( copyBoard){
-//
-//        for(int row = 0; row < BOARD_DIM; row++){
-//            Row curRow = board.get(row);
-//            ArrayList<Space> row1 = new ArrayList<Space>();//empty row collection that the flipped row will be put into
-//            for(int col = 0; col < BOARD_DIM>; col++){
-//                row1.add(curRow.getSpaces().get(col));
-//            }
-//            curRow.setSpaces(row1);
-//            board.add(curRow);//puts the board back together
-//        }
-//        copyBoard.board = board;
-//        return copyBoard;
-//    }
+
+    /*
+    public Board(copyBoard){
+        for(int row = 0; row < BOARD_DIM; row++){
+            Row curRow = board.get(row);
+            ArrayList<Space> row1 = new ArrayList<Space>();//empty row collection that the flipped row will be put into
+            for(int col = 0; col < BOARD_DIM>; col++){
+                row1.add(curRow.getSpaces().get(col));
+            }
+            curRow.setSpaces(row1);
+            board.add(curRow);//puts the board back together
+        }
+        copyBoard.board = board;
+        return copyBoard;
+    }
+    */
 
     /**
-     * this method flips the board so that it is in the correct orientation for a player's move
+     * This method flips the board to provide the proper orientation for a player.
      */
     public void boardFlip() {
-        ArrayList<Row> flippedBoard = new ArrayList<Row>();//empty board collection that the flipped board will be put into
+        ArrayList<Row> flippedBoard = new ArrayList<>();
         for(int row = BOARD_DIM - 1; row >= 0; row--) {
             Row curRow = board.get(row);
-            ArrayList<Space> flippedRow = new ArrayList<>();//empty row collection that the flipped row will be put into
+            ArrayList<Space> flippedRow = new ArrayList<>();
             for(int col = BOARD_DIM - 1; col >= 0; col--) {
                 flippedRow.add(curRow.getSpaces().get(col));
             }
             curRow.setSpaces(flippedRow);
-            flippedBoard.add(curRow);//puts the board back together
+            flippedBoard.add(curRow);
         }
         this.board = flippedBoard;
     }
@@ -124,8 +123,10 @@ public class Board implements Iterable<Row>{
     }
 
     /**
-     * puts the board in text format is used for debugging
+     * String representation of board used for debugging.
+     *
      * @return
+     *     A string representation of the board.
      */
     @Override
     public String toString() {
@@ -134,15 +135,24 @@ public class Board implements Iterable<Row>{
             for (Space curSpace : curRow) {
                 if (!curSpace.isValid()) {
                     textBoard.append("*");//none playable spot
-                } else if (curSpace.getPiece() == null) {//playable spot
+                }
+                else if (curSpace.getPiece() == null) {//playable spot
                     textBoard.append("_");
-                } else if (curSpace.getPiece().getColor() == Piece.Color.RED && curSpace.getPiece().getType() == Piece.Type.SINGLE) {//single red
+                }
+                else if (curSpace.getPiece().getColor() == Piece.Color.RED &&
+                        curSpace.getPiece().getType() == Piece.Type.SINGLE) {//single red
                     textBoard.append("r");
-                } else if (curSpace.getPiece().getColor() == Piece.Color.WHITE && curSpace.getPiece().getType() == Piece.Type.SINGLE) {//single white
+                }
+                else if (curSpace.getPiece().getColor() == Piece.Color.WHITE &&
+                        curSpace.getPiece().getType() == Piece.Type.SINGLE) {//single white
                     textBoard.append("w");
-                } else if (curSpace.getPiece().getColor() == Piece.Color.RED && curSpace.getPiece().getType() == Piece.Type.KING) {//king white
+                }
+                else if (curSpace.getPiece().getColor() == Piece.Color.RED &&
+                        curSpace.getPiece().getType() == Piece.Type.KING) {//king white
                     textBoard.append("R");
-                } else if (curSpace.getPiece().getColor() == Piece.Color.WHITE && curSpace.getPiece().getType() == Piece.Type.KING) {//king red
+                }
+                else if (curSpace.getPiece().getColor() == Piece.Color.WHITE &&
+                        curSpace.getPiece().getType() == Piece.Type.KING) {//king red
                     textBoard.append("W");
                 }
             }

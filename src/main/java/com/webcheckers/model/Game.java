@@ -1,11 +1,16 @@
 package com.webcheckers.model;
 
 /**
- * Game model class containing the logic of a standard game of Checkers
- * @author Yaqim Auguste (yaa6681@rit.edu)
+ * Game model class containing the logic of a standard game of Checkers.
+ *
+ * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
  */
 public class Game {
+
+    // The Red Player.
     private final Player redPlayer;
+
+    // The White Player.
     private final Player whitePlayer;
 
     /*
@@ -13,9 +18,13 @@ public class Game {
      */
 
     /**
-     * Constructor for game.
-     * @param redPlayer the red player who starts first
-     * @param whitePlayer the white player who goes second
+     * Constructor for Game that contains the Players.
+     *
+     * @param redPlayer
+     *     The red player who makes the first move.
+     *
+     * @param whitePlayer
+     *     The white player who makes a move after the red player.
      */
     public Game(Player redPlayer, Player whitePlayer) {
         this.redPlayer = redPlayer;
@@ -23,16 +32,20 @@ public class Game {
     }
 
     /**
-     * Getter for redPlayer8
-     * @return redPlayer
+     * A getter method for the red player.
+     *
+     * @return
+     *     The red player.
      */
     public Player getRedPlayer() {
         return redPlayer;
     }
 
     /**
-     * getter for whitePlayer
-     * @return whitePlayer
+     * A getter method for the white player.
+     *
+     * @return
+     *     The white player.
      */
     public Player getWhitePlayer() {
         return whitePlayer;

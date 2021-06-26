@@ -1,8 +1,6 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.application.PlayerLobby;
 import spark.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -14,10 +12,10 @@ import java.util.Objects;
  */
 public class GetSignInRoute implements Route
 {
-    // Attributes
+    // Title attribute.
     public static final String TITLE_ATTR = "title";
 
-    // Text
+    // Sign-in title attribute.
     public static final String TITLE = "Sign In";
 
     // State
