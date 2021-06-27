@@ -3,7 +3,7 @@
         <ul>
             <#list playerSet as player>
                 <#if player != currentUser>
-                    <li>${player}
+                    <li><a href="/game?opponent=${player}">${player}</a></li>
                 </#if>
             </#list>
         </ul>
