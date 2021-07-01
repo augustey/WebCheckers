@@ -191,7 +191,7 @@ public class WebServer {
 
     post(SIGNOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
 
-    post(VALIDATEMOVE_URL, new PostValidateMoveRoute(templateEngine));
+    post(VALIDATEMOVE_URL, new PostValidateMoveRoute());
 
     post(SUBMITTURN_URL, new PostSubmitTurnRoute(templateEngine));
 

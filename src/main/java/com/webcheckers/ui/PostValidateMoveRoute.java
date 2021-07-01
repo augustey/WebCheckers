@@ -10,11 +10,9 @@ import java.util.Map;
 
 public class PostValidateMoveRoute implements Route
 {
-    private TemplateEngine templateEngine;
-
-    public PostValidateMoveRoute(final TemplateEngine templateEngine)
+    public PostValidateMoveRoute()
     {
-        this.templateEngine = templateEngine;
+
     }
 
 
