@@ -42,6 +42,10 @@ public class Board implements Iterable<Row> {
         System.out.println(toString());
     }
 
+//    public static Space[][] getBoard() {
+//        return board;
+//    }
+
     /*
      * This checks if the moves made during a turn were valid
      *

@@ -5,6 +5,11 @@ public class SingleMove {
     private final Space start;
     private final Space end;
 
+//    public SingleMove(int startRow, int startCol, int endRow, int endCol) {
+//        Space[][] board = Board.getBoard();
+//        this.spaceStart = this.board[startRow][startCol];
+//        this.spaceEnd = this.board[4][2];
+//    }
 
     public SingleMove(Space start, Space end) {
         this.start = start;
