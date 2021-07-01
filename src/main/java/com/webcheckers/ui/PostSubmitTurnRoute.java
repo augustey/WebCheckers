@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -21,6 +22,8 @@ public class PostSubmitTurnRoute implements Route
         final Session httpSession = request.session();
         final Map<String, Object> vm = new HashMap<>();
 
-        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+        //
+
+        return Message.info("Placeholder");
     }
 }
