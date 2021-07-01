@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Position;
+import com.webcheckers.model.SingleMove;
 import com.webcheckers.util.Message;
 import spark.*;
 

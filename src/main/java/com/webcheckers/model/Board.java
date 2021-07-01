@@ -148,10 +148,23 @@ public class Board implements Iterable<Row> {
         }
         return textBoard.toString();
     }
+    public void debugMove(){
+        Space spaceStart = this.board[5][0];
+        Space spaceEnd = this.board[4][1];
+        SingleMove move = new SingleMove(spaceStart,spaceEnd);
+
+        move.executeMove();
+
+        System.out.println(toString());
+    }
 
     public static void main(String[] args) {//for debugging purposes only
         Board board = new Board();
-        board.flip();
+        board.debugMove();
+
+
+
+//        board.flip();
     }
 
     /**

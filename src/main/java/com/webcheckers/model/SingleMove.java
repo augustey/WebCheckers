@@ -4,12 +4,12 @@ public class SingleMove {
 
     private final Space start;
     private final Space end;
-    private final Piece piece;
 
-    public SingleMove(Space start, Space end, Piece piece) {
+
+    public SingleMove(Space start, Space end) {
         this.start = start;
         this.end = end;
-        this.piece = piece;
+
     }
 
     public boolean validateMove() {
@@ -17,7 +17,8 @@ public class SingleMove {
     }
 
     public void executeMove() {
-        this.end.setPiece(this.piece);
+        this.end.setPiece(this.start.getPiece());
         this.start.setPiece(null);
     }
+
 }
