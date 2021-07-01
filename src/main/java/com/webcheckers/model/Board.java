@@ -150,7 +150,7 @@ public class Board implements Iterable<Row> {
     }
     public void debugMove(){
         Space spaceStart = this.board[5][0];
-        Space spaceEnd = this.board[4][1];
+        Space spaceEnd = this.board[4][2];
         SingleMove move = new SingleMove(spaceStart,spaceEnd);
 
         move.executeMove();
