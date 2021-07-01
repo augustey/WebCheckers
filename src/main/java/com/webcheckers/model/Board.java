@@ -9,24 +9,23 @@ import java.util.Iterator;
  * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
  */
-public class Board implements Iterable<Row>{
+public class Board {
 
     // The length and width of a checkers board.
     private final int BOARD_DIM = 8;
 
-    // Array of Rows that form the board.
-    private ArrayList<Row> board = new ArrayList<>();
+    // 2D Array of Spaces that form the board.
+    private Space[][] board = new Space[BOARD_DIM][BOARD_DIM];
 
     /**
      * Constructor for the Board.
      */
     public Board() {
         for(int row = 0; row < BOARD_DIM; row++) {
-            ArrayList<Space> curRow = new ArrayList<>();
             for(int col = 0; col < BOARD_DIM; col++) {
                 Space space;
                 if(col % 2 + row % 2 == 1) {
-                    space = new Space(col, null, true);
+                    space = new Space(row, col, null, true);
                     if(row > BOARD_DIM - 4) {
                         space.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
                     }
@@ -35,13 +34,12 @@ public class Board implements Iterable<Row>{
                     }
                 }
                 else {
-                    space = new Space(col, null, false);
+                    space = new Space(row, col, null, false);
                 }
-                curRow.add(space);
+                this.board[row][col] = space;
             }
-            this.board.add(new Row(row, curRow));
         }
-        // System.out.println(toString());
+        System.out.println(toString());
     }
 
     /*
@@ -72,16 +70,13 @@ public class Board implements Iterable<Row>{
     }
     */
 
-    /*
-    public void makeMove(Move curMove){
-       curMove.getEnd().setPiece(curMove.getStart().getPiece());
-       curMove.getStart().setPiece(null);
 
+    public void makeSingleMove(SingleMove curMove) {
        System.out.println(toString());
        // board.set()
        // board.get(curMove.getStart().getRowIdx()).changeSpace(curMove.getStart().getCellIdx(), curMove.getStart());
     }
-     */
+
 
 
     /*
@@ -103,23 +98,16 @@ public class Board implements Iterable<Row>{
     /**
      * This method flips the board to provide the proper orientation for a player.
      */
-    public void boardFlip() {
-        ArrayList<Row> flippedBoard = new ArrayList<>();
-        for(int row = BOARD_DIM - 1; row >= 0; row--) {
-            Row curRow = board.get(row);
-            ArrayList<Space> flippedRow = new ArrayList<>();
-            for(int col = BOARD_DIM - 1; col >= 0; col--) {
-                flippedRow.add(curRow.getSpaces().get(col));
+    public void flip() {
+        Space[][] flippedBoard = new Space[BOARD_DIM][BOARD_DIM];
+        for(int row = 0; row < BOARD_DIM; row++) {
+            for(int col = 0; col < BOARD_DIM; col++) {
+                Space space = this.board[row][col];
+                flippedBoard[BOARD_DIM - row - 1][BOARD_DIM - col - 1] = space;
             }
-            curRow.setSpaces(flippedRow);
-            flippedBoard.add(curRow);
         }
         this.board = flippedBoard;
-    }
-
-    @Override
-    public Iterator<Row> iterator() {
-        return board.iterator();
+        System.out.println(toString());
     }
 
     /**
@@ -131,9 +119,9 @@ public class Board implements Iterable<Row>{
     @Override
     public String toString() {
         StringBuilder textBoard = new StringBuilder();
-        for (Row curRow : board) {
-            for (Space curSpace : curRow) {
-                if (!curSpace.isValid()) {
+        for (Space[] spaces : board) {
+            for (Space curSpace : spaces) {
+                if (!curSpace.isValid() && curSpace.getPiece() == null) {
                     textBoard.append("*");//none playable spot
                 }
                 else if (curSpace.getPiece() == null) {//playable spot
@@ -162,6 +150,7 @@ public class Board implements Iterable<Row>{
     }
 
     public static void main(String[] args) {//for debugging purposes only
-        new Board();
+        Board board = new Board();
+        board.flip();
     }
 }

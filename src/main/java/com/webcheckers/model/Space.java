@@ -8,8 +8,10 @@ package com.webcheckers.model;
  */
 public class Space {
 
+    // The row index a space is in
+    private final int rowIdx;
     // The cell index a space is in a row
-    private final int cellIdx;
+    private final int colIdx;
     // If a valid space for pieces
     private final boolean isValid;
     // A piece that is on that space, if any
@@ -27,8 +29,9 @@ public class Space {
      * @param isValid
      *     True, if this space is allowed to have a piece on it, else, false.
      */
-    public Space(int cellIdx, Piece piece, boolean isValid) {
-        this.cellIdx = cellIdx;
+    public Space(int rowIdx, int colIdx, Piece piece, boolean isValid) {
+        this.rowIdx = rowIdx;
+        this.colIdx = colIdx;
         this.piece = piece;
         this.isValid = isValid;
     }
@@ -39,8 +42,18 @@ public class Space {
      * @return
      *     The index of this space in a row.
      */
-    public int getCellIdx() {
-        return cellIdx;
+    public int getColIdx() {
+        return colIdx;
+    }
+
+    /**
+     * A getter method for the index of this space's row.
+     *
+     * @return
+     *     The index of this space's row.
+     */
+    public int getRowIdx() {
+        return rowIdx;
     }
 
     /**
