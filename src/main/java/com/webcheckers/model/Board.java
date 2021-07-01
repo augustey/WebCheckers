@@ -9,7 +9,7 @@ import java.util.Iterator;
  * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
  */
-public class Board {
+public class Board implements Iterable<Row> {
 
     // The length and width of a checkers board.
     private final int BOARD_DIM = 8;
@@ -152,5 +152,24 @@ public class Board {
     public static void main(String[] args) {//for debugging purposes only
         Board board = new Board();
         board.flip();
+    }
+
+    /**
+     * Returns an iterator over elements of type {@code T}.
+     *
+     * @return an Iterator.
+     */
+    @Override
+    public Iterator<Row> iterator() {
+        ArrayList<Row> board = new ArrayList<>();
+        for(int row = 0; row < BOARD_DIM; row++) {
+            ArrayList<Space> spaces = new ArrayList<>();
+            for(int col = 0; col < BOARD_DIM; col++) {
+                spaces.add(this.board[row][col]);
+            }
+            Row curRow = new Row(row, spaces);
+            board.add(curRow);
+        }
+        return board.iterator();
     }
 }
