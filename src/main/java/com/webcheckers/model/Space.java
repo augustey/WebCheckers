@@ -20,7 +20,7 @@ public class Space {
     /**
      * Constructor for creating a Space object
      *
-     * @param cellIdx
+     * @param colIdx
      *     The index of this space (a cell within a row) within the board.
      *
      * @param piece
