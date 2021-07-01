@@ -72,6 +72,26 @@ public class WebServer {
    */
   public static final String SIGNOUT_URL = "/signout";
 
+  /**
+   * The URL pattern to request the game to validate a move
+   */
+  public static final String VALIDATEMOVE_URL = "/validateMove";
+
+  /**
+   * The URL pattern to request the game to submit a turn
+   */
+  public static final String SUBMITTURN_URL = "/submitTurn";
+
+  /**
+   * The URL pattern to request the game to backup the move
+   */
+  public static final String BACKUPMOVE_URL = "/backupMove";
+
+  /**
+   * The URL pattern to request the game to have the user resign
+   */
+  public static final String RESIGNGAME_URL = "/resignGame";
+
 
   //
   // Attributes
@@ -171,7 +191,13 @@ public class WebServer {
 
     post(SIGNOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
 
-    post("/validateMove", new PostValidateMoveRoute(templateEngine));
+    post(VALIDATEMOVE_URL, new PostValidateMoveRoute(templateEngine));
+
+    post(SUBMITTURN_URL, new PostSubmitTurnRoute(templateEngine));
+
+    post(BACKUPMOVE_URL, new PostBackupMoveRoute(templateEngine));
+
+    post(RESIGNGAME_URL, new PostResignGameRoute(templateEngine));
 
     //
     LOG.config("WebServer is initialized.");
