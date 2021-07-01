@@ -171,6 +171,8 @@ public class WebServer {
 
     post(SIGNOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
 
+    post("/validateMove", new PostValidateMoveRoute(templateEngine));
+
     //
     LOG.config("WebServer is initialized.");
   }

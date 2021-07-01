@@ -53,7 +53,9 @@
           
           <fieldset id="game-toolbar">
             <legend>Controls</legend>
-            <div class="toolbar"></div>
+            <div class="toolbar">
+
+            </div>
           </fieldset>
           
         </div>
