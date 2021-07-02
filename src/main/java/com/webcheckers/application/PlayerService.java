@@ -3,6 +3,10 @@ package com.webcheckers.application;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.Row;
+import com.webcheckers.model.BoardView;
+
+import java.util.Iterator;
 
 /**
  * This class manages a specific game of checkers
@@ -11,7 +15,8 @@ import com.webcheckers.model.Player;
  * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
  */
 public class PlayerService {
-
+    // Active player
+    private final Player player;
     // The Red Player.
     private final Player redPlayer;
 
@@ -27,7 +32,8 @@ public class PlayerService {
      * @param game
      *     The game of checkers to provide services for.
      */
-    public PlayerService(Game game) {
+    public PlayerService(Player player, Game game) {
+        this.player = player;
         this.redPlayer = game.getRedPlayer();
         this.whitePlayer = game.getWhitePlayer();
         this.game = game;
@@ -53,25 +59,31 @@ public class PlayerService {
     }
 
     /**
+     * A getter method for the main player.
+     * @return
+     *     The main player.
+     */
+    public Player getPlayer() {
+        return player;
+    }
+
+    /**
      * A getter method for a board.
      * @return
      *     A board.
      */
-    public Board getBoard() {
-        //TEMPORARY
-        return new Board();
-    }
+    public synchronized BoardView getBoardView() {
+        Board board = game.getBoard();
+        Iterator<Row> boardView;
 
-    /**
-     * A getter method for the flipped version of the board.
-     *
-     * @return
-     *     A flipped board.
-     */
-    public Board getBoardFlipped() {
-        //TEMPORARY
-        Board board = new Board();
-        board.flip();
-        return board;
+        if(player.equals(redPlayer))
+            boardView = board.iterator();
+        else {
+            board.flip();
+            boardView = board.iterator();
+            board.flip();
+        }
+
+        return new BoardView(boardView);
     }
 }
