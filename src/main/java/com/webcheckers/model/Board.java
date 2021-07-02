@@ -74,6 +74,9 @@ public class Board implements Iterable<Row> {
     }
     */
 
+    public Space getSpace(int row, int col){
+        return this.board[row][col];
+    }
 
     public void makeSingleMove(SingleMove curMove) {
        System.out.println(toString());

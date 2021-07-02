@@ -1,5 +1,6 @@
 package com.webcheckers.application;
 
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
@@ -54,6 +55,7 @@ public class GameCenter {
         if(isInGame(player) || isInGame(opponent)) {
             return null;
         }
+//        Board board = new Board();
 
         Game newGame = new Game(player, opponent);
 

@@ -5,6 +5,7 @@ public class Move
     private Position start;
     private Position end;
 
+    //TODO make into abstact class with singleMove and jump subclasses
     public Move(Position start, Position end)
     {
         this.start = start;
@@ -19,6 +20,13 @@ public class Move
     public Position getEnd()
     {
         return end;
+    }
+
+    public boolean validate() {
+        return true;
+    }
+    public void execute() {
+
     }
 
     @Override

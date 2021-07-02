@@ -1,11 +1,14 @@
 package com.webcheckers.model;
 
+import java.util.ArrayList;
+
 /**
  * This class is responsible for creating a piece.
  *
  * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
  */
+//TODO make into abstact class with singlePiece and king subclass
 public class Piece {
 
     /**
@@ -36,6 +39,16 @@ public class Piece {
     public Piece(Type type, Color color) {
         this.type = type;
         this.color = color;
+    }
+    //this will be overridden by the 2 different types of pieces
+    public ArrayList<Move> allSingleMoves(){
+
+        return new ArrayList<Move>(null);
+    }
+    //this will be overridden by the 2 different types of pieces
+    public ArrayList<Move> allJumps(){
+        return new ArrayList<Move>(null);
+
     }
 
     /**
