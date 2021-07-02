@@ -2,6 +2,7 @@ package com.webcheckers.application;
 
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,10 @@ import java.util.Map;
  * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
  */
 public class GameCenter {
+    // Error messages
+    private final Message PLAYER_NULL_MSG = Message.error("That player does not exist.");
+    private final Message PLAYER_IN_GAME_MSG = Message.error("That player is already in a game.");
+
     /**
      * A Map of the active games in the server.
      */
@@ -50,9 +55,12 @@ public class GameCenter {
      * @return
      *     The service object containing the newly created game.
      */
-    public PlayerService requestNewGame(Player player, Player opponent) {
-        if(isInGame(player) || isInGame(opponent)) {
-            return null;
+    public Message requestNewGame(Player player, Player opponent) {
+        if(opponent == null) {
+            return PLAYER_NULL_MSG;
+        }
+        if(isInGame(opponent)) {
+            return PLAYER_IN_GAME_MSG;
         }
 
         Game newGame = new Game(player, opponent);
@@ -60,7 +68,7 @@ public class GameCenter {
         activeGames.put(player, newGame);
         activeGames.put(opponent, newGame);
 
-        return new PlayerService(newGame);
+        return Message.info("New game created.");
     }
 
     /**
@@ -79,6 +87,6 @@ public class GameCenter {
         }
 
         Game game = activeGames.get(player);
-        return new PlayerService(game);
+        return new PlayerService(player, game);
     }
 }
