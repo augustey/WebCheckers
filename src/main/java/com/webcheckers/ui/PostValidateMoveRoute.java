@@ -20,6 +20,8 @@ public class PostValidateMoveRoute implements Route
     {
         final Session httpSession = request.session();
 
+        //TODO Store move for game
+
         String JSONMove = request.queryParams("actionData");
         System.out.println(JSONMove);
 
@@ -28,7 +30,7 @@ public class PostValidateMoveRoute implements Route
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         Message valid;
-        if(move.validateMove())
+        if(true)
         {
             valid = Message.info("Valid");
         } else

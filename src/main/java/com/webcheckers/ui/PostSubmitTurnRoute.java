@@ -1,5 +1,7 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -8,11 +10,9 @@ import java.util.Map;
 
 public class PostSubmitTurnRoute implements Route
 {
-    private TemplateEngine templateEngine;
-
-    public PostSubmitTurnRoute(final TemplateEngine templateEngine)
+    public PostSubmitTurnRoute()
     {
-        this.templateEngine = templateEngine;
+
     }
 
 
@@ -20,10 +20,11 @@ public class PostSubmitTurnRoute implements Route
     public Object handle(Request request, Response response)
     {
         final Session httpSession = request.session();
-        final Map<String, Object> vm = new HashMap<>();
 
-        //
+        //Look for other possible moves, and if a jump move is found, send an error
 
-        return Message.info("Placeholder");
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        return "{}";
     }
 }

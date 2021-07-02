@@ -20,8 +20,9 @@ public class PostBackupMoveRoute implements Route
     public Object handle(Request request, Response response)
     {
         final Session httpSession = request.session();
-        final Map<String, Object> vm = new HashMap<>();
 
-        return Message.info("Placeholder");
+        //Backup sequence of moves
+
+        return null;
     }
 }

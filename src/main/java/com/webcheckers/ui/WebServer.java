@@ -193,7 +193,7 @@ public class WebServer {
 
     post(VALIDATEMOVE_URL, new PostValidateMoveRoute());
 
-    post(SUBMITTURN_URL, new PostSubmitTurnRoute(templateEngine));
+    post(SUBMITTURN_URL, new PostSubmitTurnRoute());
 
     post(BACKUPMOVE_URL, new PostBackupMoveRoute(templateEngine));
 
