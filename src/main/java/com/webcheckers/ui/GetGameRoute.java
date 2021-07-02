@@ -33,10 +33,6 @@ public class GetGameRoute implements Route {
     // Used to store and access player service in session object.
     public static final String PLAYER_SERVICE_KEY = "PlayerService";
 
-    // Error messages
-    private final Message PLAYER_NULL_MSG = Message.error("That player does not exist.");
-    private final Message PLAYER_IN_GAME_MSG = Message.error("That player is already in a game.");
-
     // Attributes for the freemarker template.
     private final String TITLE_ATTR = "title";
     private final String USER_ATTR = "currentUser";
@@ -95,34 +91,29 @@ public class GetGameRoute implements Route {
             String opponentName = request.queryParams(OPPONENT_PARAM);
             Player opponent = playerLobby.getPlayer(opponentName);
 
-            if (opponent == null || gameCenter.isInGame(opponent)) {
-                Message message = (opponent == null) ? PLAYER_NULL_MSG : PLAYER_IN_GAME_MSG;
-                httpSession.attribute(GetHomeRoute.MESSAGE_KEY, message);
+            Message result  = gameCenter.requestNewGame(player, opponent);
 
+            if(result.getType() == Message.Type.INFO) {
+                playerService = gameCenter.getPlayerService(player);
+                httpSession.attribute(PLAYER_SERVICE_KEY, playerService);
+            }
+            else {
+                httpSession.attribute(GetHomeRoute.MESSAGE_KEY, result);
                 response.redirect(WebServer.HOME_URL);
                 halt();
                 return null;
             }
-
-            playerService = gameCenter.requestNewGame(player, opponent);
-            httpSession.attribute(PLAYER_SERVICE_KEY, playerService);
         }
 
         Map<String, Object> vm = new HashMap<>();
 
-        Player red = playerService.getRedPlayer();
-        Player white = playerService.getWhitePlayer();
-
         vm.put(TITLE_ATTR, TITLE);
         vm.put(USER_ATTR, player);
-        vm.put(RED_PLAYER_ATTR, red);
-        vm.put(WHITE_PLAYER_ATTR, white);
+        vm.put(RED_PLAYER_ATTR, playerService.getRedPlayer());
+        vm.put(WHITE_PLAYER_ATTR, playerService.getWhitePlayer());
         vm.put(VIEW_MODE_ATTR, VIEW_MODE); //TODO: Add enumeration
         vm.put(ACTIVE_COLOR_ATTR, ACTIVE_COLOR); //TODO: Add enumeration
-
-        Board board = (player.equals(red)) ? playerService.getBoard() : playerService.getBoardFlipped();
-
-        vm.put(BOARD_VIEW_ATTR, board);
+        vm.put(BOARD_VIEW_ATTR, playerService.getBoardView());
 
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }

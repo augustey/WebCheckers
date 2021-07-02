@@ -77,15 +77,15 @@ public class GetHomeRoute implements Route {
 
             PlayerService playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
 
-            if(gameCenter.isInGame(player)) {
-                if(playerService == null) {
-                    playerService = gameCenter.getPlayerService(player);
-                    httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY, playerService);
-                }
+            if(playerService == null) {
+                playerService = gameCenter.getPlayerService(player);
 
-                response.redirect(WebServer.GAME_URL);
-                halt();
-                return null;
+                if(playerService != null) {
+                    httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY, playerService);
+                    response.redirect(WebServer.GAME_URL);
+                    halt();
+                    return null;
+                }
             }
         }
 

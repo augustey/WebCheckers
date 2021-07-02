@@ -13,9 +13,8 @@ public class Game {
     // The White Player.
     private final Player whitePlayer;
 
-    /*
-    TODO: Add board class
-     */
+    // The checkers board.
+    private final Board board;
 
     /**
      * Constructor for Game that contains the Players.
@@ -29,6 +28,7 @@ public class Game {
     public Game(Player redPlayer, Player whitePlayer) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
+        board = new Board();
     }
 
     /**
@@ -49,5 +49,15 @@ public class Game {
      */
     public Player getWhitePlayer() {
         return whitePlayer;
+    }
+
+    /**
+     * A getter method for the board.
+     *
+     * @return
+     *     The white player.
+     */
+    public Board getBoard() {
+        return board;
     }
 }
