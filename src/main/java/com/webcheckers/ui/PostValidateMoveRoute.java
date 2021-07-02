@@ -1,13 +1,11 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.model.Move;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.webcheckers.model.Position;
-import com.webcheckers.model.SingleMove;
+import com.webcheckers.model.SingleMovePosition;
 import com.webcheckers.util.Message;
 import spark.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class PostValidateMoveRoute implements Route
 {
@@ -21,21 +19,27 @@ public class PostValidateMoveRoute implements Route
     public Object handle(Request request, Response response)
     {
         final Session httpSession = request.session();
-        final Map<String, Object> vm = new HashMap<>();
 
         String JSONMove = request.queryParams("actionData");
+        System.out.println(JSONMove);
 
-        Move move = moveFromJson(JSONMove);
+        SingleMovePosition move = moveFromJson(JSONMove);
 
-        //if Move is valid
-            //return Message.info("Move Valid");
-        //else
-            //return Message.error("Move Invalid");
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        return Message.info("Valid");
+        Message valid;
+        if(move.validateMove())
+        {
+            valid = Message.info("Valid");
+        } else
+        {
+            valid = Message.error("Invalid");
+        }
+
+        return gson.toJson(valid);
     }
 
-    private Move moveFromJson(String json)
+    private SingleMovePosition moveFromJson(String json)
     {
         char[] jsonChar = json.toCharArray();
         int[] coords = new int[4];
@@ -51,7 +55,7 @@ public class PostValidateMoveRoute implements Route
 
         Position start = new Position(coords[0], coords[1]);
         Position end = new Position(coords[2], coords[3]);
-        Move move = new Move(start, end);
+        SingleMovePosition move = new SingleMovePosition(start, end);
 
         return move;
     }
