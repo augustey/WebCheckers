@@ -58,8 +58,7 @@ public class PlayerService {
      *     A board.
      */
     public Board getBoard() {
-        //TEMPORARY
-        return new Board();
+        return game.getBoard();
     }
 
     /**

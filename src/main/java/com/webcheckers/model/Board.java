@@ -42,10 +42,6 @@ public class Board implements Iterable<Row> {
         System.out.println(toString());
     }
 
-//    public static Space[][] getBoard() {
-//        return board;
-//    }
-
     /*
      * This checks if the moves made during a turn were valid
      *
@@ -83,24 +79,6 @@ public class Board implements Iterable<Row> {
        // board.set()
        // board.get(curMove.getStart().getRowIdx()).changeSpace(curMove.getStart().getCellIdx(), curMove.getStart());
     }
-
-
-
-    /*
-    public Board(copyBoard){
-        for(int row = 0; row < BOARD_DIM; row++){
-            Row curRow = board.get(row);
-            ArrayList<Space> row1 = new ArrayList<Space>();//empty row collection that the flipped row will be put into
-            for(int col = 0; col < BOARD_DIM>; col++){
-                row1.add(curRow.getSpaces().get(col));
-            }
-            curRow.setSpaces(row1);
-            board.add(curRow);//puts the board back together
-        }
-        copyBoard.board = board;
-        return copyBoard;
-    }
-    */
 
     /**
      * This method flips the board to provide the proper orientation for a player.

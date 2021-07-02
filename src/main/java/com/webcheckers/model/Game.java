@@ -13,26 +13,26 @@ public class Game {
     // The White Player.
     private final Player whitePlayer;
 
+    // The Board.
     private final Board board;
-    /*
-    TODO: Add board class
-     */
 
     /**
      * Constructor for Game that contains the Players.
+     *
      *  @param redPlayer
      *     The red player who makes the first move.
      *
      * @param whitePlayer
+     *     The white player who makes the next move.
+     *
      * @param board
+     *     The game board.
      */
-    public Game(Player redPlayer, Player whitePlayer) {
+    public Game(Player redPlayer, Player whitePlayer, Board board) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        this.board = new Board();
+        this.board = board;
     }
-
-
 
     /**
      * A getter method for the red player.
@@ -52,5 +52,15 @@ public class Game {
      */
     public Player getWhitePlayer() {
         return whitePlayer;
+    }
+
+    /**
+     * A getter method for the board.
+     *
+     * @return
+     *     The board.
+     */
+    public Board getBoard() {
+        return board;
     }
 }

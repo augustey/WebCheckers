@@ -55,9 +55,9 @@ public class GameCenter {
         if(isInGame(player) || isInGame(opponent)) {
             return null;
         }
-//        Board board = new Board();
+        Board board = new Board();
 
-        Game newGame = new Game(player, opponent);
+        Game newGame = new Game(player, opponent, board);
 
         activeGames.put(player, newGame);
         activeGames.put(opponent, newGame);
