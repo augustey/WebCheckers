@@ -49,7 +49,7 @@ public class Board implements Iterable<Row> {
 
 
         System.out.println(toString());
-//        System.out.println(this.possibleMoves.size());
+        System.out.println(this.possibleMoves.size());
 
     }
 
