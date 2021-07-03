@@ -27,10 +27,10 @@ public class Board implements Iterable<Row> {
                 if(col % 2 + row % 2 == 1) {
                     space = new Space(row, col, null, true);
                     if(row > BOARD_DIM - 4) {
-                        space.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+                        space.setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.RED));
                     }
                     else if(row < 3) {
-                        space.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+                        space.setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.WHITE));
                     }
                 }
                 else {
@@ -70,12 +70,23 @@ public class Board implements Iterable<Row> {
     }
     */
     public void lookForSingleMoves(){
+        ArrayList<Move> singleMoves = new ArrayList<>();
         for(int row = 0; row < BOARD_DIM; row++) {
             for(int col = 0; col < BOARD_DIM; col++) {
-                ArrayList<Move> peiceMoves = this.board[row][col].getPiece().allSingleMoves(row, col);
+                Piece piece = this.board[row][col].getPiece();
+                 singleMoves.addAll(piece.allSingleMoves(row, col));
             }
         }
-        //TODO: validate everything and then put it in possible moves
+        validateMoves(singleMoves);
+    }
+
+    public void validateMoves(ArrayList<Move> moves){
+        for (int i = 0; i < moves.size(); i++) {
+            if(moves.get(i).validate())
+            {
+                //TODO add to possible moves
+            }
+        }
     }
 
     public Space getSpace(int row, int col){
