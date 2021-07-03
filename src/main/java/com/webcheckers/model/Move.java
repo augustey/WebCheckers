@@ -12,6 +12,9 @@ public class Move
         this.end = end;
     }
 
+    public Move(Position start) {
+    }
+
     public Position getStart()
     {
         return start;

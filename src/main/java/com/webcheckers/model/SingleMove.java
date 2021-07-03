@@ -17,6 +17,8 @@ public class SingleMove {
 
     }
 
+
+
     private boolean validateMove() {
         //start - end = 1 row
         //abs(start - end) = 1 col

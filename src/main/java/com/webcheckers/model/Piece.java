@@ -11,6 +11,10 @@ import java.util.ArrayList;
 //TODO make into abstact class with singlePiece and king subclass
 public class Piece {
 
+
+//    private int row;
+//    private int col;
+
     /**
      * Enum for the type of pieces.
      */
@@ -41,7 +45,7 @@ public class Piece {
         this.color = color;
     }
     //this will be overridden by the 2 different types of pieces
-    public ArrayList<Move> allSingleMoves(){
+    public ArrayList<Move> allSingleMoves(int row, int col){
 
         return new ArrayList<Move>(null);
     }
@@ -68,6 +72,8 @@ public class Piece {
      *     The color of piece.
      */
     public Color getColor() {
+
         return color;
     }
+
 }

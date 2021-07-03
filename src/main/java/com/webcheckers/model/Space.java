@@ -74,6 +74,7 @@ public class Space {
      */
     public void setPiece(Piece piece) {
         this.piece = piece;
+
     }
 
     /**
@@ -85,4 +86,6 @@ public class Space {
     public boolean isValid() {
         return piece == null && isValid;
     }
+
+
 }
