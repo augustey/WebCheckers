@@ -69,7 +69,14 @@ public class Board implements Iterable<Row> {
         }
     }
     */
-
+    public void lookForSingleMoves(){
+        for(int row = 0; row < BOARD_DIM; row++) {
+            for(int col = 0; col < BOARD_DIM; col++) {
+                ArrayList<Move> peiceMoves = this.board[row][col].getPiece().allSingleMoves(row, col);
+            }
+        }
+        //TODO: validate everything and then put it in possible moves
+    }
 
     public Space getSpace(int row, int col){
         return this.board[row][col];
