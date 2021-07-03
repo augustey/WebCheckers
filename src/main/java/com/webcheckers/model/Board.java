@@ -17,6 +17,8 @@ public class Board implements Iterable<Row> {
     // 2D Array of Spaces that form the board.
     private Space[][] board = new Space[BOARD_DIM][BOARD_DIM];
 
+    private ArrayList<Move> possibleMoves = new ArrayList<Move>();
+
     /**
      * Constructor for the Board.
      */
@@ -84,7 +86,9 @@ public class Board implements Iterable<Row> {
         for (int i = 0; i < moves.size(); i++) {
             if(moves.get(i).validate())
             {
+                possibleMoves.add(moves.get(i));
                 //TODO add to possible moves
+
             }
         }
     }
