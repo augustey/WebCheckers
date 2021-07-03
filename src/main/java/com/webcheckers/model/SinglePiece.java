@@ -19,7 +19,7 @@ public class SinglePiece extends Piece {
         Position start = new Position(row , col);
         //can move 1 the positive direction
         for(int i = -1 ; i <= 1; i+=2) {
-            Position end = new Position(row + 1, col + i);
+            Position end = new Position(row - 1, col + i);
             Move move = new Move(start, end);
             moves.add(move);
         }
