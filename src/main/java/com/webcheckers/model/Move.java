@@ -15,19 +15,14 @@ public class Move
     public Move(Position start) {
     }
 
-    public Position getStart()
-    {
+    public Position getStart() {
         return start;
     }
 
-    public Position getEnd()
-    {
+    public Position getEnd() {
         return end;
     }
 
-    public boolean validate() {
-        return true;
-    }
     public void execute() {
 
     }

@@ -17,12 +17,15 @@ public class Board implements Iterable<Row> {
     // 2D Array of Spaces that form the board.
     private Space[][] board = new Space[BOARD_DIM][BOARD_DIM];
 
-    private ArrayList<Move> possibleMoves = new ArrayList<Move>();
+    private ArrayList<Move> possibleMoves = new ArrayList<>();
+
+    private Piece.Color activePlayerColor;
 
     /**
      * Constructor for the Board.
      */
     public Board() {
+        activePlayerColor = Piece.Color.RED;
         for(int row = 0; row < BOARD_DIM; row++) {
             for(int col = 0; col < BOARD_DIM; col++) {
                 Space space;
@@ -44,69 +47,57 @@ public class Board implements Iterable<Row> {
         System.out.println(toString());
     }
 
-    /*
-     * This checks if the moves made during a turn were valid
-     *
-    public void isValid(ArrayList<Space> moves) {
-        //row = cellIdx
-        //col = location in
-        Space startSpace;
-        Space endSpace;
-        if(moves.size() > 1) {
-            //TODO make copy of board
-            Iterator<Space> moveIterator = moves.iterator();//moves can be made up of 2+ spaces
-            startSpace = moveIterator.next();
-            while (moveIterator.hasNext()) {
-                endSpace = moveIterator.next();
-                Move curMove = new Move(startSpace, endSpace, activeColor);
-                if(curMove.isValid()) {
-                    //TODO change board copy
-                    makeMove(curMove);
-                    startSpace = endSpace;
-                }
-                else {
-                    break;
-                }
-            }
-        }
+    public Board(Space[][] board) {
+        this.board = board;
     }
-    */
+
     public void lookForSingleMoves(){
         ArrayList<Move> singleMoves = new ArrayList<>();
         for(int row = 0; row < BOARD_DIM; row++) {
             for(int col = 0; col < BOARD_DIM; col++) {
                 Piece piece = this.board[row][col].getPiece();
-                 singleMoves.addAll(piece.allSingleMoves(row, col));
+                if (piece != null) {
+                    singleMoves.addAll(piece.allSingleMoves(row, col));
+                }
             }
         }
-        validateMoves(singleMoves);
+        validateAllMoves(singleMoves);
     }
 
-    public void validateMoves(ArrayList<Move> moves){
+    public void validateAllMoves(ArrayList<Move> moves){
         for (int i = 0; i < moves.size(); i++) {
-            if(moves.get(i).validate())
-            {
-                possibleMoves.add(moves.get(i));
-                //TODO add to possible moves
-
+            Move move = moves.get(i);
+            if(validateSimpleMove(move)) {
+                possibleMoves.add(move);
             }
         }
+    }
+
+    private boolean validateSimpleMove(Move move) {
+        Position end = move.getEnd();
+        int row = end.getRow();
+        int col = end.getCell();
+        return this.board[row][col].isValid();
     }
 
     public Space getSpace(int row, int col){
         return this.board[row][col];
     }
 
-    public void makeSingleMove(SingleMove curMove) {
-       System.out.println(toString());
-       // board.set()
-       // board.get(curMove.getStart().getRowIdx()).changeSpace(curMove.getStart().getCellIdx(), curMove.getStart());
+    public void makeMove(Move curMove) {
+        if(activePlayerColor == Piece.Color.RED) {
+            activePlayerColor = Piece.Color.WHITE;
+        }
+        else {
+            activePlayerColor = Piece.Color.RED;
+        }
+        System.out.println(toString());
     }
 
     /**
      * This method flips the board to provide the proper orientation for a player.
      */
-    public void flip() {
+    public Board flip() {
         Space[][] flippedBoard = new Space[BOARD_DIM][BOARD_DIM];
         for(int row = 0; row < BOARD_DIM; row++) {
             for(int col = 0; col < BOARD_DIM; col++) {
@@ -114,8 +105,7 @@ public class Board implements Iterable<Row> {
                 flippedBoard[BOARD_DIM - row - 1][BOARD_DIM - col - 1] = space;
             }
         }
-        this.board = flippedBoard;
-        System.out.println(toString());
+        return new Board((flippedBoard));
     }
 
     /**

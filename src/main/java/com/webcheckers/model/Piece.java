@@ -8,8 +8,8 @@ import java.util.ArrayList;
  * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
  */
-//TODO make into abstact class with singlePiece and king subclass
-public class Piece {
+
+public abstract class Piece {
 
 
 //    private int row;
@@ -44,16 +44,11 @@ public class Piece {
         this.type = type;
         this.color = color;
     }
-    //this will be overridden by the 2 different types of pieces
-    public ArrayList<Move> allSingleMoves(int row, int col){
 
-        return new ArrayList<Move>(null);
-    }
-    //this will be overridden by the 2 different types of pieces
-    public ArrayList<Move> allJumps(){
-        return new ArrayList<Move>(null);
+    public abstract ArrayList<Move> allSingleMoves(int row, int col);
 
-    }
+    //this will be overridden by the 2 different types of pieces
+    public abstract ArrayList<Move> allJumps();
 
     /**
      * A getter method for the type of piece.
@@ -72,7 +67,6 @@ public class Piece {
      *     The color of piece.
      */
     public Color getColor() {
-
         return color;
     }
 

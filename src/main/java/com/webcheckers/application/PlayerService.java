@@ -68,9 +68,6 @@ public class PlayerService {
      *     A flipped board.
      */
     public Board getBoardFlipped() {
-        //TEMPORARY
-        Board board = new Board();
-        board.flip();
-        return board;
+        return game.getBoard().flip();
     }
 }

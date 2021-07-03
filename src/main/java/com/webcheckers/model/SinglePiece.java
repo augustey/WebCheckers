@@ -12,9 +12,10 @@ public class SinglePiece extends Piece {
     public SinglePiece(Type type, Color color) {
         super(type, color);
     }
+
     @Override
     public ArrayList<Move> allSingleMoves(int row, int col){
-        ArrayList<Move> moves = new ArrayList<Move>();
+        ArrayList<Move> moves = new ArrayList<>();
         Position start = new Position(row , col);
         //can move 1 the positive direction
         for(int i = -1 ; i <= 1; i+=2) {

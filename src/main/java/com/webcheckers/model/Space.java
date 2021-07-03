@@ -86,6 +86,4 @@ public class Space {
     public boolean isValid() {
         return piece == null && isValid;
     }
-
-
 }
