@@ -134,7 +134,7 @@ public class Board implements Iterable<Row> {
     /**
      * This method flips the board to provide the proper orientation for a player.
      */
-    public Board flip() {
+    public void flip() {
         Space[][] flippedBoard = new Space[BOARD_DIM][BOARD_DIM];
         for(int row = 0; row < BOARD_DIM; row++) {
             for(int col = 0; col < BOARD_DIM; col++) {
@@ -142,7 +142,8 @@ public class Board implements Iterable<Row> {
                 flippedBoard[BOARD_DIM - row - 1][BOARD_DIM - col - 1] = space;
             }
         }
-        return new Board((flippedBoard));
+        this.board = flippedBoard;
+        System.out.println(toString());
     }
 
     /**
