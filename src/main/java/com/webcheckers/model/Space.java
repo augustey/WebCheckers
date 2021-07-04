@@ -74,7 +74,16 @@ public class Space {
      */
     public void setPiece(Piece piece) {
         this.piece = piece;
+    }
 
+    /**
+     * Determine if there is a piece on this space.
+     *
+     * @return
+     *     True if there is a piece on this space, else, false.
+     */
+    public boolean hasPiece() {
+        return piece != null;
     }
 
     /**
