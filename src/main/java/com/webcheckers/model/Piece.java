@@ -1,12 +1,19 @@
 package com.webcheckers.model;
 
+import java.util.ArrayList;
+
 /**
  * This class is responsible for creating a piece.
  *
  * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
  */
-public class Piece {
+
+public abstract class Piece {
+
+
+//    private int row;
+//    private int col;
 
     /**
      * Enum for the type of pieces.
@@ -38,6 +45,11 @@ public class Piece {
         this.color = color;
     }
 
+    public abstract ArrayList<Move> allSingleMoves(int row, int col);
+
+    //this will be overridden by the 2 different types of pieces
+    public abstract ArrayList<Move> allJumps();
+
     /**
      * A getter method for the type of piece.
      *
@@ -57,4 +69,5 @@ public class Piece {
     public Color getColor() {
         return color;
     }
+
 }
