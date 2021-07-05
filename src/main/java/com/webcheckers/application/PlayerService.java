@@ -110,10 +110,6 @@ public class PlayerService {
         return new BoardView(boardView);
     }
 
-    public Board getFlippedBoard() {
-        return game.getBoard().neelflip();
-    }
-
     /**
      * Adds a move to the list of moves in the current turn
      *
