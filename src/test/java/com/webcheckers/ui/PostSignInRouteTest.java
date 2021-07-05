@@ -17,4 +17,7 @@ import static org.mockito.Mockito.mock;
 @Tag("UI-tier")
 
 public class PostSignInRouteTest {
+
+    private PostSignInRoute CuT;
+
 }
