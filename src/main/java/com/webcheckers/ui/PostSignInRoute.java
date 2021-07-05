@@ -19,6 +19,7 @@ public class PostSignInRoute implements Route
     public static final String USERNAME_PARAM = "username";
     public static final String NOT_VALID_USERNAME = "notValid";
     public static final String SIGNED_IN = "signedIn";
+    public static final String INVALID_MESSAGE = "invalidMessage";
 
     // Text.
     public static final String NON_UNIQUE_USERNAME = "The name you entered is already in the system";
@@ -75,20 +76,19 @@ public class PostSignInRoute implements Route
             case NON_UNIQUE:
                 vm.put(SIGNED_IN, false);
                 vm.put(NOT_VALID_USERNAME, true);
-                vm.put("invalidMessage", NON_UNIQUE_USERNAME);
-                break;
-            case NON_ALPHANUMERIC:
-                vm.put(SIGNED_IN, false);
-                vm.put(NOT_VALID_USERNAME, true);
-                vm.put("invalidMessage", NON_ALPHANUMERIC_USERNAME);
+                vm.put(INVALID_MESSAGE, NON_UNIQUE_USERNAME);
                 break;
             case SUCCESS:
                 httpSession.attribute(PLAYER_KEY, player);
                 vm.put(PLAYER_KEY, player);
                 vm.put(SIGNED_IN, true);
-                vm.put("notValid", false);
+                vm.put(NOT_VALID_USERNAME, false);
                 response.redirect("./");
                 break;
+            default:
+                vm.put(SIGNED_IN, false);
+                vm.put(NOT_VALID_USERNAME, true);
+                vm.put(INVALID_MESSAGE, NON_ALPHANUMERIC_USERNAME);
         }
 
         return templateEngine.render(new ModelAndView(vm , "signin.ftl"));

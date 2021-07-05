@@ -8,6 +8,7 @@ import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.Position;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.Request;
 import spark.Response;
@@ -17,6 +18,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Testing suite for PostBackupMove
+ *
+ * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
+ */
+
+@Tag("UI-tier")
 public class PostBackupMoveRouteTest
 {
     private PostBackupMoveRoute CuT;
