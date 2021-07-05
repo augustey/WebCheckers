@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.PlayerLobby.SignInResult;
 import com.webcheckers.model.Player;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -22,18 +23,30 @@ import static org.mockito.Mockito.when;
 @Tag("UI-tier")
 
 public class PostSignInRouteTest {
+
+    // Constant Test Username Strings.
     private final String VALID_ALPHANUMERIC = "UnitTester1";
     private final String INVALID_NONALPHANUMERIC = "-*#@$%&^+=";
     private final String INVALID_EMPTY = "";
+
+    // Friendly Object
     private Player player;
+
+    /**
+     * The component-under-test (CuT).
+     */
     private PostSignInRoute CuT;
 
+    // Mock Objects
+    private PlayerLobby playerLobby;
+    private TemplateEngine engine;
     private Request request;
     private Session session;
-    private TemplateEngine engine;
     private Response response;
-    private PlayerLobby playerLobby;
 
+    /**
+     * Setup the new mock objects for the unit tests.
+     */
     @BeforeEach
     public void testSetup() {
         request = mock(Request.class);
@@ -46,6 +59,9 @@ public class PostSignInRouteTest {
         CuT = new PostSignInRoute(playerLobby, engine);
     }
 
+    /**
+     * Test the route with a valid username.
+     */
     @Test
     public void test_valid_username() {
         when(request.queryParams(eq(PostSignInRoute.USERNAME_PARAM))).thenReturn(VALID_ALPHANUMERIC);
@@ -64,6 +80,9 @@ public class PostSignInRouteTest {
         testHelper.assertViewModelAttribute(PostSignInRoute.NOT_VALID_USERNAME, false);
     }
 
+    /**
+     * Test the route with an invalid username composed of symbols.
+     */
     @Test
     public void test_invalid_username_symbols() {
         when(request.queryParams(eq(PostSignInRoute.USERNAME_PARAM))).thenReturn(INVALID_NONALPHANUMERIC);
@@ -82,6 +101,9 @@ public class PostSignInRouteTest {
         testHelper.assertViewModelAttribute(PostSignInRoute.INVALID_MESSAGE, PostSignInRoute.NON_ALPHANUMERIC_USERNAME);
     }
 
+    /**
+     * Test the route with an invalid username that is empty.
+     */
     @Test
     public void test_invalid_username_empty() {
         when(request.queryParams(eq(PostSignInRoute.USERNAME_PARAM))).thenReturn(INVALID_EMPTY);
@@ -100,6 +122,9 @@ public class PostSignInRouteTest {
         testHelper.assertViewModelAttribute(PostSignInRoute.INVALID_MESSAGE, PostSignInRoute.NON_ALPHANUMERIC_USERNAME);
     }
 
+    /**
+     * Test the route with a non-unique username.
+     */
     @Test
     public void test_invalid_username_non_unique() {
         when(request.queryParams(eq(PostSignInRoute.USERNAME_PARAM))).thenReturn(VALID_ALPHANUMERIC);

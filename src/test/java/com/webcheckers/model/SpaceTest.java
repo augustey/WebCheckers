@@ -18,14 +18,12 @@ import static org.mockito.Mockito.mock;
 
 public class SpaceTest {
 
-    // Constants for testing
+    // Constants for testing.
     private static final int ROW_VALUE = 2;
     private static final int COL_VALUE = 5;
     private static final boolean IS_VALID = true;
 
-    /**
-     * Has not been tested; mock to be used.
-     */
+    // Mock objects.
     private Piece piece;
 
     /**
@@ -33,9 +31,13 @@ public class SpaceTest {
      */
     private Space CuT;
 
+    /**
+     * Setup the new mock object for the unit tests.
+     */
     @BeforeEach
     public void testSetup() {
         piece = mock(Piece.class);
+
         CuT = new Space(ROW_VALUE, COL_VALUE, null, IS_VALID);
     }
 
@@ -48,7 +50,7 @@ public class SpaceTest {
     }
 
     /**
-     * Test the row getter in Space
+     * Test the rowIdx getter in Space.
      */
     @Test
     public void ctor_get_row_test() {
@@ -56,7 +58,7 @@ public class SpaceTest {
     }
 
     /**
-     * Test the col getter in Space
+     * Test the colIdx getter in Space.
      */
     @Test
     public void ctor_get_col_test() {
@@ -74,7 +76,7 @@ public class SpaceTest {
     }
 
     /**
-     * Test the piece setter in Space
+     * Test the piece setter in Space.
      */
     @Test
     public void ctor_set_piece_test() {
