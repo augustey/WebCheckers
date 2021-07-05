@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The testing suite for the {@link PlayerLobby} component.
@@ -241,6 +240,19 @@ public class PlayerLobbyTest
         Player actual = CuT.getPlayer("name");
 
         assertEquals(valid, actual);
+    }
+
+    /**
+     * Test for getPlayer when player doesn't exist
+     */
+    @Test
+    public void test_getPlayer_invalid()
+    {
+        CuT.signIn(valid);
+
+        Player actual = CuT.getPlayer("name2");
+
+        assertNull(actual);
     }
 
 
