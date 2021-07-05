@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webcheckers.application.PlayerService;
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Move;
 import com.webcheckers.util.Message;
 import spark.*;
@@ -52,9 +53,10 @@ public class PostValidateMoveRoute implements Route
 
         Move move = gson.fromJson(JSONMove, Move.class);
 
+        Board board = playerService.getGame().getBoard();
 
         Message valid;
-        if(move.validateMove())
+        if(board.getPossibleMoves().contains(move))
         {
             valid = Message.info("Move was made successfully!");
             playerService.addMove(move);

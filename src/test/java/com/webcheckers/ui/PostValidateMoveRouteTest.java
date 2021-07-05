@@ -72,7 +72,7 @@ public class PostValidateMoveRouteTest
     @Test
     public void test_valid()
     {
-        move = new Move(new Position(5, 1), new Position(4, 2));
+        move = new Move(new Position(5, 0), new Position(4, 1));
         when(request.queryParams("actionData")).thenReturn(gson.toJson(move));
         String expected = "{\"text\":\"Move was made successfully!\",\"type\":\"INFO\"}";
         int expectedSize = 1;
@@ -91,7 +91,7 @@ public class PostValidateMoveRouteTest
     @Test
     public void test_invalid()
     {
-        move = new Move(new Position(5, 1), new Position(4, 1));
+        move = new Move(new Position(5, 0), new Position(4, 0));
         when(request.queryParams("actionData")).thenReturn(gson.toJson(move));
         String expected = "{\"text\":\"Move was unable to be made!\",\"type\":\"ERROR\"}";
         int expectedSize = 0;
@@ -101,6 +101,6 @@ public class PostValidateMoveRouteTest
         int actualSize = playerService.getTurnMoves().size();
         assertEquals(expected, actual);
         assertSame(expectedSize, actualSize);
-        assertNull(playerService.getTurnMoves().get(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> {playerService.getTurnMoves().get(0);});
     }
 }
