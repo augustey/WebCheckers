@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 /**
- * Testing suite for PlayerService
+ * Testing suite for GameCenter
  *
  * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
  */
