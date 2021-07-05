@@ -57,32 +57,17 @@ public class GetHomeRouteTest {
     }
     @Test
     public void new_session() {
-        // To analyze what the Route created in the View-Model map you need
-        // to be able to extract the argument to the TemplateEngine.render method.
-        // Mock up the 'render' method by supplying a Mockito 'Answer' object
-        // that captures the ModelAndView data passed to the template engine
-        final TemplateEngineTester testHelper = new TemplateEngineTester();
+
+        TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
 
         // Invoke the test
         CuT.handle(request, response);
 
-        // Analyze the results:
-        //   * model is a non-null Map
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
-        //   * model contains all necessary View-Model data
-        testHelper.assertViewModelAttribute(GetHomeRoute.MESSAGE_KEY, GetHomeRoute.TITLE);
+        testHelper.assertViewModelAttribute(GetHomeRoute.MESSAGE_KEY, GetHomeRoute.WELCOME_MSG);
 
-
-//        testHelper.assertViewModelAttribute(GetHomeRoute.NEW_PLAYER_ATTR, Boolean.TRUE);
-        //   * test view name
-        testHelper.assertViewName(GetHomeRoute.PLAYER_KEY);
-        //   * verify that a player service object and the session timeout watchdog are stored
-        //   * in the session.
-        verify(session).attribute(eq(GetHomeRoute.PLAYER_KEY), any(PlayerService.class));
-//        verify(session).attribute(eq(GetHomeRoute.TIMEOUT_SESSION_KEY),
-//                any(SessionTimeoutWatchdog.class));
     }
 
 }

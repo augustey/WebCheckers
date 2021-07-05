@@ -45,7 +45,6 @@ public class SinglePieceTest {
     @Test
     public void ctor_allSingleMoves(){
 
-
         final SinglePiece piece = new SinglePiece(Piece.Type.SINGLE, Piece.Color.RED);
 
         ArrayList<Move> moves = new ArrayList<>();
