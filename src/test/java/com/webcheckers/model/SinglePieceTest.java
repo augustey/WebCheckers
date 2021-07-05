@@ -2,14 +2,25 @@ package com.webcheckers.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 
 @Tag("Model-tier")
 
 public class SinglePieceTest {
+    private SinglePiece singlePiece;
+
+    @BeforeEach
+    public void testSetup() {
+        singlePiece = mock(SinglePiece.class);
+
+    }
+
     /**
      * Test that red singlePiece is generated with out failure.
      */
@@ -29,22 +40,19 @@ public class SinglePieceTest {
     /**
      *
      */
+
+
     @Test
     public void ctor_allSingleMoves(){
+
+
         final SinglePiece piece = new SinglePiece(Piece.Type.SINGLE, Piece.Color.RED);
+
         ArrayList<Move> moves = new ArrayList<>();
-        Position start = new Position(2, 1);
-        Position end_left = new Position(1, 0);
-        Position end_right = new Position(1, 2);
 
         moves.addAll(piece.allSingleMoves(2, 1));
 
         assertEquals(2, moves.size());//that the correct number of possible moves was generated
-
-
-//        assertTrue(moves.containsAll(new Move(start, end_left)));//checks that the generated moves is same as the expected moves
-
-
 
     }
 
