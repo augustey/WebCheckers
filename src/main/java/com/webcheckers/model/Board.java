@@ -146,6 +146,17 @@ public class Board implements Iterable<Row> {
         System.out.println(toString());
     }
 
+    public Board neelflip() {
+        Space[][] flippedBoard = new Space[BOARD_DIM][BOARD_DIM];
+        for(int row = 0; row < BOARD_DIM; row++) {
+            for(int col = 0; col < BOARD_DIM; col++) {
+                Space space = this.board[row][col];
+                flippedBoard[BOARD_DIM - row - 1][BOARD_DIM - col - 1] = space;
+            }
+        }
+        return new Board((flippedBoard));
+    }
+
     /**
      * String representation of board used for debugging.
      *
