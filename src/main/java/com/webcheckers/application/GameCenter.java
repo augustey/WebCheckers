@@ -15,8 +15,9 @@ import java.util.Map;
  */
 public class GameCenter {
     // Error messages
-    private final Message PLAYER_NULL_MSG = Message.error("That player does not exist.");
-    private final Message PLAYER_IN_GAME_MSG = Message.error("That player is already in a game.");
+    public static final Message PLAYER_NULL_MSG = Message.error("That player does not exist.");
+    public static final Message PLAYER_IN_GAME_MSG = Message.error("That player is already in a game.");
+    public static final Message CREATE_GAME_SUCCESS = Message.info("New game was created.");
 
     /**
      * A Map of the active games in the server.
@@ -69,7 +70,7 @@ public class GameCenter {
         activeGames.put(player, newGame);
         activeGames.put(opponent, newGame);
 
-        return Message.info("New game created.");
+        return CREATE_GAME_SUCCESS;
     }
 
     /**
