@@ -113,6 +113,8 @@ public class Board implements Iterable<Row> {
             else {
                 activePlayerColor = Piece.Color.RED;
             }
+            flip();
+            System.out.println(toString());
         }
         else{
             //TODO : through invalid move error
