@@ -1,12 +1,8 @@
 package com.webcheckers.application;
 
-import com.webcheckers.model.Board;
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Player;
-import com.webcheckers.model.Row;
-import com.webcheckers.model.BoardView;
+import com.webcheckers.model.*;
 
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * This class manages a specific game of checkers
@@ -26,6 +22,9 @@ public class PlayerService {
     // The single game between the two players.
     private final Game game;
 
+    // The moves made by the player during a turn
+    private final List<Move> turnMoves;
+
     /**
      * Constructor for PlayerService.
      *
@@ -37,6 +36,7 @@ public class PlayerService {
         this.redPlayer = game.getRedPlayer();
         this.whitePlayer = game.getWhitePlayer();
         this.game = game;
+        turnMoves = new ArrayList<>();
     }
 
     /**
@@ -68,6 +68,17 @@ public class PlayerService {
     }
 
     /**
+     * A getter method for the game
+     *
+     * @return
+     *      the game
+     */
+    public Game getGame()
+    {
+        return game;
+    }
+
+    /**
      * A getter method for a board.
      * @return
      *     A board.
@@ -85,5 +96,15 @@ public class PlayerService {
         }
 
         return new BoardView(boardView);
+    }
+
+    public void addMove(Move move) {
+        turnMoves.add(move);
+    }
+
+    public Move removeMove() {
+        int i = turnMoves.size() - 1;
+        System.out.println(turnMoves.get(i));
+        return turnMoves.remove(i);
     }
 }

@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.util.Objects;
+
 public class Move
 {
     private Position start;
@@ -32,5 +34,21 @@ public class Move
                 "start=" + start +
                 ", end=" + end +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Move move = (Move) o;
+        return Objects.equals(start, move.start) &&
+                Objects.equals(end, move.end);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(start, end);
     }
 }

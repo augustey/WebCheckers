@@ -1,5 +1,8 @@
 package com.webcheckers.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Game model class containing the logic of a standard game of Checkers.
  *

@@ -45,6 +45,10 @@ public class Board implements Iterable<Row> {
             }
         }
 
+        //Temporary for Testing
+        board[4][1].setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.WHITE));
+        board[1][4].setPiece(null);
+
         lookForSingleMoves();
 
 

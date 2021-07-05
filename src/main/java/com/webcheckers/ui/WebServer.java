@@ -195,7 +195,7 @@ public class WebServer {
 
     post(SUBMITTURN_URL, new PostSubmitTurnRoute());
 
-    post(BACKUPMOVE_URL, new PostBackupMoveRoute(templateEngine));
+    post(BACKUPMOVE_URL, new PostBackupMoveRoute());
 
     post(RESIGNGAME_URL, new PostResignGameRoute(templateEngine));
 
