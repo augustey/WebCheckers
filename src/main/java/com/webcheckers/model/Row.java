@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -73,9 +74,15 @@ public class Row implements Iterable<Space> {
     {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Row spaces1 = (Row) o;
-        return index == spaces1.index &&
-                Objects.equals(spaces, spaces1.spaces);
+        Row row = (Row) o;
+
+        List<Space> list1 = new ArrayList<>();
+        List<Space> list2 = new ArrayList<>();
+
+        row.forEach(list1::add);
+        this.forEach(list2::add);
+
+        return list1.equals(list2);
     }
 
     @Override
