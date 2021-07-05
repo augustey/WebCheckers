@@ -127,8 +127,11 @@ public class PlayerService {
      *      move that was removed
      */
     public synchronized Move removeMove() {
-        int i = turnMoves.size() - 1;
-        return turnMoves.remove(i);
+        if(!turnMoves.isEmpty()) {
+            int i = turnMoves.size() - 1;
+            return turnMoves.remove(i);
+        }
+        return null;
     }
 
     public synchronized void clearMoves() {
