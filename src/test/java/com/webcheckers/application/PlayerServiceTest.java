@@ -243,7 +243,6 @@ public class PlayerServiceTest
         {
             assertTrue(true);
         }
-
         assertSame(expectedSize, moves.size());
     }
 

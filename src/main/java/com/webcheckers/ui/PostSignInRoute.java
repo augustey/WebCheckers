@@ -78,11 +78,6 @@ public class PostSignInRoute implements Route
                 vm.put(NOT_VALID_USERNAME, true);
                 vm.put(INVALID_MESSAGE, NON_UNIQUE_USERNAME);
                 break;
-            case NON_ALPHANUMERIC:
-                vm.put(SIGNED_IN, false);
-                vm.put(NOT_VALID_USERNAME, true);
-                vm.put(INVALID_MESSAGE, NON_ALPHANUMERIC_USERNAME);
-                break;
             case SUCCESS:
                 httpSession.attribute(PLAYER_KEY, player);
                 vm.put(PLAYER_KEY, player);
@@ -90,6 +85,10 @@ public class PostSignInRoute implements Route
                 vm.put(NOT_VALID_USERNAME, false);
                 response.redirect("./");
                 break;
+            default:
+                vm.put(SIGNED_IN, false);
+                vm.put(NOT_VALID_USERNAME, true);
+                vm.put(INVALID_MESSAGE, NON_ALPHANUMERIC_USERNAME);
         }
 
         return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
