@@ -84,11 +84,13 @@ public class GameCenterTest {
         PlayerService playerSvcP = CuT.getPlayerService(player);
         PlayerService playerSvcO = CuT.getPlayerService(opponent);
         PlayerService playerSvcN = CuT.getPlayerService(otherPlayer);
+        PlayerService playerSvcW = CuT.getPlayerService(null);
 
         assertSame(player, playerSvcP.getPlayer());
         assertSame(player, playerSvcP.getRedPlayer());
         assertSame(opponent, playerSvcO.getPlayer());
         assertSame(opponent, playerSvcP.getWhitePlayer());
+        assertNull(playerSvcW);
         assertNull(playerSvcN);
     }
 }
