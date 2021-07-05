@@ -36,8 +36,6 @@ public class SinglePieceTest {
     /**
      *
      */
-
-
     @Test
     public void ctor_allSingleMoves(){
 
