@@ -113,6 +113,8 @@ public class Board implements Iterable<Row> {
             else {
                 activePlayerColor = Piece.Color.RED;
             }
+            flip();
+            System.out.println(toString());
         }
         else{
             //TODO : through invalid move error
@@ -127,7 +129,7 @@ public class Board implements Iterable<Row> {
         Space start = getSpace(move.getStart());
         Space end = getSpace(move.getEnd());
 
-        end.setPiece(end.getPiece());
+        end.setPiece(start.getPiece());
         start.setPiece(null);
     }
 
@@ -224,5 +226,10 @@ public class Board implements Iterable<Row> {
 
     public ArrayList<Move> getPossibleMoves() {
         return possibleMoves;
+    }
+
+    public Piece.Color getActivePlayerColor()
+    {
+        return activePlayerColor;
     }
 }

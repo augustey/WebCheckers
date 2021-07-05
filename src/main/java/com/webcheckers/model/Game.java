@@ -1,6 +1,7 @@
 package com.webcheckers.model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -62,5 +63,13 @@ public class Game {
      */
     public Board getBoard() {
         return board;
+    }
+
+    public void executeMoves(List<Move> moveList)
+    {
+        for(Move move : moveList)
+        {
+            board.makeMove(move);
+        }
     }
 }
