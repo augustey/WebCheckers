@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 
 /**
- * The unit test suite for the Space component.
+ * The unit test suite for the {@link Space} component.
  *
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
  */
@@ -17,10 +17,20 @@ import static org.mockito.Mockito.mock;
 @Tag("Model-tier")
 
 public class SpaceTest {
+
+    // Constants for testing
     private static final int ROW_VALUE = 2;
     private static final int COL_VALUE = 5;
-    private Piece piece;
     private static final boolean IS_VALID = true;
+
+    /**
+     * Has not been tested; mock to be used.
+     */
+    private Piece piece;
+
+    /**
+     * The component-under-test (CuT).
+     */
     private Space CuT;
 
     @BeforeEach
@@ -59,6 +69,8 @@ public class SpaceTest {
     @Test
     public void ctor_get_piece_test() {
         assertNull(CuT.getPiece());
+        CuT.setPiece(piece);
+        assertNotNull(CuT.getPiece());
     }
 
     /**
