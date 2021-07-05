@@ -30,7 +30,7 @@ public class PostValidateMoveRoute implements Route
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         Message valid;
-        if(true)
+        if(move.validateMove())
         {
             valid = Message.info("Valid");
         } else

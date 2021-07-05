@@ -1,4 +1,4 @@
-package com.webcheckers.ui.model;
+package com.webcheckers.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,10 +7,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import com.webcheckers.model.Piece;
-import com.webcheckers.model.Space;
 
 /**
  * The unit test suite for the Space component.

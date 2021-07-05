@@ -3,6 +3,7 @@ package com.webcheckers.model;
 import com.webcheckers.model.Row;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * Wrapper class for board iterator.
@@ -26,5 +27,33 @@ public class BoardView implements Iterable<Row>{
     @Override
     public Iterator<Row> iterator() {
         return iterator;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BoardView rows = (BoardView) o;
+        for (Row row : rows)
+        {
+            for(Row row2 : this)
+            {
+                if(row.equals(row2))
+                {
+                    break;
+                } else
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(iterator);
     }
 }

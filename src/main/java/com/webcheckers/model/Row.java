@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * This class is responsible for creating a row.
@@ -65,5 +66,21 @@ public class Row implements Iterable<Space> {
     @Override
     public Iterator<Space> iterator() {
         return spaces.iterator();
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Row spaces1 = (Row) o;
+        return index == spaces1.index &&
+                Objects.equals(spaces, spaces1.spaces);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(index, spaces);
     }
 }
