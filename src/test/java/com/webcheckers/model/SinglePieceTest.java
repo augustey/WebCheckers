@@ -15,11 +15,7 @@ import java.util.ArrayList;
 public class SinglePieceTest {
     private SinglePiece singlePiece;
 
-    @BeforeEach
-    public void testSetup() {
-        singlePiece = mock(SinglePiece.class);
 
-    }
 
     /**
      * Test that red singlePiece is generated with out failure.
@@ -60,7 +56,7 @@ public class SinglePieceTest {
      */
     @Test
     public void ctor_allJumps(){
-
+    //TODO: fill out this test
     }
 
 }
