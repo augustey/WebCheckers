@@ -32,7 +32,6 @@ public class PostValidateMoveRouteTest
 
     private Request request;
     private Session session;
-    private TemplateEngine engine;
     private Response response;
     private Gson gson;
 
@@ -54,7 +53,6 @@ public class PostValidateMoveRouteTest
         session = mock(Session.class);
         when(request.session()).thenReturn(session);
         response = mock(Response.class);
-        engine = mock(TemplateEngine.class);
 
         player = new Player("Player");
         opponent = new Player("Opponent");
