@@ -28,24 +28,25 @@ public class GetGameRoute implements Route {
     private final GameCenter gameCenter;
 
     // Used to send opponents name when selected in the list.
-    private final String OPPONENT_PARAM = "opponent";
+    public static final String OPPONENT_PARAM = "opponent";
 
     // Used to store and access player service in session object.
     public static final String PLAYER_SERVICE_KEY = "PlayerService";
 
     // Attributes for the freemarker template.
-    private final String TITLE_ATTR = "title";
-    private final String USER_ATTR = "currentUser";
-    private final String VIEW_MODE_ATTR = "viewMode";
-    private final String RED_PLAYER_ATTR = "redPlayer";
-    private final String WHITE_PLAYER_ATTR = "whitePlayer";
-    private final String ACTIVE_COLOR_ATTR = "activeColor";
-    private final String BOARD_VIEW_ATTR = "board";
+    public static final String TITLE_ATTR = "title";
+    public static final String USER_ATTR = "currentUser";
+    public static final String VIEW_MODE_ATTR = "viewMode";
+    public static final String RED_PLAYER_ATTR = "redPlayer";
+    public static final String WHITE_PLAYER_ATTR = "whitePlayer";
+    public static final String ACTIVE_COLOR_ATTR = "activeColor";
+    public static final String BOARD_VIEW_ATTR = "board";
 
     // Freemarker values.
-    private final String TITLE = "Checkers";
-    private final String VIEW_MODE = "PLAY"; //TODO: Add enumeration
-    private final String ACTIVE_COLOR = "RED"; //TODO: Add enumeration
+    public static final String TITLE = "Checkers";
+    public static final String VIEW_MODE = "PLAY"; //TODO: Add enumeration
+
+    public static final String VIEW_NAME = "game.ftl";
 
     /**
      * Constructor for GetGameRoute. Used to handle requests sent to "/game".
@@ -112,9 +113,9 @@ public class GetGameRoute implements Route {
         vm.put(RED_PLAYER_ATTR, playerService.getRedPlayer());
         vm.put(WHITE_PLAYER_ATTR, playerService.getWhitePlayer());
         vm.put(VIEW_MODE_ATTR, VIEW_MODE); //TODO: Add enumeration
-        vm.put(ACTIVE_COLOR_ATTR, playerService.getGame().getBoard().getActivePlayerColor()); //TODO: Add enumeration
+        vm.put(ACTIVE_COLOR_ATTR, playerService.getActivePlayerColor());
         vm.put(BOARD_VIEW_ATTR, playerService.getBoardView());
 
-        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+        return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
     }
 }
