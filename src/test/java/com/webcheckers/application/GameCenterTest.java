@@ -27,7 +27,7 @@ public class GameCenterTest {
         CuT = new GameCenter();
         player = new Player("Player");
         opponent = new Player("Opponent");
-        otherPlayer = new Player("otherPlayer");
+        otherPlayer = new Player("OtherPlayer");
     }
 
     /**
