@@ -92,6 +92,11 @@ public class WebServer {
    */
   public static final String RESIGNGAME_URL = "/resignGame";
 
+  /**
+   * The URL pattern to check the turn of the player
+   */
+  public static final String CHECKTURN_URL = "/checkTurn";
+
 
   //
   // Attributes
@@ -198,6 +203,8 @@ public class WebServer {
     post(BACKUPMOVE_URL, new PostBackupMoveRoute());
 
     post(RESIGNGAME_URL, new PostResignGameRoute(templateEngine));
+
+    post(CHECKTURN_URL, new PostCheckTurnRoute());
 
     //
     LOG.config("WebServer is initialized.");
