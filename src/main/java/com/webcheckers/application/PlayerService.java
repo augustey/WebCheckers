@@ -9,6 +9,7 @@ import java.util.*;
  * and offers services to access the game.
  *
  * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
+ * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
  */
 public class PlayerService {
     // Active player
@@ -79,6 +80,17 @@ public class PlayerService {
     }
 
     /**
+     * A getter method for the game
+     *
+     * @return
+     *      the list of moves during the turn
+     */
+    public List<Move> getTurnMoves()
+    {
+        return turnMoves;
+    }
+
+    /**
      * A getter method for a board.
      * @return
      *     A board.
@@ -98,13 +110,28 @@ public class PlayerService {
         return new BoardView(boardView);
     }
 
-    public void addMove(Move move) {
+    /**
+     * Adds a move to the list of moves in the current turn
+     *
+     * @param move
+     *      move that is being made
+     */
+    public synchronized void addMove(Move move) {
         turnMoves.add(move);
     }
 
-    public Move removeMove() {
+    /**
+     * Removes the last made move from the list of moves
+     *
+     * @return
+     *      move that was removed
+     */
+    public synchronized Move removeMove() {
         int i = turnMoves.size() - 1;
-        System.out.println(turnMoves.get(i));
         return turnMoves.remove(i);
+    }
+
+    public synchronized void clearMoves() {
+        turnMoves.clear();
     }
 }

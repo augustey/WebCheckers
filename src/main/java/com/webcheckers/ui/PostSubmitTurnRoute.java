@@ -23,6 +23,8 @@ public class PostSubmitTurnRoute implements Route
 
         //Look for other possible moves, and if a jump move is found, send an error
 
+        //If no other moves are found, have game perform moves in the turnMoves list
+
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         return "{}";

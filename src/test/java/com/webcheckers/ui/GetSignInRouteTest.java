@@ -11,6 +11,11 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verify;
 
+/**
+ * Testing suite for GetSignInRoute
+ *
+ * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
+ */
 @Tag("UI-Tier")
 public class GetSignInRouteTest
 {
@@ -21,6 +26,9 @@ public class GetSignInRouteTest
     private TemplateEngine engine;
     private Response response;
 
+    /**
+     * Setup for each test
+     */
     @BeforeEach
     public void setup()
     {
