@@ -41,10 +41,6 @@ public class GetHomeRouteTest {
     @BeforeEach
     public void setup() {
 
-//        this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
-//        this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
-//        this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-
         request = mock(Request.class);
         session = mock(Session.class);
         when(request.session()).thenReturn(session);
