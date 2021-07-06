@@ -10,6 +10,12 @@ import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 
+/**
+ * Testing suite for SinglePiece
+ *
+ * @author <a href = 'mailto:whd8254@g.rit.edu'>William Dabney</a>
+ */
+
 @Tag("Model-tier")
 
 public class SinglePieceTest {
@@ -34,7 +40,7 @@ public class SinglePieceTest {
     }
 
     /**
-     *
+     *Will check if the single moves are generated correctly
      */
     @Test
     public void ctor_allSingleMoves(){
@@ -49,12 +55,18 @@ public class SinglePieceTest {
 
     }
 
-    /**This method has not been written yet in the code
-     *
+    /**
+     *will check if the jumps are generated correctly
      */
     @Test
     public void ctor_allJumps(){
-    //TODO: fill out this test
+        final SinglePiece piece = new SinglePiece(Piece.Type.SINGLE, Piece.Color.RED);
+
+        ArrayList<JumpMove> moves = new ArrayList<>();
+
+//        moves.addAll(piece.allJumps(2, 1));
+
+        assertEquals(2, moves.size());//that the correct number of possible moves was generated
     }
 
 }
