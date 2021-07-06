@@ -84,8 +84,16 @@ with the WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](state_diagram_chart.png)
 
-> _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
+At the start of the web application and the establishment of an HTTP connection, 
+the user is immediately greeted with the home page (“/”) with the option to sign-in. 
+Clicking the sign-in option then directs the user to the sign-in page (“/signin”) which
+displays a text box to input a valid username to sign-in. Once the user is signed in,
+they are returned to the home page (“/”) which now displays the list of online players 
+and an option to sign-out. Selecting another online user to play a game against then 
+takes the user to the game page (“/game”). Once the game is completed, the user is then
+returned to the home page (“/”), again with the option to select to play a game from the
+list of players or the option to sign-out. Clicking the sign-out option will 
+take the user back to the home page (“/”) with the option to sign-in.
 
 
 ### UI Tier
