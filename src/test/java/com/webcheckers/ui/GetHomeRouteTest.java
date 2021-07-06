@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verify;
 
 /**
- * Testing suite for GetSignInRoute
+ * Testing suite for GetHomeRoute
  *
  * @author <a href = 'mailto:whd8254@g.rit.edu'>William Dabney</a>
  */
@@ -70,10 +70,10 @@ public class GetHomeRouteTest {
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
         testHelper.assertViewModelAttribute(GetHomeRoute.MESSAGE_KEY, GetHomeRoute.WELCOME_MSG);
-        testHelper.assertViewModelAttribute(GetHomeRoute.PLAYER_KEY, playerLobby);
-        assertThrows(NullPointerException.class, () -> {
-            player.equals(null);
-        });
+        testHelper.assertViewModelAttribute(GetHomeRoute.PLAYER_KEY, null);
+        String viewName = "home.ftl";
+        testHelper.assertViewName(viewName);
+
 
     }
 */
