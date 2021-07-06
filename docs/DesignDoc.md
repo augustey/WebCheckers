@@ -51,9 +51,12 @@ This section describes the application domain.
 
 ![The WebCheckers Domain Model](domain_model.png)
 
-> _Provide a high-level overview of the domain for this application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
+A User is Signed in by entering the login information.
+They can logout, spectate a game or can join a checkers game with another player / AI.
+During the game either player may resign which ends the game.
+The checkers game is played on a board which is made up of spaces that can be dark or light.
+The Spaces can hold pieces; these pieces are moved by it’s player.
+
 
 
 ## Architecture and Design
