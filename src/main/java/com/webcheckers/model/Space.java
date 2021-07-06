@@ -95,4 +95,19 @@ public class Space {
     public boolean isValid() {
         return piece == null && isValid;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o)
+            return true;
+
+        if(o instanceof Space) {
+            Space otherSpace = (Space) o;
+            return
+                    otherSpace.rowIdx == rowIdx &&
+                    otherSpace.colIdx == colIdx &&
+                    otherSpace.isValid == isValid;
+        }
+        else return false;
+    }
 }

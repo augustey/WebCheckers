@@ -69,7 +69,18 @@ public class PlayerService {
     }
 
     /**
-     * A getter method for the game
+     * Get the active player color
+     *
+     * @return
+     *      the active color
+     */
+    public Piece.Color getActivePlayerColor()
+    {
+        return game.getBoard().getActivePlayerColor();
+    }
+
+    /**
+     * Get the game
      *
      * @return
      *      the game

@@ -236,13 +236,8 @@ public class PlayerServiceTest
         int expectedSize = 0;
         List<Move> moves = CuT.getTurnMoves();
 
-        try
-        {
-            Move actual = CuT.removeMove();
-        } catch (IndexOutOfBoundsException ie)
-        {
-            assertTrue(true);
-        }
+        Move actual = CuT.removeMove();
+
         assertSame(expectedSize, moves.size());
     }
 

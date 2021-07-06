@@ -23,8 +23,9 @@ import static org.mockito.Mockito.verify;
  *
  * @author <a href = 'mailto:whd8254@g.rit.edu'>William Dabney</a>
  */
-@Tag("UI-Tier")
+@Tag("UI-tier")
 public class GetHomeRouteTest {
+
     private GetHomeRoute CuT;
 
     // friendly objects
@@ -55,6 +56,7 @@ public class GetHomeRouteTest {
 
         CuT = new GetHomeRoute(playerLobby, gameCenter, engine);
     }
+
     @Test
     public void new_session() {
 
