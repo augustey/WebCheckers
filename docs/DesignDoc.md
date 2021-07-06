@@ -13,7 +13,8 @@ geometry: margin=1in
 
 ## Executive Summary
 
-This is a summary of the project.
+The purpose of this project was to create a working game of checkers that follows the 
+american rules. It is played locally on one machine and is done through a web page.
 
 ### Purpose
 > _Provide a very brief statement about the project and the most
