@@ -16,7 +16,7 @@ import static org.mockito.Mockito.verify;
  *
  * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
  */
-@Tag("UI-Tier")
+@Tag("UI-tier")
 public class GetSignInRouteTest
 {
     private GetSignInRoute CuT;
