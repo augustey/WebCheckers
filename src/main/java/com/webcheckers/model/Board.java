@@ -53,12 +53,6 @@ public class Board implements Iterable<Row> {
 
     }
 
-    public Board(Space[][] board) {
-        this.board = board;
-    }
-
-
-
     public void lookForSingleMoves() throws ArrayIndexOutOfBoundsException{
         ArrayList<Move> singleMoves = new ArrayList<>();
         for(int row = 0; row < BOARD_DIM; row++) {
@@ -92,7 +86,6 @@ public class Board implements Iterable<Row> {
         catch (ArrayIndexOutOfBoundsException e){
             return false;
         }
-
     }
 
     public Space getSpace(Position position){
@@ -113,16 +106,12 @@ public class Board implements Iterable<Row> {
             else {
                 activePlayerColor = Piece.Color.RED;
             }
-            flip();
             System.out.println(toString());
         }
         else{
             //TODO : through invalid move error
         }
         System.out.println(toString());
-
-
-
     }
 
     public void executeMove(Move move){
