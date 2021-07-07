@@ -67,6 +67,16 @@ public class Space {
     }
 
     /**
+     * A getter method for the validness of a space (a black space or not).
+     *
+     * @return
+     *     The validness of a space (a black space or not).
+     */
+    public boolean getIsValid() {
+        return isValid;
+    }
+
+    /**
      * Set the piece on this space.
      *
      * @param piece
