@@ -20,9 +20,6 @@ public class Game {
     // The checkers board.
     private final Board board;
 
-    private String gameOverMessage;
-    private boolean isGameOver;
-
     /**
      * Constructor for Game that contains the Players.
      *
@@ -36,7 +33,6 @@ public class Game {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         board = new Board();
-        isGameOver = false;
     }
 
     /**
@@ -75,20 +71,5 @@ public class Game {
         {
             board.makeMove(move);
         }
-    }
-
-    public void triggerGameOver()
-    {
-        isGameOver = true;
-    }
-
-    public boolean isGameOver()
-    {
-        return isGameOver;
-    }
-
-    public String getGameOverMessage()
-    {
-        return gameOverMessage;
     }
 }
