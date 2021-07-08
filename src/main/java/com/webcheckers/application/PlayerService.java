@@ -107,15 +107,22 @@ public class PlayerService {
      *     A board.
      */
     public synchronized BoardView getBoardView() {
-        Board board = game.getBoard();
+        Board board = new Board(game.getBoard());
         Iterator<Row> boardView;
 
-        if(player.equals(redPlayer))
+        if(player.equals(redPlayer) && getActivePlayerColor() == Piece.Color.RED) {
             boardView = board.iterator();
+        }
+        else if(player.equals(redPlayer) && getActivePlayerColor() != Piece.Color.RED) {
+            board.flip();
+            boardView = board.iterator();
+        }
+        else if(player.equals(whitePlayer) && getActivePlayerColor() == Piece.Color.WHITE) {
+            boardView = board.iterator();
+        }
         else {
             board.flip();
             boardView = board.iterator();
-            board.flip();
         }
 
         return new BoardView(boardView);

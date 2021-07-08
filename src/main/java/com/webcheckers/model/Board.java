@@ -15,7 +15,7 @@ public class Board implements Iterable<Row> {
     private final int BOARD_DIM = 8;
 
     // 2D Array of Spaces that form the board.
-    private Space[][] board = new Space[BOARD_DIM][BOARD_DIM];
+    private Space[][] board;
 
     private ArrayList<Move> possibleMoves = new ArrayList<>();
 
@@ -26,6 +26,7 @@ public class Board implements Iterable<Row> {
      */
     public Board() {
         activePlayerColor = Piece.Color.RED;
+        this.board = new Space[BOARD_DIM][BOARD_DIM];
         for(int row = 0; row < BOARD_DIM; row++) {
             for(int col = 0; col < BOARD_DIM; col++) {
                 Space space;
@@ -47,10 +48,15 @@ public class Board implements Iterable<Row> {
 
         lookForSingleMoves();
 
+    }
 
-        System.out.println(toString());
-        System.out.println(this.possibleMoves.size());
-
+    public Board(Board copy) {
+        this.board = new Space[BOARD_DIM][BOARD_DIM];
+        for(int row = 0; row < BOARD_DIM; row++) {
+            System.arraycopy(copy.board[row], 0, this.board[row], 0, BOARD_DIM);
+        }
+        this.activePlayerColor = copy.getActivePlayerColor();
+        this.possibleMoves = new ArrayList<>(copy.possibleMoves);
     }
 
     public void lookForSingleMoves() throws ArrayIndexOutOfBoundsException{
@@ -98,20 +104,24 @@ public class Board implements Iterable<Row> {
         if(possibleMoves.contains(curMove))
         {
             Move move = possibleMoves.get(possibleMoves.indexOf(curMove));
-            executeMove(move);
             lookForSingleMoves();
+            System.out.println("Before Move executed");
+            System.out.println(this);
+            executeMove(move);
             if(activePlayerColor == Piece.Color.RED) {
                 activePlayerColor = Piece.Color.WHITE;
             }
             else {
                 activePlayerColor = Piece.Color.RED;
             }
-            System.out.println(toString());
+            flip();
+            System.out.println("After Move executed");
+            System.out.println(this);
         }
         else{
             //TODO : through invalid move error
         }
-        System.out.println(toString());
+
     }
 
     public void executeMove(Move move){
@@ -129,12 +139,12 @@ public class Board implements Iterable<Row> {
         Space[][] flippedBoard = new Space[BOARD_DIM][BOARD_DIM];
         for(int row = 0; row < BOARD_DIM; row++) {
             for(int col = 0; col < BOARD_DIM; col++) {
-                Space space = this.board[row][col];
+                Space space = new Space(BOARD_DIM - row - 1, BOARD_DIM - col - 1, this.board[row][col].getPiece(), this.board[row][col].getIsValid());
                 flippedBoard[BOARD_DIM - row - 1][BOARD_DIM - col - 1] = space;
             }
         }
         this.board = flippedBoard;
-        System.out.println(toString());
+        //System.out.println(this);
     }
 
     /**
@@ -175,23 +185,9 @@ public class Board implements Iterable<Row> {
         }
         return textBoard.toString();
     }
-//    public void debugMove(){
-//        Space spaceStart = this.board[5][0];
-//        Space spaceEnd = this.board[4][2];
-//        SingleMove move = new SingleMove(spaceStart,spaceEnd);
-//
-//        move.executeMove();
-//
-//        System.out.println(toString());
-//    }
 
     public static void main(String[] args) {//for debugging purposes only
         Board board = new Board();
-//        board.debugMove();
-
-
-
-//        board.flip();
     }
 
     /**
