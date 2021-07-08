@@ -1,9 +1,11 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.GameWin;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.PlayerService;
 import com.webcheckers.model.Board;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
@@ -88,6 +90,8 @@ public class GetGameRoute implements Route {
 
         PlayerService playerService = httpSession.attribute(PLAYER_SERVICE_KEY);
 
+        Map<String, Object> modeOptions = new HashMap<>();
+
         if(playerService == null) {
             String opponentName = request.queryParams(OPPONENT_PARAM);
             Player opponent = playerLobby.getPlayer(opponentName);
@@ -104,6 +108,12 @@ public class GetGameRoute implements Route {
                 halt();
                 return null;
             }
+        } else
+        {
+            Game game = playerService.getGame();
+            GameWin gameWin = new GameWin(gameCenter, game);
+            modeOptions.put("isGameOver", gameWin.isGameOver());
+            modeOptions.put("gameOverMessage", gameWin.getGameOverMessage());
         }
 
         Map<String, Object> vm = new HashMap<>();
