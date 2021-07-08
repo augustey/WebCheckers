@@ -14,14 +14,15 @@ public class GameWin
     {
         this.gameCenter = gameCenter;
         this.game = game;
+        isGameOver = game.isGameOver();
     }
 
     public boolean triggerGameOver(String gameOverMessage)
     {
+        game.setGameOver(true);
         isGameOver = true;
         this.gameOverMessage = gameOverMessage;
-        boolean result = gameCenter.removeGame(game);
-        return result;
+        return gameCenter.removeGame(game);
     }
 
     public boolean isGameOver()

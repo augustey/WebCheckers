@@ -1,5 +1,7 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.GameWin;
 import com.webcheckers.application.PlayerLobby;
@@ -117,7 +119,9 @@ public class GetGameRoute implements Route {
         }
 
         Map<String, Object> vm = new HashMap<>();
+        Gson gson = new GsonBuilder().create();
 
+        vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
         vm.put(TITLE_ATTR, TITLE);
         vm.put(USER_ATTR, player);
         vm.put(RED_PLAYER_ATTR, playerService.getRedPlayer());
