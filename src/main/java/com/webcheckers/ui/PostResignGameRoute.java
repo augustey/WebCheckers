@@ -1,5 +1,11 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.GameWin;
+import com.webcheckers.application.PlayerService;
+import com.webcheckers.model.Game;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -8,11 +14,12 @@ import java.util.Map;
 
 public class PostResignGameRoute implements Route
 {
-    private TemplateEngine templateEngine;
+    private GameCenter gameCenter;
+    private PlayerService playerService;
 
-    public PostResignGameRoute(final TemplateEngine templateEngine)
+    public PostResignGameRoute(final GameCenter gameCenter)
     {
-        this.templateEngine = templateEngine;
+        this.gameCenter = gameCenter;
     }
 
 
@@ -20,8 +27,22 @@ public class PostResignGameRoute implements Route
     public Object handle(Request request, Response response)
     {
         final Session httpSession = request.session();
-        final Map<String, Object> vm = new HashMap<>();
+        Gson gson = new GsonBuilder().create();
 
-        return Message.info("Placeholder");
+        playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
+        Game game = playerService.getGame();
+        GameWin gameWin = new GameWin(gameCenter, game);
+
+        String gameOverMessage = playerService.getPlayer() + " has resigned.";
+        if(gameWin.triggerGameOver(gameOverMessage))
+        {
+            Message message;
+            message = Message.info(gameOverMessage);
+        }
+
+        Message message;
+        message = Message.info(gameOverMessage);
+
+        return gson.toJson(message);
     }
 }

@@ -20,6 +20,8 @@ public class Game {
     // The checkers board.
     private final Board board;
 
+    private boolean isGameOver;
+
     /**
      * Constructor for Game that contains the Players.
      *
@@ -71,5 +73,15 @@ public class Game {
         {
             board.makeMove(move);
         }
+    }
+
+    public void setGameOver(boolean gameOver)
+    {
+        isGameOver = gameOver;
+    }
+
+    public boolean isGameOver()
+    {
+        return isGameOver;
     }
 }

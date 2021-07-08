@@ -91,4 +91,16 @@ public class GameCenter {
         Game game = activeGames.get(player);
         return new PlayerService(player, game);
     }
+
+    public boolean removeGame(Game game) {
+        Player player1 = game.getRedPlayer();
+        Player player2 = game.getWhitePlayer();
+
+        if(isInGame(player1) && isInGame(player2)) {
+            activeGames.remove(player1);
+            activeGames.remove(player2);
+            return true;
+        }
+        return false;
+    }
 }
