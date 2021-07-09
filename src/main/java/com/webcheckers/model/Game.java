@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -69,10 +70,7 @@ public class Game {
 
     public void executeMoves(List<Move> moveList)
     {
-        for(Move move : moveList)
-        {
-            board.makeMove(move);
-        }
+        board.makeMove((ArrayList<Move>) moveList);
     }
 
     public void setGameOver(boolean gameOver)
