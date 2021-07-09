@@ -103,11 +103,7 @@ public class Board implements Iterable<Row> {
     public void makeMove(Move curMove) {
         if(possibleMoves.contains(curMove))
         {
-            Move move = possibleMoves.get(possibleMoves.indexOf(curMove));
-            lookForSingleMoves();
-            System.out.println("Before Move executed");
-            System.out.println(this);
-            executeMove(move);
+            executeMove(curMove);
             if(activePlayerColor == Piece.Color.RED) {
                 activePlayerColor = Piece.Color.WHITE;
             }
@@ -115,13 +111,12 @@ public class Board implements Iterable<Row> {
                 activePlayerColor = Piece.Color.RED;
             }
             flip();
-            System.out.println("After Move executed");
-            System.out.println(this);
+            possibleMoves.clear();
+            lookForSingleMoves();
         }
         else{
             //TODO : through invalid move error
         }
-
     }
 
     public void executeMove(Move move){
