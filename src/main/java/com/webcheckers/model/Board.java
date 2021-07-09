@@ -174,8 +174,9 @@ public class Board implements Iterable<Row> {
      * @param moves
      */
     public void makeMove(ArrayList<Move> moves) {
-
-        determineMoveType();
+        System.out.println(this);
+        moveType = MoveType.Single;
+//        determineMoveType();
         System.out.println(moveType);
         if (moveType == MoveType.Blocked){
             //TODO game is over
@@ -215,15 +216,15 @@ public class Board implements Iterable<Row> {
 
             } else {//Jump move
                 possibleMoves.addAll(piece.allSingleMoves(row, col));
-                if (possibleMoves.contains(curMove)) {
-                    if (validateJumpMove((JumpMove) curMove)) {
+//                if (possibleMoves.contains(curMove)) {
+//                    if (validateJumpMove((JumpMove) curMove)) {
 
 
                         Position jumpedPos = ((JumpMove) curMove).getJumpedPosition();
                         Space jumpedSpace = getSpace(jumpedPos, board);
                         executeJumpMove(startSpace, jumpedSpace, endSpace);
-                    }
-                }
+//                    }
+//                }
             }
         }
         if(moveType == MoveType.Jump) {
@@ -242,13 +243,15 @@ public class Board implements Iterable<Row> {
         //TODO:King piece if necessary
 
 
-        if(activePlayerColor == Piece.Color.RED) {
-            activePlayerColor = Piece.Color.WHITE;
+        if(this.activePlayerColor == Piece.Color.RED) {
+            this.activePlayerColor = Piece.Color.WHITE;
         }
         else {
-            activePlayerColor = Piece.Color.RED;
+            this.activePlayerColor = Piece.Color.RED;
         }
-        flip();
+        this.board = copy.board;
+//        flip();
+
 
 
     }
