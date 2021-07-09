@@ -143,15 +143,18 @@ public class Board implements Iterable<Row> {
      */
     private boolean validateJumpMove(JumpMove move) {
         Position end = move.getEnd();
-        int row = end.getRow();
-        int col = end.getCell();
+        int endRow = end.getRow();
+        int endCol = end.getCell();
+        Position jumped = move.getJumpedPosition();
         try {
-            //TODO: chek jumped pos
-            return this.board[row][col].isValid();
+            if(getSpace(jumped, this.board).getPiece().getColor() != activePlayerColor) {
+                return this.board[endRow][endCol].isValid();
+            }
         }
         catch (ArrayIndexOutOfBoundsException e){
             return false;
         }
+        return false;
     }
 
 
@@ -186,9 +189,9 @@ public class Board implements Iterable<Row> {
         Space endSpace = null;
         Position endPos = null;
 
-        for(int i = 0; i < moves.size(); i++) {
+        //Loops though all moves
+        for (Move curMove : moves) {
 
-            Move curMove = moves.get(i);
             Position startPos = curMove.getStart();
             endPos = curMove.getEnd();
 
@@ -200,21 +203,19 @@ public class Board implements Iterable<Row> {
 
             int row = startPos.getRow();
             int col = startPos.getCell();
-            //TODO generate all moves from current piece
 
-            if(moveType == MoveType.Single){
+            if (moveType == MoveType.Single) {
                 possibleMoves.addAll(piece.allSingleMoves(row, col));
-                if(possibleMoves.contains(curMove)) {
-                    if(validateSingleMove((SingleMove) curMove)) {
+                if (possibleMoves.contains(curMove)) {
+                    if (validateSingleMove((SingleMove) curMove)) {
                         executeSingleMove(startSpace, endSpace);
                     }
                 }
 
-            }
-            else {
+            } else {//Jump move
                 possibleMoves.addAll(piece.allSingleMoves(row, col));
-                if(possibleMoves.contains(curMove)) {
-                    if(validateJumpMove((JumpMove) curMove)) {
+                if (possibleMoves.contains(curMove)) {
+                    if (validateJumpMove((JumpMove) curMove)) {
 
 
                         Position jumpedPos = ((JumpMove) curMove).getJumpedPosition();
