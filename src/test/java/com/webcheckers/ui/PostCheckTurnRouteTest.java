@@ -86,7 +86,7 @@ public class PostCheckTurnRouteTest
         playerService = new PlayerService(opponent, game);
         when(session.attribute(GetGameRoute.PLAYER_SERVICE_KEY)).thenReturn(playerService);
         Board board = game.getBoard();
-        board.makeMove(new Move(new Position(5, 0), new Position(4, 1)));
+        //board.makeMove(new Move(new Position(5, 0), new Position(4, 1)));
         Message message = Message.info("true");
         String expected = gson.toJson(message);
 
@@ -102,7 +102,7 @@ public class PostCheckTurnRouteTest
     public void test_active_player_white_player_red()
     {
         Board board = game.getBoard();
-        board.makeMove(new Move(new Position(5, 0), new Position(4, 1)));
+        //board.makeMove(new Move(new Position(5, 0), new Position(4, 1)));
         Message message = Message.info("false");
         String expected = gson.toJson(message);
 

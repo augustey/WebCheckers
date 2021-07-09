@@ -151,7 +151,7 @@ public class Board implements Iterable<Row> {
                 return this.board[endRow][endCol].isValid();
             }
         }
-        catch (ArrayIndexOutOfBoundsException e){
+        catch (Exception e){
             return false;
         }
         return false;
@@ -166,17 +166,17 @@ public class Board implements Iterable<Row> {
     public Space getSpace(Position position, Space[][] board){
         int row = position.getRow();
         int col = position.getCell();
-        return this.board[row][col];
+        return board[row][col];
     }
 
     /**
      * This is called to make a move
-     * @param curMove
+     * @param moves
      */
     public void makeMove(ArrayList<Move> moves) {
 
         determineMoveType();
-
+        System.out.println(moveType);
         if (moveType == MoveType.Blocked){
             //TODO game is over
         }
@@ -205,12 +205,13 @@ public class Board implements Iterable<Row> {
             int col = startPos.getCell();
 
             if (moveType == MoveType.Single) {
-                possibleMoves.addAll(piece.allSingleMoves(row, col));
-                if (possibleMoves.contains(curMove)) {
-                    if (validateSingleMove((SingleMove) curMove)) {
+//                possibleMoves.addAll(piece.allSingleMoves(row, col));
+//                if (possibleMoves.contains(curMove)) {
+//                    System.out.println("possibleMoves contains curMove");
+//                    if (validateSingleMove((SingleMove) curMove)) {
                         executeSingleMove(startSpace, endSpace);
-                    }
-                }
+//                    }
+//                }
 
             } else {//Jump move
                 possibleMoves.addAll(piece.allSingleMoves(row, col));
@@ -223,8 +224,6 @@ public class Board implements Iterable<Row> {
                         executeJumpMove(startSpace, jumpedSpace, endSpace);
                     }
                 }
-
-                validateJumpMove((JumpMove) curMove);
             }
         }
         if(moveType == MoveType.Jump) {
@@ -256,8 +255,9 @@ public class Board implements Iterable<Row> {
 
 
     public void executeSingleMove(Space start, Space end){
-        end.setPiece(end.getPiece());
+        end.setPiece(start.getPiece());
         start.setPiece(null);
+        System.out.println(this);
     }
 
     public void executeJumpMove(Space start, Space jumped, Space end){
