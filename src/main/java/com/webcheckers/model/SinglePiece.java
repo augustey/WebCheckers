@@ -14,18 +14,18 @@ public class SinglePiece extends Piece {
     }
 
     @Override
-    public ArrayList<Move> allSingleMoves(int row, int col){
-        ArrayList<Move> moves = new ArrayList<>();
+    public ArrayList<SingleMove> allSingleMoves(int row, int col){
+        ArrayList<SingleMove> moves = new ArrayList<>();
         Position start = new Position(row , col);
         //can move 1 the positive direction
         for(int i = -1 ; i <= 1; i+=2) {
             Position end = new Position(row - 1, col + i);
-            Move move = new Move(start, end);
+            SingleMove move = new SingleMove(start, end);
             moves.add(move);
         }
         return moves;
     }
-//    @Override
+    //    @Override
 //    public ArrayList<SingleMove> allSingleMoves(Space start){
 //        ArrayList<SingleMove> moves = new ArrayList<SingleMove>();
 //        //get cur space
@@ -39,8 +39,15 @@ public class SinglePiece extends Piece {
 //    }
     @Override
     //this will be overridden by the 2 different types of pieces
-    public ArrayList<Move> allJumps(){
-        return new ArrayList<Move>(null);
-
+    public ArrayList<JumpMove> allJumps(int row, int col){
+        ArrayList<JumpMove> moves = new ArrayList<>();
+        Position start = new Position(row , col);
+        //can move 2 the positive direction
+        for(int i = -2 ; i <= 2; i+=4) {
+            Position end = new Position(row - 2, col + i);
+            JumpMove move = new JumpMove(start, end);
+            moves.add(move);
+        }
+        return moves;
     }
 }

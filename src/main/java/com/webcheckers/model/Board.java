@@ -18,6 +18,10 @@ public class Board implements Iterable<Row> {
     private Space[][] board;
 
     private ArrayList<Move> possibleMoves = new ArrayList<>();
+    enum MoveType{Jump, Single, Blocked};
+
+    private MoveType moveType;
+
 
     private Piece.Color activePlayerColor;
 
@@ -46,7 +50,7 @@ public class Board implements Iterable<Row> {
             }
         }
 
-        lookForSingleMoves();
+//        lookForSingleMoves();
 
     }
 
@@ -55,34 +59,57 @@ public class Board implements Iterable<Row> {
         for(int row = 0; row < BOARD_DIM; row++) {
             System.arraycopy(copy.board[row], 0, this.board[row], 0, BOARD_DIM);
         }
+        this.moveType = copy.moveType;
         this.activePlayerColor = copy.getActivePlayerColor();
         this.possibleMoves = new ArrayList<>(copy.possibleMoves);
     }
 
-    public void lookForSingleMoves() throws ArrayIndexOutOfBoundsException{
-        ArrayList<Move> singleMoves = new ArrayList<>();
+    public void determineMoveType() throws ArrayIndexOutOfBoundsException{
+        moveType = MoveType.Blocked;
         for(int row = 0; row < BOARD_DIM; row++) {
             for(int col = 0; col < BOARD_DIM; col++) {
                 Piece piece = this.board[row][col].getPiece();
                 if (piece != null && piece.getColor() == activePlayerColor) {
-                    singleMoves.addAll(piece.allSingleMoves(row, col));
+
+                    ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
+                    if(validateJumpMoves(jumpMoves)) {
+                        moveType = MoveType.Jump;
+                        return;
+                    }
+
+                    ArrayList<SingleMove> singleMoves = new ArrayList<>(piece.allSingleMoves(row, col));
+                    if (validateSingleMoves(singleMoves)){
+                        moveType = MoveType.Single;
+
+                    }
+
                 }
             }
         }
-        validateAllMoves(singleMoves);
+
     }
+    /**
+     * This method look at all generated singleMoves for one piece and if it is found valid it adds the move to possible moves
+     * @param moves
+     */
+    public boolean validateSingleMoves(ArrayList<SingleMove> moves){
+        for(int i = 0; i < moves.size(); i++) {
+            SingleMove move = moves.get(i);
 
-    public void validateAllMoves(ArrayList<Move> moves){
-        for (int i = 0; i < moves.size(); i++) {
-            Move move = moves.get(i);
-
-            if(validateSimpleMove(move)) {
-                possibleMoves.add(move);
+            if(validateSingleMove(move)) {
+                return true;
             }
         }
+        return false;
+
     }
 
-    private boolean validateSimpleMove(Move move) {
+    /**
+     * This method looks at an individual single move and checks if it is valid
+     * @param move
+     * @return
+     */
+    private boolean validateSingleMove(SingleMove move) {
         Position end = move.getEnd();
         int row = end.getRow();
         int col = end.getCell();
@@ -94,36 +121,148 @@ public class Board implements Iterable<Row> {
         }
     }
 
-    public Space getSpace(Position position){
+
+    /**
+     * This method look at all generated jumpMoves for one piece and if it is found valid it adds the move to possible moves
+     * @param moves
+     */
+    public boolean validateJumpMoves(ArrayList<JumpMove> moves){
+        for(int i = 0; i < moves.size(); i++) {
+            JumpMove move = moves.get(i);
+
+            if(validateJumpMove(move)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
+     * This method looks at an individual jumpMove and checks if it is valid
+     * @param move
+     * @return
+     */
+    private boolean validateJumpMove(JumpMove move) {
+        Position end = move.getEnd();
+        int row = end.getRow();
+        int col = end.getCell();
+        try {
+            //TODO: chek jumped pos
+            return this.board[row][col].isValid();
+        }
+        catch (ArrayIndexOutOfBoundsException e){
+            return false;
+        }
+    }
+
+
+    /**
+     * This method is used to convert a position to what space it represents
+     * @param position
+     * @return
+     */
+    public Space getSpace(Position position, Space[][] board){
         int row = position.getRow();
         int col = position.getCell();
         return this.board[row][col];
     }
 
-    public void makeMove(Move curMove) {
-        if(possibleMoves.contains(curMove))
-        {
-            executeMove(curMove);
-            if(activePlayerColor == Piece.Color.RED) {
-                activePlayerColor = Piece.Color.WHITE;
+    /**
+     * This is called to make a move
+     * @param curMove
+     */
+    public void makeMove(ArrayList<Move> moves) {
+
+        determineMoveType();
+
+        if (moveType == MoveType.Blocked){
+            //TODO game is over
+        }
+        else if(moveType == MoveType.Single &&  moves.size() != 1) {
+            //TODO: throws error singleMoves can only be one in magnitude
+        }
+
+        Board copy = new Board(this);
+
+        Space endSpace = null;
+        Position endPos = null;
+
+        for(int i = 0; i < moves.size(); i++) {
+
+            Move curMove = moves.get(i);
+            Position startPos = curMove.getStart();
+            endPos = curMove.getEnd();
+
+            Space startSpace = getSpace(startPos, copy.board);
+            endSpace = getSpace(endPos, copy.board);
+
+            Piece piece = startSpace.getPiece();
+            ArrayList<Move> possibleMoves = new ArrayList<>();
+
+            int row = startPos.getRow();
+            int col = startPos.getCell();
+            //TODO generate all moves from current piece
+
+            if(moveType == MoveType.Single){
+                possibleMoves.addAll(piece.allSingleMoves(row, col));
+                if(possibleMoves.contains(curMove)) {
+                    if(validateSingleMove((SingleMove) curMove)) {
+                        executeSingleMove(startSpace, endSpace);
+                    }
+                }
+
             }
             else {
-                activePlayerColor = Piece.Color.RED;
+                possibleMoves.addAll(piece.allSingleMoves(row, col));
+                if(possibleMoves.contains(curMove)) {
+                    if(validateJumpMove((JumpMove) curMove)) {
+
+
+                        Position jumpedPos = ((JumpMove) curMove).getJumpedPosition();
+                        Space jumpedSpace = getSpace(jumpedPos, board);
+                        executeJumpMove(startSpace, jumpedSpace, endSpace);
+                    }
+                }
+
+                validateJumpMove((JumpMove) curMove);
             }
-            flip();
-            possibleMoves.clear();
-            lookForSingleMoves();
         }
-        else{
-            //TODO : through invalid move error
+        if(moveType == MoveType.Jump) {
+
+            ArrayList<JumpMove> jumpMoves = new ArrayList<>();
+            Piece piece = endSpace.getPiece();
+            int row = endPos.getRow();
+            int col = endPos.getCell();
+
+            jumpMoves.addAll(piece.allJumps(row, col));
+
+            if (validateJumpMoves(jumpMoves)) {
+                //TODO another jump is possible
+            }
         }
+        //TODO:King piece if necessary
+
+
+        if(activePlayerColor == Piece.Color.RED) {
+            activePlayerColor = Piece.Color.WHITE;
+        }
+        else {
+            activePlayerColor = Piece.Color.RED;
+        }
+        flip();
+
+
     }
 
-    public void executeMove(Move move){
-        Space start = getSpace(move.getStart());
-        Space end = getSpace(move.getEnd());
 
-        end.setPiece(start.getPiece());
+    public void executeSingleMove(Space start, Space end){
+        end.setPiece(end.getPiece());
+        start.setPiece(null);
+    }
+
+    public void executeJumpMove(Space start, Space jumped, Space end){
+
+        end.setPiece(end.getPiece());
+        jumped.setPiece(null);
         start.setPiece(null);
     }
 

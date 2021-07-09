@@ -14,14 +14,14 @@ public class King extends Piece{
     }
 
     @Override
-    public ArrayList<Move> allSingleMoves(int row, int col) {
-        ArrayList<Move> moves = new ArrayList<>();
+    public ArrayList<SingleMove> allSingleMoves(int row, int col) {
+        ArrayList<SingleMove> moves = new ArrayList<>();
         Position start = new Position(row , col);
         //can move 1 in positive and negative direction
         for(int i = -1 ; i <= 1; i+=1) {
             for (int j = -1; j <= 1; j += 1) {
                 Position end = new Position(row + i, col + j);
-                Move move = new Move(start, end);
+                SingleMove move = new SingleMove(start, end);
                 moves.add(move);
             }
         }
@@ -29,7 +29,7 @@ public class King extends Piece{
     }
 
     @Override
-    public ArrayList<Move> allJumps() {
+    public ArrayList<JumpMove> allJumps(int row, int col) {
         return null;
     }
 }

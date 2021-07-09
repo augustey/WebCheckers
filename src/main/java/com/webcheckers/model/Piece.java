@@ -45,10 +45,10 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract ArrayList<Move> allSingleMoves(int row, int col);
+    public abstract ArrayList<SingleMove> allSingleMoves(int row, int col);
 
     //this will be overridden by the 2 different types of pieces
-    public abstract ArrayList<Move> allJumps();
+    public abstract ArrayList<JumpMove> allJumps(int row, int col);
 
     /**
      * A getter method for the type of piece.
