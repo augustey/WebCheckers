@@ -24,4 +24,6 @@ public class JumpMove extends Move {
     public Position getJumpedPosition() {
         return this.jumped;
     }
+
+
 }

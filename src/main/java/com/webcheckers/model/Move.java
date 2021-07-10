@@ -39,8 +39,8 @@ public class Move
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
         Move move = (Move) o;
         return Objects.equals(start, move.start) &&
                 Objects.equals(end, move.end);

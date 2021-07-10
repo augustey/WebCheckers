@@ -18,7 +18,7 @@ public class Board implements Iterable<Row> {
     // 2D Array of Spaces that form the board.
     private Space[][] board;
 
-    private ArrayList<Move> possibleMoves = new ArrayList<>();
+//    private ArrayList<Move> possibleMoves = new ArrayList<>();
     enum MoveType{Jump, Single, Blocked};
 
     private MoveType moveType;
@@ -63,7 +63,7 @@ public class Board implements Iterable<Row> {
         }
         this.moveType = copy.moveType;
         this.activePlayerColor = copy.getActivePlayerColor();
-        this.possibleMoves = new ArrayList<>(copy.possibleMoves);
+//        this.possibleMoves = new ArrayList<>(copy.possibleMoves);
     }
 
     public void determineMoveType() throws ArrayIndexOutOfBoundsException{
@@ -177,9 +177,9 @@ public class Board implements Iterable<Row> {
      */
     public void makeMove(ArrayList<Move> moves) {
 //        System.out.println(this);
-        moveType = MoveType.Single;
-//        determineMoveType();
-        System.out.println(moveType);
+//        moveType = MoveType.Single;
+        determineMoveType();
+//        System.out.println(moveType);
         if (moveType == MoveType.Blocked){
             //TODO game is over
         }
@@ -189,59 +189,66 @@ public class Board implements Iterable<Row> {
 
         Board copy = new Board(this);
 
-        Space endSpace = null;
-        Position endPos = null;
+//        Position endPos = null;
 
         //Loops though all moves
         for (Move curMove : moves) {
 
             Position startPos = curMove.getStart();
-            endPos = curMove.getEnd();
+            Position endPos = curMove.getEnd();
 
             Space startSpace = getSpace(startPos, copy.board);
-            endSpace = getSpace(endPos, copy.board);
+            Space endSpace = getSpace(endPos, copy.board);
 
             Piece piece = startSpace.getPiece();
-            ArrayList<Move> possibleMoves = new ArrayList<>();
+
 
             int row = startPos.getRow();
             int col = startPos.getCell();
 
             if (moveType == MoveType.Single) {
-//                possibleMoves.addAll(piece.allSingleMoves(row, col));
-//                if (possibleMoves.contains(curMove)) {
-//                    System.out.println("possibleMoves contains curMove");
-//                    if (validateSingleMove((SingleMove) curMove)) {
+                ArrayList<SingleMove> singleMoves = new ArrayList<>(piece.allSingleMoves(row, col));
+//                singleMoves.remove(0);
+                if (singleMoves.contains(curMove)) {
+                    int index = singleMoves.indexOf(curMove);
+                    SingleMove singleMove = singleMoves.get(index);
+                    if (validateSingleMove(singleMove)) {
                         executeSingleMove(startSpace, endSpace);
-//                    }
-//                }
+                    }
+                }
+
 
             } else {//Jump move
-                possibleMoves.addAll(piece.allSingleMoves(row, col));
-//                if (possibleMoves.contains(curMove)) {
-//                    if (validateJumpMove((JumpMove) curMove)) {
+                ArrayList<JumpMove> jumpMoves = new ArrayList<>();
+                jumpMoves.addAll(piece.allJumps(row, col));
+                if (jumpMoves.contains(curMove)) {
+                    int index = jumpMoves.indexOf(curMove);
+                    JumpMove jumpMove = jumpMoves.get(index);
 
 
-                        Position jumpedPos = ((JumpMove) curMove).getJumpedPosition();
+                    if (validateJumpMove((JumpMove) curMove)) {
+
+
+                        Position jumpedPos = (jumpMove).getJumpedPosition();
                         Space jumpedSpace = getSpace(jumpedPos, board);
                         executeJumpMove(startSpace, jumpedSpace, endSpace);
-//                    }
-//                }
+                    }
+                }
             }
         }
-        if(moveType == MoveType.Jump) {
-
-            ArrayList<JumpMove> jumpMoves = new ArrayList<>();
-            Piece piece = endSpace.getPiece();
-            int row = endPos.getRow();
-            int col = endPos.getCell();
-
-            jumpMoves.addAll(piece.allJumps(row, col));
-
-            if (validateJumpMoves(jumpMoves)) {
-                //TODO another jump is possible
-            }
-        }
+//        if(moveType == MoveType.Jump) {
+//
+//            ArrayList<JumpMove> jumpMoves = new ArrayList<>();
+//            Piece piece = endSpace.getPiece();
+//            int row = endPos.getRow();
+//            int col = endPos.getCell();
+//
+//            jumpMoves.addAll(piece.allJumps(row, col));
+//
+//            if (validateJumpMoves(jumpMoves)) {
+//                //TODO another jump is possible
+//            }
+//        }
         //TODO:King piece if necessary
 
 
@@ -262,12 +269,12 @@ public class Board implements Iterable<Row> {
     public void executeSingleMove(Space start, Space end){
         end.setPiece(start.getPiece());
         start.setPiece(null);
-        System.out.println(this);
+
     }
 
     public void executeJumpMove(Space start, Space jumped, Space end){
 
-        end.setPiece(end.getPiece());
+        end.setPiece(start.getPiece());
         jumped.setPiece(null);
         start.setPiece(null);
     }
@@ -347,8 +354,8 @@ public class Board implements Iterable<Row> {
             startRow = Integer.parseInt(startCords[0]);
             startCol = Integer.parseInt(startCords[1]);
             String[] endCords = end.split(" ");
-            endRow = Integer.parseInt(startCords[0]);
-            endCol = Integer.parseInt(startCords[1]);
+            endRow = Integer.parseInt(endCords[0]);
+            endCol = Integer.parseInt(endCords[1]);
 
             Move move = new Move(new Position(startRow, startCol), new Position(endRow, endCol));
             ArrayList<Move> moves= new ArrayList<>();
@@ -388,9 +395,9 @@ public class Board implements Iterable<Row> {
         return board.iterator();
     }
 
-    public ArrayList<Move> getPossibleMoves() {
-        return possibleMoves;
-    }
+//    public ArrayList<Move> getPossibleMoves() {
+//        return possibleMoves;
+//    }
 
     public Piece.Color getActivePlayerColor()
     {
