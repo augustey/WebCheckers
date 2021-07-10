@@ -197,9 +197,11 @@ public class Board implements Iterable<Row> {
         Position endPos = null;
         Space endSpace = null;
 
-        //Loops though all moves
-        for (Move curMove : moves) {
 
+        //Loops though all moves
+        for(int i = 0; i < moves.size(); i++){
+//        for (Move curMove : moves) {
+            Move curMove = moves.get(i);
             Position startPos = curMove.getStart();
             endPos = curMove.getEnd();
 
@@ -250,6 +252,7 @@ public class Board implements Iterable<Row> {
                 //TODO another jump is possible
             }
         }
+
 //        TODO:King piece if necessary
 
 
@@ -267,6 +270,8 @@ public class Board implements Iterable<Row> {
 
 
     }
+
+//
 
 
     public void executeSingleMove(Space start, Space end){
@@ -349,7 +354,7 @@ public class Board implements Iterable<Row> {
         int startCol;
         int endRow;
         int endCol;
-        while(true){
+//        while(true){
             System.out.println(this);
 //            start = scan.nextLine();
 //            end = scan.nextLine();
@@ -373,7 +378,7 @@ public class Board implements Iterable<Row> {
             makeMove(moves);
 
 
-        }
+//        }
 
     }
 
