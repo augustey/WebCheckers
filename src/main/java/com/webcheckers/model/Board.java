@@ -223,8 +223,6 @@ public class Board implements Iterable<Row> {
                         executeSingleMove(startSpace, endSpace);
                     }
                 }
-
-
             } else {//Jump move
                 ArrayList<JumpMove> jumpMoves = new ArrayList<>();
                 jumpMoves.addAll(piece.allJumps(row, col));
@@ -237,6 +235,7 @@ public class Board implements Iterable<Row> {
                     }
                 }
             }
+            //TODO if move not exicuted error
         }
         if(moveType == MoveType.Jump) {
 
