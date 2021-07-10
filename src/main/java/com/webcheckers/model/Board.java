@@ -63,7 +63,6 @@ public class Board implements Iterable<Row> {
         }
         this.moveType = copy.moveType;
         this.activePlayerColor = copy.getActivePlayerColor();
-//        this.possibleMoves = new ArrayList<>(copy.possibleMoves);
     }
 
     public void determineMoveType() throws ArrayIndexOutOfBoundsException{
@@ -253,7 +252,9 @@ public class Board implements Iterable<Row> {
         else {
             this.activePlayerColor = Piece.Color.RED;
         }
-        this.board = copy.board;
+        for(int row = 0; row < BOARD_DIM; row++) {
+            System.arraycopy(copy.board[row], 0, this.board[row], 0, BOARD_DIM);
+        }
         flip();
 
 
@@ -264,11 +265,9 @@ public class Board implements Iterable<Row> {
     public void executeSingleMove(Space start, Space end){
         end.setPiece(start.getPiece());
         start.setPiece(null);
-
     }
 
     public void executeJumpMove(Space start, Space jumped, Space end){
-
         end.setPiece(start.getPiece());
         jumped.setPiece(null);
         start.setPiece(null);
@@ -281,12 +280,15 @@ public class Board implements Iterable<Row> {
         Space[][] flippedBoard = new Space[BOARD_DIM][BOARD_DIM];
         for(int row = 0; row < BOARD_DIM; row++) {
             for(int col = 0; col < BOARD_DIM; col++) {
-                Space space = new Space(BOARD_DIM - row - 1, BOARD_DIM - col - 1, this.board[row][col].getPiece(), this.board[row][col].getIsValid());
+                int flippedRow = BOARD_DIM - row - 1;
+                int flippedCol = BOARD_DIM - col - 1;
+                Piece piece = this.board[row][col].getPiece();
+                boolean isValid = this.board[row][col].getIsValid();
+                Space space = new Space(flippedRow, flippedCol , piece, isValid);
                 flippedBoard[BOARD_DIM - row - 1][BOARD_DIM - col - 1] = space;
             }
         }
         this.board = flippedBoard;
-        //System.out.println(this);
     }
 
     /**
