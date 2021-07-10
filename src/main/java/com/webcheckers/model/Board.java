@@ -224,13 +224,8 @@ public class Board implements Iterable<Row> {
                 if (jumpMoves.contains(curMove)) {
                     int index = jumpMoves.indexOf(curMove);
                     JumpMove jumpMove = jumpMoves.get(index);
-
-
-                    if (validateJumpMove((JumpMove) curMove)) {
-
-
-                        Position jumpedPos = (jumpMove).getJumpedPosition();
-                        Space jumpedSpace = getSpace(jumpedPos, board);
+                    if (validateJumpMove(jumpMove)) {
+                        Space jumpedSpace = getSpace(jumpMove.getJumpedPosition(), board);
                         executeJumpMove(startSpace, jumpedSpace, endSpace);
                     }
                 }
