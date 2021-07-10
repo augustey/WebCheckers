@@ -120,4 +120,9 @@ public class Space {
         }
         else return false;
     }
+
+    @Override
+    public String toString() {
+        return "Space{" + "row=" + rowIdx + ", col=" + colIdx + ", piece=" + piece + "}";
+    }
 }
