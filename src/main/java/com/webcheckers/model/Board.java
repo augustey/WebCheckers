@@ -254,10 +254,6 @@ public class Board implements Iterable<Row> {
                         executeSingleMove(startSpace, endSpace);
                     }
                 }
-<<<<<<< HEAD
-
-=======
->>>>>>> b010ae4b1755c97e578c1f2fe23fa898791bb7b1
             } else {//Jump move
                 ArrayList<JumpMove> jumpMoves = new ArrayList<>();
                 jumpMoves.addAll(piece.allJumps(row, col));
