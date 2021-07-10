@@ -228,10 +228,11 @@ public class Board implements Iterable<Row> {
 
         Position endPos = null;
         Space endSpace = null;
-
+        Boolean madeMove;
 
         //Loops though all moves
         for(int i = 0; i < moves.size(); i++){
+            madeMove = false;
 //        for (Move curMove : moves) {
             Move curMove = moves.get(i);
             Position startPos = curMove.getStart();
@@ -251,6 +252,7 @@ public class Board implements Iterable<Row> {
                     int index = singleMoves.indexOf(curMove);
                     SingleMove singleMove = singleMoves.get(index);
                     if (validateSingleMove(singleMove)) {
+                        madeMove = true;
                         executeSingleMove(startSpace, endSpace);
                     }
                 }
@@ -261,12 +263,13 @@ public class Board implements Iterable<Row> {
                     int index = jumpMoves.indexOf(curMove);
                     JumpMove jumpMove = jumpMoves.get(index);
                     if (validateJumpMove(jumpMove)) {
+                        madeMove = true;
                         Space jumpedSpace = getSpace(jumpMove.getJumpedPosition(), board);
                         executeJumpMove(startSpace, jumpedSpace, endSpace);
                     }
                 }
             }
-            //TODO if move not exicuted error
+            //TODO if move not executed error
         }
         if(moveType == MoveType.Jump) {
 
