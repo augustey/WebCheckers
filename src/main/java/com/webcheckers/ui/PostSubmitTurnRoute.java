@@ -3,10 +3,12 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webcheckers.application.PlayerService;
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Move;
 import com.webcheckers.util.Message;
 import spark.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostSubmitTurnRoute implements Route
@@ -25,14 +27,12 @@ public class PostSubmitTurnRoute implements Route
         final Session httpSession = request.session();
         playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
 
-        //Look for other possible moves, and if a jump move is found, send an error
-
-        //If no other moves are found, have game perform moves in the turnMoves list
-        List<Move> moves = playerService.getTurnMoves();
-        playerService.getGame().executeMoves(moves);
+        Board board = playerService.getGame().getBoard();
+        ArrayList<Move> moves = (ArrayList<Move>) playerService.getTurnMoves();
+        Message message = board.makeMove(moves);
 
         Gson gson = new GsonBuilder().create();
 
-        return gson.toJson(Message.info("Valid"));
+        return gson.toJson(message);
     }
 }

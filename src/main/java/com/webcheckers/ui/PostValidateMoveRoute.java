@@ -56,14 +56,14 @@ public class PostValidateMoveRoute implements Route
         Board board = playerService.getGame().getBoard();
         System.out.println(move);
         Message valid;
-//        if(board.getPossibleMoves().contains(move))
-//        {
+        if(board.getPossibleMoves().contains(move))
+        {
             valid = Message.info("Move was made successfully!");
             playerService.addMove(move);
-//        }
-//        else {
-//            valid = Message.error("Move was unable to be made!");
-//        }
+        }
+        else {
+            valid = Message.error("Move was unable to be made!");
+        }
 
         System.out.println(gson.toJson(valid));
 
