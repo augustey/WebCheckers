@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.util.Message;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -93,8 +95,38 @@ public class Board implements Iterable<Row> {
                 }
             }
         }
-
     }
+
+    public ArrayList<Move> getPossibleMoves() {
+        ArrayList<Move> possibleMove = new ArrayList<>();
+
+        determineMoveType();
+        for(int row = 0; row < BOARD_DIM; row++) {
+            for(int col = 0; col < BOARD_DIM; col++) {
+                Piece piece = this.board[row][col].getPiece();
+                if (piece != null && piece.getColor() == activePlayerColor) {
+
+                    if(moveType == MoveType.Jump) {
+                        ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
+                        if(validateJumpMoves(jumpMoves)) {
+                            possibleMove.addAll(jumpMoves);
+                        }
+                    }
+
+                    else if(moveType == MoveType.Single) {
+                        ArrayList<SingleMove> singleMoves = new ArrayList<>(piece.allSingleMoves(row, col));
+                        if (validateSingleMoves(singleMoves)){
+                            possibleMove.addAll(singleMoves);
+                        }
+                    }
+
+                }
+            }
+        }
+        return possibleMove;
+    }
+
+
     /**
      * This method look at all generated singleMoves for one piece and if it is found valid it adds the move to possible moves
      * @param moves
@@ -180,7 +212,7 @@ public class Board implements Iterable<Row> {
      * This is called to make a move
      * @param moves
      */
-    public void makeMove(ArrayList<Move> moves) {
+    public Message makeMove(ArrayList<Move> moves) {
 //        System.out.println(this);
 //        moveType = MoveType.Single;
         determineMoveType();
@@ -210,7 +242,6 @@ public class Board implements Iterable<Row> {
 
             Piece piece = startSpace.getPiece();
 
-
             int row = startPos.getRow();
             int col = startPos.getCell();
 
@@ -223,7 +254,6 @@ public class Board implements Iterable<Row> {
                         executeSingleMove(startSpace, endSpace);
                     }
                 }
-
 
             } else {//Jump move
                 ArrayList<JumpMove> jumpMoves = new ArrayList<>();
@@ -250,6 +280,7 @@ public class Board implements Iterable<Row> {
             if (validateJumpMoves(jumpMoves)) {
                 System.out.println("more ");
                 //TODO another jump is possible
+                return Message.error("Another jump move is possible!");
             }
         }
 
@@ -268,7 +299,7 @@ public class Board implements Iterable<Row> {
         flip();
 
 
-
+        return Message.info("Move is valid!");
     }
 
 //

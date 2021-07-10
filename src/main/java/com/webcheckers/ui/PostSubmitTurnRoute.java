@@ -7,9 +7,7 @@ import com.webcheckers.model.Move;
 import com.webcheckers.util.Message;
 import spark.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PostSubmitTurnRoute implements Route
 {
