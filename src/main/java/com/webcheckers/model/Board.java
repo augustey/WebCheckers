@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Scanner;
 
 /**
  * This class is responsible for creating the board for a checkers game.
@@ -49,6 +50,7 @@ public class Board implements Iterable<Row> {
                 this.board[row][col] = space;
             }
         }
+        debug();
 
 //        lookForSingleMoves();
 
@@ -174,7 +176,7 @@ public class Board implements Iterable<Row> {
      * @param moves
      */
     public void makeMove(ArrayList<Move> moves) {
-        System.out.println(this);
+//        System.out.println(this);
         moveType = MoveType.Single;
 //        determineMoveType();
         System.out.println(moveType);
@@ -250,7 +252,7 @@ public class Board implements Iterable<Row> {
             this.activePlayerColor = Piece.Color.RED;
         }
         this.board = copy.board;
-//        flip();
+        flip();
 
 
 
@@ -324,8 +326,47 @@ public class Board implements Iterable<Row> {
         return textBoard.toString();
     }
 
+    public void debug(){
+        System.out.println("Enter in start pos and end pos on separate lines");
+        System.out.println("Start:row col");
+        System.out.println("End:row col");
+        Scanner scan = new Scanner(System.in);
+        String start;
+        String end;
+
+        int startRow;
+        int startCol;
+        int endRow;
+        int endCol;
+        while(true){
+            System.out.println(this);
+            start = scan.nextLine();
+            end = scan.nextLine();
+
+            String[] startCords = start.split(" ");
+            startRow = Integer.parseInt(startCords[0]);
+            startCol = Integer.parseInt(startCords[1]);
+            String[] endCords = end.split(" ");
+            endRow = Integer.parseInt(startCords[0]);
+            endCol = Integer.parseInt(startCords[1]);
+
+            Move move = new Move(new Position(startRow, startCol), new Position(endRow, endCol));
+            ArrayList<Move> moves= new ArrayList<>();
+            moves.add(move);
+            makeMove(moves);
+
+
+
+
+
+
+        }
+
+    }
+
     public static void main(String[] args) {//for debugging purposes only
         Board board = new Board();
+
     }
 
     /**
