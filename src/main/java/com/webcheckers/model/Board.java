@@ -216,7 +216,7 @@ public class Board implements Iterable<Row> {
 //        System.out.println(this);
 //        moveType = MoveType.Single;
         determineMoveType();
-        System.out.println(moveType);
+        System.out.println("board: " + moveType);
         if (moveType == MoveType.Blocked){
             //TODO game is over
         }
@@ -233,8 +233,9 @@ public class Board implements Iterable<Row> {
         //Loops though all moves
         for(int i = 0; i < moves.size(); i++){
             madeMove = false;
-//        for (Move curMove : moves) {
             Move curMove = moves.get(i);
+            System.out.println(curMove);
+
             Position startPos = curMove.getStart();
             endPos = curMove.getEnd();
 

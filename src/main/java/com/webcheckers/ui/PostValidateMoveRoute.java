@@ -54,7 +54,7 @@ public class PostValidateMoveRoute implements Route
         Move move = gson.fromJson(JSONMove, Move.class);
 
         Board board = playerService.getGame().getBoard();
-        System.out.println(move);
+        System.out.println("PostValidateMoveRoute: " + move);
         Message valid;
         if(board.getPossibleMoves().contains(move))
         {
