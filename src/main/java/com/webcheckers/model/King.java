@@ -6,11 +6,10 @@ public class King extends Piece{
     /**
      * Constructor for a chess piece.
      *
-     * @param type  The type of piece.
      * @param color
      */
-    public King(Type type, Color color) {
-        super(type, color);
+    public King(Color color) {
+        super(color);
     }
 
     @Override
@@ -30,6 +29,16 @@ public class King extends Piece{
 
     @Override
     public ArrayList<JumpMove> allJumps(int row, int col) {
-        return null;
+        ArrayList<JumpMove> moves = new ArrayList<>();
+        Position start = new Position(row , col);
+        //can move 2 the positive/negative direction
+        for(int i = -2 ; i <= 2; i += 4) {
+            for (int j = -2; j <= 2; j += 4) {
+                Position end = new Position(row + i, col + j);
+                JumpMove move = new JumpMove(start, end);
+                moves.add(move);
+            }
+        }
+        return moves;
     }
 }

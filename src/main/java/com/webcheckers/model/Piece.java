@@ -11,22 +11,10 @@ import java.util.ArrayList;
 
 public abstract class Piece {
 
-
-//    private int row;
-//    private int col;
-
-    /**
-     * Enum for the type of pieces.
-     */
-    public enum Type {SINGLE, KING}
-
     /**
      * Enum for the color of pieces.
      */
     public enum Color {RED, WHITE}
-
-    // Type of piece.
-    private final Type type;
 
     // Color of piece.
     private final Color color;
@@ -34,14 +22,10 @@ public abstract class Piece {
     /**
      * Constructor for a chess piece.
      *
-     * @param type
-     *     The type of piece.
-     *
      * @param color
      *     The color of the piece.
      */
-    public Piece(Type type, Color color) {
-        this.type = type;
+    public Piece(Color color) {
         this.color = color;
     }
 
@@ -49,16 +33,6 @@ public abstract class Piece {
 
     //this will be overridden by the 2 different types of pieces
     public abstract ArrayList<JumpMove> allJumps(int row, int col);
-
-    /**
-     * A getter method for the type of piece.
-     *
-     * @return
-     *     The type of piece.
-     */
-    public Type getType () {
-        return type;
-    }
 
     /**
      * A getter method for the color of piece.
@@ -69,5 +43,4 @@ public abstract class Piece {
     public Color getColor() {
         return color;
     }
-
 }

@@ -6,11 +6,10 @@ public class SinglePiece extends Piece {
     /**
      * Constructor for a chess piece.
      *
-     * @param type  The type of piece.
      * @param color
      */
-    public SinglePiece(Type type, Color color) {
-        super(type, color);
+    public SinglePiece(Color color) {
+        super(color);
     }
 
     @Override
