@@ -7,9 +7,10 @@ public class King extends Piece{
      * Constructor for a chess piece.
      *
      * @param color
+     * @param type
      */
-    public King(Color color) {
-        super(color);
+    public King(Type type, Color color) {
+        super(type, color);
     }
 
     @Override

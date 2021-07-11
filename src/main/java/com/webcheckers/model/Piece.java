@@ -14,10 +14,18 @@ public abstract class Piece {
     /**
      * Enum for the color of pieces.
      */
+    public enum Type {SINGLE, KING}
+
+    /**
+     * Enum for the color of pieces.
+     */
     public enum Color {RED, WHITE}
 
     // Color of piece.
     private final Color color;
+
+    // Color of piece.
+    private final Type type;
 
     /**
      * Constructor for a chess piece.
@@ -25,7 +33,8 @@ public abstract class Piece {
      * @param color
      *     The color of the piece.
      */
-    public Piece(Color color) {
+    public Piece(Type type, Color color) {
+        this.type = type;
         this.color = color;
     }
 
@@ -42,5 +51,15 @@ public abstract class Piece {
      */
     public Color getColor() {
         return color;
+    }
+
+    /**
+     * A getter method for the type of piece.
+     *
+     * @return
+     *     The type of piece.
+     */
+    public Type getType () {
+        return type;
     }
 }
