@@ -25,8 +25,10 @@ public class GetHomeRoute implements Route {
 
     public static final Message WELCOME_MSG = Message.info("Welcome to the world of Online Checkers.");
 
+    public static final String TITLE_ATTR = "title";
     public static final String MESSAGE_KEY = "message";
     public static final String PLAYER_KEY = "currentUser";
+    public static final String PLAYERSET_KEY = "playerSet";
     public static final String ONLINE_COUNT_ATTR = "count";
 
     public static final String TITLE = "Welcome!";
@@ -67,13 +69,13 @@ public class GetHomeRoute implements Route {
         //
         final Session httpSession = request.session();
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Welcome!");
+        vm.put(TITLE_ATTR, "Welcome!");
 
         if(httpSession.attribute(PLAYER_KEY) != null)
         {
             Player player = httpSession.attribute(PLAYER_KEY);
-            vm.put("currentUser", player);
-            vm.put("playerSet", playerLobby.getPlayerSet());
+            vm.put(PLAYER_KEY, player);
+            vm.put(PLAYERSET_KEY, playerLobby.getPlayerSet());
 
             PlayerService playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
 
@@ -102,7 +104,7 @@ public class GetHomeRoute implements Route {
         httpSession.removeAttribute(MESSAGE_KEY);
 
         // display a user message in the Home page
-        vm.put("message", message);
+        vm.put(MESSAGE_KEY, message);
 
         // render the View
         return templateEngine.render(new ModelAndView(vm , "home.ftl"));
