@@ -202,7 +202,7 @@ public class WebServer {
 
     post(BACKUPMOVE_URL, new PostBackupMoveRoute());
 
-    post(RESIGNGAME_URL, new PostResignGameRoute(gameCenter));
+    post(RESIGNGAME_URL, new PostResignGameRoute());
 
     post(CHECKTURN_URL, new PostCheckTurnRoute());
 

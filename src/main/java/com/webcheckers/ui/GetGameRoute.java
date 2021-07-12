@@ -112,7 +112,7 @@ public class GetGameRoute implements Route {
             }
         } else {
             Game game = playerService.getGame();
-            GameWin gameWin = new GameWin(gameCenter, game);
+            GameWin gameWin = game.getGameWin();
             modeOptions.put("isGameOver", gameWin.isGameOver());
             modeOptions.put("gameOverMessage", gameWin.getGameOverMessage());
         }

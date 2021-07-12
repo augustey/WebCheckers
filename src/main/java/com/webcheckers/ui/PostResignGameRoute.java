@@ -14,12 +14,11 @@ import java.util.Map;
 
 public class PostResignGameRoute implements Route
 {
-    private GameCenter gameCenter;
     private PlayerService playerService;
 
-    public PostResignGameRoute(final GameCenter gameCenter)
+    public PostResignGameRoute()
     {
-        this.gameCenter = gameCenter;
+
     }
 
 
@@ -31,7 +30,7 @@ public class PostResignGameRoute implements Route
 
         playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
         Game game = playerService.getGame();
-        GameWin gameWin = new GameWin(gameCenter, game);
+        GameWin gameWin = game.getGameWin();
 
         String gameOverMessage = playerService.getPlayer() + " has resigned.";
         Message message;

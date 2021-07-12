@@ -54,9 +54,9 @@ public class Board implements Iterable<Row> {
 //                    else if(row == 2){
 //                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
 //                    }
-                    else if(row < 3) {
-                        space.setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.WHITE));
-                    }
+                   // else if(row < 3) {
+                  //      space.setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.WHITE));
+                  //  }
                 }
                 else {
                     space = new Space(row, col, null, false);
@@ -64,6 +64,8 @@ public class Board implements Iterable<Row> {
                 this.board[row][col] = space;
             }
         }
+
+        this.board[5][2].setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.WHITE));
 //        debug();
 
 //        lookForSingleMoves();
@@ -224,7 +226,7 @@ public class Board implements Iterable<Row> {
         determineMoveType();
         System.out.println("board: " + moveType);
         if (moveType == MoveType.Blocked){
-            //TODO game is over
+            gameWin.triggerGameOver(activePlayerColor + " has run out of moves!");
         }
         else if(moveType == MoveType.Single &&  moves.size() != 1) {
             //TODO: throws error singleMoves can only be one in magnitude
@@ -307,6 +309,9 @@ public class Board implements Iterable<Row> {
         }
         flip();
 
+        if(checkPieceCount(activePlayerColor) == 0) {
+            gameWin.triggerGameOver(activePlayerColor + " has ran out of pieces!");
+        }
 
         return Message.info("Move is valid!");
     }
@@ -444,6 +449,23 @@ public class Board implements Iterable<Row> {
             board.add(curRow);
         }
         return board.iterator();
+    }
+
+    public int checkPieceCount(Piece.Color color) {
+        int count = 0;
+        for(int i = 0; i < BOARD_DIM; i++) {
+            for(int j = 0; j < BOARD_DIM; j++) {
+                Piece piece = board[i][j].getPiece();
+                try {
+                    if(piece.getColor() == color) {
+                        count++;
+                    }
+                } catch (NullPointerException npe) {
+                    continue;
+                }
+            }
+        }
+        return count;
     }
 
 //    public ArrayList<Move> getPossibleMoves() {

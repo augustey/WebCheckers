@@ -44,6 +44,21 @@ public class Game {
     }
 
     /**
+     * Constructor for Game that does not contain GameWin
+     *
+     * @param redPlayer
+     *     The red player who makes the first move.
+     *
+     * @param whitePlayer
+     *     The white player who makes a move after the red player.
+     */
+    public Game(Player redPlayer, Player whitePlayer) {
+        this.redPlayer = redPlayer;
+        this.whitePlayer = whitePlayer;
+        board = new Board(gameWin);
+    }
+
+    /**
      * A getter method for the red player.
      *
      * @return
@@ -71,6 +86,10 @@ public class Game {
      */
     public Board getBoard() {
         return board;
+    }
+
+    public GameWin getGameWin() {
+        return gameWin;
     }
 
     public void setGameOver(boolean gameOver)
