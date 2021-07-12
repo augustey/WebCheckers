@@ -27,6 +27,7 @@ import static org.mockito.Mockito.when;
  * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
  */
 @Tag("UI-tier")
+@Tag("feature-ui")
 public class PostResignGameRouteTest
 {
     private PostResignGameRoute CuT;

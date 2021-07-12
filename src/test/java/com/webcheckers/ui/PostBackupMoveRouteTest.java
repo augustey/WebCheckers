@@ -26,6 +26,7 @@ import static org.mockito.Mockito.when;
  */
 
 @Tag("UI-tier")
+@Tag("feature-ui")
 public class PostBackupMoveRouteTest
 {
     private PostBackupMoveRoute CuT;

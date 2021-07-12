@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
  */
 @Tag("Application-tier")
+@Tag("feature-win")
 public class GameWinTest
 {
     private GameWin CuT;
