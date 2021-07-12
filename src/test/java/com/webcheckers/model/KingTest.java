@@ -1,12 +1,19 @@
 package com.webcheckers.model;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+/**
+ * Testing suite for King
+ *
+ * @author <a href = 'mailto:whd8254@g.rit.edu'>William Dabney</a>
+ */
 
+@Tag("Model-tier")
 public class KingTest {
     private King king;
 
