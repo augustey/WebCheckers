@@ -73,16 +73,20 @@ public class Row implements Iterable<Space> {
     public boolean equals(Object o)
     {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Row row = (Row) o;
+        if(o instanceof Row) {
+            Row row = (Row) o;
 
-        List<Space> list1 = new ArrayList<>();
-        List<Space> list2 = new ArrayList<>();
+            List<Space> list1 = new ArrayList<>();
+            List<Space> list2 = new ArrayList<>();
 
-        row.forEach(list1::add);
-        this.forEach(list2::add);
+            row.forEach(list1::add);
+            this.forEach(list2::add);
 
-        return list1.equals(list2);
+            return list1.equals(list2);
+        }
+        else {
+            return false;
+        }
     }
 
     @Override

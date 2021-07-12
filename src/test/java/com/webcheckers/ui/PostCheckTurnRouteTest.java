@@ -3,7 +3,6 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webcheckers.application.GameCenter;
-import com.webcheckers.application.GameWin;
 import com.webcheckers.application.PlayerService;
 import com.webcheckers.model.*;
 import com.webcheckers.util.Message;
@@ -63,6 +62,7 @@ public class PostCheckTurnRouteTest
         gameCenter.requestNewGame(player, opponent);
         playerService = gameCenter.getPlayerService(player);
         game = playerService.getGame();
+
 
         gson = new GsonBuilder().create();
 

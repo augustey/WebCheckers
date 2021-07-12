@@ -63,6 +63,7 @@ public class PostBackupMoveRouteTest
         playerService = gameCenter.getPlayerService(player);
         game = playerService.getGame();
 
+
         gson = new GsonBuilder().create();
 
         when(session.attribute(GetGameRoute.PLAYER_SERVICE_KEY)).thenReturn(playerService);
