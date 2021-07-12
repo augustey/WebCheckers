@@ -52,18 +52,15 @@ public class PostValidateMoveRoute implements Route
 
         Gson gson = new GsonBuilder().create();
 
-        Move move1 = gson.fromJson(JSONMove, Move.class);
-        Move move2 = toJSON(JSONMove);
+        Move move = gson.fromJson(JSONMove, Move.class);
 
         Board board = playerService.getGame().getBoard();
-        System.out.println(move1);
-        System.out.println(move2);
-        System.out.println("PostValidateMoveRoute: " + move1);
+        System.out.println("PostValidateMoveRoute: " + move);
         Message valid;
-        if(board.getPossibleMoves().contains(move1))
+        if(board.getPossibleMoves().contains(move))
         {
             valid = Message.info("Move was made successfully!");
-            playerService.addMove(move1);
+            playerService.addMove(move);
         }
         else {
             valid = Message.error("Move was unable to be made!");
@@ -72,19 +69,5 @@ public class PostValidateMoveRoute implements Route
         System.out.println(gson.toJson(valid));
 
         return gson.toJson(valid);
-    }
-
-    private Move toJSON(String json) {
-        int[] coords = new int[4];
-        int i = 0;
-
-        for(Character c : json.toCharArray()) {
-            if(Character.isDigit(c)) {
-                coords[i] = Integer.parseInt(Character.toString(c));
-                i++;
-            }
-        }
-
-        return new Move(new Position(coords[0], coords[1]), new Position(coords[2], coords[3]));
     }
 }

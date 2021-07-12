@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.GameWin;
 import com.webcheckers.util.Message;
 
 import java.util.ArrayList;
@@ -25,13 +27,16 @@ public class Board implements Iterable<Row> {
 
     private MoveType moveType;
 
+    private GameWin gameWin;
+
 
     private Piece.Color activePlayerColor;
 
     /**
      * Constructor for the Board.
      */
-    public Board() {
+    public Board(GameWin gameWin) {
+        this.gameWin = gameWin;
         activePlayerColor = Piece.Color.RED;
         this.board = new Space[BOARD_DIM][BOARD_DIM];
         for(int row = 0; row < BOARD_DIM; row++) {
@@ -419,11 +424,6 @@ public class Board implements Iterable<Row> {
 
 
 //        }
-
-    }
-
-    public static void main(String[] args) {//for debugging purposes only
-        Board board = new Board();
 
     }
 

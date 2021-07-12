@@ -1,5 +1,8 @@
 package com.webcheckers.model;
 
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.GameWin;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,6 +24,7 @@ public class Game {
     // The checkers board.
     private final Board board;
 
+    private GameWin gameWin;
     private boolean isGameOver;
 
     /**
@@ -32,10 +36,11 @@ public class Game {
      * @param whitePlayer
      *     The white player who makes a move after the red player.
      */
-    public Game(Player redPlayer, Player whitePlayer) {
+    public Game(Player redPlayer, Player whitePlayer, GameCenter gameCenter) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        board = new Board();
+        gameWin = new GameWin(gameCenter, this);
+        board = new Board(gameWin);
     }
 
     /**
@@ -66,12 +71,6 @@ public class Game {
      */
     public Board getBoard() {
         return board;
-    }
-
-    public void executeMoves(List<Move> moveList)
-    {
-        board.makeMove((ArrayList<Move>) moveList);
-
     }
 
     public void setGameOver(boolean gameOver)

@@ -34,14 +34,14 @@ public class PostResignGameRoute implements Route
         GameWin gameWin = new GameWin(gameCenter, game);
 
         String gameOverMessage = playerService.getPlayer() + " has resigned.";
+        Message message;
+
         if(gameWin.triggerGameOver(gameOverMessage))
         {
-            Message message;
             message = Message.info(gameOverMessage);
+        } else {
+            message = Message.error("Game was unable to be ended.");
         }
-
-        Message message;
-        message = Message.info(gameOverMessage);
 
         return gson.toJson(message);
     }
