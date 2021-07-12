@@ -65,7 +65,7 @@ public class GameCenter {
             return PLAYER_IN_GAME_MSG;
         }
 
-        Game newGame = new Game(player, opponent);
+        Game newGame = new Game(player, opponent, this);
 
         activeGames.put(player, newGame);
         activeGames.put(opponent, newGame);

@@ -1,5 +1,8 @@
 package com.webcheckers.model;
 
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.model.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -19,6 +22,9 @@ public class PlayerTest
 {
     //component under test
     private Player CuT;
+
+    // Friendly object
+    private GameCenter gameCenter;
 
     private final static String NAME = "name"; //name
 
@@ -45,7 +51,7 @@ public class PlayerTest
     }
 
     /**
-     * Test for eqivilancy
+     * Test for equality
      */
     @Test
     public void test_equals()
@@ -58,14 +64,14 @@ public class PlayerTest
     }
 
     /**
-     * Test for unequivlancy
+     * Test for inequality
      */
     @Test
     public void test_not_equal()
     {
         Player player2 = new Player("name1");
         Player player = null;
-        Game game = new Game(CuT, player);
+        Game game = new Game(CuT, player, gameCenter);
 
         boolean result = CuT.equals(player2);
         boolean result2 = CuT.equals(player);

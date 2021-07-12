@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerService;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
@@ -36,6 +37,7 @@ public class PostBackupMoveRouteTest
 
     //friendly objects
     private PlayerService playerService;
+    private GameCenter gameCenter;
     private Game game;
     private Player player;
     private Player opponent;
@@ -55,7 +57,8 @@ public class PostBackupMoveRouteTest
 
         player = new Player("Player");
         opponent = new Player("Opponent");
-        game = new Game(player, opponent);
+        gameCenter = new GameCenter();
+        game = new Game(player, opponent, gameCenter);
         playerService = new PlayerService(player, game);
 
         gson = new GsonBuilder().create();
