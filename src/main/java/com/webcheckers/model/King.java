@@ -18,8 +18,8 @@ public class King extends Piece{
         ArrayList<SingleMove> moves = new ArrayList<>();
         Position start = new Position(row , col);
         //can move 1 in positive and negative direction
-        for(int i = -1 ; i <= 1; i+=1) {
-            for (int j = -1; j <= 1; j += 1) {
+        for(int i = -1 ; i <= 1; i+=2) {
+            for (int j = -1; j <= 1; j += 2) {
                 Position end = new Position(row + i, col + j);
                 SingleMove move = new SingleMove(start, end);
                 moves.add(move);
