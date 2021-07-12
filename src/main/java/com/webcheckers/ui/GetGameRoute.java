@@ -99,6 +99,7 @@ public class GetGameRoute implements Route {
             Player opponent = playerLobby.getPlayer(opponentName);
 
             Message result  = gameCenter.requestNewGame(player, opponent);
+            System.out.println(result);
 
             if(result.getType() == Message.Type.INFO) {
                 playerService = gameCenter.getPlayerService(player);
@@ -115,6 +116,10 @@ public class GetGameRoute implements Route {
             GameWin gameWin = game.getGameWin();
             modeOptions.put("isGameOver", gameWin.isGameOver());
             modeOptions.put("gameOverMessage", gameWin.getGameOverMessage());
+            gameCenter.removeGame(game);
+            if(gameWin.isGameOver()) {
+                httpSession.removeAttribute(PLAYER_SERVICE_KEY);
+            }
         }
 
         Map<String, Object> vm = new HashMap<>();

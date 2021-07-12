@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class Board implements Iterable<Row> {
 
     // The length and width of a checkers board.
-    private final int BOARD_DIM = 8;
+    public final int BOARD_DIM = 8;
 
     // 2D Array of Spaces that form the board.
     private Space[][] board;
@@ -226,7 +226,14 @@ public class Board implements Iterable<Row> {
         determineMoveType();
         System.out.println("board: " + moveType);
         if (moveType == MoveType.Blocked){
-            gameWin.triggerGameOver(activePlayerColor + " has run out of moves!");
+            String gameOverString = "%s has run out of moves!";
+            if(activePlayerColor == Piece.Color.RED) {
+                gameOverString = String.format(gameOverString, "The Red player");
+            } else
+            {
+                gameOverString = String.format(gameOverString, "The White player");
+            }
+            gameWin.triggerGameOver(gameOverString);
         }
         else if(moveType == MoveType.Single &&  moves.size() != 1) {
             //TODO: throws error singleMoves can only be one in magnitude
@@ -309,8 +316,15 @@ public class Board implements Iterable<Row> {
         }
         flip();
 
-        if(checkPieceCount(activePlayerColor) == 0) {
-            gameWin.triggerGameOver(activePlayerColor + " has ran out of pieces!");
+        String gameOverString = "%s has run out of pieces!";
+        if(activePlayerColor == Piece.Color.RED) {
+            gameOverString = String.format(gameOverString, "The Red player");
+        } else
+        {
+            gameOverString = String.format(gameOverString, "The White player");
+        }
+        if(gameWin.checkPieceCount(this, activePlayerColor) == 0) {
+            gameWin.triggerGameOver(gameOverString);
         }
 
         return Message.info("Move is valid!");
@@ -451,24 +465,12 @@ public class Board implements Iterable<Row> {
         return board.iterator();
     }
 
-    public int checkPieceCount(Piece.Color color) {
-        int count = 0;
-        for(int i = 0; i < BOARD_DIM; i++) {
-            for(int j = 0; j < BOARD_DIM; j++) {
-                Piece piece = board[i][j].getPiece();
-                try {
-                    if(piece.getColor() == color) {
-                        count++;
-                    }
-                } catch (NullPointerException npe) {
-                    continue;
-                }
-            }
-        }
-        return count;
+    public Space[][] getBoard()
+    {
+        return board;
     }
 
-//    public ArrayList<Move> getPossibleMoves() {
+    //    public ArrayList<Move> getPossibleMoves() {
 //        return possibleMoves;
 //    }
 
