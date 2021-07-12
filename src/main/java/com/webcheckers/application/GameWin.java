@@ -5,6 +5,11 @@ import com.webcheckers.model.Game;
 import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 
+/**
+ * This class checks for the game win conditions and ends the game
+ *
+ * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
+ */
 public class GameWin
 {
     private GameCenter gameCenter;
