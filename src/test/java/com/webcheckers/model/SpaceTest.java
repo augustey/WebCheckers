@@ -117,7 +117,14 @@ public class SpaceTest {
     @Test
     public void space_equals_test() {
         assertTrue(CuT.equals(CuT));
+        // Test for differing pieces
         Space other = new Space(ROW_VALUE, COL_VALUE, piece, IS_VALID);
+        assertFalse(CuT.equals(other));
+        // Test for differing validity
+        other = new Space(ROW_VALUE, COL_VALUE, piece, !IS_VALID);
+        assertFalse(CuT.equals(other));
+        // Test for differing validity
+        other = new Space(1, 2, piece, !IS_VALID);
         assertFalse(CuT.equals(other));
     }
 }

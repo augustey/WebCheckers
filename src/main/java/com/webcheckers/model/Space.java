@@ -106,6 +106,7 @@ public class Space {
             return
                     otherSpace.rowIdx == rowIdx &&
                     otherSpace.colIdx == colIdx &&
+                    otherSpace.piece == piece &&
                     otherSpace.isValid == isValid;
         }
         else return false;
