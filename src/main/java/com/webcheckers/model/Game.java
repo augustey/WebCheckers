@@ -52,11 +52,6 @@ public class Game {
      * @param whitePlayer
      *     The white player who makes a move after the red player.
      */
-    public Game(Player redPlayer, Player whitePlayer) {
-        this.redPlayer = redPlayer;
-        this.whitePlayer = whitePlayer;
-        board = new Board(gameWin);
-    }
 
     /**
      * A getter method for the red player.

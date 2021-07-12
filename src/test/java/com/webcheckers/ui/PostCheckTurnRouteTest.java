@@ -2,6 +2,8 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.GameWin;
 import com.webcheckers.application.PlayerService;
 import com.webcheckers.model.*;
 import com.webcheckers.util.Message;
@@ -11,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import spark.Request;
 import spark.Response;
 import spark.Session;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -34,6 +38,7 @@ public class PostCheckTurnRouteTest
     private Gson gson;
 
     //friendly objects
+    private GameCenter gameCenter;
     private PlayerService playerService;
     private Game game;
     private Player player;
@@ -51,10 +56,12 @@ public class PostCheckTurnRouteTest
         when(request.session()).thenReturn(session);
         response = mock(Response.class);
 
+        gameCenter = new GameCenter();
         player = new Player("Player");
         opponent = new Player("Opponent");
-        game = new Game(player, opponent);
-        playerService = new PlayerService(player, game);
+        gameCenter.requestNewGame(player, opponent);
+        playerService = gameCenter.getPlayerService(player);
+        game = playerService.getGame();
 
         gson = new GsonBuilder().create();
 
@@ -86,7 +93,9 @@ public class PostCheckTurnRouteTest
         playerService = new PlayerService(opponent, game);
         when(session.attribute(GetGameRoute.PLAYER_SERVICE_KEY)).thenReturn(playerService);
         Board board = game.getBoard();
-        //board.makeMove(new Move(new Position(5, 0), new Position(4, 1)));
+        ArrayList<Move> moves = new ArrayList<>();
+        moves.add(new SingleMove(new Position(5, 0), new Position(4, 1)));
+        board.makeMove(moves);
         Message message = Message.info("true");
         String expected = gson.toJson(message);
 
@@ -102,7 +111,9 @@ public class PostCheckTurnRouteTest
     public void test_active_player_white_player_red()
     {
         Board board = game.getBoard();
-        //board.makeMove(new Move(new Position(5, 0), new Position(4, 1)));
+        ArrayList<Move> moves = new ArrayList<>();
+        moves.add(new SingleMove(new Position(5, 0), new Position(4, 1)));
+        board.makeMove(moves);
         Message message = Message.info("false");
         String expected = gson.toJson(message);
 

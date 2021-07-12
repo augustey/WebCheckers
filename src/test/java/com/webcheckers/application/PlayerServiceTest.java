@@ -27,11 +27,12 @@ public class PlayerServiceTest
 
     //friendly objects
     //BoardView
+    private GameCenter gameCenter;
     private Board board;
+    private Player player;
+    private Player opponent;
     private Move move;
     private Game game;
-    private Player redPlayer;
-    private Player whitePlayer;
 
     /**
      * Setup objects for each test
@@ -39,13 +40,16 @@ public class PlayerServiceTest
     @BeforeEach
     public void testSetup()
     {
-        redPlayer = new Player("red");
-        whitePlayer = new Player("white");
-        game = new Game(redPlayer, whitePlayer);
-        board = game.getBoard();
+        gameCenter = new GameCenter();
+        player = new Player("Player");
+        opponent = new Player("Opponent");
+        gameCenter.requestNewGame(player, opponent);
 
         //Setup CuT
-        CuT = new PlayerService(redPlayer, game);
+        CuT = gameCenter.getPlayerService(player);
+
+        game = CuT.getGame();
+        board = game.getBoard();
     }
 
     /**
@@ -54,7 +58,7 @@ public class PlayerServiceTest
     @Test
     public void test_create_service()
     {
-        new PlayerService(redPlayer, game);
+        new PlayerService(player, game);
     }
 
     /**
@@ -65,7 +69,9 @@ public class PlayerServiceTest
     {
         Player expected = CuT.getRedPlayer();
 
-        assertSame(expected, redPlayer);
+        System.out.println(expected);
+
+        assertSame(expected, player);
     }
 
     /**
@@ -76,7 +82,7 @@ public class PlayerServiceTest
     {
         Player expected = CuT.getWhitePlayer();
 
-        assertSame(expected, whitePlayer);
+        assertSame(expected, opponent);
     }
 
     /**
@@ -87,7 +93,7 @@ public class PlayerServiceTest
     {
         Player expected = CuT.getPlayer();
 
-        assertSame(expected, redPlayer);
+        assertSame(expected, player);
     }
 
     /**
@@ -134,11 +140,44 @@ public class PlayerServiceTest
     @Test
     public void test_getBoardView_flipped()
     {
-        CuT = new PlayerService(whitePlayer, game);
+        CuT = new PlayerService(opponent, game);
 
         board.flip();
         Iterator<Row> bv = board.iterator();
         board.flip();
+        BoardView expected = new BoardView(bv);
+
+        BoardView actual = CuT.getBoardView();
+
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Test for getting the boardview when activeplayer is not the player
+     */
+    @Test
+    public void test_getBoardView_activeplayer_not_player()
+    {
+        board.setActivePlayerColor(Piece.Color.WHITE);
+        board.flip();
+        Iterator<Row> bv = board.iterator();
+        board.flip();
+        BoardView expected = new BoardView(bv);
+
+        BoardView actual = CuT.getBoardView();
+
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Test for getting the boardview when activeplayer is not the player
+     */
+    @Test
+    public void test_getBoardView_activeplayer_white_not_player()
+    {
+        CuT = new PlayerService(opponent, game);
+        board.setActivePlayerColor(Piece.Color.WHITE);
+        Iterator<Row> bv = board.iterator();
         BoardView expected = new BoardView(bv);
 
         BoardView actual = CuT.getBoardView();

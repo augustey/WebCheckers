@@ -1,5 +1,6 @@
 package com.webcheckers.application;
 
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import static org.junit.jupiter.api.Assertions.*;
@@ -92,5 +93,22 @@ public class GameCenterTest {
         assertSame(opponent, playerSvcP.getWhitePlayer());
         assertNull(playerSvcW);
         assertNull(playerSvcN);
+    }
+
+    /**
+     * Test to remove games from active players
+     */
+    @Test
+    public void test_remove_game() {
+        CuT.requestNewGame(player, opponent);
+        Game game = new Game(otherPlayer, opponent, CuT);
+        Game game2 = new Game(opponent, otherPlayer, CuT);
+        Game game3 = new Game(opponent, new Player("f"), CuT);
+        PlayerService playerService = CuT.getPlayerService(player);
+
+        assertTrue(CuT.removeGame(playerService.getGame()));
+        assertFalse(CuT.removeGame(game));
+        assertFalse(CuT.removeGame(game2));
+        assertFalse(CuT.removeGame(game3));
     }
 }

@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerService;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
@@ -36,6 +37,7 @@ public class PostValidateMoveRouteTest
     private Gson gson;
 
     //friendly objects
+    private GameCenter gameCenter;
     private PlayerService playerService;
     private Game game;
     private Player player;
@@ -54,10 +56,12 @@ public class PostValidateMoveRouteTest
         when(request.session()).thenReturn(session);
         response = mock(Response.class);
 
+        gameCenter = new GameCenter();
         player = new Player("Player");
         opponent = new Player("Opponent");
-        game = new Game(player, opponent);
-        playerService = new PlayerService(player, game);
+        gameCenter.requestNewGame(player, opponent);
+        playerService = gameCenter.getPlayerService(player);
+        game = playerService.getGame();
 
         gson = new GsonBuilder().create();
 

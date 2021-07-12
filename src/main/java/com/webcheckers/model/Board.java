@@ -465,4 +465,9 @@ public class Board implements Iterable<Row> {
     {
         return activePlayerColor;
     }
+
+    public void setActivePlayerColor(Piece.Color activePlayerColor)
+    {
+        this.activePlayerColor = activePlayerColor;
+    }
 }

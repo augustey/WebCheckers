@@ -22,11 +22,18 @@ public class JumpMoveTest {
     JumpMove jumpMove;
 
     /**
+     * Setup for each test
+     */
+    @BeforeEach
+    public void setUp() {
+        jumpMove = new JumpMove(new Position(0, 0), new Position(-2, -2));
+    }
+
+    /**
      * Test that JumpMove is generated with out failure.
      */
     @Test
     public void ctor_redPiece() {
-        jumpMove = new JumpMove(new Position(0, 0), new Position(-2, -2));
         assertEquals(new Position(-1 , -1), jumpMove.getJumpedPosition());
     }
 

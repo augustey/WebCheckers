@@ -65,7 +65,7 @@ public class PlayerTest
     {
         Player player2 = new Player("name1");
         Player player = null;
-        Game game = new Game(CuT, player);
+        Game game = new Game(CuT, player, null);
 
         boolean result = CuT.equals(player2);
         boolean result2 = CuT.equals(player);
