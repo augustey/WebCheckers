@@ -1,6 +1,5 @@
 package com.webcheckers.model;
 
-import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.GameWin;
 import com.webcheckers.util.Message;
 
@@ -54,9 +53,10 @@ public class Board implements Iterable<Row> {
 //                    else if(row == 2){
 //                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
 //                    }
-                    //else if(row < 3) {
-                    //    space.setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.WHITE));
-                    //}
+                    else if(row < 3) {
+                        space.setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.WHITE));
+                    }
+
                 }
                 else {
                     space = new Space(row, col, null, false);
@@ -64,8 +64,6 @@ public class Board implements Iterable<Row> {
                 this.board[row][col] = space;
             }
         }
-
-        this.board[5][2].setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.WHITE));
 
 //        debug();
 
@@ -308,6 +306,11 @@ public class Board implements Iterable<Row> {
             System.arraycopy(copy.board[row], 0, this.board[row], 0, BOARD_DIM);
         }
         flip();
+
+        determineMoveType();
+        if(moveType == MoveType.Blocked) {
+            gameWin.checkBlockedGameOver(activePlayerColor);
+        }
 
         gameWin.checkPieceGameOver(this, activePlayerColor);
 
