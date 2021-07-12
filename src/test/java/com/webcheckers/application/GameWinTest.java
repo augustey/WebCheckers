@@ -53,34 +53,34 @@ public class GameWinTest
         assertFalse(game.isGameOver());
     }
 
-    /**
-     * Test for getGameMessage
-     */
-    @Test
-    public void test_getGameOverMessage()
-    {
-        String expected = GameWin.NOT_OVER;
+//    /**
+//     * Test for getGameMessage
+//     */
+//    @Test
+//    public void test_getGameOverMessage()
+//    {
+//        String expected = GameWin.NOT_OVER;
+//
+//        String actual = CuT.getGameOverMessage();
+//
+//        assertEquals(expected, actual);
+//    }
 
-        String actual = CuT.getGameOverMessage();
-
-        assertEquals(expected, actual);
-    }
-
-    /**
-     * Test to trigger an end to a game
-     */
-    @Test
-    public void test_triggerGameOver()
-    {
-        String expected = GameWin.NO_PIECES;
-
-        boolean result = CuT.triggerGameOver(GameWin.NO_PIECES);
-
-        assertTrue(game.isGameOver());
-        assertTrue(CuT.isGameOver());
-        assertEquals(expected, CuT.getGameOverMessage());
-        assertTrue(result);
-    }
+//    /**
+//     * Test to trigger an end to a game
+//     */
+//    @Test
+//    public void test_triggerGameOver()
+//    {
+//        String expected = GameWin.NO_PIECES;
+//
+//        boolean result = CuT.triggerGameOver(GameWin.NO_PIECES);
+//
+//        assertTrue(game.isGameOver());
+//        assertTrue(CuT.isGameOver());
+//        assertEquals(expected, CuT.getGameOverMessage());
+//        assertTrue(result);
+//    }
 
 
 }
