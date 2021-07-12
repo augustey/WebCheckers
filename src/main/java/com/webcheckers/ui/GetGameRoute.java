@@ -116,7 +116,6 @@ public class GetGameRoute implements Route {
             GameWin gameWin = game.getGameWin();
             modeOptions.put("isGameOver", gameWin.isGameOver());
             modeOptions.put("gameOverMessage", gameWin.getGameOverMessage());
-            gameCenter.removeGame(game);
             if(gameWin.isGameOver()) {
                 httpSession.removeAttribute(PLAYER_SERVICE_KEY);
             }

@@ -3,6 +3,7 @@ package com.webcheckers.application;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Piece;
+import com.webcheckers.model.Player;
 
 public class GameWin
 {
@@ -41,6 +42,37 @@ public class GameWin
             }
         }
         return count;
+    }
+
+    public boolean checkPieceGameOver(Board board, Piece.Color activePlayerColor) {
+        String gameOverString = "%s has captured all pieces!";
+        if(activePlayerColor == Piece.Color.RED) {
+            gameOverString = String.format(gameOverString, game.getWhitePlayer());
+        } else
+        {
+            gameOverString = String.format(gameOverString, game.getRedPlayer());
+        }
+        if(checkPieceCount(board, activePlayerColor) == 0)
+        {
+            return triggerGameOver(gameOverString);
+        }
+        return false;
+    }
+
+    public boolean checkBlockedGameOver(Piece.Color activePlayerColor) {
+        String gameOverString = "%s has all of their pieces blocked!";
+        if(activePlayerColor == Piece.Color.RED) {
+            gameOverString = String.format(gameOverString, game.getRedPlayer());
+        } else
+        {
+            gameOverString = String.format(gameOverString, game.getWhitePlayer());
+        }
+        return triggerGameOver(gameOverString);
+    }
+
+    public boolean checkResignGameOver(Player player) {
+        String gameOverString = player + " has resigned.";
+        return triggerGameOver(gameOverString);
     }
 
     public boolean isGameOver() {

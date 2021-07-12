@@ -54,9 +54,9 @@ public class Board implements Iterable<Row> {
 //                    else if(row == 2){
 //                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
 //                    }
-                   // else if(row < 3) {
-                  //      space.setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.WHITE));
-                  //  }
+                    //else if(row < 3) {
+                    //    space.setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.WHITE));
+                    //}
                 }
                 else {
                     space = new Space(row, col, null, false);
@@ -66,6 +66,7 @@ public class Board implements Iterable<Row> {
         }
 
         this.board[5][2].setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.WHITE));
+
 //        debug();
 
 //        lookForSingleMoves();
@@ -226,14 +227,7 @@ public class Board implements Iterable<Row> {
         determineMoveType();
         System.out.println("board: " + moveType);
         if (moveType == MoveType.Blocked){
-            String gameOverString = "%s has run out of moves!";
-            if(activePlayerColor == Piece.Color.RED) {
-                gameOverString = String.format(gameOverString, "The Red player");
-            } else
-            {
-                gameOverString = String.format(gameOverString, "The White player");
-            }
-            gameWin.triggerGameOver(gameOverString);
+            gameWin.checkBlockedGameOver(activePlayerColor);
         }
         else if(moveType == MoveType.Single &&  moves.size() != 1) {
             //TODO: throws error singleMoves can only be one in magnitude
@@ -298,7 +292,6 @@ public class Board implements Iterable<Row> {
 
             if (validateJumpMoves(jumpMoves)) {
                 System.out.println("more ");
-                //TODO another jump is possible
                 return Message.error("Another jump move is possible!");
             }
         }
@@ -316,16 +309,7 @@ public class Board implements Iterable<Row> {
         }
         flip();
 
-        String gameOverString = "%s has run out of pieces!";
-        if(activePlayerColor == Piece.Color.RED) {
-            gameOverString = String.format(gameOverString, "The Red player");
-        } else
-        {
-            gameOverString = String.format(gameOverString, "The White player");
-        }
-        if(gameWin.checkPieceCount(this, activePlayerColor) == 0) {
-            gameWin.triggerGameOver(gameOverString);
-        }
+        gameWin.checkPieceGameOver(this, activePlayerColor);
 
         return Message.info("Move is valid!");
     }

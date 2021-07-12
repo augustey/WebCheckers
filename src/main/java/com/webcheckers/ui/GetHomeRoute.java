@@ -86,6 +86,10 @@ public class GetHomeRoute implements Route {
                     halt();
                     return null;
                 }
+            } else { //If the player has resigned and was returned to the home page
+                if(playerService.getGame().isGameOver()) {
+                    httpSession.removeAttribute(GetGameRoute.PLAYER_SERVICE_KEY);
+                }
             }
         }
 
