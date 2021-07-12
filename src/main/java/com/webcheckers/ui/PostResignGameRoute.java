@@ -32,12 +32,11 @@ public class PostResignGameRoute implements Route
         Game game = playerService.getGame();
         GameWin gameWin = game.getGameWin();
 
-        String gameOverMessage = playerService.getPlayer() + " has resigned.";
         Message message;
 
         if(gameWin.checkResignGameOver(playerService.getPlayer()))
         {
-            message = Message.info(gameOverMessage);
+            message = Message.info(gameWin.getGameOverMessage());
         } else {
             message = Message.error("Game was unable to be ended.");
         }
