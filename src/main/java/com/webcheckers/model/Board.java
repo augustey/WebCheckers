@@ -44,7 +44,7 @@ public class Board implements Iterable<Row> {
                 if(col % 2 + row % 2 == 1) {
                     space = new Space(row, col, null, true);
                     if(row > BOARD_DIM - 4) {
-                        space.setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.RED));
+                        space.setPiece(new SinglePiece(Piece.Color.RED));
                     }
                     // Commented out chain jump debugging
 //                    else if(row == 4){
@@ -54,7 +54,7 @@ public class Board implements Iterable<Row> {
 //                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
 //                    }
                     else if(row < 3) {
-                        space.setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.WHITE));
+                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
                     }
 
                 }
@@ -321,7 +321,7 @@ public class Board implements Iterable<Row> {
         int row = endSpace.getRowIdx();
         Piece piece = endSpace.getPiece();
         if (row == 0 && piece instanceof SinglePiece) {
-            endSpace.setPiece(new King(Piece.Type.KING, activePlayerColor));
+            endSpace.setPiece(new King(activePlayerColor));
         }
     }
 

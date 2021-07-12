@@ -24,7 +24,7 @@ public class KingTest {
      */
     @Test
     public void ctor_redPiece(){
-        new King(Piece.Type.KING, Piece.Color.RED);
+        new King(Piece.Color.RED);
     }
 
     /**
@@ -32,7 +32,7 @@ public class KingTest {
      */
     @Test
     public void ctor_whitePiece(){
-        new King(Piece.Type.KING, Piece.Color.WHITE);
+        new King(Piece.Color.WHITE);
     }
 
     /**
@@ -41,7 +41,7 @@ public class KingTest {
     @Test
     public void ctor_allSingleMoves(){
 
-        final King piece = new King(Piece.Type.KING, Piece.Color.RED);
+        final King piece = new King(Piece.Color.RED);
 
         ArrayList<SingleMove> moves = new ArrayList<>();
 
@@ -61,7 +61,7 @@ public class KingTest {
      */
     @Test
     public void ctor_allJumps(){
-        final King piece = new King(Piece.Type.KING, Piece.Color.RED);
+        final King piece = new King(Piece.Color.RED);
 
         ArrayList<JumpMove> moves = new ArrayList<>();
 

@@ -24,7 +24,7 @@ public class PieceTest {
      */
     @Test
     public void ctor_redPiece(){
-        new King(Piece.Type.KING, Piece.Color.RED);
+        new King(Piece.Color.RED);
     }
 
     /**
@@ -32,7 +32,7 @@ public class PieceTest {
      */
     @Test
     public void ctor_whitePiece(){
-        new King(Piece.Type.KING, Piece.Color.WHITE);
+        new King(Piece.Color.WHITE);
     }
 
     /**
@@ -40,7 +40,7 @@ public class PieceTest {
      */
     @Test
     public void ctor_getColor() {
-        King piece = new King(Piece.Type.KING, Piece.Color.RED);
+        King piece = new King(Piece.Color.RED);
 
         assertEquals(Piece.Color.RED, piece.getColor());
     }
@@ -49,7 +49,7 @@ public class PieceTest {
      * Test that shows that the Type can be gotten correctly
      */
     public void ctor_getType() {
-        King piece = new King(Piece.Type.KING, Piece.Color.RED);
+        King piece = new King(Piece.Color.RED);
 
         assertEquals(Piece.Type.KING, piece.getType());
     }

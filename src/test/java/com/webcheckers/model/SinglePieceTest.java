@@ -29,7 +29,7 @@ public class SinglePieceTest {
      */
     @Test
     public void ctor_redPiece(){
-        new SinglePiece(Piece.Type.SINGLE, Piece.Color.RED);
+        new SinglePiece(Piece.Color.RED);
     }
 
     /**
@@ -37,7 +37,7 @@ public class SinglePieceTest {
      */
     @Test
     public void ctor_whitePiece(){
-        new SinglePiece(Piece.Type.SINGLE, Piece.Color.WHITE);
+        new SinglePiece(Piece.Color.WHITE);
     }
 
     /**
@@ -46,7 +46,7 @@ public class SinglePieceTest {
     @Test
     public void ctor_allSingleMoves(){
 
-        final SinglePiece piece = new SinglePiece(Piece.Type.SINGLE, Piece.Color.RED);
+        final SinglePiece piece = new SinglePiece(Piece.Color.RED);
 
         ArrayList<SingleMove> moves = new ArrayList<>();
 
@@ -64,7 +64,7 @@ public class SinglePieceTest {
      */
     @Test
     public void ctor_allJumps(){
-        final SinglePiece piece = new SinglePiece(Piece.Type.SINGLE, Piece.Color.RED);
+        final SinglePiece piece = new SinglePiece(Piece.Color.RED);
 
         ArrayList<JumpMove> moves = new ArrayList<>();
 
