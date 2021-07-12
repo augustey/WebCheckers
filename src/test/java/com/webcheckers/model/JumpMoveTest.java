@@ -33,7 +33,7 @@ public class JumpMoveTest {
      * Test that JumpMove is generated with out failure.
      */
     @Test
-    public void ctor_redPiece() {
+    public void ctor_jumpMove() {
         assertEquals(new Position(-1 , -1), jumpMove.getJumpedPosition());
     }
 

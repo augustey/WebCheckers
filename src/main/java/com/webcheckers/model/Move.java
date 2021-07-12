@@ -22,10 +22,10 @@ public class Move
         return end;
     }
 
-    public boolean validateMove(){
-        //Stub
-        return true;
-    }
+//    public boolean validateMove(){
+//        //Stub
+//        return true;
+//    }
 
     @Override
     public String toString()
