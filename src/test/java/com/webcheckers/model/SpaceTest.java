@@ -47,31 +47,42 @@ public class SpaceTest {
      * Test that the Space constructor works without failing.
      */
     @Test
-    public void ctor_arg_test() {
+    public void arg_test() {
         new Space(ROW_VALUE, COL_VALUE, piece, IS_VALID);
-    }
-
-    /**
-     * Test the rowIdx getter in Space.
-     */
-    @Test
-    public void ctor_get_row_test() {
-        assertEquals(ROW_VALUE, CuT.getRowIdx());
     }
 
     /**
      * Test the colIdx getter in Space.
      */
     @Test
-    public void ctor_get_col_test() {
+    public void get_col_test() {
         assertEquals(COL_VALUE, CuT.getColIdx());
+    }
+
+    /**
+     * Test the rowIdx getter in Space.
+     */
+    @Test
+    public void get_row_test() {
+        assertEquals(ROW_VALUE, CuT.getRowIdx());
     }
 
     /**
      * Test the piece getter in Space where the piece is null.
      */
     @Test
-    public void ctor_get_piece_test() {
+    public void get_piece_test() {
+        assertNull(CuT.getPiece());
+        // Setting the piece to null to test that the piece is actually placed.
+        CuT.setPiece(piece);
+        assertNotNull(CuT.getPiece());
+    }
+
+    /**
+     * Test the validity getter in Space where the piece is null.
+     */
+    @Test
+    public void get_isvalid_test() {
         assertNull(CuT.getPiece());
         // Setting the piece to null to test that the piece is actually placed.
         CuT.setPiece(piece);
@@ -82,7 +93,7 @@ public class SpaceTest {
      * Test the piece setter in Space.
      */
     @Test
-    public void ctor_set_piece_test() {
+    public void set_piece_test() {
         CuT.setPiece(piece);
         // Testing that piece set is the same piece created.
         assertEquals(piece, CuT.getPiece());
@@ -92,7 +103,7 @@ public class SpaceTest {
      * Test the Space's validity for placing a piece.
      */
     @Test
-    public void ctor_space_validity_test() {
+    public void space_validity_test() {
         // Testing that space is empty and a black/true space.
         assertTrue(CuT.isValid());
         // Testing that space is now filled and no longer valid.
@@ -101,14 +112,12 @@ public class SpaceTest {
     }
 
     /**
-     * Test the Space if it has a piece.
+     * Test the Space equals method.
      */
     @Test
-    public void ctor_space_has_piece_test() {
-        // Testing if the space recognizes having a piece on it.
-        assertFalse(CuT.hasPiece());
-        // Setting a piece to test the space recognizing a piece on it.
-        CuT.setPiece(piece);
-        assertTrue(CuT.hasPiece());
+    public void space_equals_test() {
+        assertTrue(CuT.equals(CuT));
+        Space other = new Space(ROW_VALUE, COL_VALUE, piece, IS_VALID);
+        assertFalse(CuT.equals(other));
     }
 }

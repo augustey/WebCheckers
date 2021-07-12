@@ -288,8 +288,6 @@ public class Board implements Iterable<Row> {
             jumpMoves.addAll(piece.allJumps(row, col));
 
             if (validateJumpMoves(jumpMoves)) {
-                System.out.println("more ");
-                //TODO another jump is possible
                 return Message.error("Another jump move is possible!");
             }
         }

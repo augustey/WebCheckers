@@ -87,16 +87,6 @@ public class Space {
     }
 
     /**
-     * Determine if there is a piece on this space.
-     *
-     * @return
-     *     True if there is a piece on this space, else, false.
-     */
-    public boolean hasPiece() {
-        return piece != null;
-    }
-
-    /**
      * Determine if this is a valid space for a piece.
      *
      * @return
@@ -119,10 +109,5 @@ public class Space {
                     otherSpace.isValid == isValid;
         }
         else return false;
-    }
-
-    @Override
-    public String toString() {
-        return "Space{" + "row=" + rowIdx + ", col=" + colIdx + ", piece=" + piece + "}";
     }
 }
