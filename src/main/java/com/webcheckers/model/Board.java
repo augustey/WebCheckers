@@ -42,11 +42,12 @@ public class Board implements Iterable<Row> {
                     if(row > BOARD_DIM - 4) {
                         space.setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.RED));
                     }
+                    // Commented out chain jump debugging
 //                    else if(row == 4){
-//                        space.setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.WHITE));
+//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
 //                    }
 //                    else if(row == 2){
-//                        space.setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.WHITE));
+//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
 //                    }
                     else if(row < 3) {
                         space.setPiece(new SinglePiece(Piece.Type.SINGLE, Piece.Color.WHITE));
@@ -216,7 +217,7 @@ public class Board implements Iterable<Row> {
 //        System.out.println(this);
 //        moveType = MoveType.Single;
         determineMoveType();
-        System.out.println(moveType);
+        System.out.println("board: " + moveType);
         if (moveType == MoveType.Blocked){
             //TODO game is over
         }
@@ -233,8 +234,9 @@ public class Board implements Iterable<Row> {
         //Loops though all moves
         for(int i = 0; i < moves.size(); i++){
             madeMove = false;
-//        for (Move curMove : moves) {
             Move curMove = moves.get(i);
+            System.out.println(curMove);
+
             Position startPos = curMove.getStart();
             endPos = curMove.getEnd();
 
@@ -287,8 +289,7 @@ public class Board implements Iterable<Row> {
             }
         }
 
-//        TODO:King piece if necessary
-
+        kingPiece(endSpace);
 
         if(this.activePlayerColor == Piece.Color.RED) {
             this.activePlayerColor = Piece.Color.WHITE;
@@ -305,8 +306,13 @@ public class Board implements Iterable<Row> {
         return Message.info("Move is valid!");
     }
 
-//
-
+    private void kingPiece(Space endSpace) {
+        int row = endSpace.getRowIdx();
+        Piece piece = endSpace.getPiece();
+        if (row == 0 && piece instanceof SinglePiece) {
+            endSpace.setPiece(new King(Piece.Type.KING, activePlayerColor));
+        }
+    }
 
     public void executeSingleMove(Space start, Space end){
         end.setPiece(start.getPiece());
@@ -355,19 +361,19 @@ public class Board implements Iterable<Row> {
                     textBoard.append("_");
                 }
                 else if (curSpace.getPiece().getColor() == Piece.Color.RED &&
-                        curSpace.getPiece().getType() == Piece.Type.SINGLE) {//single red
+                        curSpace.getPiece() instanceof SinglePiece) {//single red
                     textBoard.append("r");
                 }
                 else if (curSpace.getPiece().getColor() == Piece.Color.WHITE &&
-                        curSpace.getPiece().getType() == Piece.Type.SINGLE) {//single white
+                        curSpace.getPiece() instanceof SinglePiece) {//single white
                     textBoard.append("w");
                 }
                 else if (curSpace.getPiece().getColor() == Piece.Color.RED &&
-                        curSpace.getPiece().getType() == Piece.Type.KING) {//king white
+                        curSpace.getPiece() instanceof King) {//king white
                     textBoard.append("R");
                 }
                 else if (curSpace.getPiece().getColor() == Piece.Color.WHITE &&
-                        curSpace.getPiece().getType() == Piece.Type.KING) {//king red
+                        curSpace.getPiece() instanceof King) {//king red
                     textBoard.append("W");
                 }
             }

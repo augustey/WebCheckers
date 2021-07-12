@@ -71,6 +71,7 @@ public class Game {
     public void executeMoves(List<Move> moveList)
     {
         board.makeMove((ArrayList<Move>) moveList);
+
     }
 
     public void setGameOver(boolean gameOver)

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Testing suite for SinglePiece
@@ -47,11 +48,14 @@ public class SinglePieceTest {
 
         final SinglePiece piece = new SinglePiece(Piece.Type.SINGLE, Piece.Color.RED);
 
-        ArrayList<Move> moves = new ArrayList<>();
+        ArrayList<SingleMove> moves = new ArrayList<>();
 
-        moves.addAll(piece.allSingleMoves(2, 1));
+        moves.addAll(piece.allSingleMoves(0, 0));
 
         assertEquals(2, moves.size());//that the correct number of possible moves was generated
+
+        assertTrue(moves.contains(new SingleMove(new Position(0, 0) , new Position(-1, -1))));
+        assertTrue(moves.contains(new SingleMove(new Position(0, 0) , new Position(-1, 1))));
 
     }
 
@@ -64,9 +68,12 @@ public class SinglePieceTest {
 
         ArrayList<JumpMove> moves = new ArrayList<>();
 
-//        moves.addAll(piece.allJumps(2, 1));
+        moves.addAll(piece.allJumps(0, 0));
 
-//        assertEquals(2, moves.size());//that the correct number of possible moves was generated
+        assertEquals(2, moves.size());//that the correct number of possible moves was generated
+
+        assertTrue(moves.contains(new JumpMove(new Position(0, 0) , new Position(-2, -2))));
+        assertTrue(moves.contains(new JumpMove(new Position(0, 0) , new Position(-2, 2))));
     }
 
 }

@@ -58,6 +58,7 @@ public class PostValidateMoveRoute implements Route
         Board board = playerService.getGame().getBoard();
         System.out.println(move1);
         System.out.println(move2);
+        System.out.println("PostValidateMoveRoute: " + move1);
         Message valid;
         if(board.getPossibleMoves().contains(move1))
         {
