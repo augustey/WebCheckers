@@ -17,8 +17,13 @@ The purpose of this project was to create a working game of checkers that follow
 american rules. It is played locally on one machine and is done through a web page.
 
 ### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
+
+The project is to develop a web application of checkers that allows users to play
+a game featuring the ability to perform piece moves, either single, jump, or 
+multiple jumps. Additionally, the project has to allow for interact with the 
+game page by reverting moves, submitting their moves, or resigning from the game.
+Users should also be able to interact with the rest of the application through 
+signing in, player selection, and signing out.
 
 ### Glossary and Acronyms
 > _Provide a table of terms and acronyms._
@@ -32,9 +37,11 @@ american rules. It is played locally on one machine and is done through a web pa
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
+The application features include the ability to sign in to and out of the web application, 
+select a user to play a checkers game with. Another set of features are movement: 
+move pieces regularly or perform a jump or several jump moves. 
+Additionally, the application features the ability to back up, or revert, a move before it is submitted, 
+submit a move, and resign from the game.
 
 ### Definition of MVP
 > _Provide a simple description of the Minimum Viable Product._
