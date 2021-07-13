@@ -89,9 +89,7 @@ public class Board implements Iterable<Row> {
                     ArrayList<SingleMove> singleMoves = new ArrayList<>(piece.allSingleMoves(row, col));
                     if (validateSingleMoves(singleMoves)) {
                         moveType = MoveType.Single;
-
                     }
-
                 }
             }
         }
@@ -139,7 +137,6 @@ public class Board implements Iterable<Row> {
             }
         }
         return false;
-
     }
 
     /**
@@ -165,7 +162,6 @@ public class Board implements Iterable<Row> {
     public boolean validateJumpMoves(ArrayList<JumpMove> moves) {
         for (int i = 0; i < moves.size(); i++) {
             JumpMove move = moves.get(i);
-
             if (validateJumpMove(move)) {
                 return true;
             }
@@ -213,12 +209,14 @@ public class Board implements Iterable<Row> {
         return board[row][col];
     }
 
+    public MoveType getMoveType() {
+        return moveType;
+    }
+
     /**
      * This is called to make a move
      */
     public Message makeMove(ArrayList<Move> moves) {
-//        System.out.println(this);
-//        moveType = MoveType.Single;
         determineMoveType();
         if (moveType == MoveType.Blocked) {
             gameWin.checkBlockedGameOver(activePlayerColor);
@@ -266,21 +264,16 @@ public class Board implements Iterable<Row> {
                     if (validateJumpMove(jumpMove)) {
                         Space jumpedSpace = getSpace(jumpMove.getJumpedPosition());
                         copy.executeJumpMove(startSpace, jumpedSpace, endSpace);
-                        System.out.println(this);
                     }
                 }
             }
             //TODO if move not executed error
         }
         if (moveType == MoveType.Jump) {
-
-            ArrayList<JumpMove> jumpMoves = new ArrayList<>();
             Piece piece = endSpace.getPiece();
             int row = endPos.getRow();
             int col = endPos.getCell();
-
-            jumpMoves.addAll(piece.allJumps(row, col));
-
+            ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
             if (validateJumpMoves(jumpMoves)) {
                 return Message.error("Another jump move is possible!");
             }
@@ -346,42 +339,42 @@ public class Board implements Iterable<Row> {
         this.board = flippedBoard;
     }
 
-//    public void ptuiDebug() {
-//        System.out.println("Enter in start pos and end pos on separate lines");
-//        System.out.println("Start:row col");
-//        System.out.println("End:row col");
-//        Scanner scan = new Scanner(System.in);
-//        String start;
-//        String end;
+    public void ptuiDebug() {
+        System.out.println("Enter in start pos and end pos on separate lines");
+        System.out.println("Start:row col");
+        System.out.println("End:row col");
+        Scanner scan = new Scanner(System.in);
+        String start;
+        String end;
+
+        int startRow;
+        int startCol;
+        int endRow;
+        int endCol;
+//        while(true){
+        System.out.println(this);
+//            start = scan.nextLine();
+//            end = scan.nextLine();
 //
-//        int startRow;
-//        int startCol;
-//        int endRow;
-//        int endCol;
-////        while(true){
-//        System.out.println(this);
-////            start = scan.nextLine();
-////            end = scan.nextLine();
-////
-////            String[] startCords = start.split(" ");
-////            startRow = Integer.parseInt(startCords[0]);
-////            startCol = Integer.parseInt(startCords[1]);
-////            String[] endCords = end.split(" ");
-////            endRow = Integer.parseInt(endCords[0]);
-////            endCol = Integer.parseInt(endCords[1]);
-////
-////            Move move = new Move(new Position(startRow, startCol), new Position(endRow, endCol));
+//            String[] startCords = start.split(" ");
+//            startRow = Integer.parseInt(startCords[0]);
+//            startCol = Integer.parseInt(startCords[1]);
+//            String[] endCords = end.split(" ");
+//            endRow = Integer.parseInt(endCords[0]);
+//            endCol = Integer.parseInt(endCords[1]);
 //
-//        Move move = new Move(new Position(5, 0), new Position(3, 2));
-//
-//        ArrayList<Move> moves = new ArrayList<>();
-//        moves.add(move);
-//
-//        Move move1 = new Move(new Position(3, 2), new Position(1, 4));
-//        moves.add(move1);
-//        makeMove(moves);
-////        }
-//    }
+//            Move move = new Move(new Position(startRow, startCol), new Position(endRow, endCol));
+
+        Move move = new Move(new Position(5, 0), new Position(3, 2));
+
+        ArrayList<Move> moves = new ArrayList<>();
+        moves.add(move);
+
+        Move move1 = new Move(new Position(3, 2), new Position(1, 4));
+        moves.add(move1);
+        makeMove(moves);
+//        }
+    }
 
     /**
      * Returns an iterator over elements of type {@code T}.
@@ -439,8 +432,4 @@ public class Board implements Iterable<Row> {
         }
         return textBoard.toString();
     }
-    public MoveType getMoveType() {
-        return moveType;
-    }
-
 }
