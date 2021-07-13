@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,15 +23,104 @@ import java.util.Collection;
 public class BoardTest {
 
     private Board board;
+    private Board jump;
+    private Board chainJump;
+    private Board blocked;
+    private Board kinging;
 
-    private GameWin CuT;
+    private GameWin gameWin;
 
     @BeforeEach
     public void setUp() {
         //this sets up the normal starting board
-        board = new Board(CuT);
+        gameWin = mock(GameWin.class);
+        board = new Board(gameWin);
+        jump = new Board(gameWin);
+        generateJumpableBoard();
+        chainJump = new Board(gameWin);
+        generateChainJumpableBoard();
+        blocked = new Board(gameWin);
+        generateBlockedBoard();
+        kinging = new Board(gameWin);
+        generateKingingBoard();
+        System.out.println(chainJump.toString());
+
+    }
+
+    /**
+     * Changes a new board to one that is can be kinged on first move
+     */
+    private void generateKingingBoard() {
+        for (int row = 0; row < kinging.BOARD_DIM; row++) {
+            for (int col = 0; col < kinging.BOARD_DIM; col++) {
+                if (col % 2 + row % 2 == 1) {
+                    Space space = kinging.getSpace(new Position(row, col), kinging.getBoard());
+                    if(row > 0) {
+                        space.setPiece(new SinglePiece(Piece.Color.RED));
+                    }
 
 
+                }
+            }
+        }
+    }
+
+    /**
+     * Changes a new board to one that jumps are possible on first move
+     */
+    private void generateJumpableBoard() {
+        for (int row = 0; row < jump.BOARD_DIM; row++) {
+            for (int col = 0; col < jump.BOARD_DIM; col++) {
+                if (col % 2 + row % 2 == 1) {
+                    Space space = jump.getSpace(new Position(row, col), jump.getBoard());
+                    if (row == 4) {
+                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+                    } else if(row < 3) {
+                        space.setPiece(null);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Changes a new board to one that chain jumps are possible on first move
+     */
+    private void generateChainJumpableBoard() {
+        for (int row = 0; row < chainJump.BOARD_DIM; row++) {
+            for (int col = 0; col < chainJump.BOARD_DIM; col++) {
+                if (col % 2 + row % 2 == 1) {
+                    Space space = chainJump.getSpace(new Position(row, col), chainJump.getBoard());
+                    if (row == 4) {
+                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+                    }
+                    else if(row == 2) {
+                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+                    }
+                    else if(row < 3) {
+                        space.setPiece(null);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Changes a new board to one that is blocked on first move
+     */
+    private void generateBlockedBoard() {
+        for (int row = 0; row < blocked.BOARD_DIM; row++) {
+            for (int col = 0; col < blocked.BOARD_DIM; col++) {
+                if (col % 2 + row % 2 == 1) {
+                    Space space = blocked.getSpace(new Position(row, col), blocked.getBoard());
+                    if(row < 5) {
+                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+                    }
+
+
+                }
+            }
+        }
     }
 
     /**
@@ -47,7 +137,7 @@ public class BoardTest {
      */
     @Test
     public void ctor_getPossibleMovesSingleMove() {
-        assertEquals(7, board.getPossibleMoves().size());
+        assertEquals(8, board.getPossibleMoves().size());
     }
     //TODO get board to a point where it's move type is Jump
 
@@ -56,8 +146,8 @@ public class BoardTest {
      */
     @Test
     public void ctor_determineMoveTypeJump() {
-        board.determineMoveType();
-        assertEquals(Board.MoveType.Jump, board.getMoveType());
+        jump.determineMoveType();
+        assertEquals(Board.MoveType.Jump, jump.getMoveType());
     }
     /**
      * Check that when determining posible moves when taking jump it goes succesfully
@@ -65,7 +155,7 @@ public class BoardTest {
     @Test
     public void ctor_getPossibleMovesJumpMove() {
 
-        assertEquals(0, board.getPossibleMoves().size());
+        assertEquals(8, jump.getPossibleMoves().size());
     }
     //TODO get board to a point where it's move type is Blocked
     /**
@@ -73,8 +163,8 @@ public class BoardTest {
      */
     @Test
     public void ctor_determineMoveTypeBlocked() {
-        board.determineMoveType();
-        assertEquals(Board.MoveType.Blocked, board.getMoveType());
+        blocked.determineMoveType();
+        assertEquals(Board.MoveType.Blocked, blocked.getMoveType());
     }
     /**
      * Check that when determining possible moves when taking blocked it goes sucesfully
@@ -83,7 +173,7 @@ public class BoardTest {
     @Test
     public void ctor_getPossibleMovesBlocked() {
 
-        assertEquals(0, board.getPossibleMoves().size());
+        assertEquals(0, blocked.getPossibleMoves().size());
     }
 
     /**
@@ -110,8 +200,9 @@ public class BoardTest {
         singleMoves.add(singleMove);
         board.makeMove(singleMoves);
         System.out.println(board.toString());
-        assertNotEquals(startBoard.toString(), board.toString());
-        //TODO show the it was exicuted
+//        assertNotEquals(startBoard.toString(), board.toString());
+        board.flip();
+        assertSame(board.getSpace(end, board.getBoard()).getPiece().getColor(), Piece.Color.RED);
 
 
     }
@@ -123,10 +214,15 @@ public class BoardTest {
     public void ctor_makeMoveJump(){
         //JumpMove
         //TODO need to create a board that has a singleJump avalible
-        Move jumpMove = new Move(new Position(5, 0), new Position(3, 2));
+        Position end = new Position(3, 2);
+        Move jumpMove = new Move(new Position(5, 0),end);
         ArrayList<Move> jumpMoves = new ArrayList<>();
         jumpMoves.add(jumpMove);
-        board.makeMove(jumpMoves);
+        jump.makeMove(jumpMoves);
+
+        System.out.println(jump);
+        jump.flip();
+        assertSame(jump.getSpace(end, jump.getBoard()).getPiece().getColor(), Piece.Color.RED);
         //TODO show the it was exicuted
     }
 
@@ -137,14 +233,20 @@ public class BoardTest {
     @Test
     public void ctor_makeMoveChainJump(){
         //TODO need to create a board that a chain jump is avalible
-        Move jumpMove = new Move(new Position(5, 0), new Position(3, 2));
+        Position end = new Position(3, 2);
+        Move jumpMove = new Move(new Position(5, 0), end);
         ArrayList<Move> jumpMoves = new ArrayList<>();
         jumpMoves.add(jumpMove);
-        board.makeMove(jumpMoves);//should fail
+        chainJump.makeMove(jumpMoves);//should fail
+        assertNull(chainJump.getSpace(end, chainJump.getBoard()).getPiece());//another jump is avalible
+        end = new Position(1, 4);
         //TODO show that it failed
-        Move jumpMove1 = new Move(new Position(3, 2), new Position(1, 4));
+        Move jumpMove1 = new Move(new Position(3, 2), end);
         jumpMoves.add(jumpMove1);
-        board.makeMove(jumpMoves);
+        chainJump.makeMove(jumpMoves);
+        chainJump.flip();
+        assertSame(chainJump.getSpace(end, chainJump.getBoard()).getPiece().getColor(), Piece.Color.RED);
+
         //TODO show that it was exicuted
     }
 
@@ -152,12 +254,27 @@ public class BoardTest {
      * Checks that if the player is determined to blocked no move is made and game is over.
      */
     @Test
-    public void ctorMakeMoveBlocked(){
+    public void ctor_MakeMoveBlocked(){
         //TODO need to create a board that is blocked
-        Move move = new Move(new Position(5, 0), new Position(3, 2));
+        Position end = new Position(4, 1);
+        Move move = new Move(new Position(5, 0), end);
         ArrayList<Move> moves = new ArrayList<>();
-        board.makeMove(moves);//caught by first if statement
+        blocked.makeMove(moves);//caught by first if statement
+        assertEquals(blocked.getSpace(end, blocked.getBoard()).getPiece().getColor(), Piece.Color.RED);
+
         //TODO show that it did not exicute
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void ctor_KingingPeice() {
+        Position end = new Position(0, 1);
+        Move move = new Move(new Position(1, 0), end);
+        ArrayList<Move> moves = new ArrayList<>();
+        kinging.makeMove(moves);//caught by first if statement
+        assertTrue(kinging.getSpace(end, kinging.getBoard()).getPiece() instanceof King);
     }
 
     /**

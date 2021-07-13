@@ -27,6 +27,7 @@ public class Board implements Iterable<Row> {
     // The game win object
     private GameWin gameWin;
 
+
     /**
      * Enum that shows the different types of moves.
      */
@@ -443,4 +444,8 @@ public class Board implements Iterable<Row> {
         }
         return textBoard.toString();
     }
+    public MoveType getMoveType() {
+        return moveType;
+    }
+
 }
