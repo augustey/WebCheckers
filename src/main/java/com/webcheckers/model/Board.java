@@ -8,7 +8,8 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 /**
- * This class is responsible for creating the board for a checkers game.
+ * The board class is responsible for handling all functionality
+ * related to the board during a game.
  *
  * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
@@ -21,24 +22,26 @@ public class Board implements Iterable<Row> {
     // 2D Array of Spaces that form the board.
     private Space[][] board;
 
-    //    private ArrayList<Move> possibleMoves = new ArrayList<>();
-    enum MoveType {Jump, Single, Blocked}
+    // The color of the player whose turn it is.
+    private Piece.Color activePlayerColor;
 
-    ;
-
-    private MoveType moveType;
-
+    // The game win object
     private GameWin gameWin;
 
+    /**
+     * Enum that shows the different types of moves.
+     */
+    enum MoveType {Jump, Single, Blocked}
 
-    private Piece.Color activePlayerColor;
+    // The current move type in the board.
+    private MoveType moveType;
 
     /**
      * Constructor for the Board.
      */
     public Board(GameWin gameWin) {
         this.gameWin = gameWin;
-        activePlayerColor = Piece.Color.RED;
+        this.activePlayerColor = Piece.Color.RED;
         this.board = new Space[BOARD_DIM][BOARD_DIM];
         for (int row = 0; row < BOARD_DIM; row++) {
             for (int col = 0; col < BOARD_DIM; col++) {
@@ -48,18 +51,11 @@ public class Board implements Iterable<Row> {
                     if (row > BOARD_DIM - 4) {
                         space.setPiece(new SinglePiece(Piece.Color.RED));
                     }
-                    // Commented out chain jump debugging
-//                    else if(row == 4){
-//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-//                    }
-//                    else if(row == 2){
-//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-//                    }
                     else if (row < 3) {
                         space.setPiece(new SinglePiece(Piece.Color.WHITE));
                     }
-
-                } else {
+                }
+                else {
                     space = new Space(row, col, null, false);
                 }
                 this.board[row][col] = space;
@@ -201,6 +197,17 @@ public class Board implements Iterable<Row> {
         return false;
     }
 
+    public Space[][] getBoard() {
+        return board;
+    }
+
+    public Piece.Color getActivePlayerColor() {
+        return activePlayerColor;
+    }
+
+    public void setActivePlayerColor(Piece.Color activePlayerColor) {
+        this.activePlayerColor = activePlayerColor;
+    }
 
     /**
      * This method is used to convert a position to what space it represents
@@ -405,18 +412,6 @@ public class Board implements Iterable<Row> {
             board.add(curRow);
         }
         return board.iterator();
-    }
-
-    public Space[][] getBoard() {
-        return board;
-    }
-
-    public Piece.Color getActivePlayerColor() {
-        return activePlayerColor;
-    }
-
-    public void setActivePlayerColor(Piece.Color activePlayerColor) {
-        this.activePlayerColor = activePlayerColor;
     }
 
     /**
