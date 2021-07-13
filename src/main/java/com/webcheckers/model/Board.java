@@ -5,7 +5,6 @@ import com.webcheckers.util.Message;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Scanner;
 
 /**
  * The board class is responsible for handling all functionality related to the board during a game.
@@ -27,7 +26,6 @@ public class Board implements Iterable<Row> {
     // The game win object
     private GameWin gameWin;
 
-
     /**
      * Enum that shows the different types of moves.
      */
@@ -37,7 +35,10 @@ public class Board implements Iterable<Row> {
     private MoveType moveType;
 
     /**
-     * Constructor for the Board.
+     * Constructor for the board class that builds the board and initializes the starting player color.
+     *
+     * @param gameWin
+     *         The gameWin object responsible for handling the win condition.
      */
     public Board(GameWin gameWin) {
         this.gameWin = gameWin;
@@ -61,9 +62,15 @@ public class Board implements Iterable<Row> {
                 this.board[row][col] = space;
             }
         }
-//        ptuiDebug();
+        //ptuiDebug();
     }
 
+    /**
+     * Copy constructor used for performing moves and for communicating the board to the UI.
+     *
+     * @param copy
+     *         The other board to copy from.
+     */
     public Board(Board copy) {
         this.board = new Space[BOARD_DIM][BOARD_DIM];
         for (int row = 0; row < BOARD_DIM; row++) {
@@ -73,19 +80,25 @@ public class Board implements Iterable<Row> {
         this.activePlayerColor = copy.getActivePlayerColor();
     }
 
+    /**
+     * Determines what the current possible move type the active player can make.
+     *
+     * @throws ArrayIndexOutOfBoundsException
+     *         Throws if the array is indexed out of bounds
+     */
     public void determineMoveType() throws ArrayIndexOutOfBoundsException {
         moveType = MoveType.Blocked;
         for (int row = 0; row < BOARD_DIM; row++) {
             for (int col = 0; col < BOARD_DIM; col++) {
                 Piece piece = this.board[row][col].getPiece();
                 if (piece != null && piece.getColor() == activePlayerColor) {
-
+                    // Find the jump moves if possible and return if found.
                     ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
                     if (validateJumpMoves(jumpMoves)) {
                         moveType = MoveType.Jump;
                         return;
                     }
-
+                    // Find the single moves if there are any.
                     ArrayList<SingleMove> singleMoves = new ArrayList<>(piece.allSingleMoves(row, col));
                     if (validateSingleMoves(singleMoves)) {
                         moveType = MoveType.Single;
@@ -95,6 +108,11 @@ public class Board implements Iterable<Row> {
         }
     }
 
+    /**
+     * A getter method for the possible moves that the active player could make.
+     *
+     * @return The list of possible moves.
+     */
     public ArrayList<Move> getPossibleMoves() {
         ArrayList<Move> possibleMove = new ArrayList<>();
 
@@ -103,7 +121,6 @@ public class Board implements Iterable<Row> {
             for (int col = 0; col < BOARD_DIM; col++) {
                 Piece piece = this.board[row][col].getPiece();
                 if (piece != null && piece.getColor() == activePlayerColor) {
-
                     if (moveType == MoveType.Jump) {
                         ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
                         if (validateJumpMoves(jumpMoves)) {
@@ -123,10 +140,38 @@ public class Board implements Iterable<Row> {
         return possibleMove;
     }
 
+    public Space[][] getBoard() {
+        return board;
+    }
+
+    public Piece.Color getActivePlayerColor() {
+        return activePlayerColor;
+    }
 
     /**
-     * This method look at all generated singleMoves for one piece and if it is found valid it adds the move to possible
-     * moves
+     * This method is used to convert a position to what space it represents
+     */
+    public Space getSpace(Position position) {
+        int row = position.getRow();
+        int col = position.getCell();
+        return board[row][col];
+    }
+
+    public MoveType getMoveType() {
+        return moveType;
+    }
+
+    public void setActivePlayerColor(Piece.Color activePlayerColor) {
+        this.activePlayerColor = activePlayerColor;
+    }
+
+    /**
+     * Validates the determined singlemoves to establish the active player's move type.
+     *
+     * @param moves
+     *         A list of single moves.
+     *
+     * @return True if any move in the list is a valid single move, else, false.
      */
     public boolean validateSingleMoves(ArrayList<SingleMove> moves) {
         for (int i = 0; i < moves.size(); i++) {
@@ -140,7 +185,12 @@ public class Board implements Iterable<Row> {
     }
 
     /**
-     * This method looks at an individual single move and checks if it is valid
+     * Validates a singular single move.
+     *
+     * @param move
+     *         A SingleMove object.
+     *
+     * @return True if the single move is valid, else, false.
      */
     private boolean validateSingleMove(SingleMove move) {
         Position end = move.getEnd();
@@ -154,10 +204,11 @@ public class Board implements Iterable<Row> {
         }
     }
 
-
     /**
-     * This method look at all generated jumpMoves for one piece and if it is found valid it adds the move to possible
-     * moves
+     * Validates the determined jumpMoves to establish the active player's move type.
+     *
+     * @param moves A list of jump moves.
+     * @return True if any move in the list is a valid jump move, else, false.
      */
     public boolean validateJumpMoves(ArrayList<JumpMove> moves) {
         for (int i = 0; i < moves.size(); i++) {
@@ -170,7 +221,12 @@ public class Board implements Iterable<Row> {
     }
 
     /**
-     * This method looks at an individual jumpMove and checks if it is valid
+     * Validates a singular jump move.
+     *
+     * @param move
+     *         A JumpMove object.
+     *
+     * @return True if the jump move is valid, else, false.
      */
     private boolean validateJumpMove(JumpMove move) {
         Position end = move.getEnd();
@@ -186,31 +242,6 @@ public class Board implements Iterable<Row> {
             return false;
         }
         return false;
-    }
-
-    public Space[][] getBoard() {
-        return board;
-    }
-
-    public Piece.Color getActivePlayerColor() {
-        return activePlayerColor;
-    }
-
-    public void setActivePlayerColor(Piece.Color activePlayerColor) {
-        this.activePlayerColor = activePlayerColor;
-    }
-
-    /**
-     * This method is used to convert a position to what space it represents
-     */
-    public Space getSpace(Position position) {
-        int row = position.getRow();
-        int col = position.getCell();
-        return board[row][col];
-    }
-
-    public MoveType getMoveType() {
-        return moveType;
     }
 
     /**
@@ -233,7 +264,6 @@ public class Board implements Iterable<Row> {
         //Loops though all moves
         for (int i = 0; i < moves.size(); i++) {
             Move curMove = moves.get(i);
-            System.out.println(curMove);
 
             Position startPos = curMove.getStart();
             endPos = curMove.getEnd();
@@ -339,43 +369,6 @@ public class Board implements Iterable<Row> {
         this.board = flippedBoard;
     }
 
-//    public void ptuiDebug() {
-//        System.out.println("Enter in start pos and end pos on separate lines");
-//        System.out.println("Start:row col");
-//        System.out.println("End:row col");
-//        Scanner scan = new Scanner(System.in);
-//        String start;
-//        String end;
-//
-//        int startRow;
-//        int startCol;
-//        int endRow;
-//        int endCol;
-////        while(true){
-//        System.out.println(this);
-////            start = scan.nextLine();
-////            end = scan.nextLine();
-////
-////            String[] startCords = start.split(" ");
-////            startRow = Integer.parseInt(startCords[0]);
-////            startCol = Integer.parseInt(startCords[1]);
-////            String[] endCords = end.split(" ");
-////            endRow = Integer.parseInt(endCords[0]);
-////            endCol = Integer.parseInt(endCords[1]);
-////
-////            Move move = new Move(new Position(startRow, startCol), new Position(endRow, endCol));
-//
-//        Move move = new Move(new Position(5, 0), new Position(3, 2));
-//
-//        ArrayList<Move> moves = new ArrayList<>();
-//        moves.add(move);
-//
-//        Move move1 = new Move(new Position(3, 2), new Position(1, 4));
-//        moves.add(move1);
-//        makeMove(moves);
-////        }
-//    }
-
     /**
      * Returns an iterator over elements of type {@code T}.
      *
@@ -432,4 +425,41 @@ public class Board implements Iterable<Row> {
         }
         return textBoard.toString();
     }
+
+    //    public void ptuiDebug() {
+//        System.out.println("Enter in start pos and end pos on separate lines");
+//        System.out.println("Start:row col");
+//        System.out.println("End:row col");
+//        Scanner scan = new Scanner(System.in);
+//        String start;
+//        String end;
+//
+//        int startRow;
+//        int startCol;
+//        int endRow;
+//        int endCol;
+////        while(true){
+//        System.out.println(this);
+////            start = scan.nextLine();
+////            end = scan.nextLine();
+////
+////            String[] startCords = start.split(" ");
+////            startRow = Integer.parseInt(startCords[0]);
+////            startCol = Integer.parseInt(startCords[1]);
+////            String[] endCords = end.split(" ");
+////            endRow = Integer.parseInt(endCords[0]);
+////            endCol = Integer.parseInt(endCords[1]);
+////
+////            Move move = new Move(new Position(startRow, startCol), new Position(endRow, endCol));
+//
+//        Move move = new Move(new Position(5, 0), new Position(3, 2));
+//
+//        ArrayList<Move> moves = new ArrayList<>();
+//        moves.add(move);
+//
+//        Move move1 = new Move(new Position(3, 2), new Position(1, 4));
+//        moves.add(move1);
+//        makeMove(moves);
+////        }
+//    }
 }
