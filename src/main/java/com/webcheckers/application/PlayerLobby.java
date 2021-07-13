@@ -6,22 +6,25 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * This class holds sign-in information and verifies unique names
- * and alphanumeric names.
+ * The PlayerLobby class is responsible for holding sign-in information
+ * and verifying unique and alphanumeric player names.
  *
  * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
  */
 public class PlayerLobby {
+
     /**
      * Enum that keeps track of the specific sign in result.
      */
     public enum SignInResult {NON_UNIQUE, NON_ALPHANUMERIC, SUCCESS}
 
-    //Set that holds unique Players.
+    /**
+     * Set of unique Players.
+     */
     private final Set<Player> playerSet;
 
     /**
-     * Creates a new PlayerLobby that initializes the player set.
+     * Constructor for PlayerLobby that initializes the player set.
      */
     public PlayerLobby() {
         playerSet = new HashSet<>();

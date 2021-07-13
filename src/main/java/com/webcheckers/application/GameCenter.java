@@ -8,14 +8,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Central class for creating and monitoring games of checkers.
+ * The GameCenter class is responsible for managing of games of checkers.
  *
  * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
  */
 public class GameCenter {
-    // Error messages
+
+    // Error messages.
     public static final Message PLAYER_NULL_MSG = Message.error("That player does not exist.");
     public static final Message PLAYER_IN_GAME_MSG = Message.error("That player is already in a game.");
+
+    // Information messages.
     public static final Message CREATE_GAME_SUCCESS = Message.info("New game was created.");
 
     /**
