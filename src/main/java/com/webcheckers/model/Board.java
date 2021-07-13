@@ -220,7 +220,6 @@ public class Board implements Iterable<Row> {
 //        System.out.println(this);
 //        moveType = MoveType.Single;
         determineMoveType();
-        System.out.println("board: " + moveType);
         if (moveType == MoveType.Blocked) {
             gameWin.checkBlockedGameOver(activePlayerColor);
         }
@@ -232,11 +231,9 @@ public class Board implements Iterable<Row> {
 
         Position endPos = null;
         Space endSpace = null;
-        Boolean madeMove;
 
         //Loops though all moves
         for (int i = 0; i < moves.size(); i++) {
-            madeMove = false;
             Move curMove = moves.get(i);
             System.out.println(curMove);
 
@@ -257,19 +254,16 @@ public class Board implements Iterable<Row> {
                     int index = singleMoves.indexOf(curMove);
                     SingleMove singleMove = singleMoves.get(index);
                     if (validateSingleMove(singleMove)) {
-                        madeMove = true;
                         executeSingleMove(startSpace, endSpace);
                     }
                 }
             }
             else {//Jump move
-                ArrayList<JumpMove> jumpMoves = new ArrayList<>();
-                jumpMoves.addAll(piece.allJumps(row, col));
+                ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
                 if (jumpMoves.contains(curMove)) {
                     int index = jumpMoves.indexOf(curMove);
                     JumpMove jumpMove = jumpMoves.get(index);
                     if (validateJumpMove(jumpMove)) {
-                        madeMove = true;
                         Space jumpedSpace = getSpace(jumpMove.getJumpedPosition(), board);
                         executeJumpMove(startSpace, jumpedSpace, endSpace);
                     }
