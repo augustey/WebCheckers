@@ -44,8 +44,7 @@ public class GameWin {
      * Set the game's game over flag to true and remove the game from the
      * GameCenter.
      *
-     * @return
-     *     True if the game was removed, else, false.
+     * @return True if the game was removed, else, false.
      */
     public boolean triggerGameOver() {
         game.setGameOver(true);
@@ -56,26 +55,20 @@ public class GameWin {
     /**
      * Determines the number of a specific color of pieces on a board.
      *
-     * @param board
-     *     The game's board.
-     *
-     * @param color
-     *     The piece color to count.
-     *
-     * @return
-     *     The number of the specified color pieces on the board.
+     * @param board The game's board.
+     * @param color The piece color to count.
+     * @return The number of the specified color pieces on the board.
      */
     public int checkPieceCount(Board board, Piece.Color color) {
         int count = 0;
-        for(int i = 0; i < board.BOARD_DIM; i++) {
-            for(int j = 0; j < board.BOARD_DIM; j++) {
+        for (int i = 0; i < board.BOARD_DIM; i++) {
+            for (int j = 0; j < board.BOARD_DIM; j++) {
                 Piece piece = board.getBoard()[i][j].getPiece();
                 try {
-                    if(piece.getColor() == color) {
+                    if (piece.getColor() == color) {
                         count++;
                     }
-                }
-                catch (NullPointerException npe) {
+                } catch (NullPointerException npe) {
                     continue;
                 }
             }
@@ -87,23 +80,17 @@ public class GameWin {
      * Trigger the game over functionality with a message for when the active
      * player's pieces have all been captured.
      *
-     * @param board
-     *     The game's board.
-     *
-     * @param activePlayerColor
-     *     The active player's color.
-     *
-     * @return
-     *     True if game over was triggered, else, false.
+     * @param board             The game's board.
+     * @param activePlayerColor The active player's color.
+     * @return True if game over was triggered, else, false.
      */
     public boolean checkPieceGameOver(Board board, Piece.Color activePlayerColor) {
-        if(activePlayerColor == Piece.Color.RED) {
+        if (activePlayerColor == Piece.Color.RED) {
             this.gameOverMessage = String.format(PIECES_CAPTURED, game.getWhitePlayer());
-        }
-        else {
+        } else {
             this.gameOverMessage = String.format(PIECES_CAPTURED, game.getRedPlayer());
         }
-        if(checkPieceCount(board, activePlayerColor) == 0) {
+        if (checkPieceCount(board, activePlayerColor) == 0) {
             return triggerGameOver();
         }
         return false;
@@ -113,17 +100,13 @@ public class GameWin {
      * Trigger the game over functionality with a message for when the active player's
      * pieces are blocked from moving.
      *
-     * @param activePlayerColor
-     *     The active player's color.
-     *
-     * @return
-     *     True if game over was triggered, else, false.
+     * @param activePlayerColor The active player's color.
+     * @return True if game over was triggered, else, false.
      */
     public boolean checkBlockedGameOver(Piece.Color activePlayerColor) {
-        if(activePlayerColor == Piece.Color.RED) {
+        if (activePlayerColor == Piece.Color.RED) {
             this.gameOverMessage = String.format(PIECES_BLOCKED, game.getRedPlayer());
-        }
-        else {
+        } else {
             this.gameOverMessage = String.format(PIECES_BLOCKED, game.getWhitePlayer());
         }
         return triggerGameOver();
@@ -133,11 +116,8 @@ public class GameWin {
      * Trigger the game over functionality with a message for when a given player
      * has resigned from the game.
      *
-     * @param player
-     *     The player that resigned.
-     *
-     * @return
-     *     True if game over was triggered, else, false.
+     * @param player The player that resigned.
+     * @return True if game over was triggered, else, false.
      */
     public boolean checkResignGameOver(Player player) {
         this.gameOverMessage = String.format(PLAYER_RESIGNED, player);
@@ -147,8 +127,7 @@ public class GameWin {
     /**
      * A getter method for isGameOver boolean flag.
      *
-     * @return
-     *     The isGameOver boolean flag.
+     * @return The isGameOver boolean flag.
      */
     public boolean isGameOver() {
         return isGameOver;
@@ -157,8 +136,7 @@ public class GameWin {
     /**
      * A getter method for game over message.
      *
-     * @return
-     *     The game over message.
+     * @return The game over message.
      */
     public String getGameOverMessage() {
         return gameOverMessage;

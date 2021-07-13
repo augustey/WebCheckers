@@ -36,11 +36,8 @@ public class GameCenter {
     /**
      * Check if player is currently in a game of checkers.
      *
-     * @param player
-     *     The player to search for.
-     *
-     * @return
-     *     Whether the specified player is in a game of checkers or not.
+     * @param player The player to search for.
+     * @return Whether the specified player is in a game of checkers or not.
      */
     public boolean isInGame(Player player) {
         return activeGames.containsKey(player);
@@ -50,20 +47,15 @@ public class GameCenter {
      * Create a new game containing the two specified players.
      * Both players must not be in a game for the game center to create it.
      *
-     * @param player
-     *     The requesting player.
-     *
-     * @param opponent
-     *     The opponent the requesting player selected.
-     *
-     * @return
-     *     The service object containing the newly created game.
+     * @param player   The requesting player.
+     * @param opponent The opponent the requesting player selected.
+     * @return The service object containing the newly created game.
      */
     public Message requestNewGame(Player player, Player opponent) {
-        if(opponent == null) {
+        if (opponent == null) {
             return PLAYER_NULL_MSG;
         }
-        if(isInGame(opponent)) {
+        if (isInGame(opponent)) {
             return PLAYER_IN_GAME_MSG;
         }
 
@@ -79,14 +71,11 @@ public class GameCenter {
      * Get a PlayerService object representing the users active game
      * if it exists.
      *
-     * @param player
-     *     The requesting player.
-     *
-     * @return
-     *     PlayerService object containing the players game if it exists.
+     * @param player The requesting player.
+     * @return PlayerService object containing the players game if it exists.
      */
     public PlayerService getPlayerService(Player player) {
-        if(!isInGame(player)) {
+        if (!isInGame(player)) {
             return null;
         }
 
@@ -97,17 +86,14 @@ public class GameCenter {
     /**
      * Remove the game for each player in active games.
      *
-     * @param game
-     *     The finished game to get the two players.
-     *
-     * @return
-     *     True if the games were removed when both players were in a game, else, false.
+     * @param game The finished game to get the two players.
+     * @return True if the games were removed when both players were in a game, else, false.
      */
     public boolean removeGame(Game game) {
         Player player1 = game.getRedPlayer();
         Player player2 = game.getWhitePlayer();
 
-        if(isInGame(player1) && isInGame(player2)) {
+        if (isInGame(player1) && isInGame(player2)) {
             activeGames.remove(player1);
             activeGames.remove(player2);
             return true;

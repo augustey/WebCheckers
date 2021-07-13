@@ -31,11 +31,8 @@ public class PlayerService {
     /**
      * Constructor for PlayerService.
      *
-     * @param player
-     *     The player this service belongs to.
-     *
-     * @param game
-     *     The game of checkers to provide services for.
+     * @param player The player this service belongs to.
+     * @param game   The game of checkers to provide services for.
      */
     public PlayerService(Player player, Game game) {
         this.player = player;
@@ -48,8 +45,7 @@ public class PlayerService {
     /**
      * A getter method for the red player in the player's game.
      *
-     * @return
-     *     The red player.
+     * @return The red player.
      */
     public Player getRedPlayer() {
         return redPlayer;
@@ -58,8 +54,7 @@ public class PlayerService {
     /**
      * A getter method for the white player in the player's game.
      *
-     * @return
-     *     The white player.
+     * @return The white player.
      */
     public Player getWhitePlayer() {
         return whitePlayer;
@@ -68,8 +63,7 @@ public class PlayerService {
     /**
      * A getter method for the main player.
      *
-     * @return
-     *     The main player.
+     * @return The main player.
      */
     public Player getPlayer() {
         return player;
@@ -78,8 +72,7 @@ public class PlayerService {
     /**
      * A helper getter method for the active player color.
      *
-     * @return
-     *     The active player color.
+     * @return The active player color.
      */
     public Piece.Color getActivePlayerColor() {
         return game.getBoard().getActivePlayerColor();
@@ -88,8 +81,7 @@ public class PlayerService {
     /**
      * A getter method for the game.
      *
-     * @return
-     *     The game.
+     * @return The game.
      */
     public Game getGame() {
         return game;
@@ -99,8 +91,7 @@ public class PlayerService {
      * A getter method for list of moves during the
      * player's turn.
      *
-     * @return
-     *     The list of moves during the player's turn.
+     * @return The list of moves during the player's turn.
      */
     public List<Move> getTurnMoves() {
         return turnMoves;
@@ -109,24 +100,20 @@ public class PlayerService {
     /**
      * A getter method for the board view.
      *
-     * @return
-     *     A board view object.
+     * @return A board view object.
      */
     public synchronized BoardView getBoardView() {
         Board board = new Board(game.getBoard());
         Iterator<Row> boardView;
 
-        if(player.equals(redPlayer) && getActivePlayerColor() == Piece.Color.RED) {
+        if (player.equals(redPlayer) && getActivePlayerColor() == Piece.Color.RED) {
             boardView = board.iterator();
-        }
-        else if(player.equals(redPlayer) && getActivePlayerColor() != Piece.Color.RED) {
+        } else if (player.equals(redPlayer) && getActivePlayerColor() != Piece.Color.RED) {
             board.flip();
             boardView = board.iterator();
-        }
-        else if(player.equals(whitePlayer) && getActivePlayerColor() == Piece.Color.WHITE) {
+        } else if (player.equals(whitePlayer) && getActivePlayerColor() == Piece.Color.WHITE) {
             boardView = board.iterator();
-        }
-        else {
+        } else {
             board.flip();
             boardView = board.iterator();
         }
@@ -137,8 +124,7 @@ public class PlayerService {
     /**
      * Adds a move to the list of moves in the player's turn.
      *
-     * @param move
-     *     A move that is to be made.
+     * @param move A move that is to be made.
      */
     public synchronized void addMove(Move move) {
         turnMoves.add(move);
@@ -147,11 +133,10 @@ public class PlayerService {
     /**
      * Removes the last made move from the list of moves.
      *
-     * @return
-     *     A move that was removed.
+     * @return A move that was removed.
      */
     public synchronized Move removeMove() {
-        if(!turnMoves.isEmpty()) {
+        if (!turnMoves.isEmpty()) {
             int i = turnMoves.size() - 1;
             return turnMoves.remove(i);
         }
