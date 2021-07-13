@@ -5,15 +5,17 @@ import com.webcheckers.model.*;
 import java.util.*;
 
 /**
- * This class manages a specific game of checkers
- * and offers services to access the game.
+ * The PlayerService class is responsible for managing a player's
+ * specific game of checkers.
  *
  * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
  * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
  */
 public class PlayerService {
-    // Active player
+
+    // The Active player.
     private final Player player;
+
     // The Red Player.
     private final Player redPlayer;
 
@@ -23,11 +25,14 @@ public class PlayerService {
     // The single game between the two players.
     private final Game game;
 
-    // The moves made by the player during a turn
+    // The list of moves made by a player.
     private final List<Move> turnMoves;
 
     /**
      * Constructor for PlayerService.
+     *
+     * @param player
+     *     The player this service belongs to.
      *
      * @param game
      *     The game of checkers to provide services for.
@@ -41,7 +46,7 @@ public class PlayerService {
     }
 
     /**
-     * A getter method for the red player.
+     * A getter method for the red player in the player's game.
      *
      * @return
      *     The red player.
@@ -51,7 +56,8 @@ public class PlayerService {
     }
 
     /**
-     * A getter method for the white player.
+     * A getter method for the white player in the player's game.
+     *
      * @return
      *     The white player.
      */
@@ -61,6 +67,7 @@ public class PlayerService {
 
     /**
      * A getter method for the main player.
+     *
      * @return
      *     The main player.
      */
@@ -69,55 +76,54 @@ public class PlayerService {
     }
 
     /**
-     * Get the active player color
+     * A helper getter method for the active player color.
      *
      * @return
-     *      the active color
+     *     The active player color.
      */
-    public Piece.Color getActivePlayerColor()
-    {
+    public Piece.Color getActivePlayerColor() {
         return game.getBoard().getActivePlayerColor();
     }
 
     /**
-     * Get the game
+     * A getter method for the game.
      *
      * @return
-     *      the game
+     *     The game.
      */
-    public Game getGame()
-    {
+    public Game getGame() {
         return game;
     }
 
     /**
-     * A getter method for the game
+     * A getter method for list of moves during the
+     * player's turn.
      *
      * @return
-     *      the list of moves during the turn
+     *     The list of moves during the player's turn.
      */
-    public List<Move> getTurnMoves()
-    {
+    public List<Move> getTurnMoves() {
         return turnMoves;
     }
 
     /**
-     * A getter method for a board.
+     * A getter method for the board view.
+     *
      * @return
-     *     A board.
+     *     A board view object.
      */
     public synchronized BoardView getBoardView() {
         Board board = new Board(game.getBoard());
         Iterator<Row> boardView;
 
-        if(player.equals(redPlayer) && getActivePlayerColor() == Piece.Color.RED) {
+        if (player.equals(redPlayer) && getActivePlayerColor() == Piece.Color.RED) {
             boardView = board.iterator();
         }
-        else if(player.equals(redPlayer) && getActivePlayerColor() != Piece.Color.RED) {
+        else if (player.equals(redPlayer) && getActivePlayerColor() != Piece.Color.RED) {
             board.flip();
             boardView = board.iterator();
         }
-        else if(player.equals(whitePlayer) && getActivePlayerColor() == Piece.Color.WHITE) {
+        else if (player.equals(whitePlayer) && getActivePlayerColor() == Piece.Color.WHITE) {
             boardView = board.iterator();
         }
         else {
@@ -129,29 +135,32 @@ public class PlayerService {
     }
 
     /**
-     * Adds a move to the list of moves in the current turn
+     * Adds a move to the list of moves in the player's turn.
      *
      * @param move
-     *      move that is being made
+     *     A move that is to be made.
      */
     public synchronized void addMove(Move move) {
         turnMoves.add(move);
     }
 
     /**
-     * Removes the last made move from the list of moves
+     * Removes the last made move from the list of moves.
      *
      * @return
-     *      move that was removed
+     *     A move that was removed.
      */
     public synchronized Move removeMove() {
-        if(!turnMoves.isEmpty()) {
+        if (!turnMoves.isEmpty()) {
             int i = turnMoves.size() - 1;
             return turnMoves.remove(i);
         }
         return null;
     }
 
+    /**
+     * Clears the list of moves at the end of a player's turn.
+     */
     public synchronized void clearMoves() {
         turnMoves.clear();
     }
