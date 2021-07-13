@@ -9,27 +9,21 @@ import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class PostSubmitTurnRoute implements Route
-{
+public class PostSubmitTurnRoute implements Route {
+
     private PlayerService playerService;
 
-    public PostSubmitTurnRoute()
-    {
-
+    public PostSubmitTurnRoute() {
     }
 
-
     @Override
-    public Object handle(Request request, Response response)
-    {
+    public Object handle(Request request, Response response) {
         final Session httpSession = request.session();
         playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
 
         Board board = playerService.getGame().getBoard();
         ArrayList<Move> moves = (ArrayList<Move>) playerService.getTurnMoves();
-        System.out.println("PostSubmitTurnRoute: " + moves.get(0));
         Message message = board.makeMove(moves);
         playerService.clearMoves();
 

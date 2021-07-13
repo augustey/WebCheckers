@@ -2,39 +2,46 @@ package com.webcheckers.model;
 
 import java.util.Objects;
 
-public class Position
-{
+/**
+ *
+ *
+ * @author <a href='mailto:jrl9984@rit.edu'>Jim Logan</a>
+ */
+public class Position {
+
+    //
     private int row;
+
+    //
     private int cell;
 
-    public Position(int row, int cell)
-    {
+    /**
+     *
+     */
+    public Position(int row, int cell) {
         this.row = row;
         this.cell = cell;
     }
 
-    public int getCell()
-    {
+    /**
+     *
+     */
+    public int getCell() {
         return cell;
     }
 
-    public int getRow()
-    {
+    /**
+     *
+     */
+    public int getRow() {
         return row;
     }
 
+    /**
+     *
+     */
     @Override
-    public String toString()
-    {
-        return "Position{" +
-                "row=" + row +
-                ", cell=" + cell +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o instanceof Position) {
             Position position = (Position) o;
@@ -46,9 +53,22 @@ public class Position
         }
     }
 
+    /**
+     *
+     */
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(row, cell);
+    }
+
+    /**
+     *
+     */
+    @Override
+    public String toString() {
+        return "Position{" +
+                "row=" + row +
+                ", cell=" + cell +
+                '}';
     }
 }

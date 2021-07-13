@@ -11,18 +11,15 @@ import spark.Response;
 import spark.Route;
 import spark.Session;
 
-public class PostCheckTurnRoute implements Route
-{
+public class PostCheckTurnRoute implements Route {
     private PlayerService playerService;
 
-    public PostCheckTurnRoute()
-    {
+    public PostCheckTurnRoute() {
 
     }
 
     @Override
-    public Object handle(Request request, Response response)
-    {
+    public Object handle(Request request, Response response) {
         final Session httpSession = request.session();
         playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
         Board board = playerService.getGame().getBoard();
@@ -31,15 +28,13 @@ public class PostCheckTurnRoute implements Route
 
         Message message;
 
-        if(playerService.getPlayer().equals(playerService.getRedPlayer()) && board.getActivePlayerColor() == Piece.Color.RED)
-        {
+        if (playerService.getPlayer().equals(playerService.getRedPlayer()) && board.getActivePlayerColor() == Piece.Color.RED) {
             message = Message.info("true");
-        } else if(playerService.getPlayer().equals(playerService.getWhitePlayer()) && board.getActivePlayerColor() == Piece.Color.WHITE)
-        {
+        }
+        else if (playerService.getPlayer().equals(playerService.getWhitePlayer()) && board.getActivePlayerColor() == Piece.Color.WHITE) {
             message = Message.info("true");
-        } else
-        {
-
+        }
+        else {
             message = Message.info("false");
         }
 

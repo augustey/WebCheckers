@@ -31,10 +31,9 @@ public class Game {
      * Constructor for Game that contains the Players.
      *
      * @param redPlayer
-     *     The red player who makes the first move.
-     *
+     *         The red player who makes the first move.
      * @param whitePlayer
-     *     The white player who makes a move after the red player.
+     *         The white player who makes a move after the red player.
      */
     public Game(Player redPlayer, Player whitePlayer, GameCenter gameCenter) {
         this.redPlayer = redPlayer;
@@ -56,8 +55,7 @@ public class Game {
     /**
      * A getter method for the red player.
      *
-     * @return
-     *     The red player.
+     * @return The red player.
      */
     public Player getRedPlayer() {
         return redPlayer;
@@ -66,8 +64,7 @@ public class Game {
     /**
      * A getter method for the white player.
      *
-     * @return
-     *     The white player.
+     * @return The white player.
      */
     public Player getWhitePlayer() {
         return whitePlayer;
@@ -76,8 +73,7 @@ public class Game {
     /**
      * A getter method for the board.
      *
-     * @return
-     *     The white player.
+     * @return The white player.
      */
     public Board getBoard() {
         return board;
@@ -87,13 +83,11 @@ public class Game {
         return gameWin;
     }
 
-    public void setGameOver(boolean gameOver)
-    {
+    public void setGameOver(boolean gameOver) {
         isGameOver = gameOver;
     }
 
-    public boolean isGameOver()
-    {
+    public boolean isGameOver() {
         return isGameOver;
     }
 }

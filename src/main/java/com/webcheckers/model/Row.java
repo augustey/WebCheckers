@@ -23,10 +23,9 @@ public class Row implements Iterable<Space> {
      * Constructor for a row.
      *
      * @param index
-     *     The index of the row on a board.
-     *
+     *         The index of the row on a board.
      * @param spaces
-     *     An arraylist of spaces in this row.
+     *         An arraylist of spaces in this row.
      */
     public Row(int index, ArrayList<Space> spaces) {
         this.index = index;
@@ -36,8 +35,7 @@ public class Row implements Iterable<Space> {
     /**
      * A getter method for the spaces in this row.
      *
-     * @return
-     *     The spaces in this row.
+     * @return The spaces in this row.
      */
     public ArrayList<Space> getSpaces() {
         return spaces;
@@ -46,34 +44,40 @@ public class Row implements Iterable<Space> {
     /**
      * A getter method for the index of this row.
      *
-     * @return
-     *     The index of this row.
+     * @return The index of this row.
      */
     public int getIndex() {
         return index;
     }
 
     /**
-     * A setter method for changing the spaces in a row.
-     * NOTE: This method is only used for changing a board's orientation.
+     * A setter method for changing the spaces in a row. NOTE: This method is only used for changing a board's
+     * orientation.
      *
      * @param spaces
-     *     The spaces for this row to become.
+     *         The spaces for this row to become.
      */
     public void setSpaces(ArrayList<Space> spaces) {
         this.spaces = spaces;
     }
 
+    /**
+     *
+     */
     @Override
     public Iterator<Space> iterator() {
         return spaces.iterator();
     }
 
+    /**
+     * @param o
+     *
+     * @return
+     */
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o) return true;
-        if(o instanceof Row) {
+        if (o instanceof Row) {
             Row row = (Row) o;
 
             List<Space> list1 = new ArrayList<>();
@@ -89,9 +93,11 @@ public class Row implements Iterable<Space> {
         }
     }
 
+    /**
+     *
+     */
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(index, spaces);
     }
 }

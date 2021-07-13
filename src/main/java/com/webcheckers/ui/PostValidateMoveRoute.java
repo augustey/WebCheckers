@@ -14,36 +14,32 @@ import spark.*;
  *
  * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
  */
-public class PostValidateMoveRoute implements Route
-{
-    //PlayerService for the Player
+public class PostValidateMoveRoute implements Route {
+
+    // PlayerService for the Player
     private PlayerService playerService;
 
 
     /**
      * Creates a new PostValidateMoveRoute
      */
-    public PostValidateMoveRoute()
-    {
+    public PostValidateMoveRoute() {
         playerService = null;
     }
 
 
     /**
-     * Grabs the player's PlayerService and the move from the server, and then
-     * validates the move
+     * Grabs the player's PlayerService and the move from the server, and then validates the move
+     *
      * @param request
-     *     The HTTP request.
-     *
+     *         The HTTP request.
      * @param response
-     *     The HTTP response.
+     *         The HTTP response.
      *
-     * @return
-     *      JSON formatted message determing if the move was valid for not
+     * @return JSON formatted message determing if the move was valid for not
      */
     @Override
-    public Object handle(Request request, Response response)
-    {
+    public Object handle(Request request, Response response) {
         final Session httpSession = request.session();
 
         playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
@@ -55,10 +51,9 @@ public class PostValidateMoveRoute implements Route
         Move move = gson.fromJson(JSONMove, Move.class);
 
         Board board = playerService.getGame().getBoard();
-        System.out.println("PostValidateMoveRoute: " + move);
+
         Message valid;
-        if(board.getPossibleMoves().contains(move))
-        {
+        if (board.getPossibleMoves().contains(move)) {
             valid = Message.info("Move was made successfully!");
             playerService.addMove(move);
         }

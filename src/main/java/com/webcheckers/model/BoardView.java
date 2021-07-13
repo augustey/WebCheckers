@@ -6,14 +6,17 @@ import java.util.*;
 
 /**
  * Wrapper class for board iterator.
+ *
  * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
  */
-public class BoardView implements Iterable<Row>{
+public class BoardView implements Iterable<Row> {
     private final Iterator<Row> iterator;
 
     /**
      * Constructor
-     * @param iterator iterator from the Board class
+     *
+     * @param iterator
+     *         iterator from the Board class
      */
     public BoardView(Iterator<Row> iterator) {
         this.iterator = iterator;
@@ -21,6 +24,7 @@ public class BoardView implements Iterable<Row>{
 
     /**
      * Return the iterator from the Board class
+     *
      * @return board class iterator
      */
     @Override
@@ -29,8 +33,7 @@ public class BoardView implements Iterable<Row>{
     }
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -46,8 +49,7 @@ public class BoardView implements Iterable<Row>{
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(iterator);
     }
 }

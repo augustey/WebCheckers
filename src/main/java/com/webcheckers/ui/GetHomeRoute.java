@@ -21,6 +21,7 @@ import static spark.Spark.halt;
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
 public class GetHomeRoute implements Route {
+
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
     public static final Message WELCOME_MSG = Message.info("Welcome to the world of Online Checkers.");
@@ -41,7 +42,7 @@ public class GetHomeRoute implements Route {
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
      *
      * @param templateEngine
-     *   The HTML template rendering engine.
+     *         The HTML template rendering engine.
      */
     public GetHomeRoute(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine) {
         this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
@@ -55,13 +56,11 @@ public class GetHomeRoute implements Route {
      * Render the WebCheckers Home page.
      *
      * @param request
-     *   The HTTP request.
-     *
+     *         The HTTP request.
      * @param response
-     *   The HTTP response.
+     *         The HTTP response.
      *
-     * @return
-     *   The rendered HTML for the Home page.
+     * @return The rendered HTML for the Home page.
      */
     @Override
     public Object handle(Request request, Response response) {
@@ -71,25 +70,25 @@ public class GetHomeRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, "Welcome!");
 
-        if(httpSession.attribute(PLAYER_KEY) != null)
-        {
+        if (httpSession.attribute(PLAYER_KEY) != null) {
             Player player = httpSession.attribute(PLAYER_KEY);
             vm.put(PLAYER_KEY, player);
             vm.put(PLAYERSET_KEY, playerLobby.getPlayerSet());
 
             PlayerService playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
 
-            if(playerService == null) {
+            if (playerService == null) {
                 playerService = gameCenter.getPlayerService(player);
 
-                if(playerService != null) {
+                if (playerService != null) {
                     httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY, playerService);
                     response.redirect(WebServer.GAME_URL);
                     halt();
                     return null;
                 }
-            } else { //If the player has resigned and was returned to the home page
-                if(playerService.getGame().isGameOver()) {
+            }
+            else { //If the player has resigned and was returned to the home page
+                if (playerService.getGame().isGameOver()) {
                     httpSession.removeAttribute(GetGameRoute.PLAYER_SERVICE_KEY);
                 }
             }
@@ -107,6 +106,6 @@ public class GetHomeRoute implements Route {
         vm.put(MESSAGE_KEY, message);
 
         // render the View
-        return templateEngine.render(new ModelAndView(vm , "home.ftl"));
+        return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
 }
