@@ -8,14 +8,19 @@ import java.util.Objects;
  */
 public class Move {
 
-    //
-    private Position start;
+    // The start position.
+    private final Position start;
 
-    //
-    private Position end;
+    // The end position
+    private final Position end;
 
     /**
+     * Constructor for Move.
      *
+     * @param start
+     *         The start position.
+     * @param end
+     *         The end position.
      */
     public Move(Position start, Position end) {
         this.start = start;
@@ -23,27 +28,38 @@ public class Move {
     }
 
     /**
+     * A getter method for the start position.
      *
+     * @return The start position.
      */
     public Position getStart() {
         return start;
     }
 
     /**
+     * A getter method for the end position.
      *
+     * @return The end position.
      */
     public Position getEnd() {
         return end;
     }
 
     /**
+     * Equals method that compares two Move objects together.
      *
+     * @param other
+     *         The other move object.
+     *
+     * @return True if the move objects are equal, else, false.
      */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o instanceof Move) {
-            Move move = (Move) o;
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        else if (other instanceof Move) {
+            Move move = (Move) other;
             return Objects.equals(start, move.start) &&
                     Objects.equals(end, move.end);
         }
@@ -51,7 +67,9 @@ public class Move {
     }
 
     /**
+     * Creates a hashcode due to overriding equals method from the row and cell values.
      *
+     * @return The hashcode.
      */
     @Override
     public int hashCode() {
@@ -59,7 +77,7 @@ public class Move {
     }
 
     /**
-     *
+     * String representation of a Move object.
      */
     @Override
     public String toString() {

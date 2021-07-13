@@ -1,7 +1,7 @@
 package com.webcheckers.model;
 
 /**
- * This class is responsible for creating a space.
+ * The Space class is responsible for handling piece placement.
  *
  * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
@@ -93,17 +93,20 @@ public class Space {
     }
 
     /**
-     * @param o
+     * Equals method that compares two spaces together.
      *
-     * @return
+     * @param other
+     *         The other space object.
+     *
+     * @return True if the space objects are equal, else, false.
      */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object other) {
+        if (this == other) {
             return true;
         }
-        else if (o instanceof Space) {
-            Space otherSpace = (Space) o;
+        else if (other instanceof Space) {
+            Space otherSpace = (Space) other;
             return otherSpace.rowIdx == rowIdx &&
                    otherSpace.colIdx == colIdx &&
                    otherSpace.piece == piece &&
