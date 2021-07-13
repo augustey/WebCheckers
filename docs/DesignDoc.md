@@ -62,7 +62,7 @@ This section describes the application domain.
 A User signs in by entering the login information.
 They can sign out, spectate a game or can join a checkers game with another player / AI.
 During the game either player may resign which ends the game.
-The checkers game is played on a board which is made up of spaces that can be dark or light.
+The checkers game uses a board, which is made up of spaces that can be dark or light, to play the game.
 The Spaces can hold pieces; the player can move their corresponding pieces.
 
 
@@ -78,13 +78,13 @@ The following Tiers/Layers model shows a high-level view of the webapp's archite
 ![The Tiers & Layers of the Architecture](architecture-tiers-and-layers.png)
 
 As a web application, the user interacts with the system using a
-browser. The client-side of the UI is composed of HTML pages with
+browser. The client-side of the UI consists of HTML pages with
 some minimal CSS for styling the page. There is also some JavaScript
 that has been provided to the team by the architect.
 
 The server-side tiers include the UI Tier that is composed of UI Controllers and Views. 
-Controllers are created using the Spark framework and View are built using the FreeMarker framework. 
-The Application and Model tiers are built using plain-old Java objects (POJOs).
+The Spark framework creates Controllers, and the FreeMarker frameworks builds the View.
+The Application and Model tiers contain plain-old Java objects (POJOs).
 
 Details of the components within these tiers are below.
 
@@ -145,8 +145,8 @@ such as when one player runs out of pieces, or when a player cannot make any mov
 The application tier consists of four classes that provide services to the UI tier: 
 GameCenter, PlayerLobby, GameWin, and PlayerService. Each of these classes play a 
 central role in the flow of the application. GameCenter controls what games are 
-active, PlayerLobby holds all of the active players, GameWin determines when and 
-how a game is ended, and PlayerService provides utility to the respective player.
+active, PlayerLobby holds the active players, GameWin determines when and 
+how a game ends, and PlayerService provides utility to the respective player.
 
 
 ### Model Tier
