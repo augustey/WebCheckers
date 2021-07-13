@@ -14,6 +14,9 @@ import java.util.Map;
  */
 public class PostSignOutRoute implements Route
 {
+
+    public static final String MESSAGE_KEY = "message";
+
     // Title attribute.
     private static final String TITLE_ATTR = "title";
 
@@ -63,7 +66,7 @@ public class PostSignOutRoute implements Route
         int count = playerLobby.getPlayerSet().size();
         vm.put(GetHomeRoute.ONLINE_COUNT_ATTR, count);
 
-        vm.put("message", GetHomeRoute.WELCOME_MSG);
+        vm.put(MESSAGE_KEY, GetHomeRoute.WELCOME_MSG);
 
         response.redirect("/");
 
