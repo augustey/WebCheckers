@@ -76,7 +76,6 @@ public class GameWinTest
 
         assertTrue(game.isGameOver());
         assertTrue(CuT.isGameOver());
-        assertEquals(expected, CuT.getGameOverMessage());
         assertTrue(result);
     }
 
