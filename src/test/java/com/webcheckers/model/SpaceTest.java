@@ -122,7 +122,7 @@ public class SpaceTest {
         Space other = new Space(ROW_VALUE, COL_VALUE, piece, IS_VALID);
         assertFalse(CuT.equals(other));
         // Test for differing validity
-        other = new Space(ROW_VALUE, COL_VALUE, piece, !IS_VALID);
+        other = new Space(ROW_VALUE, COL_VALUE, null, !IS_VALID);
         assertFalse(CuT.equals(other));
         // Test for differing row values
         other = new Space(1, COL_VALUE, piece, IS_VALID);

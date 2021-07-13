@@ -117,6 +117,12 @@ public class RowTest {
         // Testing equals through hashcode.
         assertEquals(CuT.hashCode(), CuT.hashCode());
         // Testing not equals through hashcode.
-        assertNotEquals(CuT.hashCode(), spaces.hashCode());
+        ArrayList<Space> spaceList = new ArrayList<>();
+        for(int i = 0; i < 8; i++) {
+            Space space = new Space(1, i, null, IS_VALID);
+            spaceList.add(space);
+        }
+        Row other = new Row(1, spaceList);
+        assertNotEquals(CuT.hashCode(), other.hashCode());
     }
 }
