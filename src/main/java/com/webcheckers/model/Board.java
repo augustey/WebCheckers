@@ -17,14 +17,14 @@ public class Board implements Iterable<Row> {
     // The length and width of a checkers board.
     public final int BOARD_DIM = 8;
 
+    // The game win object
+    private final GameWin gameWin;
+
     // 2D Array of Spaces that form the board.
     private Space[][] board;
 
     // The color of the player whose turn it is.
     private Piece.Color activePlayerColor;
-
-    // The game win object
-    private GameWin gameWin;
 
     /**
      * Enum that shows the different types of moves.
@@ -72,6 +72,7 @@ public class Board implements Iterable<Row> {
      *         The other board to copy from.
      */
     public Board(Board copy) {
+        this.gameWin = copy.gameWin;
         this.board = new Space[BOARD_DIM][BOARD_DIM];
         for (int row = 0; row < BOARD_DIM; row++) {
             System.arraycopy(copy.board[row], 0, this.board[row], 0, BOARD_DIM);
@@ -114,8 +115,7 @@ public class Board implements Iterable<Row> {
      * @return The list of possible moves.
      */
     public ArrayList<Move> getPossibleMoves() {
-        ArrayList<Move> possibleMove = new ArrayList<>();
-
+        ArrayList<Move> possibleMoves = new ArrayList<>();
         determineMoveType();
         for (int row = 0; row < BOARD_DIM; row++) {
             for (int col = 0; col < BOARD_DIM; col++) {
@@ -124,32 +124,47 @@ public class Board implements Iterable<Row> {
                     if (moveType == MoveType.Jump) {
                         ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
                         if (validateJumpMoves(jumpMoves)) {
-                            possibleMove.addAll(jumpMoves);
+                            possibleMoves.addAll(jumpMoves);
                         }
                     }
                     else if (moveType == MoveType.Single) {
                         ArrayList<SingleMove> singleMoves = new ArrayList<>(piece.allSingleMoves(row, col));
                         if (validateSingleMoves(singleMoves)) {
-                            possibleMove.addAll(singleMoves);
+                            possibleMoves.addAll(singleMoves);
                         }
                     }
 
                 }
             }
         }
-        return possibleMove;
+        return possibleMoves;
     }
 
+    /**
+     * A getter method for the 2D space array that represents the board of spaces and pieces.
+     *
+     * @return The board.
+     */
     public Space[][] getBoard() {
         return board;
     }
 
+    /**
+     * A getter method for the active player color.
+     *
+     * @return The active player color.
+     */
     public Piece.Color getActivePlayerColor() {
         return activePlayerColor;
     }
 
     /**
-     * This method is used to convert a position to what space it represents
+     * A getter method for the a space on the board.
+     *
+     * @param position
+     *         The position object containing the row and col location.
+     *
+     * @return The space at the position's location.
      */
     public Space getSpace(Position position) {
         int row = position.getRow();
@@ -157,10 +172,21 @@ public class Board implements Iterable<Row> {
         return board[row][col];
     }
 
+    /**
+     * A getter method for the move type.
+     *
+     * @return The move type.
+     */
     public MoveType getMoveType() {
         return moveType;
     }
 
+    /**
+     * A setter method used only for testing purposes.
+     *
+     * @param activePlayerColor
+     *         A Piece.Color color.
+     */
     public void setActivePlayerColor(Piece.Color activePlayerColor) {
         this.activePlayerColor = activePlayerColor;
     }
@@ -207,7 +233,9 @@ public class Board implements Iterable<Row> {
     /**
      * Validates the determined jumpMoves to establish the active player's move type.
      *
-     * @param moves A list of jump moves.
+     * @param moves
+     *         A list of jump moves.
+     *
      * @return True if any move in the list is a valid jump move, else, false.
      */
     public boolean validateJumpMoves(ArrayList<JumpMove> moves) {
@@ -242,6 +270,43 @@ public class Board implements Iterable<Row> {
             return false;
         }
         return false;
+    }
+
+    private void kingPiece(Space endSpace) {
+        int row = endSpace.getRowIdx();
+        Piece piece = endSpace.getPiece();
+        if (row == 0 && piece instanceof SinglePiece) {
+            endSpace.setPiece(new King(activePlayerColor));
+        }
+    }
+
+    public void executeSingleMove(Space start, Space end) {
+        end.setPiece(start.getPiece());
+        start.setPiece(null);
+    }
+
+    public void executeJumpMove(Space start, Space jumped, Space end) {
+        end.setPiece(start.getPiece());
+        jumped.setPiece(null);
+        start.setPiece(null);
+    }
+
+    /**
+     * This method flips the board to provide the proper orientation for a player.
+     */
+    public void flip() {
+        Space[][] flippedBoard = new Space[BOARD_DIM][BOARD_DIM];
+        for (int row = 0; row < BOARD_DIM; row++) {
+            for (int col = 0; col < BOARD_DIM; col++) {
+                int flippedRow = BOARD_DIM - row - 1;
+                int flippedCol = BOARD_DIM - col - 1;
+                Piece piece = this.board[row][col].getPiece();
+                boolean isValid = this.board[row][col].getIsValid();
+                Space space = new Space(flippedRow, flippedCol, piece, isValid);
+                flippedBoard[BOARD_DIM - row - 1][BOARD_DIM - col - 1] = space;
+            }
+        }
+        this.board = flippedBoard;
     }
 
     /**
@@ -330,43 +395,6 @@ public class Board implements Iterable<Row> {
         gameWin.checkPieceGameOver(this, activePlayerColor);
 
         return Message.info("Move is valid!");
-    }
-
-    private void kingPiece(Space endSpace) {
-        int row = endSpace.getRowIdx();
-        Piece piece = endSpace.getPiece();
-        if (row == 0 && piece instanceof SinglePiece) {
-            endSpace.setPiece(new King(activePlayerColor));
-        }
-    }
-
-    public void executeSingleMove(Space start, Space end) {
-        end.setPiece(start.getPiece());
-        start.setPiece(null);
-    }
-
-    public void executeJumpMove(Space start, Space jumped, Space end) {
-        end.setPiece(start.getPiece());
-        jumped.setPiece(null);
-        start.setPiece(null);
-    }
-
-    /**
-     * This method flips the board to provide the proper orientation for a player.
-     */
-    public void flip() {
-        Space[][] flippedBoard = new Space[BOARD_DIM][BOARD_DIM];
-        for (int row = 0; row < BOARD_DIM; row++) {
-            for (int col = 0; col < BOARD_DIM; col++) {
-                int flippedRow = BOARD_DIM - row - 1;
-                int flippedCol = BOARD_DIM - col - 1;
-                Piece piece = this.board[row][col].getPiece();
-                boolean isValid = this.board[row][col].getIsValid();
-                Space space = new Space(flippedRow, flippedCol, piece, isValid);
-                flippedBoard[BOARD_DIM - row - 1][BOARD_DIM - col - 1] = space;
-            }
-        }
-        this.board = flippedBoard;
     }
 
     /**
