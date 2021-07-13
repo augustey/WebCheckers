@@ -3,16 +3,15 @@ package com.webcheckers.model;
 import java.util.ArrayList;
 
 /**
- * This class is responsible for creating a piece.
+ * The Piece class is responsible for containing the outlined functionality for any Piece object that extend.
  *
  * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
  */
-
 public abstract class Piece {
 
     /**
-     * Enum for the color of pieces.
+     * Enum for the type of pieces.
      */
     public enum Type {SINGLE, KING}
 
@@ -24,12 +23,14 @@ public abstract class Piece {
     // Color of piece.
     private final Color color;
 
-    // Color of piece.
+    // Type of piece.
     private final Type type;
 
     /**
-     * Constructor for a chess piece.
+     * Constructor for Piece.
      *
+     * @param type
+     *         The type of piece.
      * @param color
      *         The color of the piece.
      */
@@ -39,12 +40,26 @@ public abstract class Piece {
     }
 
     /**
+     * Abstract method that will determine all possible single moves for this piece.
      *
+     * @param row
+     *         The start row position value.
+     * @param col
+     *         The start col position value.
+     *
+     * @return A list of single moves that this piece can make.
      */
     public abstract ArrayList<SingleMove> allSingleMoves(int row, int col);
 
     /**
+     * Abstract method that will determine all possible jump moves for this piece.
      *
+     * @param row
+     *         The start row position value.
+     * @param col
+     *         The start col position value.
+     *
+     * @return A list of jump moves that this piece can make.
      */
     public abstract ArrayList<JumpMove> allJumps(int row, int col);
 
