@@ -1,6 +1,7 @@
 package com.webcheckers.model;
 
 
+import com.webcheckers.application.GameCenter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -103,5 +104,19 @@ public class RowTest {
             spaceList.add(space);
         }
         assertFalse(CuT.equals(new Row(1, spaceList)));
+        // Test with a differing object
+        GameCenter gameCenter = new GameCenter();
+        assertFalse(CuT.equals(gameCenter));
+    }
+
+    /**
+     * Test the Row hashcode method.
+     */
+    @Test
+    public void row_hashcode_test() {
+        // Testing equals through hashcode.
+        assertEquals(CuT.hashCode(), CuT.hashCode());
+        // Testing not equals through hashcode.
+        assertNotEquals(CuT.hashCode(), spaces.hashCode());
     }
 }
