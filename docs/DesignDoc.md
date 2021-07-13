@@ -26,11 +26,15 @@ Users should also be able to interact with the rest of the application through
 signing in, player selection, and signing out.
 
 ### Glossary and Acronyms
-> _Provide a table of terms and acronyms._
 
 | Term | Definition |
 |------|------------|
-| VO | Value Object |
+| MVP | Minimum Viable Product |
+| UI | User Interface |
+| AI | Artificial Intelligence |
+| HTML | HyperText Markup Language |
+| CSS | Cascading Style Sheet |
+| POJO | Plain Old Java Object |
 
 
 ## Requirements
