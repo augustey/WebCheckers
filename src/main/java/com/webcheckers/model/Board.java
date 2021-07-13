@@ -272,6 +272,12 @@ public class Board implements Iterable<Row> {
         return false;
     }
 
+    /**
+     * Kings a piece that ends up in the top most row.
+     *
+     * @param endSpace
+     *         The space to see if a piece has landed on the top most row.
+     */
     private void kingPiece(Space endSpace) {
         int row = endSpace.getRowIdx();
         Piece piece = endSpace.getPiece();
@@ -280,11 +286,29 @@ public class Board implements Iterable<Row> {
         }
     }
 
+    /**
+     * Executes a single move.
+     *
+     * @param start
+     *         The start space.
+     * @param end
+     *         The end space.
+     */
     public void executeSingleMove(Space start, Space end) {
         end.setPiece(start.getPiece());
         start.setPiece(null);
     }
 
+    /**
+     * Executes a jump move.
+     *
+     * @param start
+     *         The start space.
+     * @param jumped
+     *         The jumped over space.
+     * @param end
+     *         The end space.
+     */
     public void executeJumpMove(Space start, Space jumped, Space end) {
         end.setPiece(start.getPiece());
         jumped.setPiece(null);
@@ -292,7 +316,7 @@ public class Board implements Iterable<Row> {
     }
 
     /**
-     * This method flips the board to provide the proper orientation for a player.
+     * Flips the board to provide the proper orientation for the active player.
      */
     public void flip() {
         Space[][] flippedBoard = new Space[BOARD_DIM][BOARD_DIM];
@@ -302,45 +326,46 @@ public class Board implements Iterable<Row> {
                 int flippedCol = BOARD_DIM - col - 1;
                 Piece piece = this.board[row][col].getPiece();
                 boolean isValid = this.board[row][col].getIsValid();
-                Space space = new Space(flippedRow, flippedCol, piece, isValid);
-                flippedBoard[BOARD_DIM - row - 1][BOARD_DIM - col - 1] = space;
+                Space newSpace = new Space(flippedRow, flippedCol, piece, isValid);
+                flippedBoard[flippedRow][flippedCol] = newSpace;
             }
         }
         this.board = flippedBoard;
     }
 
     /**
-     * This is called to make a move
+     * Uses a list of moves to make moves on the board.
+     *
+     * @param moves
+     *         A list of moves.
+     *
+     * @return A message if the moves were valid, or an error if there is another jump move possible.
      */
     public Message makeMove(ArrayList<Move> moves) {
+        // Determine what move type the user can make.
         determineMoveType();
+        // Handles the win condition where there are no possible moves.
         if (moveType == MoveType.Blocked) {
             gameWin.checkBlockedGameOver(activePlayerColor);
         }
         else if (moveType == MoveType.Single && moves.size() != 1) {
             //TODO: throws error singleMoves can only be one in magnitude
         }
-
+        // Create the board to make the moves on.
         Board copy = new Board(this);
-
+        // Establish the end position and space.
         Position endPos = null;
         Space endSpace = null;
-
-        //Loops though all moves
-        for (int i = 0; i < moves.size(); i++) {
-            Move curMove = moves.get(i);
-
+        // Loops though all moves.
+        for (Move curMove : moves) {
             Position startPos = curMove.getStart();
             endPos = curMove.getEnd();
-
             Space startSpace = copy.getSpace(startPos);
             endSpace = copy.getSpace(endPos);
-
             Piece piece = startSpace.getPiece();
-
             int row = startPos.getRow();
             int col = startPos.getCell();
-
+            // Perform a single move.
             if (moveType == MoveType.Single) {
                 ArrayList<SingleMove> singleMoves = new ArrayList<>(piece.allSingleMoves(row, col));
                 if (singleMoves.contains(curMove)) {
@@ -351,7 +376,8 @@ public class Board implements Iterable<Row> {
                     }
                 }
             }
-            else {//Jump move
+            // Perform jump move.
+            else {
                 ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
                 if (jumpMoves.contains(curMove)) {
                     int index = jumpMoves.indexOf(curMove);
@@ -362,8 +388,8 @@ public class Board implements Iterable<Row> {
                     }
                 }
             }
-            //TODO if move not executed error
         }
+        // Check if another jump move is still possible.
         if (moveType == MoveType.Jump) {
             Piece piece = endSpace.getPiece();
             int row = endPos.getRow();
@@ -373,25 +399,27 @@ public class Board implements Iterable<Row> {
                 return Message.error("Another jump move is possible!");
             }
         }
-
+        // King the piece if its endspace is the top most row.
         kingPiece(endSpace);
-
+        // Change the active player color to the next player.
         if (this.activePlayerColor == Piece.Color.RED) {
             this.activePlayerColor = Piece.Color.WHITE;
         }
         else {
             this.activePlayerColor = Piece.Color.RED;
         }
+        // Copy the copy board over to the main board for the next turn.
         for (int row = 0; row < BOARD_DIM; row++) {
             System.arraycopy(copy.board[row], 0, this.board[row], 0, BOARD_DIM);
         }
+        // Flip the board orientation for the next player.
         flip();
-
+        // Check the win condition for blocked moves.
         determineMoveType();
         if (moveType == MoveType.Blocked) {
             gameWin.checkBlockedGameOver(activePlayerColor);
         }
-
+        // Check the win condition if there are no more pieces.
         gameWin.checkPieceGameOver(this, activePlayerColor);
 
         return Message.info("Move is valid!");
