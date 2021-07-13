@@ -16,7 +16,7 @@ public class Player {
      * Creates a new player data entity using a unique string.
      *
      * @param name
-     *     The name for the player.
+     *         The name for the player.
      */
     public Player(String name) {
         this.name = name;
@@ -25,8 +25,7 @@ public class Player {
     /**
      * A getter method for the name of the player.
      *
-     * @return
-     *     The name of the player.
+     * @return The name of the player.
      */
     public String getName() {
         return name;

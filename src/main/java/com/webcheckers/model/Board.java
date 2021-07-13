@@ -8,8 +8,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 /**
- * The board class is responsible for handling all functionality
- * related to the board during a game.
+ * The board class is responsible for handling all functionality related to the board during a game.
  *
  * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
@@ -111,7 +110,8 @@ public class Board implements Iterable<Row> {
                         if (validateJumpMoves(jumpMoves)) {
                             possibleMove.addAll(jumpMoves);
                         }
-                    } else if (moveType == MoveType.Single) {
+                    }
+                    else if (moveType == MoveType.Single) {
                         ArrayList<SingleMove> singleMoves = new ArrayList<>(piece.allSingleMoves(row, col));
                         if (validateSingleMoves(singleMoves)) {
                             possibleMove.addAll(singleMoves);
@@ -126,9 +126,8 @@ public class Board implements Iterable<Row> {
 
 
     /**
-     * This method look at all generated singleMoves for one piece and if it is found valid it adds the move to possible moves
-     *
-     * @param moves
+     * This method look at all generated singleMoves for one piece and if it is found valid it adds the move to possible
+     * moves
      */
     public boolean validateSingleMoves(ArrayList<SingleMove> moves) {
         for (int i = 0; i < moves.size(); i++) {
@@ -144,9 +143,6 @@ public class Board implements Iterable<Row> {
 
     /**
      * This method looks at an individual single move and checks if it is valid
-     *
-     * @param move
-     * @return
      */
     private boolean validateSingleMove(SingleMove move) {
         Position end = move.getEnd();
@@ -154,16 +150,16 @@ public class Board implements Iterable<Row> {
         int col = end.getCell();
         try {
             return this.board[row][col].isValid();
-        } catch (ArrayIndexOutOfBoundsException e) {
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
             return false;
         }
     }
 
 
     /**
-     * This method look at all generated jumpMoves for one piece and if it is found valid it adds the move to possible moves
-     *
-     * @param moves
+     * This method look at all generated jumpMoves for one piece and if it is found valid it adds the move to possible
+     * moves
      */
     public boolean validateJumpMoves(ArrayList<JumpMove> moves) {
         for (int i = 0; i < moves.size(); i++) {
@@ -178,9 +174,6 @@ public class Board implements Iterable<Row> {
 
     /**
      * This method looks at an individual jumpMove and checks if it is valid
-     *
-     * @param move
-     * @return
      */
     private boolean validateJumpMove(JumpMove move) {
         Position end = move.getEnd();
@@ -191,7 +184,8 @@ public class Board implements Iterable<Row> {
             if (getSpace(jumped, this.board).getPiece().getColor() != activePlayerColor) {
                 return this.board[endRow][endCol].isValid();
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             return false;
         }
         return false;
@@ -211,9 +205,6 @@ public class Board implements Iterable<Row> {
 
     /**
      * This method is used to convert a position to what space it represents
-     *
-     * @param position
-     * @return
      */
     public Space getSpace(Position position, Space[][] board) {
         int row = position.getRow();
@@ -223,8 +214,6 @@ public class Board implements Iterable<Row> {
 
     /**
      * This is called to make a move
-     *
-     * @param moves
      */
     public Message makeMove(ArrayList<Move> moves) {
 //        System.out.println(this);
@@ -233,7 +222,8 @@ public class Board implements Iterable<Row> {
         System.out.println("board: " + moveType);
         if (moveType == MoveType.Blocked) {
             gameWin.checkBlockedGameOver(activePlayerColor);
-        } else if (moveType == MoveType.Single && moves.size() != 1) {
+        }
+        else if (moveType == MoveType.Single && moves.size() != 1) {
             //TODO: throws error singleMoves can only be one in magnitude
         }
 
@@ -270,7 +260,8 @@ public class Board implements Iterable<Row> {
                         executeSingleMove(startSpace, endSpace);
                     }
                 }
-            } else {//Jump move
+            }
+            else {//Jump move
                 ArrayList<JumpMove> jumpMoves = new ArrayList<>();
                 jumpMoves.addAll(piece.allJumps(row, col));
                 if (jumpMoves.contains(curMove)) {
@@ -303,7 +294,8 @@ public class Board implements Iterable<Row> {
 
         if (this.activePlayerColor == Piece.Color.RED) {
             this.activePlayerColor = Piece.Color.WHITE;
-        } else {
+        }
+        else {
             this.activePlayerColor = Piece.Color.RED;
         }
         for (int row = 0; row < BOARD_DIM; row++) {
@@ -426,18 +418,23 @@ public class Board implements Iterable<Row> {
             for (Space curSpace : spaces) {
                 if (!curSpace.isValid() && curSpace.getPiece() == null) {
                     textBoard.append("*");//none playable spot
-                } else if (curSpace.getPiece() == null) {//playable spot
+                }
+                else if (curSpace.getPiece() == null) {//playable spot
                     textBoard.append("_");
-                } else if (curSpace.getPiece().getColor() == Piece.Color.RED &&
+                }
+                else if (curSpace.getPiece().getColor() == Piece.Color.RED &&
                         curSpace.getPiece() instanceof SinglePiece) {//single red
                     textBoard.append("r");
-                } else if (curSpace.getPiece().getColor() == Piece.Color.WHITE &&
+                }
+                else if (curSpace.getPiece().getColor() == Piece.Color.WHITE &&
                         curSpace.getPiece() instanceof SinglePiece) {//single white
                     textBoard.append("w");
-                } else if (curSpace.getPiece().getColor() == Piece.Color.RED &&
+                }
+                else if (curSpace.getPiece().getColor() == Piece.Color.RED &&
                         curSpace.getPiece() instanceof King) {//king white
                     textBoard.append("R");
-                } else if (curSpace.getPiece().getColor() == Piece.Color.WHITE &&
+                }
+                else if (curSpace.getPiece().getColor() == Piece.Color.WHITE &&
                         curSpace.getPiece() instanceof King) {//king red
                     textBoard.append("W");
                 }

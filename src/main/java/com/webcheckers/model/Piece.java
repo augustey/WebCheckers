@@ -31,23 +31,27 @@ public abstract class Piece {
      * Constructor for a chess piece.
      *
      * @param color
-     *     The color of the piece.
+     *         The color of the piece.
      */
     public Piece(Type type, Color color) {
         this.type = type;
         this.color = color;
     }
 
+    /**
+     *
+     */
     public abstract ArrayList<SingleMove> allSingleMoves(int row, int col);
 
-    //this will be overridden by the 2 different types of pieces
+    /**
+     *
+     */
     public abstract ArrayList<JumpMove> allJumps(int row, int col);
 
     /**
      * A getter method for the color of piece.
      *
-     * @return
-     *     The color of piece.
+     * @return The color of piece.
      */
     public Color getColor() {
         return color;
@@ -56,10 +60,9 @@ public abstract class Piece {
     /**
      * A getter method for the type of piece.
      *
-     * @return
-     *     The type of piece.
+     * @return The type of piece.
      */
-    public Type getType () {
+    public Type getType() {
         return type;
     }
 }

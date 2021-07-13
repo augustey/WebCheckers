@@ -6,8 +6,7 @@ import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 
 /**
- * The GameWin class is responsible for the game win conditions
- * and ends the game.
+ * The GameWin class is responsible for the game win conditions and ends the game.
  *
  * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
@@ -41,8 +40,7 @@ public class GameWin {
     }
 
     /**
-     * Set the game's game over flag to true and remove the game from the
-     * GameCenter.
+     * Set the game's game over flag to true and remove the game from the GameCenter.
      *
      * @return True if the game was removed, else, false.
      */
@@ -55,8 +53,11 @@ public class GameWin {
     /**
      * Determines the number of a specific color of pieces on a board.
      *
-     * @param board The game's board.
-     * @param color The piece color to count.
+     * @param board
+     *         The game's board.
+     * @param color
+     *         The piece color to count.
+     *
      * @return The number of the specified color pieces on the board.
      */
     public int checkPieceCount(Board board, Piece.Color color) {
@@ -68,7 +69,8 @@ public class GameWin {
                     if (piece.getColor() == color) {
                         count++;
                     }
-                } catch (NullPointerException npe) {
+                }
+                catch (NullPointerException npe) {
                     continue;
                 }
             }
@@ -77,17 +79,20 @@ public class GameWin {
     }
 
     /**
-     * Trigger the game over functionality with a message for when the active
-     * player's pieces have all been captured.
+     * Trigger the game over functionality with a message for when the active player's pieces have all been captured.
      *
-     * @param board             The game's board.
-     * @param activePlayerColor The active player's color.
+     * @param board
+     *         The game's board.
+     * @param activePlayerColor
+     *         The active player's color.
+     *
      * @return True if game over was triggered, else, false.
      */
     public boolean checkPieceGameOver(Board board, Piece.Color activePlayerColor) {
         if (activePlayerColor == Piece.Color.RED) {
             this.gameOverMessage = String.format(PIECES_CAPTURED, game.getWhitePlayer());
-        } else {
+        }
+        else {
             this.gameOverMessage = String.format(PIECES_CAPTURED, game.getRedPlayer());
         }
         if (checkPieceCount(board, activePlayerColor) == 0) {
@@ -97,26 +102,29 @@ public class GameWin {
     }
 
     /**
-     * Trigger the game over functionality with a message for when the active player's
-     * pieces are blocked from moving.
+     * Trigger the game over functionality with a message for when the active player's pieces are blocked from moving.
      *
-     * @param activePlayerColor The active player's color.
+     * @param activePlayerColor
+     *         The active player's color.
+     *
      * @return True if game over was triggered, else, false.
      */
     public boolean checkBlockedGameOver(Piece.Color activePlayerColor) {
         if (activePlayerColor == Piece.Color.RED) {
             this.gameOverMessage = String.format(PIECES_BLOCKED, game.getRedPlayer());
-        } else {
+        }
+        else {
             this.gameOverMessage = String.format(PIECES_BLOCKED, game.getWhitePlayer());
         }
         return triggerGameOver();
     }
 
     /**
-     * Trigger the game over functionality with a message for when a given player
-     * has resigned from the game.
+     * Trigger the game over functionality with a message for when a given player has resigned from the game.
      *
-     * @param player The player that resigned.
+     * @param player
+     *         The player that resigned.
+     *
      * @return True if game over was triggered, else, false.
      */
     public boolean checkResignGameOver(Player player) {

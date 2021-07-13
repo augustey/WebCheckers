@@ -12,19 +12,16 @@ import spark.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PostResignGameRoute implements Route
-{
+public class PostResignGameRoute implements Route {
+
     private PlayerService playerService;
 
-    public PostResignGameRoute()
-    {
-
+    public PostResignGameRoute() {
     }
 
 
     @Override
-    public Object handle(Request request, Response response)
-    {
+    public Object handle(Request request, Response response) {
         final Session httpSession = request.session();
         Gson gson = new GsonBuilder().create();
 
@@ -34,10 +31,10 @@ public class PostResignGameRoute implements Route
 
         Message message;
 
-        if(gameWin.checkResignGameOver(playerService.getPlayer()))
-        {
+        if (gameWin.checkResignGameOver(playerService.getPlayer())) {
             message = Message.info(gameWin.getGameOverMessage());
-        } else {
+        }
+        else {
             message = Message.error("Game was unable to be ended.");
         }
 

@@ -10,18 +10,16 @@ import spark.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PostBackupMoveRoute implements Route
-{
+public class PostBackupMoveRoute implements Route {
+
     private PlayerService playerService;
 
-    public PostBackupMoveRoute()
-    {
+    public PostBackupMoveRoute() {
     }
 
 
     @Override
-    public Object handle(Request request, Response response)
-    {
+    public Object handle(Request request, Response response) {
         final Session httpSession = request.session();
         playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
 
@@ -29,11 +27,10 @@ public class PostBackupMoveRoute implements Route
 
         Message message;
 
-        if(playerService.removeMove() != null)
-        {
+        if (playerService.removeMove() != null) {
             message = Message.info("Move was reversed successfully!");
-        } else
-        {
+        }
+        else {
             message = Message.error("Move was unable to be reversed!");
         }
 

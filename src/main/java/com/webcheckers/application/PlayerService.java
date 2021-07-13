@@ -5,8 +5,7 @@ import com.webcheckers.model.*;
 import java.util.*;
 
 /**
- * The PlayerService class is responsible for managing a player's
- * specific game of checkers.
+ * The PlayerService class is responsible for managing a player's specific game of checkers.
  *
  * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
  * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
@@ -31,8 +30,10 @@ public class PlayerService {
     /**
      * Constructor for PlayerService.
      *
-     * @param player The player this service belongs to.
-     * @param game   The game of checkers to provide services for.
+     * @param player
+     *         The player this service belongs to.
+     * @param game
+     *         The game of checkers to provide services for.
      */
     public PlayerService(Player player, Game game) {
         this.player = player;
@@ -88,8 +89,7 @@ public class PlayerService {
     }
 
     /**
-     * A getter method for list of moves during the
-     * player's turn.
+     * A getter method for list of moves during the player's turn.
      *
      * @return The list of moves during the player's turn.
      */
@@ -108,12 +108,15 @@ public class PlayerService {
 
         if (player.equals(redPlayer) && getActivePlayerColor() == Piece.Color.RED) {
             boardView = board.iterator();
-        } else if (player.equals(redPlayer) && getActivePlayerColor() != Piece.Color.RED) {
+        }
+        else if (player.equals(redPlayer) && getActivePlayerColor() != Piece.Color.RED) {
             board.flip();
             boardView = board.iterator();
-        } else if (player.equals(whitePlayer) && getActivePlayerColor() == Piece.Color.WHITE) {
+        }
+        else if (player.equals(whitePlayer) && getActivePlayerColor() == Piece.Color.WHITE) {
             boardView = board.iterator();
-        } else {
+        }
+        else {
             board.flip();
             boardView = board.iterator();
         }
@@ -124,7 +127,8 @@ public class PlayerService {
     /**
      * Adds a move to the list of moves in the player's turn.
      *
-     * @param move A move that is to be made.
+     * @param move
+     *         A move that is to be made.
      */
     public synchronized void addMove(Move move) {
         turnMoves.add(move);

@@ -6,9 +6,7 @@ import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.GameWin;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.PlayerService;
-import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
-import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.*;
@@ -26,6 +24,7 @@ import static spark.Spark.halt;
  * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
  */
 public class GetGameRoute implements Route {
+
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
     private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
@@ -56,7 +55,7 @@ public class GetGameRoute implements Route {
      * Constructor for GetGameRoute. Used to handle requests sent to "/game".
      *
      * @param templateEngine
-     *     Template engine used to render views.
+     *         Template engine used to render views.
      */
     public GetGameRoute(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine) {
         this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
@@ -64,17 +63,16 @@ public class GetGameRoute implements Route {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         LOG.config("GetGameRoute is initialized.");
     }
+
     /**
      * Render the WebCheckers Game page.
      *
      * @param request
-     *     The HTTP request.
-     *
+     *         The HTTP request.
      * @param response
-     *     The HTTP response.
+     *         The HTTP response.
      *
-     * @return
-     *     The rendered HTML for the Home page.
+     * @return The rendered HTML for the Home page.
      */
     @Override
     public Object handle(Request request, Response response) {
@@ -84,7 +82,7 @@ public class GetGameRoute implements Route {
 
         Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
 
-        if(player == null) {
+        if (player == null) {
             response.redirect(WebServer.SIGNIN_URL);
             halt();
             return null;
@@ -94,14 +92,14 @@ public class GetGameRoute implements Route {
 
         Map<String, Object> modeOptions = new HashMap<>();
 
-        if(playerService == null) {
+        if (playerService == null) {
             String opponentName = request.queryParams(OPPONENT_PARAM);
             Player opponent = playerLobby.getPlayer(opponentName);
 
-            Message result  = gameCenter.requestNewGame(player, opponent);
+            Message result = gameCenter.requestNewGame(player, opponent);
             System.out.println(result);
 
-            if(result.getType() == Message.Type.INFO) {
+            if (result.getType() == Message.Type.INFO) {
                 playerService = gameCenter.getPlayerService(player);
                 httpSession.attribute(PLAYER_SERVICE_KEY, playerService);
             }
@@ -111,12 +109,13 @@ public class GetGameRoute implements Route {
                 halt();
                 return null;
             }
-        } else {
+        }
+        else {
             Game game = playerService.getGame();
             GameWin gameWin = game.getGameWin();
             modeOptions.put("isGameOver", gameWin.isGameOver());
             modeOptions.put("gameOverMessage", gameWin.getGameOverMessage());
-            if(gameWin.isGameOver()) {
+            if (gameWin.isGameOver()) {
                 httpSession.removeAttribute(PLAYER_SERVICE_KEY);
             }
         }
@@ -133,6 +132,6 @@ public class GetGameRoute implements Route {
         vm.put(ACTIVE_COLOR_ATTR, playerService.getActivePlayerColor());
         vm.put(BOARD_VIEW_ATTR, playerService.getBoardView());
 
-        return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
+        return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
 }

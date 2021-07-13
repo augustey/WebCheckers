@@ -1,14 +1,29 @@
 package com.webcheckers.model;
 
+/**
+ *
+ *
+ * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
+ * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
+ */
 public class JumpMove extends Move {
 
+    //
     private Position jumped;
 
+    /**
+     *
+     * @param start
+     * @param end
+     */
     public JumpMove(Position start, Position end) {
         super(start, end);
         this.createJumpPosition();
     }
 
+    /**
+     *
+     */
     private void createJumpPosition() {
         int row1 = super.getStart().getRow();
         int row2 = super.getEnd().getRow();
@@ -21,9 +36,11 @@ public class JumpMove extends Move {
         this.jumped = new Position(r, c);
     }
 
+    /**
+     *
+     * @return
+     */
     public Position getJumpedPosition() {
         return this.jumped;
     }
-
-
 }
