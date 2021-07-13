@@ -44,7 +44,9 @@ Additionally, the application features the ability to back up, or revert, a move
 submit a move, and resign from the game.
 
 ### Definition of MVP
-
+The application must allow players to play checkers with other players who are currently signed-in. 
+The game user interface (UI) will support a game experience using drag-and-drop browser capabilities
+ for making moves. Either player is able to resign from the game.
 
 
 ### MVP Features
