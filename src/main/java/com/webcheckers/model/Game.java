@@ -4,7 +4,7 @@ import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.GameWin;
 
 /**
- * Game model class containing the logic of a standard game of Checkers.
+ * The Game class is responsible for managing the logic of a standard game of Checkers.
  *
  * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
  */
@@ -19,7 +19,10 @@ public class Game {
     // The checkers board.
     private final Board board;
 
+    // The GameWin object for handling win conditions.
     private GameWin gameWin;
+
+    // The boolean flag for if this game has ended.
     private boolean isGameOver;
 
     /**
@@ -33,19 +36,9 @@ public class Game {
     public Game(Player redPlayer, Player whitePlayer, GameCenter gameCenter) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        gameWin = new GameWin(gameCenter, this);
-        board = new Board(gameWin);
+        this.gameWin = new GameWin(gameCenter, this);
+        this.board = new Board(this.gameWin);
     }
-
-    /**
-     * Constructor for Game that does not contain GameWin
-     *
-     * @param redPlayer
-     *     The red player who makes the first move.
-     *
-     * @param whitePlayer
-     *     The white player who makes a move after the red player.
-     */
 
     /**
      * A getter method for the red player.
@@ -74,14 +67,30 @@ public class Game {
         return board;
     }
 
+    /**
+     * A getter method for the game win object.
+     *
+     * @return The game win object.
+     */
     public GameWin getGameWin() {
         return gameWin;
     }
 
+    /**
+     * A setter method for if the game is over.
+     *
+     * @param gameOver
+     *         A boolean flag for if the game is over.
+     */
     public void setGameOver(boolean gameOver) {
         isGameOver = gameOver;
     }
 
+    /**
+     * A getter method for the boolean flag if the game is over.
+     *
+     * @return The boolean flag for it the game is over.
+     */
     public boolean isGameOver() {
         return isGameOver;
     }

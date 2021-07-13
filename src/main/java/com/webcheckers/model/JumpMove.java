@@ -1,20 +1,24 @@
 package com.webcheckers.model;
 
 /**
- *
+ * The JumpMove class is responsible for handling the logic for a jump move and extending the functionality of a Move
+ * object.
  *
  * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
  */
 public class JumpMove extends Move {
 
-    //
+    // The jumped over position.
     private Position jumped;
 
     /**
+     * Constructor for JumpMove that determines the jumped over position.
      *
      * @param start
+     *         The start position.
      * @param end
+     *         The end position.
      */
     public JumpMove(Position start, Position end) {
         super(start, end);
@@ -22,7 +26,7 @@ public class JumpMove extends Move {
     }
 
     /**
-     *
+     * Calculates the jumped over position by performing a midpoint calculation.
      */
     private void createJumpPosition() {
         int row1 = super.getStart().getRow();
@@ -37,8 +41,9 @@ public class JumpMove extends Move {
     }
 
     /**
+     * A getter method for the jumped over position.
      *
-     * @return
+     * @return The jumped over position.
      */
     public Position getJumpedPosition() {
         return this.jumped;

@@ -3,7 +3,7 @@ package com.webcheckers.model;
 import java.util.*;
 
 /**
- * Wrapper class for board iterator.
+ * The BoardView class is the wrapper for Board class's iterator.
  *
  * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
  */
