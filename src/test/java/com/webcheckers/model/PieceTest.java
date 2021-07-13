@@ -48,6 +48,7 @@ public class PieceTest {
     /**
      * Test that shows that the Type can be gotten correctly
      */
+    @Test
     public void ctor_getType() {
         King piece = new King(Piece.Color.RED);
 
