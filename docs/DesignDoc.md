@@ -44,13 +44,26 @@ Additionally, the application features the ability to back up, or revert, a move
 submit a move, and resign from the game.
 
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
+
+
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
+- Sign-in
+- Start a Game
+- Validate Move
+- Submit Turn
+- Backup Move
+- Check Turn
+- Resign Game
+- Simple Move
+- Jump Move
+- Chain Jump
+- King Piece
+- Win Conditions
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
+- Sign Out
+- Replaying A Game
 
 
 ## Application Domain
