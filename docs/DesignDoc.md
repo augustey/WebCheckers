@@ -135,9 +135,11 @@ such as when one player runs out of pieces, or when a player cannot make any mov
 
 
 ### Application Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+The application tier consists of four classes that provide services to the UI tier: 
+GameCenter, PlayerLobby, GameWin, and PlayerService. Each of these classes play a 
+central role in the flow of the application. GameCenter controls what games are 
+active, PlayerLobby holds all of the active players, GameWin determines when and 
+how a game is ended, and PlayerService provides utility to the respective player.
 
 
 ### Model Tier
