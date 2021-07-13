@@ -339,42 +339,42 @@ public class Board implements Iterable<Row> {
         this.board = flippedBoard;
     }
 
-    public void ptuiDebug() {
-        System.out.println("Enter in start pos and end pos on separate lines");
-        System.out.println("Start:row col");
-        System.out.println("End:row col");
-        Scanner scan = new Scanner(System.in);
-        String start;
-        String end;
-
-        int startRow;
-        int startCol;
-        int endRow;
-        int endCol;
-//        while(true){
-        System.out.println(this);
-//            start = scan.nextLine();
-//            end = scan.nextLine();
+//    public void ptuiDebug() {
+//        System.out.println("Enter in start pos and end pos on separate lines");
+//        System.out.println("Start:row col");
+//        System.out.println("End:row col");
+//        Scanner scan = new Scanner(System.in);
+//        String start;
+//        String end;
 //
-//            String[] startCords = start.split(" ");
-//            startRow = Integer.parseInt(startCords[0]);
-//            startCol = Integer.parseInt(startCords[1]);
-//            String[] endCords = end.split(" ");
-//            endRow = Integer.parseInt(endCords[0]);
-//            endCol = Integer.parseInt(endCords[1]);
+//        int startRow;
+//        int startCol;
+//        int endRow;
+//        int endCol;
+////        while(true){
+//        System.out.println(this);
+////            start = scan.nextLine();
+////            end = scan.nextLine();
+////
+////            String[] startCords = start.split(" ");
+////            startRow = Integer.parseInt(startCords[0]);
+////            startCol = Integer.parseInt(startCords[1]);
+////            String[] endCords = end.split(" ");
+////            endRow = Integer.parseInt(endCords[0]);
+////            endCol = Integer.parseInt(endCords[1]);
+////
+////            Move move = new Move(new Position(startRow, startCol), new Position(endRow, endCol));
 //
-//            Move move = new Move(new Position(startRow, startCol), new Position(endRow, endCol));
-
-        Move move = new Move(new Position(5, 0), new Position(3, 2));
-
-        ArrayList<Move> moves = new ArrayList<>();
-        moves.add(move);
-
-        Move move1 = new Move(new Position(3, 2), new Position(1, 4));
-        moves.add(move1);
-        makeMove(moves);
-//        }
-    }
+//        Move move = new Move(new Position(5, 0), new Position(3, 2));
+//
+//        ArrayList<Move> moves = new ArrayList<>();
+//        moves.add(move);
+//
+//        Move move1 = new Move(new Position(3, 2), new Position(1, 4));
+//        moves.add(move1);
+//        makeMove(moves);
+////        }
+//    }
 
     /**
      * Returns an iterator over elements of type {@code T}.

@@ -3,11 +3,6 @@ package com.webcheckers.model;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.GameWin;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 /**
  * Game model class containing the logic of a standard game of Checkers.
  *

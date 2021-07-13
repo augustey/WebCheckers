@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.webcheckers.application.PlayerService;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Move;
-import com.webcheckers.model.Position;
 import com.webcheckers.util.Message;
 import spark.*;
 

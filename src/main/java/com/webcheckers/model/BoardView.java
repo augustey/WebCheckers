@@ -1,7 +1,5 @@
 package com.webcheckers.model;
 
-import com.webcheckers.model.Row;
-
 import java.util.*;
 
 /**
