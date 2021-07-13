@@ -72,7 +72,7 @@ public class GameWinTest
     {
         String expected = "over";
 
-        boolean result = CuT.triggerGameOver("over");
+        boolean result = CuT.triggerGameOver();
 
         assertTrue(game.isGameOver());
         assertTrue(CuT.isGameOver());
