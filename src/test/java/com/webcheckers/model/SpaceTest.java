@@ -134,5 +134,4 @@ public class SpaceTest {
         GameCenter gameCenter = new GameCenter();
         assertFalse(CuT.equals(gameCenter));
     }
-
 }

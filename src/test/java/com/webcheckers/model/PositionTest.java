@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.webcheckers.application.GameCenter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -67,5 +68,8 @@ public class PositionTest {
         // Test equals with a different position object
         Position position = new Position(1, 2);
         assertFalse(CuT.equals(position));
+        // Test equals with a different object
+        GameCenter gameCenter = new GameCenter();
+        assertFalse(CuT.equals(gameCenter));
     }
 }
