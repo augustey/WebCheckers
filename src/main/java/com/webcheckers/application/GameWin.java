@@ -10,6 +10,7 @@ import com.webcheckers.model.Player;
  * and ends the game.
  *
  * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
+ * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
  */
 public class GameWin {
 

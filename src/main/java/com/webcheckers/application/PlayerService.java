@@ -42,7 +42,7 @@ public class PlayerService {
         this.redPlayer = game.getRedPlayer();
         this.whitePlayer = game.getWhitePlayer();
         this.game = game;
-        turnMoves = new ArrayList<>();
+        this.turnMoves = new ArrayList<>();
     }
 
     /**
@@ -116,14 +116,14 @@ public class PlayerService {
         Board board = new Board(game.getBoard());
         Iterator<Row> boardView;
 
-        if (player.equals(redPlayer) && getActivePlayerColor() == Piece.Color.RED) {
+        if(player.equals(redPlayer) && getActivePlayerColor() == Piece.Color.RED) {
             boardView = board.iterator();
         }
-        else if (player.equals(redPlayer) && getActivePlayerColor() != Piece.Color.RED) {
+        else if(player.equals(redPlayer) && getActivePlayerColor() != Piece.Color.RED) {
             board.flip();
             boardView = board.iterator();
         }
-        else if (player.equals(whitePlayer) && getActivePlayerColor() == Piece.Color.WHITE) {
+        else if(player.equals(whitePlayer) && getActivePlayerColor() == Piece.Color.WHITE) {
             boardView = board.iterator();
         }
         else {
@@ -151,7 +151,7 @@ public class PlayerService {
      *     A move that was removed.
      */
     public synchronized Move removeMove() {
-        if (!turnMoves.isEmpty()) {
+        if(!turnMoves.isEmpty()) {
             int i = turnMoves.size() - 1;
             return turnMoves.remove(i);
         }

@@ -40,7 +40,7 @@ public class GameCenter {
      *     The player to search for.
      *
      * @return
-     *     Whether the specified player is in a game of checkers or not
+     *     Whether the specified player is in a game of checkers or not.
      */
     public boolean isInGame(Player player) {
         return activeGames.containsKey(player);

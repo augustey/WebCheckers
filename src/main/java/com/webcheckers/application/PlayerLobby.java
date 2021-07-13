@@ -27,7 +27,7 @@ public class PlayerLobby {
      * Constructor for PlayerLobby that initializes the player set.
      */
     public PlayerLobby() {
-        playerSet = new HashSet<>();
+        this.playerSet = new HashSet<>();
     }
 
     /**
