@@ -99,6 +99,15 @@ returned to the home page (“/”), again with the option to select to play a g
 list of players or the option to sign-out. Clicking the sign-out option will 
 take the user back to the home page (“/”) with the option to sign-in.
 
+When starting a game, the player is directed to one of two states depending on who 
+started the game. The player who started the game is directed to the Playing My Turn state, 
+where the player can make their move and submit the turn. Submitting their turn moves them 
+to the Waiting for My TurnState. The process is reversed for the player who was challenged 
+to a game. When entering their respective states either player can select the resign button,
+which ends the game and renders the exit button. When clicked, the button then directs the 
+players back to the home screen. The exit button also appears whenever the game ends,
+such as when one player runs out of pieces, or when a player cannot make any moves.
+
 
 ### UI Tier
 > _Provide a summary of the Server-side UI tier of your architecture.
