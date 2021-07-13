@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Testing suite for JumpMove
+ * Testing suite for Move
  *
  * @author <a href = 'mailto:whd8254@g.rit.edu'>William Dabney</a>
  */
