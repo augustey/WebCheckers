@@ -1,6 +1,5 @@
 package com.webcheckers.application;
 
-import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
@@ -92,6 +91,15 @@ public class GameCenter {
         return new PlayerService(player, game);
     }
 
+    /**
+     * Remove the game for each player in active games.
+     *
+     * @param game
+     *     The finished game to get the two players.
+     *
+     * @return
+     *     True if the games were removed when both players were in a game, else, false.
+     */
     public boolean removeGame(Game game) {
         Player player1 = game.getRedPlayer();
         Player player2 = game.getWhitePlayer();
