@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.webcheckers.application.GameCenter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -123,8 +124,15 @@ public class SpaceTest {
         // Test for differing validity
         other = new Space(ROW_VALUE, COL_VALUE, piece, !IS_VALID);
         assertFalse(CuT.equals(other));
-        // Test for differing validity
-        other = new Space(1, 2, piece, !IS_VALID);
+        // Test for differing row values
+        other = new Space(1, COL_VALUE, piece, IS_VALID);
         assertFalse(CuT.equals(other));
+        // Test for differing col values
+        other = new Space(ROW_VALUE, 2, piece, IS_VALID);
+        assertFalse(CuT.equals(other));
+        // Test if the other object is not a space.
+        GameCenter gameCenter = new GameCenter();
+        assertFalse(CuT.equals(gameCenter));
     }
+
 }
