@@ -137,27 +137,39 @@ such as when one player runs out of pieces, or when a player cannot make any mov
 
 
 ### UI Tier
-> _Provide a summary of the Server-side UI tier of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
+The UI tier of the application contains all of the HTTP view components for the webserver. 
+The first route that is called is the GetHomeRoute, which gives all of the information about 
+the home screen to the web server for it to be rendered. From the homescreen, the user can 
+check any messages that the server displays, but more importantly, the player can click the 
+sign in button in order to access the GetSignInRoute. The flow between these two states can 
+be seen above in the state diagram for the application. The user can then sign in with a 
+unique and appropriate username. which calls the PostSignIn route, which tailors the appropriate 
+response based on the name entered. If the name is successful, the server redirects to the 
+homescreen, but with additional information displayed, such as the ability to sign out, 
+which is performed with PostSignOut.
 
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class structure or object diagrams) with some
-> details such as critical attributes and methods._
+By selecting another player’s name, a game can be issued, and GetGameRoute is called in one 
+of two states, waiting for a turn, and performing a turn. Performing a turn starts at 
+GetGameRoute, where the player can move a piece to an open spot. When this happens, it 
+calls PostValidateMove which ensures that the move is able to be made, and sends a message 
+of type INFO to the server if the move is valid, or sends a message of type ERROR to the 
+server if the move was invalid. From there, the user can use one of two buttons. The first 
+button is the Back button, which then calls PostBackupMove. PostBackupMove reverses the game 
+back one move. The Player can also press the Submit Turn button. By pressing the button, the 
+player submits their turn to the game, and the route sends a message of type INFO if successful, 
+and ERROR if the moves were unsuccessful, such as the case where jump moves were possible. 
 
-> _You must also provide any dynamic models, such as statechart and
-> sequence diagrams, as is relevant to a particular aspect of the design
-> that you are describing.  For example, in WebCheckers you might create
-> a sequence diagram of the `POST /validateMove` HTTP request processing
-> or you might show a statechart diagram if the Game component uses a
-> state machine to manage the game._
+![Playing a turn state chart](playing_turn_chart.png)
 
-> _If a dynamic model, such as a statechart describes a feature that is
-> not mostly in this tier and cuts across multiple tiers, you can
-> consider placing the narrative description of that feature in a
-> separate section for describing significant features. Place this after
-> you describe the design of the three tiers._
+While the player is performing their turn, the other player is in the Waiting for My Turn state. 
+Using PostCheckTurn, every five seconds the game queries as to whether it is the player’s turn. 
+The route returns a message of type INFO with the message “true” or “false” depending on if it is 
+the player’s turn. If the message is “true,” then GetGameRoute is called, and the turn switches.
+
+![Waiting for a turn state chart](waiting_turn_chart.png)
+
+At any point the player can select the resign button, which triggers the end of the game using PostResignGame.
+
 
 
 ### Application Tier
