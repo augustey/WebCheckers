@@ -173,12 +173,19 @@ At any point the player can select the resign button, which triggers the end of 
 
 
 ### Application Tier
-The application tier consists of four classes that provide services to the UI tier: 
-GameCenter, PlayerLobby, GameWin, and PlayerService. Each of these classes play a 
-central role in the flow of the application. GameCenter controls what games are 
-active, PlayerLobby holds the active players, GameWin determines when and 
-how a game ends, and PlayerService provides utility to the respective player.
+The application tier consists of four classes that provide services to the UI tier: GameCenter, 
+PlayerLobby, GameWin, and PlayerService. Each of these classes play a central role in the flow 
+of the application. GameCenter is the class that controls and keeps track of active games and which 
+players are in a game. It has methods to request a new game with specific players, and is able to 
+create a PlayerService application tier class. The PlayerService class holds information specific 
+to the player. For instance, there are methods that add moves to a list for the player’s current turn. 
+On the simpler side of the application tier components there is PlayerLobby. PlayerLobby simply keeps 
+track of players that are signed in to the web server, and makes sure that no duplicate or invalid 
+names are present. The final application tier class is GameWin. GameWin contains the functionality 
+to trigger the end of a game. It contains multiple methods relating to the way a game can end, 
+such as no valid moves able to be made, no pieces on the board, or resignation.
 
+> UML chart
 
 ### Model Tier
 > _Provide a summary of the Application tier of your architecture. This
