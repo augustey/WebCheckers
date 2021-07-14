@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * The SinglePiece class is responsible for handling the functionality of a single piece and extending the functionality
- * of a Move object.
+ * of a Piece object.
  *
  * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>

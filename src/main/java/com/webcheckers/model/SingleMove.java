@@ -1,7 +1,8 @@
 package com.webcheckers.model;
 
 /**
- *
+ * The SingleMove class is responsible for handling the functionality of a single move and extending the functionality
+ * of a Move object.
  *
  * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
@@ -9,9 +10,12 @@ package com.webcheckers.model;
 public class SingleMove extends Move {
 
     /**
+     * Constructor for SingleMove.
      *
      * @param start
+     *         The start position.
      * @param end
+     *         The end position.
      */
     public SingleMove(Position start, Position end) {
         super(start, end);

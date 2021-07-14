@@ -3,7 +3,7 @@ package com.webcheckers.model;
 import java.util.ArrayList;
 
 /**
- * The Piece class is responsible for containing the outlined functionality for any Piece object that extend.
+ * The Piece class is responsible for containing the outlined functionality for any Piece object that extends.
  *
  * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>

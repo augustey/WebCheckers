@@ -108,9 +108,9 @@ public class Space {
         else if (other instanceof Space) {
             Space otherSpace = (Space) other;
             return otherSpace.rowIdx == rowIdx &&
-                   otherSpace.colIdx == colIdx &&
-                   otherSpace.piece == piece &&
-                   otherSpace.isValid == isValid;
+                    otherSpace.colIdx == colIdx &&
+                    otherSpace.piece == piece &&
+                    otherSpace.isValid == isValid;
         }
         return false;
     }

@@ -3,6 +3,8 @@ package com.webcheckers.model;
 import java.util.Objects;
 
 /**
+ * The Position class is responsible for containing a location.
+ *
  * @author <a href='mailto:jrl9984@rit.edu'>Jim Logan</a>
  */
 public class Position {
@@ -67,7 +69,7 @@ public class Position {
     /**
      * Creates a hashcode due to overriding equals method from the row and cell values.
      *
-     * @return The hashcode.
+     * @return A unique hashcode.
      */
     @Override
     public int hashCode() {
@@ -76,6 +78,8 @@ public class Position {
 
     /**
      * String representation of a Position object.
+     *
+     * @return The Position string.
      */
     @Override
     public String toString() {

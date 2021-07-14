@@ -69,7 +69,7 @@ public class Move {
     /**
      * Creates a hashcode due to overriding equals method from the row and cell values.
      *
-     * @return The hashcode.
+     * @return A unique hashcode.
      */
     @Override
     public int hashCode() {
@@ -78,6 +78,8 @@ public class Move {
 
     /**
      * String representation of a Move object.
+     *
+     * @return The Move string.
      */
     @Override
     public String toString() {

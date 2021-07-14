@@ -445,7 +445,7 @@ public class Board implements Iterable<Row> {
     }
 
     /**
-     * String representation of board used for debugging.
+     * String representation of a board used for debugging.
      *
      * @return A string representation of the board.
      */
