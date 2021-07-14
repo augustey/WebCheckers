@@ -6,14 +6,32 @@ import com.webcheckers.application.PlayerService;
 import com.webcheckers.util.Message;
 import spark.*;
 
+/**
+ * The UI Controller to POST the backup move message.
+ *
+ * @author <a href="mailto:jrl9984@rit.edu">Jim Logan</a>
+ */
 public class PostBackupMoveRoute implements Route {
 
+    // The player service.
     private PlayerService playerService;
 
+    /**
+     * Constructor for PostBackupMoveRoute
+     */
     public PostBackupMoveRoute() {
     }
 
-
+    /**
+     * Render the WebCheckers Backup message.
+     *
+     * @param request
+     *         The HTTP request.
+     * @param response
+     *         The HTTP response.
+     *
+     * @return The backup message.
+     */
     @Override
     public Object handle(Request request, Response response) {
         final Session httpSession = request.session();

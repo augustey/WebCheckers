@@ -11,13 +11,32 @@ import spark.Response;
 import spark.Route;
 import spark.Session;
 
+/**
+ * The UI Controller to POST the check turn message.
+ *
+ * @author <a href="mailto:jrl9984@rit.edu">Jim Logan</a>
+ */
 public class PostCheckTurnRoute implements Route {
+
+    // The player service
     private PlayerService playerService;
 
+    /**
+     * Constructor for ostCheckTurnRoute
+     */
     public PostCheckTurnRoute() {
-
     }
 
+    /**
+     * Render the WebCheckers check turn message.
+     *
+     * @param request
+     *         The HTTP request.
+     * @param response
+     *         The HTTP response.
+     *
+     * @return The backup message.
+     */
     @Override
     public Object handle(Request request, Response response) {
         final Session httpSession = request.session();

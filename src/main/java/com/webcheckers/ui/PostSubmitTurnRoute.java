@@ -12,11 +12,25 @@ import java.util.ArrayList;
 
 public class PostSubmitTurnRoute implements Route {
 
+    // The player service.
     private PlayerService playerService;
 
+    /**
+     * Constructor for PostSubmitTurnRoute
+     */
     public PostSubmitTurnRoute() {
     }
 
+    /**
+     * Render the WebCheckers submit turn message and make the user's moves.
+     *
+     * @param request
+     *         The HTTP request.
+     * @param response
+     *         The HTTP response.
+     *
+     * @return The backup message.
+     */
     @Override
     public Object handle(Request request, Response response) {
         final Session httpSession = request.session();

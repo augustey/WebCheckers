@@ -8,14 +8,32 @@ import com.webcheckers.model.Game;
 import com.webcheckers.util.Message;
 import spark.*;
 
+/**
+ * The UI Controller to POST the resign message.
+ *
+ * @author <a href="mailto:jrl9984@rit.edu">Jim Logan</a>
+ */
 public class PostResignGameRoute implements Route {
 
+    // The player service
     private PlayerService playerService;
 
+    /**
+     * Constructor for ostCheckTurnRoute
+     */
     public PostResignGameRoute() {
     }
 
-
+    /**
+     * Render the WebCheckers check turn message.
+     *
+     * @param request
+     *         The HTTP request.
+     * @param response
+     *         The HTTP response.
+     *
+     * @return The backup message.
+     */
     @Override
     public Object handle(Request request, Response response) {
         final Session httpSession = request.session();

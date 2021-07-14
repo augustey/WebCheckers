@@ -12,6 +12,7 @@ import java.util.Objects;
  * @author <a href="mailto:jrl9984@rit.edu">Jim Logan</a>
  */
 public class GetSignInRoute implements Route {
+
     // Title attribute.
     public static final String TITLE_ATTR = "title";
 

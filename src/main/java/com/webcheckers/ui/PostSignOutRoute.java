@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Route for signing out the player.
+ * The UI Controller for signing out the player.
  *
  * @author <a href="mailto:jrl9984@rit.edu">Jim Logan</a>
  */

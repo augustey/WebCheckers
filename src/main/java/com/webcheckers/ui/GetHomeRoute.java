@@ -24,19 +24,23 @@ public class GetHomeRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
+    // Messages
+    public static final String TITLE = "Welcome!";
     public static final Message WELCOME_MSG = Message.info("Welcome to the world of Online Checkers.");
 
+    // Attribute Keys
     public static final String TITLE_ATTR = "title";
     public static final String MESSAGE_KEY = "message";
     public static final String PLAYER_KEY = "currentUser";
     public static final String PLAYERSET_KEY = "playerSet";
     public static final String ONLINE_COUNT_ATTR = "count";
 
-    public static final String TITLE = "Welcome!";
-
+    // The player lobby.
     private final PlayerLobby playerLobby;
-    private final TemplateEngine templateEngine;
+    // The game center.
     private final GameCenter gameCenter;
+    // The template engine.
+    private final TemplateEngine templateEngine;
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
@@ -48,7 +52,7 @@ public class GetHomeRoute implements Route {
         this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
         this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-        //
+
         LOG.config("GetHomeRoute is initialized.");
     }
 
@@ -102,10 +106,10 @@ public class GetHomeRoute implements Route {
 
         httpSession.removeAttribute(MESSAGE_KEY);
 
-        // display a user message in the Home page
+        // Display a user message in the Home page
         vm.put(MESSAGE_KEY, message);
 
-        // render the View
+        // Render the View
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
 }

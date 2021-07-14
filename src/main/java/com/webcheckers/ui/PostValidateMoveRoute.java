@@ -18,7 +18,6 @@ public class PostValidateMoveRoute implements Route {
     // PlayerService for the Player
     private PlayerService playerService;
 
-
     /**
      * Creates a new PostValidateMoveRoute
      */
@@ -28,14 +27,14 @@ public class PostValidateMoveRoute implements Route {
 
 
     /**
-     * Grabs the player's PlayerService and the move from the server, and then validates the move
+     * Render the WebCheckers validate move message after validating a move.
      *
      * @param request
      *         The HTTP request.
      * @param response
      *         The HTTP response.
      *
-     * @return JSON formatted message determing if the move was valid for not
+     * @return The valid move message.
      */
     @Override
     public Object handle(Request request, Response response) {
