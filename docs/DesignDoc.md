@@ -134,14 +134,14 @@ moves.
 
 ### UI Tier
 
-The UI tier of the application contains all the HTTP view components for the webserver. The first route that is
-called is the GetHomeRoute, which gives all the information about the home screen to the web server for it to be
-rendered. From the homescreen, the user can check any messages that the server displays, but more importantly, the
-player can click the sign in button in order to access the GetSignInRoute. The flow between these two states can be seen
-above in the state diagram for the application. The user can then sign in with a unique and appropriate username. which
-calls the PostSignIn route, which tailors the appropriate response based on the name entered. If the name is successful,
-the server redirects to the homescreen, but with additional information displayed, such as the ability to sign out,
-which is performed with PostSignOut.
+The UI tier of the application contains all the HTTP view components for the webserver. The first route that is called
+is the GetHomeRoute, which gives all the information about the home screen to the web server for it to be rendered. From
+the homescreen, the user can check any messages that the server displays, but more importantly, the player can click the
+sign in button in order to access the GetSignInRoute. The flow between these two states can be seen above in the state
+diagram for the application. The user can then sign in with a unique and appropriate username. which calls the
+PostSignIn route, which tailors the appropriate response based on the name entered. If the name is successful, the
+server redirects to the homescreen, but with additional information displayed, such as the ability to sign out, which is
+performed with PostSignOut.
 
 By selecting another player’s name, a game can be issued, and GetGameRoute is called in one of two states, waiting for a
 turn, and performing a turn. Performing a turn starts at GetGameRoute, where the player can move a piece to an open
@@ -230,11 +230,15 @@ for sprint two were written as each new class was created, in order to ensure pr
 
 ### Acceptance Testing
 
-> _Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
+As of the end of Sprint 2, all seven user stories (five from Sprint 2 and two from Sprint 1) have all met their
+acceptance criteria tests. None have failed their acceptance criteria. All user stories have been tested.
+
+There is one issue that has arisen during acceptance testing. In the user story, _Making a Jump Move_, when making a
+multiple jump move, there is an issue, both on the Model and UI side. In the model, the board updates even when the
+multiple jump has not been completed. On the UI side, the only way multiple jumps work is if the player submits a turn
+every jump move. Although in the acceptance criteria the multiple jumps does work, the current implementation does call
+for improvement so that the player does not have to submit a turn for every jump. As a result, this causes a slight
+issue with the backup feature in the _UI_ user story.
 
 ### Unit Testing and Code Coverage
 
