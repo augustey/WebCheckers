@@ -1,29 +1,29 @@
 ---
 geometry: margin=1in
 ---
+
 # PROJECT Design Documentation
 
 ## Team Information
+
 * Team name: Team 4
 * Team members
-  * Yaqim Auguste
-  * William Dabney
-  * Jim Logan
-  * Neel Raj
+    * Yaqim Auguste
+    * William Dabney
+    * Jim Logan
+    * Neel Raj
 
 ## Executive Summary
 
-The purpose of this project was to create a working game of checkers that follows the 
-american rules. It is played locally on one machine and is done through a web page.
+The purpose of this project was to create a working game of checkers that follows the american rules. It is played
+locally on one machine and is done through a web page.
 
 ### Purpose
 
-The project is to develop a web application of checkers that allows users to play
-a game featuring the ability to perform piece moves, either single, jump, or 
-multiple jumps. Additionally, the project has to allow for interact with the 
-game page by reverting moves, submitting their moves, or resigning from the game.
-Users should also be able to interact with the rest of the application through 
-signing in, player selection, and signing out.
+The project is to develop a web application of checkers that allows users to play a game featuring the ability to
+perform piece moves, either single, jump, or multiple jumps. Additionally, the project has to allow for interact with
+the game page by reverting moves, submitting their moves, or resigning from the game. Users should also be able to
+interact with the rest of the application through signing in, player selection, and signing out.
 
 ### Glossary and Acronyms
 
@@ -42,20 +42,19 @@ signing in, player selection, and signing out.
 
 This section describes the features of the application.
 
-The application features include the ability to sign in to and out of the web application, 
-select a user to play a checkers game with. Another set of features are movement: 
-move pieces regularly or perform a jump or several jump moves. 
-Additionally, the application features the ability to back up, or revert, a move before it is submitted, 
-submit a move, and resign from the game.
+The application features include the ability to sign in to and out of the web application, select a user to play a
+checkers game with. Another set of features are movement:
+move pieces regularly or perform a jump or several jump moves. Additionally, the application features the ability to
+back up, or revert, a move before it is submitted, submit a move, and resign from the game.
 
 ### Definition of MVP
 
-The application must allow players to play checkers with other players who are currently signed-in. 
-The game user interface (UI) will support a game experience using drag-and-drop browser capabilities
- for making moves. Either player is able to resign from the game.
-
+The application must allow players to play checkers with other players who are currently signed-in. The game user
+interface (UI) will support a game experience using drag-and-drop browser capabilities for making moves. Either player
+is able to resign from the game.
 
 ### MVP Features
+
 The list of MVP features is below.
 
 - Sign-in
@@ -84,12 +83,10 @@ This section describes the application domain.
 
 ![The WebCheckers Domain Model](domain_model.png)
 
-A User signs in by entering the login information.
-They can sign out, spectate a game or can join a checkers game with another player / AI.
-During the game either player may resign which ends the game.
-The checkers game uses a board, which is made up of spaces that can be dark or light, to play the game.
-The Spaces can hold pieces; the player can move their corresponding pieces.
-
+A User signs in by entering the login information. They can sign out, spectate a game or can join a checkers game with
+another player / AI. During the game either player may resign which ends the game. The checkers game uses a board, which
+is made up of spaces that can be dark or light, to play the game. The Spaces can hold pieces; the player can move their
+corresponding pieces.
 
 ## Architecture and Design
 
@@ -101,116 +98,131 @@ The following Tiers/Layers model shows a high-level view of the webapp's archite
 
 ![The Tiers & Layers of the Architecture](architecture-tiers-and-layers.png)
 
-As a web application, the user interacts with the system using a
-browser. The client-side of the UI consists of HTML pages with
-some minimal CSS for styling the page. There is also some JavaScript
-that has been provided to the team by the architect.
+As a web application, the user interacts with the system using a browser. The client-side of the UI consists of HTML
+pages with some minimal CSS for styling the page. There is also some JavaScript that has been provided to the team by
+the architect.
 
-The server-side tiers include the UI Tier that is composed of UI Controllers and Views. 
-The Spark framework creates Controllers, and the FreeMarker frameworks builds the View.
-The Application and Model tiers contain plain-old Java objects (POJOs).
+The server-side tiers include the UI Tier that is composed of UI Controllers and Views. The Spark framework creates
+Controllers, and the FreeMarker frameworks builds the View. The Application and Model tiers contain plain-old Java
+objects (POJOs).
 
 Details of the components within these tiers are below.
 
 ### Overview of User Interface
 
-This section describes the web interface flow; this is how the user views and interacts
-with the WebCheckers application.
+This section describes the web interface flow; this is how the user views and interacts with the WebCheckers
+application.
 
 ![The WebCheckers Web Interface Statechart](state_diagram_chart.png)
 
-At the start of the web application and the establishment of an HTTP connection, 
-the user is immediately greeted with the home page (“/”) with the option to sign-in. 
-Clicking the sign-in option then directs the user to the sign-in page (“/signin”) which
-displays a text box to input a valid username to sign-in. Once the user is signed in,
-they are returned to the home page (“/”) which now displays the list of online players 
-and an option to sign-out. Selecting another online user to play a game against then 
-takes the user to the game page (“/game”). Once the game is completed, the user is then
-returned to the home page (“/”), again with the option to select to play a game from the
-list of players or the option to sign-out. Clicking the sign-out option will 
-take the user back to the home page (“/”) with the option to sign-in.
+At the start of the web application and the establishment of an HTTP connection, the user is immediately greeted with
+the home page (“/”) with the option to sign-in. Clicking the sign-in option then directs the user to the sign-in page (
+“/signin”) which displays a text box to input a valid username to sign-in. Once the user is signed in, they are returned
+to the home page (“/”) which now displays the list of online players and an option to sign-out. Selecting another online
+user to play a game against then takes the user to the game page (“/game”). Once the game is completed, the user is then
+returned to the home page (“/”), again with the option to select to play a game from the list of players or the option
+to sign-out. Clicking the sign-out option will take the user back to the home page (“/”) with the option to sign-in.
 
-When starting a game, the player is directed to one of two states depending on who 
-started the game. The player who started the game is directed to the Playing My Turn state, 
-where the player can make their move and submit the turn. Submitting their turn moves them 
-to the Waiting for My TurnState. The process is reversed for the player who was challenged 
-to a game. When entering their respective states either player can select the resign button,
-which ends the game and renders the exit button. When clicked, the button then directs the 
-players back to the home screen. The exit button also appears whenever the game ends,
-such as when one player runs out of pieces, or when a player cannot make any moves.
+When starting a game, the player is directed to one of two states depending on who started the game. The player who
+started the game is directed to the Playing My Turn state, where the player can make their move and submit the turn.
+Submitting their turn moves them to the Waiting for My TurnState. The process is reversed for the player who was
+challenged to a game. When entering their respective states either player can select the resign button, which ends the
+game and renders the exit button. When clicked, the button then directs the players back to the home screen. The exit
+button also appears whenever the game ends, such as when one player runs out of pieces, or when a player cannot make any
+moves.
 
 ### UI Tier
-The UI tier of the application contains all of the HTTP view components for the webserver. 
-The first route that is called is the GetHomeRoute, which gives all of the information about 
-the home screen to the web server for it to be rendered. From the homescreen, the user can 
-check any messages that the server displays, but more importantly, the player can click the 
-sign in button in order to access the GetSignInRoute. The flow between these two states can 
-be seen above in the state diagram for the application. The user can then sign in with a 
-unique and appropriate username. which calls the PostSignIn route, which tailors the appropriate 
-response based on the name entered. If the name is successful, the server redirects to the 
-homescreen, but with additional information displayed, such as the ability to sign out, 
+
+The UI tier of the application contains all of the HTTP view components for the webserver. The first route that is
+called is the GetHomeRoute, which gives all of the information about the home screen to the web server for it to be
+rendered. From the homescreen, the user can check any messages that the server displays, but more importantly, the
+player can click the sign in button in order to access the GetSignInRoute. The flow between these two states can be seen
+above in the state diagram for the application. The user can then sign in with a unique and appropriate username. which
+calls the PostSignIn route, which tailors the appropriate response based on the name entered. If the name is successful,
+the server redirects to the homescreen, but with additional information displayed, such as the ability to sign out,
 which is performed with PostSignOut.
 
-By selecting another player’s name, a game can be issued, and GetGameRoute is called in one 
-of two states, waiting for a turn, and performing a turn. Performing a turn starts at 
-GetGameRoute, where the player can move a piece to an open spot. When this happens, it 
-calls PostValidateMove which ensures that the move is able to be made, and sends a message 
-of type INFO to the server if the move is valid, or sends a message of type ERROR to the 
-server if the move was invalid. From there, the user can use one of two buttons. The first 
-button is the Back button, which then calls PostBackupMove. PostBackupMove reverses the game 
-back one move. The Player can also press the Submit Turn button. By pressing the button, the 
-player submits their turn to the game, and the route sends a message of type INFO if successful, 
-and ERROR if the moves were unsuccessful, such as the case where jump moves were possible. 
+By selecting another player’s name, a game can be issued, and GetGameRoute is called in one of two states, waiting for a
+turn, and performing a turn. Performing a turn starts at GetGameRoute, where the player can move a piece to an open
+spot. When this happens, it calls PostValidateMove which ensures that the move is able to be made, and sends a message
+of type INFO to the server if the move is valid, or sends a message of type ERROR to the server if the move was invalid.
+From there, the user can use one of two buttons. The first button is the Back button, which then calls PostBackupMove.
+PostBackupMove reverses the game back one move. The Player can also press the Submit Turn button. By pressing the
+button, the player submits their turn to the game, and the route sends a message of type INFO if successful, and ERROR
+if the moves were unsuccessful, such as the case where jump moves were possible.
 
 ![Playing a turn state chart](playing_turn_chart.png)
 
-While the player is performing their turn, the other player is in the Waiting for My Turn state. 
-Using PostCheckTurn, every five seconds the game queries as to whether it is the player’s turn. 
-The route returns a message of type INFO with the message “true” or “false” depending on if it is 
-the player’s turn. If the message is “true,” then GetGameRoute is called, and the turn switches.
+While the player is performing their turn, the other player is in the Waiting for My Turn state. Using PostCheckTurn,
+every five seconds the game queries as to whether it is the player’s turn. The route returns a message of type INFO with
+the message “true” or “false” depending on if it is the player’s turn. If the message is “true,” then GetGameRoute is
+called, and the turn switches.
 
 ![Waiting for a turn state chart](waiting_turn_chart.png)
 
 At any point the player can select the resign button, which triggers the end of the game using PostResignGame.
 
 ### Application Tier
-The application tier consists of four classes that provide services to the UI tier: GameCenter, 
-PlayerLobby, GameWin, and PlayerService. Each of these classes play a central role in the flow 
-of the application. GameCenter is the class that controls and keeps track of active games and which 
-players are in a game. It has methods to request a new game with specific players, and is able to 
-create a PlayerService application tier class. The PlayerService class holds information specific 
-to the player. For instance, there are methods that add moves to a list for the player’s current turn. 
-On the simpler side of the application tier components there is PlayerLobby. PlayerLobby simply keeps 
-track of players that are signed in to the web server, and makes sure that no duplicate or invalid 
-names are present. The final application tier class is GameWin. GameWin contains the functionality 
-to trigger the end of a game. It contains multiple methods relating to the way a game can end, 
-such as no valid moves able to be made, no pieces on the board, or resignation.
+
+The application tier consists of four classes that provide services to the UI tier: GameCenter, PlayerLobby, GameWin,
+and PlayerService. Each of these classes play a central role in the flow of the application. GameCenter is the class
+that controls and keeps track of active games and which players are in a game. It has methods to request a new game with
+specific players, and is able to create a PlayerService application tier class. The PlayerService class holds
+information specific to the player. For instance, there are methods that add moves to a list for the player’s current
+turn. On the simpler side of the application tier components there is PlayerLobby. PlayerLobby simply keeps track of
+players that are signed in to the web server, and makes sure that no duplicate or invalid names are present. The final
+application tier class is GameWin. GameWin contains the functionality to trigger the end of a game. It contains multiple
+methods relating to the way a game can end, such as no valid moves able to be made, no pieces on the board, or
+resignation.
 
 ![UML chart for application](application_uml.png)
 
 ### Model Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+
+The model tier consists of 14 classes that make up different aspects of the game: Position, Move (JumpMove and
+SingleMove), Piece (SinglePiece and King), Space, Row, Board, Boardview, Game, and Player. Across these classes, the
+model holds information about the web application’s state and helps communicate that to the other tiers.
+
+Position holds location information, specifically a row and column location value. There are two types of Moves,
+JumpMove and SingleMove. Move contains two Position objects, a start Position and an end Position. A SingleMove does not
+extend the Move functionality, but is useful due to the possibility of JumpMoves. JumpMove extends the Move
+functionality by having another Position that represents the space that is being jumped over.
+
+There are two types of Pieces, a SinglePiece and a King, both of which extend the functionality of the Piece class.
+Piece is an abstract class that contains a piece’s type and color; it has two methods to determine a Piece’s possible
+SingleMoves and JumpMoves. Space holds information on its location on a checkerboard, if a Piece is on it, and if it is
+a valid Space for a Piece to be placed on it.
+
+Row consists of eight Spaces and is used by the Board to help build an iterator used in BoardView. Board contains most
+of the logic of the model. It holds both the players’ pieces on 64 spaces that make up the checkerboard. Additionally,
+it handles the various forms of moving pieces and the process of communicating if a move is valid and if it was made
+successfully. Moreover, through the GameWin class in the Application tier, it helps determine if the win conditions are
+met. BoardView serves as the Board class’ communicator to the UI tier, sending the information being held in the board
+to the UI to display the correct orientation of a board with the appropriate colored pieces.
+
+Game is responsible for holding information about the players, the GameCenter that is holding the game, and for
+monitoring the status of the game. The Player represents a Player on the web application, holding the player’s name.
 
 ### Design Improvements
+
 > _Discuss design improvements that you would make if the project were
 > to continue. These improvement should be based on your direct
 > analysis of where there are problems in the code base which could be
 > addressed with design changes, and describe those suggested design
 > improvements. After completion of the Code metrics exercise, you
-> will also discuss the resutling metric measurements.  Indicate the
+> will also discuss the resutling metric measurements. Indicate the
 > hot spots the metrics identified in your code base, and your
 > suggested design improvements to address those hot spots._
 
 ## Testing
-The testing for this product was done using the JUnit framework and with JaCoCo in order to generate 
-coverage reports. Additional testing tools such as mockito were used in order to write tests for the 
-UI components. Tests were created for each class in order to achieve as much coverage as possible. 
-Tests for the first sprint were done over time, while tests for sprint two were written as each new 
-class was being created, in order to ensure proper functionality.
+
+The testing for this product was done using the JUnit framework and with JaCoCo in order to generate coverage reports.
+Additional testing tools such as mockito were used in order to write tests for the UI components. Tests were created for
+each class in order to achieve as much coverage as possible. Tests for the first sprint were done over time, while tests
+for sprint two were written as each new class was being created, in order to ensure proper functionality.
 
 ### Acceptance Testing
+
 > _Report on the number of user stories that have passed all their
 > acceptance criteria tests, the number that have some acceptance
 > criteria tests failing, and the number of user stories that
@@ -218,10 +230,10 @@ class was being created, in order to ensure proper functionality.
 > acceptance testing and if there are any concerns._
 
 ### Unit Testing and Code Coverage
-For each Unit test, the person who wrote the class and methods would be the person to test them. We 
-would test for return values and any changes that occurred when each method was tested. As we wrote 
-new methods and refactored other methods we would try as soon as possible to fix the tests to accommodate 
-for the changes. As a team we established that we wanted to have 90% coverage for the server and each 
-individual component in order to ensure proper functionality. Some anomalies that occured with testing 
-happened with switch statements, as all branches were unable to be covered due to a lack of need for a 
-default case. As it stands right now, our code coverage is currently at 90%.
+
+For each Unit test, the person who wrote the class and methods would be the person to test them. We would test for
+return values and any changes that occurred when each method was tested. As we wrote new methods and refactored other
+methods we would try as soon as possible to fix the tests to accommodate for the changes. As a team we established that
+we wanted to have 90% coverage for the server and each individual component in order to ensure proper functionality.
+Some anomalies that occured with testing happened with switch statements, as all branches were unable to be covered due
+to a lack of need for a default case. As it stands right now, our code coverage is currently at 90%.
