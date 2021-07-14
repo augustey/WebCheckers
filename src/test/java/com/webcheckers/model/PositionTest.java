@@ -72,4 +72,16 @@ public class PositionTest {
         GameCenter gameCenter = new GameCenter();
         assertFalse(CuT.equals(gameCenter));
     }
+
+    /**
+     * Test the Position toString method
+     */
+    @Test
+    public void to_string_test() {
+        String expected = "Position{row=2, cell=5}";
+
+        String actual = CuT.toString();
+
+        assertEquals(expected, actual);
+    }
 }
