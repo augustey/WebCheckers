@@ -33,6 +33,7 @@ interact with the rest of the application through signing in, player selection, 
 | CSS | Cascading Style Sheet |
 | HTML | HyperText Markup Language |
 | HTTP | HyperText Transfer Protocol |
+| JaCoCo | Java Code Coverage |
 | JUnit | Unit Testing Framework |
 | MVP | Minimum Viable Product |
 | POJO | Plain Old Java Object |
@@ -133,8 +134,8 @@ moves.
 
 ### UI Tier
 
-The UI tier of the application contains all of the HTTP view components for the webserver. The first route that is
-called is the GetHomeRoute, which gives all of the information about the home screen to the web server for it to be
+The UI tier of the application contains all the HTTP view components for the webserver. The first route that is
+called is the GetHomeRoute, which gives all the information about the home screen to the web server for it to be
 rendered. From the homescreen, the user can check any messages that the server displays, but more importantly, the
 player can click the sign in button in order to access the GetSignInRoute. The flow between these two states can be seen
 above in the state diagram for the application. The user can then sign in with a unique and appropriate username. which
@@ -184,7 +185,7 @@ SingleMove), Piece (SinglePiece and King), Space, Row, Board, Boardview, Game, a
 model holds information about the web application’s state and helps communicate that to the other tiers.
 
 Position holds location information, specifically a row and column location value. There are two types of Moves,
-JumpMove and SingleMove. Move contains two Position objects, a start Position and an end Position. A SingleMove does not
+JumpMove and SingleMove. Move contains two Position objects: a start Position and an end Position. A SingleMove does not
 extend the Move functionality, but is useful due to the possibility of JumpMoves. JumpMove extends the Move
 functionality by having another Position that represents the space that is being jumped over.
 
@@ -219,7 +220,7 @@ monitoring the status of the game. The Player represents a Player on the web app
 The testing for this product was done using the JUnit framework and with JaCoCo in order to generate coverage reports.
 Additional testing tools such as mockito were used in order to write tests for the UI components. Tests were created for
 each class in order to achieve as much coverage as possible. Tests for the first sprint were done over time, while tests
-for sprint two were written as each new class was being created, in order to ensure proper functionality.
+for sprint two were written as each new class was created, in order to ensure proper functionality.
 
 ### Acceptance Testing
 
@@ -235,5 +236,5 @@ For each Unit test, the person who wrote the class and methods would be the pers
 return values and any changes that occurred when each method was tested. As we wrote new methods and refactored other
 methods we would try as soon as possible to fix the tests to accommodate for the changes. As a team we established that
 we wanted to have 90% coverage for the server and each individual component in order to ensure proper functionality.
-Some anomalies that occured with testing happened with switch statements, as all branches were unable to be covered due
+Some anomalies that occurred with testing happened with switch statements, as all branches were unable to be covered due
 to a lack of need for a default case. As it stands right now, our code coverage is currently at 90%.
