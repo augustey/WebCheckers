@@ -203,8 +203,11 @@ such as no valid moves able to be made, no pieces on the board, or resignation.
 > suggested design improvements to address those hot spots._
 
 ## Testing
-> _This section will provide information about the testing performed
-> and the results of the testing._
+The testing for this product was done using the JUnit framework and with JaCoCo in order to generate 
+coverage reports. Additional testing tools such as mockito were used in order to write tests for the 
+UI components. Tests were created for each class in order to achieve as much coverage as possible. 
+Tests for the first sprint were done over time, while tests for sprint two were written as each new 
+class was being created, in order to ensure proper functionality.
 
 ### Acceptance Testing
 > _Report on the number of user stories that have passed all their
@@ -214,8 +217,10 @@ such as no valid moves able to be made, no pieces on the board, or resignation.
 > acceptance testing and if there are any concerns._
 
 ### Unit Testing and Code Coverage
-> _Discuss your unit testing strategy. Report on the code coverage
-> achieved from unit testing of the code base. Discuss the team's
-> coverage targets, why you selected those values, and how well your
-> code coverage met your targets. If there are any anomalies, discuss
-> those._
+For each Unit test, the person who wrote the class and methods would be the person to test them. We 
+would test for return values and any changes that occurred when each method was tested. As we wrote 
+new methods and refactored other methods we would try as soon as possible to fix the tests to accommodate 
+for the changes. As a team we established that we wanted to have 90% coverage for the server and each 
+individual component in order to ensure proper functionality. Some anomalies that occured with testing 
+happened with switch statements, as all branches were unable to be covered due to a lack of need for a 
+default case. As it stands right now, our code coverage is currently at 90%. 
