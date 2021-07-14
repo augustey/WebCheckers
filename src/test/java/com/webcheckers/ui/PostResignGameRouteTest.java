@@ -78,7 +78,7 @@ public class PostResignGameRouteTest
      */
     @Test
     public void test_valid() {
-        Message expected = Message.info("Player has resigned.");
+        Message expected = Message.info("Player has resigned. Opponent is the winner!");
 
         String actual = (String) CuT.handle(request, response);
 
