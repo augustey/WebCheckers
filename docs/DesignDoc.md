@@ -212,14 +212,18 @@ monitoring the status of the game. The Player represents a Player on the web app
 
 ### Design Improvements
 
-> _Discuss design improvements that you would make if the project were
-> to continue. These improvement should be based on your direct
-> analysis of where there are problems in the code base which could be
-> addressed with design changes, and describe those suggested design
-> improvements. After completion of the Code metrics exercise, you
-> will also discuss the resutling metric measurements. Indicate the
-> hot spots the metrics identified in your code base, and your
-> suggested design improvements to address those hot spots._
+For Sprint 3, the team has decided on several design improvements. The Board class is currently at above 400 lines of
+code. As a result, the size of the Board class leads the team to conclude that many of the assigned responsibilities of
+Board can be reassigned to other classes. Specifically, the functionality for making a move on the board can be done in
+either the PlayerService or Game classes. Additionally, the validation functionality for moves can be moved to the
+respective move classes.
+
+The model tier has 14 different classes which leads the team to conclude that it is possible that some of the classes as
+well as their assigned functionality could be relocated.
+
+Moreover, the team’s architectural separation can be improved on. The Model should be responsible for maintaining and
+holding information about the game. There are instances in the Model where there is information being communicated to
+the UI whereas the Application should be handling that.
 
 ## Testing
 
