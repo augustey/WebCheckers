@@ -56,6 +56,16 @@ public class MoveTest {
     }
 
     /**
+     * Test that a jumpMove can be found unequal to a move object or other object
+     */
+    @Test
+    public void ctor_equals_false() {
+        JumpMove jumpMove = new JumpMove(new Position(0, 1), new Position(-2, -2));
+        assertFalse(move.equals(jumpMove));
+        assertFalse(move.equals("not equal"));
+    }
+
+    /**
      * Test that the hashCode is generated correctly
      */
     @Test
@@ -64,5 +74,17 @@ public class MoveTest {
         assertEquals(move.hashCode(), move.hashCode());
         assertNotEquals(move.hashCode(), move1.hashCode());
 
+    }
+
+    /**
+     * Test that toString is generated correctly
+     */
+    @Test
+    public void ctor_toString() {
+        String expected = "Move{start=Position{row=0, cell=0}, end=Position{row=-2, cell=-2}}";
+
+        String actual = move.toString();
+
+        assertEquals(expected, actual);
     }
 }
