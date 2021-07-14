@@ -7,7 +7,7 @@ geometry: margin=1in
 * Team name: Team 4
 * Team members
   * Yaqim Auguste
-  * Will Dabney
+  * William Dabney
   * Jim Logan
   * Neel Raj
 
@@ -29,13 +29,14 @@ signing in, player selection, and signing out.
 
 | Term | Definition |
 |------|------------|
-| MVP | Minimum Viable Product |
-| UI | User Interface |
 | AI | Artificial Intelligence |
-| HTML | HyperText Markup Language |
 | CSS | Cascading Style Sheet |
+| HTML | HyperText Markup Language |
+| HTTP | HyperText Transfer Protocol |
+| JUnit | Unit Testing Framework |
+| MVP | Minimum Viable Product |
 | POJO | Plain Old Java Object |
-
+| UI | User Interface |
 
 ## Requirements
 
@@ -48,12 +49,15 @@ Additionally, the application features the ability to back up, or revert, a move
 submit a move, and resign from the game.
 
 ### Definition of MVP
+
 The application must allow players to play checkers with other players who are currently signed-in. 
 The game user interface (UI) will support a game experience using drag-and-drop browser capabilities
  for making moves. Either player is able to resign from the game.
 
 
 ### MVP Features
+The list of MVP features is below.
+
 - Sign-in
 - Start a Game
 - Validate Move
@@ -68,9 +72,11 @@ The game user interface (UI) will support a game experience using drag-and-drop 
 - Win Conditions
 
 ### Roadmap of Enhancements
+
+The list of enhancements is below.
+
 - Sign Out
 - Replaying A Game
-
 
 ## Application Domain
 
@@ -83,7 +89,6 @@ They can sign out, spectate a game or can join a checkers game with another play
 During the game either player may resign which ends the game.
 The checkers game uses a board, which is made up of spaces that can be dark or light, to play the game.
 The Spaces can hold pieces; the player can move their corresponding pieces.
-
 
 
 ## Architecture and Design
@@ -106,7 +111,6 @@ The Spark framework creates Controllers, and the FreeMarker frameworks builds th
 The Application and Model tiers contain plain-old Java objects (POJOs).
 
 Details of the components within these tiers are below.
-
 
 ### Overview of User Interface
 
@@ -134,7 +138,6 @@ to a game. When entering their respective states either player can select the re
 which ends the game and renders the exit button. When clicked, the button then directs the 
 players back to the home screen. The exit button also appears whenever the game ends,
 such as when one player runs out of pieces, or when a player cannot make any moves.
-
 
 ### UI Tier
 The UI tier of the application contains all of the HTTP view components for the webserver. 
@@ -169,8 +172,6 @@ the player’s turn. If the message is “true,” then GetGameRoute is called, 
 ![Waiting for a turn state chart](waiting_turn_chart.png)
 
 At any point the player can select the resign button, which triggers the end of the game using PostResignGame.
-
-
 
 ### Application Tier
 The application tier consists of four classes that provide services to the UI tier: GameCenter, 
@@ -223,4 +224,4 @@ new methods and refactored other methods we would try as soon as possible to fix
 for the changes. As a team we established that we wanted to have 90% coverage for the server and each 
 individual component in order to ensure proper functionality. Some anomalies that occured with testing 
 happened with switch statements, as all branches were unable to be covered due to a lack of need for a 
-default case. As it stands right now, our code coverage is currently at 90%. 
+default case. As it stands right now, our code coverage is currently at 90%.
