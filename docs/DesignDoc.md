@@ -189,10 +189,14 @@ JumpMove and SingleMove. Move contains two Position objects: a start Position an
 extend the Move functionality, but is useful due to the possibility of JumpMoves. JumpMove extends the Move
 functionality by having another Position that represents the space that is being jumped over.
 
+![UML for move](move_uml.png)
+
 There are two types of Pieces, a SinglePiece and a King, both of which extend the functionality of the Piece class.
 Piece is an abstract class that contains a piece’s type and color; it has two methods to determine a Piece’s possible
 SingleMoves and JumpMoves. Space holds information on its location on a checkerboard, if a Piece is on it, and if it is
 a valid Space for a Piece to be placed on it.
+
+![UML for piece](piece_uml.png)
 
 Row consists of eight Spaces and is used by the Board to help build an iterator used in BoardView. Board contains most
 of the logic of the model. It holds both the players’ pieces on 64 spaces that make up the checkerboard. Additionally,
@@ -200,6 +204,8 @@ it handles the various forms of moving pieces and the process of communicating i
 successfully. Moreover, through the GameWin class in the Application tier, it helps determine if the win conditions are
 met. BoardView serves as the Board class’ communicator to the UI tier, sending the information being held in the board
 to the UI to display the correct orientation of a board with the appropriate colored pieces.
+
+![UML for Board](board_uml.png)
 
 Game is responsible for holding information about the players, the GameCenter that is holding the game, and for
 monitoring the status of the game. The Player represents a Player on the web application, holding the player’s name.
