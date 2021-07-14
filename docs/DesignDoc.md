@@ -134,14 +134,14 @@ moves.
 
 ### UI Tier
 
-The UI tier of the application contains all the HTTP view components for the webserver. The first route that is
-called is the GetHomeRoute, which gives all the information about the home screen to the web server for it to be
-rendered. From the homescreen, the user can check any messages that the server displays, but more importantly, the
-player can click the sign in button in order to access the GetSignInRoute. The flow between these two states can be seen
-above in the state diagram for the application. The user can then sign in with a unique and appropriate username. which
-calls the PostSignIn route, which tailors the appropriate response based on the name entered. If the name is successful,
-the server redirects to the homescreen, but with additional information displayed, such as the ability to sign out,
-which is performed with PostSignOut.
+The UI tier of the application contains all the HTTP view components for the webserver. The first route that is called
+is the GetHomeRoute, which gives all the information about the home screen to the web server for it to be rendered. From
+the homescreen, the user can check any messages that the server displays, but more importantly, the player can click the
+sign in button in order to access the GetSignInRoute. The flow between these two states can be seen above in the state
+diagram for the application. The user can then sign in with a unique and appropriate username. which calls the
+PostSignIn route, which tailors the appropriate response based on the name entered. If the name is successful, the
+server redirects to the homescreen, but with additional information displayed, such as the ability to sign out, which is
+performed with PostSignOut.
 
 By selecting another player’s name, a game can be issued, and GetGameRoute is called in one of two states, waiting for a
 turn, and performing a turn. Performing a turn starts at GetGameRoute, where the player can move a piece to an open
@@ -212,14 +212,18 @@ monitoring the status of the game. The Player represents a Player on the web app
 
 ### Design Improvements
 
-> _Discuss design improvements that you would make if the project were
-> to continue. These improvement should be based on your direct
-> analysis of where there are problems in the code base which could be
-> addressed with design changes, and describe those suggested design
-> improvements. After completion of the Code metrics exercise, you
-> will also discuss the resutling metric measurements. Indicate the
-> hot spots the metrics identified in your code base, and your
-> suggested design improvements to address those hot spots._
+For Sprint 3, the team has decided on several design improvements. The Board class is currently at above 400 lines of
+code. As a result, the size of the Board class leads the team to conclude that many of the assigned responsibilities of
+Board can be reassigned to other classes. Specifically, the functionality for making a move on the board can be done in
+either the PlayerService or Game classes. Additionally, the validation functionality for moves can be moved to the
+respective move classes.
+
+The model tier has 14 different classes which leads the team to conclude that it is possible that some of the classes as
+well as their assigned functionality could be relocated.
+
+Moreover, the team’s architectural separation can be improved on. The Model should be responsible for maintaining and
+holding information about the game. There are instances in the Model where there is information being communicated to
+the UI whereas the Application should be handling that.
 
 ## Testing
 
@@ -230,11 +234,15 @@ for sprint two were written as each new class was created, in order to ensure pr
 
 ### Acceptance Testing
 
-> _Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
+As of the end of Sprint 2, all seven user stories (five from Sprint 2 and two from Sprint 1) have all met their
+acceptance criteria tests. None have failed their acceptance criteria. All user stories have been tested.
+
+There is one issue that has arisen during acceptance testing. In the user story, _Making a Jump Move_, when making a
+multiple jump move, there is an issue, both on the Model and UI side. In the model, the board updates even when the
+multiple jump has not been completed. On the UI side, the only way multiple jumps work is if the player submits a turn
+every jump move. Although in the acceptance criteria the multiple jumps does work, the current implementation does call
+for improvement so that the player does not have to submit a turn for every jump. As a result, this causes a slight
+issue with the backup feature in the _UI_ user story.
 
 ### Unit Testing and Code Coverage
 
