@@ -46,8 +46,8 @@ public class Move {
     }
 
     /**
-     * Equals method that compares two Move objects together.
-     *
+     * Equals method that compares two Move objects together
+     * Used to compare move, simpleMove and jumpMove
      * @param other
      *         The other move object.
      *
