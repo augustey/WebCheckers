@@ -185,7 +185,7 @@ names are present. The final application tier class is GameWin. GameWin contains
 to trigger the end of a game. It contains multiple methods relating to the way a game can end, 
 such as no valid moves able to be made, no pieces on the board, or resignation.
 
-> UML chart
+! [UML chart for application](application_uml.png)
 
 ### Model Tier
 > _Provide a summary of the Application tier of your architecture. This
