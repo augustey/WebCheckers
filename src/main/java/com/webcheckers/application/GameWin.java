@@ -14,9 +14,9 @@ import com.webcheckers.model.Player;
 public class GameWin {
 
     // Game Over Message Strings.
-    private final String PIECES_CAPTURED = "%s has captured all pieces!";
-    private final String PIECES_BLOCKED = "%s has all of their pieces blocked!";
-    private final String PLAYER_RESIGNED = "%s has resigned.";
+    private final String PIECES_CAPTURED = "%s has captured all pieces! %s is the winner!";
+    private final String PIECES_BLOCKED = "%s has all of their pieces blocked! %s is the winner!";
+    private final String PLAYER_RESIGNED = "%s has resigned. %s is the winner!";
 
     // The GameCenter object managing the game.
     private final GameCenter gameCenter;
@@ -58,7 +58,7 @@ public class GameWin {
      * @param color
      *         The piece color to count.
      *
-     * @return The number of the specified color pieces on the board.
+     * @return True if the number of pieces is zero, else, false.
      */
     public int checkPieceCount(Board board, Piece.Color color) {
         int count = 0;
@@ -90,10 +90,10 @@ public class GameWin {
      */
     public boolean checkPieceGameOver(Board board, Piece.Color activePlayerColor) {
         if (activePlayerColor == Piece.Color.RED) {
-            this.gameOverMessage = String.format(PIECES_CAPTURED, game.getWhitePlayer());
+            this.gameOverMessage = String.format(PIECES_CAPTURED, game.getWhitePlayer(), game.getWhitePlayer());
         }
         else {
-            this.gameOverMessage = String.format(PIECES_CAPTURED, game.getRedPlayer());
+            this.gameOverMessage = String.format(PIECES_CAPTURED, game.getRedPlayer(), game.getRedPlayer());
         }
         if (checkPieceCount(board, activePlayerColor) == 0) {
             return triggerGameOver();
@@ -111,10 +111,10 @@ public class GameWin {
      */
     public boolean checkBlockedGameOver(Piece.Color activePlayerColor) {
         if (activePlayerColor == Piece.Color.RED) {
-            this.gameOverMessage = String.format(PIECES_BLOCKED, game.getRedPlayer());
+            this.gameOverMessage = String.format(PIECES_BLOCKED, game.getRedPlayer(), game.getWhitePlayer());
         }
         else {
-            this.gameOverMessage = String.format(PIECES_BLOCKED, game.getWhitePlayer());
+            this.gameOverMessage = String.format(PIECES_BLOCKED, game.getWhitePlayer(), game.getRedPlayer());
         }
         return triggerGameOver();
     }
@@ -128,7 +128,12 @@ public class GameWin {
      * @return True if game over was triggered, else, false.
      */
     public boolean checkResignGameOver(Player player) {
-        this.gameOverMessage = String.format(PLAYER_RESIGNED, player);
+        if (player.equals(game.getRedPlayer())) {
+            this.gameOverMessage = String.format(PLAYER_RESIGNED, player, game.getWhitePlayer());
+        }
+        else {
+            this.gameOverMessage = String.format(PLAYER_RESIGNED, player, game.getRedPlayer());
+        }
         return triggerGameOver();
     }
 
