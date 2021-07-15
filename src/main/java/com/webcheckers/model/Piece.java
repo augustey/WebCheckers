@@ -1,12 +1,14 @@
 package com.webcheckers.model;
 
+import java.util.ArrayList;
+
 /**
- * This class is responsible for creating a piece.
+ * The Piece class is responsible for containing the outlined functionality for any Piece object that extends.
  *
  * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
  */
-public class Piece {
+public abstract class Piece {
 
     /**
      * Enum for the type of pieces.
@@ -18,20 +20,19 @@ public class Piece {
      */
     public enum Color {RED, WHITE}
 
-    // Type of piece.
-    private final Type type;
-
     // Color of piece.
     private final Color color;
 
+    // Type of piece.
+    private final Type type;
+
     /**
-     * Constructor for a chess piece.
+     * Constructor for Piece.
      *
      * @param type
-     *     The type of piece.
-     *
+     *         The type of piece.
      * @param color
-     *     The color of the piece.
+     *         The color of the piece.
      */
     public Piece(Type type, Color color) {
         this.type = type;
@@ -39,22 +40,44 @@ public class Piece {
     }
 
     /**
-     * A getter method for the type of piece.
+     * Abstract method that will determine all possible single moves for this piece.
      *
-     * @return
-     *     The type of piece.
+     * @param row
+     *         The start row position value.
+     * @param col
+     *         The start col position value.
+     *
+     * @return A list of single moves that this piece can make.
      */
-    public Type getType () {
-        return type;
-    }
+    public abstract ArrayList<SingleMove> allSingleMoves(int row, int col);
+
+    /**
+     * Abstract method that will determine all possible jump moves for this piece.
+     *
+     * @param row
+     *         The start row position value.
+     * @param col
+     *         The start col position value.
+     *
+     * @return A list of jump moves that this piece can make.
+     */
+    public abstract ArrayList<JumpMove> allJumps(int row, int col);
 
     /**
      * A getter method for the color of piece.
      *
-     * @return
-     *     The color of piece.
+     * @return The color of piece.
      */
     public Color getColor() {
         return color;
+    }
+
+    /**
+     * A getter method for the type of piece.
+     *
+     * @return The type of piece.
+     */
+    public Type getType() {
+        return type;
     }
 }

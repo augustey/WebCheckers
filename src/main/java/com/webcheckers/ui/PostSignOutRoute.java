@@ -8,12 +8,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Route for signing out the player.
+ * The UI Controller for signing out the player.
  *
  * @author <a href="mailto:jrl9984@rit.edu">Jim Logan</a>
  */
-public class PostSignOutRoute implements Route
-{
+public class PostSignOutRoute implements Route {
+
+    public static final String MESSAGE_KEY = "message";
+
     // Title attribute.
     private static final String TITLE_ATTR = "title";
 
@@ -25,13 +27,11 @@ public class PostSignOutRoute implements Route
      * Create the Spark Route (UI controller) to handle all {@code POST /signout} HTTP requests.
      *
      * @param playerLobby
-     *     The server wide lobby keeping track of all players.
-     *
+     *         The server wide lobby keeping track of all players.
      * @param templateEngine
-     *     The HTML template rendering engine.
+     *         The HTML template rendering engine.
      */
-    public PostSignOutRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine)
-    {
+    public PostSignOutRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
         this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
     }
@@ -40,17 +40,14 @@ public class PostSignOutRoute implements Route
      * Render the WebCheckers Sign-out page.
      *
      * @param request
-     *     The HTTP request.
-     *
+     *         The HTTP request.
      * @param response
-     *     The HTTP response.
+     *         The HTTP response.
      *
-     * @return
-     *     The rendered HTML for the Sign-out page.
+     * @return The rendered HTML for the Sign-out page.
      */
     @Override
-    public Object handle(Request request, Response response)
-    {
+    public Object handle(Request request, Response response) {
         final Session httpSession = request.session();
         final Map<String, Object> vm = new HashMap<>();
 
@@ -63,10 +60,10 @@ public class PostSignOutRoute implements Route
         int count = playerLobby.getPlayerSet().size();
         vm.put(GetHomeRoute.ONLINE_COUNT_ATTR, count);
 
-        vm.put("message", GetHomeRoute.WELCOME_MSG);
+        vm.put(MESSAGE_KEY, GetHomeRoute.WELCOME_MSG);
 
         response.redirect("/");
 
-        return templateEngine.render(new ModelAndView(vm , "home.ftl"));
+        return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
 }
