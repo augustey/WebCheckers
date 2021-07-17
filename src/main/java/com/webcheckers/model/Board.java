@@ -130,7 +130,6 @@ public class Board implements Iterable<Row> {
      */
     public boolean isPossibleMove(Move move) {
         determineMoveType();
-        System.out.println(moveType);
         if (possibleMoves.isEmpty()) {
             for (int row = 0; row < BOARD_DIM; row++) {
                 for (int col = 0; col < BOARD_DIM; col++) {
@@ -151,10 +150,9 @@ public class Board implements Iterable<Row> {
                     }
                 }
             }
-            return true;
         }
         if (!possibleMoves.contains(move)) {
-            if (move instanceof JumpMove) {
+            if (move instanceof JumpMove && moveType == MoveType.Jump) {
                 Position end = move.getEnd();
                 Position start = move.getStart();
                 Space copyEndSpace = getSpace(end, new Board(this));
@@ -165,19 +163,14 @@ public class Board implements Iterable<Row> {
                 else {
                     copyEndSpace.setPiece(new King(thisStartSpace.getPiece().getColor()));
                 }
-                possibleMoves.addAll(copyEndSpace.getPiece().allJumps(end.getRow(), end.getCell()));
+                ArrayList<JumpMove> jumpMoves = copyEndSpace.getPiece().allJumps(end.getRow(), end.getCell());
+                if (validateJumpMoves(jumpMoves)) {
+                    possibleMoves.addAll(jumpMoves);
+                }
                 return possibleMoves.contains(move);
             }
         }
-
-        if(moveType == MoveType.Jump && move instanceof JumpMove){
-            return true;
-        }
-        else if(moveType == MoveType.Single && move instanceof SingleMove){
-            return true;
-        }
-        return false;
-
+        return true;
     }
 
     /**
