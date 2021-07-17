@@ -95,7 +95,7 @@ public class Board implements Iterable<Row> {
         for (int row = 0; row < BOARD_DIM; row++) {
             System.arraycopy(copy.board[row], 0, this.board[row], 0, BOARD_DIM);
         }
-        this.moveType = copy.moveType;
+        this.moveType = null;
         this.activePlayerColor = copy.getActivePlayerColor();
     }
 
@@ -128,9 +128,9 @@ public class Board implements Iterable<Row> {
     }
 
     /**
-     * A getter method for the possible moves that the active player could make.
+     * Verifies if a move is valid and could be executed.
      *
-     * @return The list of possible moves.
+     * @return True if a move is valid, else, false.
      */
     public boolean isPossibleMove(Move move) {
         System.out.println("isPossibleMove : \n" + this);
@@ -159,7 +159,7 @@ public class Board implements Iterable<Row> {
         if (!possibleMoves.contains(move)) {
             if (moveType == MoveType.Jump && this.startJumpPos != null) {
                 Position moveStart = move.getStart();
-                Space copyStartMoveSpace = getSpace(moveStart, new Board(this));
+                Space copyStartMoveSpace = new Space(getSpace(moveStart, new Board(this)));
                 Space thisStartingSpace = getSpace(this.startJumpPos, this);
                 if (thisStartingSpace.getPiece() instanceof SinglePiece) {
                     copyStartMoveSpace.setPiece(new SinglePiece(thisStartingSpace.getPiece().getColor()));
@@ -397,7 +397,6 @@ public class Board implements Iterable<Row> {
         }
         // Create the board to make the moves on.
         Board copy = new Board(this);
-
 
         // Establish the end position and space.
         Position endPos = null;

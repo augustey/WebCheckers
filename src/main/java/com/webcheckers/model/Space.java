@@ -38,6 +38,18 @@ public class Space {
     }
 
     /**
+     * Copy constructor for space.
+     *
+     * @param copy A Space to copy.
+     */
+    public Space(Space copy) {
+        this.rowIdx = copy.rowIdx;
+        this.colIdx = copy.colIdx;
+        this.piece = copy.piece;
+        this.isValid = copy.isValid;
+    }
+
+    /**
      * A getter method for the index of this space in a row.
      *
      * @return The index of this space in a row.

@@ -52,6 +52,7 @@ public class PostValidateMoveRoute implements Route {
         Board board = playerService.getGame().getBoard();
         System.out.println(move);
         Message valid;
+        System.out.println("PostValidateMoveRoute Before: \n" + board);
         if (board.isPossibleMove(move)) {
             valid = Message.info("Move was made successfully!");
             playerService.addMove(move);
@@ -61,7 +62,7 @@ public class PostValidateMoveRoute implements Route {
         }
 
         System.out.println(gson.toJson(valid));
-        System.out.println("PostValidateMoveRoute: \n" + board);
+        System.out.println("PostValidateMoveRoute After: \n" + board);
         return gson.toJson(valid);
     }
 }
