@@ -55,15 +55,15 @@ public class Board implements Iterable<Row> {
                     if (row > BOARD_DIM - 4) {
                         space.setPiece(new SinglePiece(Piece.Color.RED));
                     }
-                    if (row == 4) {
-                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-                    }
-                    else if(row == 2) {
-                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-                    }
-//                    else if (row < 3) {
+//                    if (row == 4) {
 //                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
 //                    }
+//                    else if(row == 2) {
+//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+//                    }
+                    else if (row < 3) {
+                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+                    }
                 }
                 else {
                     space = new Space(row, col, null, false);
@@ -71,7 +71,7 @@ public class Board implements Iterable<Row> {
                 this.board[row][col] = space;
             }
         }
-        ptuiDebug();
+//        ptuiDebug();
     }
 
     /**
