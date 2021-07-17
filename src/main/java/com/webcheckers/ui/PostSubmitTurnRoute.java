@@ -38,7 +38,8 @@ public class PostSubmitTurnRoute implements Route {
 
         Board board = playerService.getGame().getBoard();
         ArrayList<Move> moves = (ArrayList<Move>) playerService.getTurnMoves();
-        Message message = board.makeMove(moves);
+        System.out.println("PostSubmitTurn: \n" +board);
+        Message message = board.makeMove( moves);
         playerService.clearMoves();
 
         Gson gson = new GsonBuilder().create();

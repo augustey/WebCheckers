@@ -61,7 +61,7 @@ public class PostValidateMoveRoute implements Route {
         }
 
         System.out.println(gson.toJson(valid));
-
+        System.out.println("PostValidateMoveRoute: \n" + board);
         return gson.toJson(valid);
     }
 }

@@ -133,6 +133,7 @@ public class Board implements Iterable<Row> {
      * @return The list of possible moves.
      */
     public boolean isPossibleMove(Move move) {
+        System.out.println("isPossibleMove : \n" + this);
         determineMoveType();
         if (possibleMoves.isEmpty()) {
             for (int row = 0; row < BOARD_DIM; row++) {
@@ -172,6 +173,7 @@ public class Board implements Iterable<Row> {
                 return possibleMoves.contains(move);
             }
         }
+        System.out.println("isPossibleMove end : \n" + this);
         if (possibleMoves.contains(move)) {
             if (moveType == MoveType.Jump) {
                 this.startJumpPos = move.getStart();
@@ -382,6 +384,8 @@ public class Board implements Iterable<Row> {
      * @return A message if the moves were valid, or an error if there is another jump move possible.
      */
     public Message makeMove(ArrayList<Move> moves) {
+        System.out.println("makeMove: " + moves);
+        System.out.println(this);
         // Determine what move type the user can make.
         determineMoveType();
         // Handles the win condition where there are no possible moves.
@@ -427,7 +431,7 @@ public class Board implements Iterable<Row> {
                     if (validateJumpMove(jumpMove)) {
                         Space jumpedSpace = getSpace(jumpMove.getJumpedPosition(), copy);
                         copy.executeJumpMove(startSpace, jumpedSpace, endSpace);
-                        System.out.println(copy);
+//                        System.out.println(copy);
                     }
                 }
             }
@@ -455,7 +459,7 @@ public class Board implements Iterable<Row> {
         for (int row = 0; row < BOARD_DIM; row++) {
             System.arraycopy(copy.board[row], 0, this.board[row], 0, BOARD_DIM);
         }
-        System.out.println(this);
+//        System.out.println(this);
         // Flip the board orientation for the next player.
         flip();
         // Check the win condition for blocked moves.
@@ -540,7 +544,7 @@ public class Board implements Iterable<Row> {
         int endRow;
         int endCol;
 //        while(true){
-        System.out.println(this);
+//        System.out.println(this);
 //            start = scan.nextLine();
 //            end = scan.nextLine();
 //
@@ -558,8 +562,8 @@ public class Board implements Iterable<Row> {
         ArrayList<Move> moves = new ArrayList<>();
         moves.add(move);
 
-//        Move move1 = new Move(new Position(3, 2), new Position(1, 4));
-//        moves.add(move1);
+        Move move1 = new Move(new Position(3, 2), new Position(1, 4));
+        moves.add(move1);
         makeMove(moves);
             System.out.println(this);
 //        }
