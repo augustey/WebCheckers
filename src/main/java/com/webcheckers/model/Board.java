@@ -21,7 +21,7 @@ public class Board implements Iterable<Row> {
     public final int BOARD_DIM = 8;
 
     // The game win object
-    private GameWin gameWin = null;
+    private GameWin gameWin;
 
     // 2D Array of Spaces that form the board.
     private Space[][] board;
@@ -55,15 +55,15 @@ public class Board implements Iterable<Row> {
                     if (row > BOARD_DIM - 4) {
                         space.setPiece(new SinglePiece(Piece.Color.RED));
                     }
-//                    if (row == 4) {
-//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-//                    }
-//                    else if(row == 2) {
-//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-//                    }
-                    else if (row < 3) {
+                    if (row == 4) {
                         space.setPiece(new SinglePiece(Piece.Color.WHITE));
                     }
+                    else if(row == 2) {
+                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+                    }
+//                    else if (row < 3) {
+//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+//                    }
                 }
                 else {
                     space = new Space(row, col, null, false);
@@ -71,7 +71,7 @@ public class Board implements Iterable<Row> {
                 this.board[row][col] = space;
             }
         }
-//        ptuiDebug();
+        ptuiDebug();
     }
 
     /**
@@ -81,23 +81,13 @@ public class Board implements Iterable<Row> {
      *         The other board to copy from.
      */
     public Board(Board copy) {
-        copy.gameWin = this.gameWin;
-        System.out.println(copy);
-        copy.board = new Space[BOARD_DIM][BOARD_DIM];
+        this.gameWin = copy.gameWin;
+        this.board = new Space[BOARD_DIM][BOARD_DIM];
         for (int row = 0; row < BOARD_DIM; row++) {
-            //TODO remove this once doen debugging
-            if(row == 7) {
-                System.arraycopy(copy.board[row], 0, this.board[row], 0, BOARD_DIM);
-                copy.getSpace(new Position(row, 6)).setPiece(null);
-            }
-            else
-            System.arraycopy(this.board[row], 0, copy.board[row], 0, BOARD_DIM);
+            System.arraycopy(copy.board[row], 0, this.board[row], 0, BOARD_DIM);
         }
-
-        copy.moveType = this.moveType;
-        copy.activePlayerColor = this.getActivePlayerColor();
-        System.out.println(this);
-        System.out.println(copy);
+        this.moveType = copy.moveType;
+        this.activePlayerColor = copy.getActivePlayerColor();
     }
 
     /**
@@ -258,8 +248,7 @@ public class Board implements Iterable<Row> {
      * @return True if any move in the list is a valid jump move, else, false.
      */
     public boolean validateJumpMoves(ArrayList<JumpMove> moves) {
-        for (int i = 0; i < moves.size(); i++) {
-            JumpMove move = moves.get(i);
+        for (JumpMove move : moves) {
             if (validateJumpMove(move)) {
                 return true;
             }
@@ -509,7 +498,7 @@ public class Board implements Iterable<Row> {
         return textBoard.toString();
     }
 
-        public void ptuiDebug() {
+    public void ptuiDebug() {
         System.out.println("Enter in start pos and end pos on separate lines");
         System.out.println("Start:row col");
         System.out.println("End:row col");
@@ -540,8 +529,8 @@ public class Board implements Iterable<Row> {
         ArrayList<Move> moves = new ArrayList<>();
         moves.add(move);
 
-        Move move1 = new Move(new Position(3, 2), new Position(1, 4));
-        moves.add(move1);
+//        Move move1 = new Move(new Position(3, 2), new Position(1, 4));
+//        moves.add(move1);
         makeMove(moves);
 //        }
     }
