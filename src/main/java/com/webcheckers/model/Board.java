@@ -40,6 +40,9 @@ public class Board implements Iterable<Row> {
     // The current move type in the board.
     private ArrayList<Move> possibleMoves;
 
+    // Starting position for a possible multiple jumps
+    private Position startJumpPos;
+
     /**
      * Constructor for the board class that builds the board and initializes the starting player color.
      *
@@ -59,15 +62,15 @@ public class Board implements Iterable<Row> {
                     if (row > BOARD_DIM - 4) {
                         space.setPiece(new SinglePiece(Piece.Color.RED));
                     }
-//                    if (row == 4) {
-//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-//                    }
-//                    else if(row == 2) {
-//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-//                    }
-                    else if (row < 3) {
+                    if (row == 4) {
                         space.setPiece(new SinglePiece(Piece.Color.WHITE));
                     }
+                    else if(row == 2) {
+                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+                    }
+//                    else if (row < 3) {
+//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+//                    }
                 }
                 else {
                     space = new Space(row, col, null, false);
@@ -86,6 +89,7 @@ public class Board implements Iterable<Row> {
      */
     public Board(Board copy) {
         this.gameWin = copy.gameWin;
+        this.startJumpPos = null;
         this.possibleMoves = new ArrayList<>();
         this.board = new Space[BOARD_DIM][BOARD_DIM];
         for (int row = 0; row < BOARD_DIM; row++) {
@@ -152,25 +156,29 @@ public class Board implements Iterable<Row> {
             }
         }
         if (!possibleMoves.contains(move)) {
-            if (move instanceof JumpMove && moveType == MoveType.Jump) {
-                Position end = move.getEnd();
-                Position start = move.getStart();
-                Space copyEndSpace = getSpace(end, new Board(this));
-                Space thisStartSpace = getSpace(start, this);
-                if (thisStartSpace.getPiece() instanceof SinglePiece) {
-                    copyEndSpace.setPiece(new SinglePiece(thisStartSpace.getPiece().getColor()));
+            if (moveType == MoveType.Jump && this.startJumpPos != null) {
+                Position moveStart = move.getStart();
+                Space copyStartMoveSpace = getSpace(moveStart, new Board(this));
+                Space thisStartingSpace = getSpace(this.startJumpPos, this);
+                if (thisStartingSpace.getPiece() instanceof SinglePiece) {
+                    copyStartMoveSpace.setPiece(new SinglePiece(thisStartingSpace.getPiece().getColor()));
                 }
                 else {
-                    copyEndSpace.setPiece(new King(thisStartSpace.getPiece().getColor()));
+                    copyStartMoveSpace.setPiece(new King(thisStartingSpace.getPiece().getColor()));
                 }
-                ArrayList<JumpMove> jumpMoves = copyEndSpace.getPiece().allJumps(end.getRow(), end.getCell());
-                if (validateJumpMoves(jumpMoves)) {
-                    possibleMoves.addAll(jumpMoves);
-                }
+                ArrayList<JumpMove> jumpMoves = copyStartMoveSpace.getPiece().allJumps(moveStart.getRow(), moveStart.getCell());
+                jumpMoves.removeIf(jumpMove -> !validateJumpMove(jumpMove));
+                possibleMoves.addAll(jumpMoves);
                 return possibleMoves.contains(move);
             }
         }
-        return true;
+        if (possibleMoves.contains(move)) {
+            if (moveType == MoveType.Jump) {
+                this.startJumpPos = move.getStart();
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -384,7 +392,7 @@ public class Board implements Iterable<Row> {
             //TODO: throws error singleMoves can only be one in magnitude
         }
         // Create the board to make the moves on.
-        Board copy = this;
+        Board copy = new Board(this);
 
 
         // Establish the end position and space.
@@ -431,12 +439,9 @@ public class Board implements Iterable<Row> {
             int col = endPos.getCell();
             ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
             if (validateJumpMoves(jumpMoves)) {
-                System.out.println("hear");
                 return Message.error("Another jump move is possible!");
-
             }
         }
-
         // King the piece if its endspace is the top most row.
         kingPiece(endSpace);
         // Change the active player color to the next player.
@@ -461,7 +466,7 @@ public class Board implements Iterable<Row> {
         // Check the win condition if there are no more pieces.
         gameWin.checkPieceGameOver(this, activePlayerColor);
         possibleMoves.clear();
-
+        this.startJumpPos = null;
         return Message.info("Move is valid!");
     }
 
