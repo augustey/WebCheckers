@@ -80,4 +80,14 @@ public abstract class Piece {
     public Type getType() {
         return type;
     }
+
+    /**
+     * String representation of a Piece object.
+     *
+     * @return The Piece string.
+     */
+    @Override
+    public String toString() {
+        return "Piece{" + "type=" + type + ", color=" + color + "}";
+    }
 }

@@ -142,15 +142,13 @@ public class Board implements Iterable<Row> {
                     if (piece != null && piece.getColor() == activePlayerColor) {
                         if (moveType == MoveType.Jump) {
                             ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
-                            if (validateJumpMoves(jumpMoves)) {
-                                possibleMoves.addAll(jumpMoves);
-                            }
+                            jumpMoves.removeIf(jumpMove -> !validateJumpMove(jumpMove));
+                            possibleMoves.addAll(jumpMoves);
                         }
                         else if (moveType == MoveType.Single) {
                             ArrayList<SingleMove> singleMoves = new ArrayList<>(piece.allSingleMoves(row, col));
-                            if (validateSingleMoves(singleMoves)) {
-                                possibleMoves.addAll(singleMoves);
-                            }
+                            singleMoves.removeIf(singleMove -> !validateSingleMove(singleMove));
+                            possibleMoves.addAll(singleMoves);
                         }
                     }
                 }
@@ -160,12 +158,17 @@ public class Board implements Iterable<Row> {
             if (moveType == MoveType.Jump && this.startJumpPos != null) {
                 Position moveStart = move.getStart();
                 Space copyStartMoveSpace = new Space(getSpace(moveStart, new Board(this)));
-                Space thisStartingSpace = getSpace(this.startJumpPos, this);
+                Space thisStartingSpace = new Space(getSpace(this.startJumpPos, this));
                 if (thisStartingSpace.getPiece() instanceof SinglePiece) {
                     copyStartMoveSpace.setPiece(new SinglePiece(thisStartingSpace.getPiece().getColor()));
                 }
-                else {
+                else if (thisStartingSpace.getPiece() instanceof King){
                     copyStartMoveSpace.setPiece(new King(thisStartingSpace.getPiece().getColor()));
+                }
+                else {
+                    System.out.println(thisStartingSpace.getPiece());
+                    //TODO FIX BUG ISSUE
+                    return false;
                 }
                 ArrayList<JumpMove> jumpMoves = copyStartMoveSpace.getPiece().allJumps(moveStart.getRow(), moveStart.getCell());
                 jumpMoves.removeIf(jumpMove -> !validateJumpMove(jumpMove));
