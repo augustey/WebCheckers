@@ -21,7 +21,7 @@ public class Board implements Iterable<Row> {
     public final int BOARD_DIM = 8;
 
     // The game win object
-    private GameWin gameWin;
+    private final GameWin gameWin;
 
     // 2D Array of Spaces that form the board.
     private Space[][] board;
@@ -37,6 +37,9 @@ public class Board implements Iterable<Row> {
     // The current move type in the board.
     private MoveType moveType;
 
+    // The current move type in the board.
+    private ArrayList<Move> possibleMoves;
+
     /**
      * Constructor for the board class that builds the board and initializes the starting player color.
      *
@@ -46,6 +49,7 @@ public class Board implements Iterable<Row> {
     public Board(GameWin gameWin) {
         this.gameWin = gameWin;
         this.activePlayerColor = Piece.Color.RED;
+        this.possibleMoves = new ArrayList<>();
         this.board = new Space[BOARD_DIM][BOARD_DIM];
         for (int row = 0; row < BOARD_DIM; row++) {
             for (int col = 0; col < BOARD_DIM; col++) {
@@ -55,15 +59,15 @@ public class Board implements Iterable<Row> {
                     if (row > BOARD_DIM - 4) {
                         space.setPiece(new SinglePiece(Piece.Color.RED));
                     }
-                    if (row == 4) {
-                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-                    }
-                    else if(row == 2) {
-                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-                    }
-//                    else if (row < 3) {
+//                    if (row == 4) {
 //                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
 //                    }
+//                    else if(row == 2) {
+//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+//                    }
+                    else if (row < 3) {
+                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+                    }
                 }
                 else {
                     space = new Space(row, col, null, false);
@@ -71,7 +75,7 @@ public class Board implements Iterable<Row> {
                 this.board[row][col] = space;
             }
         }
-        ptuiDebug();
+//        ptuiDebug();
     }
 
     /**
@@ -82,6 +86,7 @@ public class Board implements Iterable<Row> {
      */
     public Board(Board copy) {
         this.gameWin = copy.gameWin;
+        this.possibleMoves = new ArrayList<>();
         this.board = new Space[BOARD_DIM][BOARD_DIM];
         for (int row = 0; row < BOARD_DIM; row++) {
             System.arraycopy(copy.board[row], 0, this.board[row], 0, BOARD_DIM);
@@ -123,30 +128,46 @@ public class Board implements Iterable<Row> {
      *
      * @return The list of possible moves.
      */
-    public ArrayList<Move> getPossibleMoves() {
-        ArrayList<Move> possibleMoves = new ArrayList<>();
+    public boolean isPossibleMove(Move move) {
         determineMoveType();
-        for (int row = 0; row < BOARD_DIM; row++) {
-            for (int col = 0; col < BOARD_DIM; col++) {
-                Piece piece = this.board[row][col].getPiece();
-                if (piece != null && piece.getColor() == activePlayerColor) {
-                    if (moveType == MoveType.Jump) {
-                        ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
-                        if (validateJumpMoves(jumpMoves)) {
-                            possibleMoves.addAll(jumpMoves);
+        if (possibleMoves.isEmpty()) {
+            for (int row = 0; row < BOARD_DIM; row++) {
+                for (int col = 0; col < BOARD_DIM; col++) {
+                    Piece piece = this.board[row][col].getPiece();
+                    if (piece != null && piece.getColor() == activePlayerColor) {
+                        if (moveType == MoveType.Jump) {
+                            ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
+                            if (validateJumpMoves(jumpMoves)) {
+                                possibleMoves.addAll(jumpMoves);
+                            }
+                        }
+                        else if (moveType == MoveType.Single) {
+                            ArrayList<SingleMove> singleMoves = new ArrayList<>(piece.allSingleMoves(row, col));
+                            if (validateSingleMoves(singleMoves)) {
+                                possibleMoves.addAll(singleMoves);
+                            }
                         }
                     }
-                    else if (moveType == MoveType.Single) {
-                        ArrayList<SingleMove> singleMoves = new ArrayList<>(piece.allSingleMoves(row, col));
-                        if (validateSingleMoves(singleMoves)) {
-                            possibleMoves.addAll(singleMoves);
-                        }
-                    }
-
                 }
             }
         }
-        return possibleMoves;
+        if (!possibleMoves.contains(move)) {
+            if (move instanceof JumpMove) {
+                Position end = move.getEnd();
+                Position start = move.getStart();
+                Space copyEndSpace = getSpace(end, new Board(this));
+                Space thisStartSpace = getSpace(start, this);
+                if (thisStartSpace.getPiece() instanceof SinglePiece) {
+                    copyEndSpace.setPiece(new SinglePiece(thisStartSpace.getPiece().getColor()));
+                }
+                else {
+                    copyEndSpace.setPiece(new King(thisStartSpace.getPiece().getColor()));
+                }
+                possibleMoves.addAll(copyEndSpace.getPiece().allJumps(end.getRow(), end.getCell()));
+                return possibleMoves.contains(move);
+            }
+        }
+        return true;
     }
 
     /**
@@ -175,10 +196,10 @@ public class Board implements Iterable<Row> {
      *
      * @return The space at the position's location.
      */
-    public Space getSpace(Position position) {
+    public Space getSpace(Position position, Board someBoard) {
         int row = position.getRow();
         int col = position.getCell();
-        return board[row][col];
+        return someBoard.board[row][col];
     }
 
     /**
@@ -270,7 +291,7 @@ public class Board implements Iterable<Row> {
         int endCol = end.getCell();
         Position jumped = move.getJumpedPosition();
         try {
-            if (getSpace(jumped).getPiece().getColor() != activePlayerColor) {
+            if (getSpace(jumped, this).getPiece().getColor() != activePlayerColor) {
                 return this.board[endRow][endCol].isValid();
             }
         }
@@ -370,8 +391,8 @@ public class Board implements Iterable<Row> {
         for (Move curMove : moves) {
             Position startPos = curMove.getStart();
             endPos = curMove.getEnd();
-            Space startSpace = copy.getSpace(startPos);
-            endSpace = copy.getSpace(endPos);
+            Space startSpace = getSpace(startPos, copy);
+            endSpace = getSpace(endPos, copy);
             Piece piece = startSpace.getPiece();
             int row = startPos.getRow();
             int col = startPos.getCell();
@@ -393,10 +414,9 @@ public class Board implements Iterable<Row> {
                     int index = jumpMoves.indexOf(curMove);
                     JumpMove jumpMove = jumpMoves.get(index);
                     if (validateJumpMove(jumpMove)) {
-                        Space jumpedSpace = getSpace(jumpMove.getJumpedPosition());
+                        Space jumpedSpace = getSpace(jumpMove.getJumpedPosition(), copy);
                         copy.executeJumpMove(startSpace, jumpedSpace, endSpace);
                         System.out.println(copy);
-
                     }
                 }
             }
@@ -437,7 +457,7 @@ public class Board implements Iterable<Row> {
         }
         // Check the win condition if there are no more pieces.
         gameWin.checkPieceGameOver(this, activePlayerColor);
-
+        possibleMoves.clear();
         return Message.info("Move is valid!");
     }
 

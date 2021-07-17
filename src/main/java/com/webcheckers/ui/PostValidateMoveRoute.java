@@ -51,7 +51,7 @@ public class PostValidateMoveRoute implements Route {
         Board board = playerService.getGame().getBoard();
 
         Message valid;
-        if (board.getPossibleMoves().contains(move)) {
+        if (board.isPossibleMove(move)) {
             valid = Message.info("Move was made successfully!");
             playerService.addMove(move);
         }
