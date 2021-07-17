@@ -130,6 +130,7 @@ public class Board implements Iterable<Row> {
      */
     public boolean isPossibleMove(Move move) {
         determineMoveType();
+        System.out.println(moveType);
         if (possibleMoves.isEmpty()) {
             for (int row = 0; row < BOARD_DIM; row++) {
                 for (int col = 0; col < BOARD_DIM; col++) {
@@ -150,6 +151,7 @@ public class Board implements Iterable<Row> {
                     }
                 }
             }
+            return true;
         }
         if (!possibleMoves.contains(move)) {
             if (move instanceof JumpMove) {
@@ -167,7 +169,15 @@ public class Board implements Iterable<Row> {
                 return possibleMoves.contains(move);
             }
         }
-        return true;
+
+        if(moveType == MoveType.Jump && move instanceof JumpMove){
+            return true;
+        }
+        else if(moveType == MoveType.Single && move instanceof SingleMove){
+            return true;
+        }
+        return false;
+
     }
 
     /**
@@ -445,7 +455,7 @@ public class Board implements Iterable<Row> {
         }
         // Copy the copy board over to the main board for the next turn.
         for (int row = 0; row < BOARD_DIM; row++) {
-            System.arraycopy(this.board[row], 0, copy.board[row], 0, BOARD_DIM);
+            System.arraycopy(copy.board[row], 0, this.board[row], 0, BOARD_DIM);
         }
         System.out.println(this);
         // Flip the board orientation for the next player.
@@ -458,6 +468,7 @@ public class Board implements Iterable<Row> {
         // Check the win condition if there are no more pieces.
         gameWin.checkPieceGameOver(this, activePlayerColor);
         possibleMoves.clear();
+
         return Message.info("Move is valid!");
     }
 
@@ -552,6 +563,7 @@ public class Board implements Iterable<Row> {
 //        Move move1 = new Move(new Position(3, 2), new Position(1, 4));
 //        moves.add(move1);
         makeMove(moves);
+            System.out.println(this);
 //        }
     }
 
