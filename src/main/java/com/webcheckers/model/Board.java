@@ -90,8 +90,22 @@ public class Board implements Iterable<Row> {
     public Board(Board copy) {
         this.gameWin = copy.gameWin;
         this.startJumpPos = null;
-        this.possibleMoves = new ArrayList<>();
+        this.possibleMoves = new ArrayList<>(copy.possibleMoves);
         this.board = new Space[BOARD_DIM][BOARD_DIM];
+        for (int row = 0; row < BOARD_DIM; row++) {
+            for (int col = 0; col < BOARD_DIM; col++) {
+                if (thisStartingSpace.getPiece() instanceof SinglePiece) {
+                    copyStartMoveSpace.setPiece(new SinglePiece(thisStartingSpace.getPiece().getColor()));
+                }
+                else if (thisStartingSpace.getPiece() instanceof King){
+                    copyStartMoveSpace.setPiece(new King(thisStartingSpace.getPiece().getColor()));
+                }
+                Piece piece = this.board[row][col].getPiece();
+                boolean isValid = this.board[row][col].getIsValid();
+                Space newSpace = new Space(flippedRow, flippedCol, piece, isValid);
+                flippedBoard[flippedRow][flippedCol] = newSpace;
+            }
+        }
         for (int row = 0; row < BOARD_DIM; row++) {
             System.arraycopy(copy.board[row], 0, this.board[row], 0, BOARD_DIM);
         }
@@ -401,6 +415,7 @@ public class Board implements Iterable<Row> {
         // Create the board to make the moves on.
         Board copy = new Board(this);
 
+//        Board copy = this;
         // Establish the end position and space.
         Position endPos = null;
         Space endSpace = null;
