@@ -445,6 +445,7 @@ public class Board implements Iterable<Row> {
             int col = endPos.getCell();
             ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
             if (validateJumpMoves(jumpMoves)) {
+                System.out.println("Move submited with another one possible : " + this);
                 return Message.error("Another jump move is possible!");
             }
         }
