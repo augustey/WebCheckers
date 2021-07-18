@@ -94,22 +94,11 @@ public class Board implements Iterable<Row> {
         this.board = new Space[BOARD_DIM][BOARD_DIM];
         for (int row = 0; row < BOARD_DIM; row++) {
             for (int col = 0; col < BOARD_DIM; col++) {
-                if (thisStartingSpace.getPiece() instanceof SinglePiece) {
-                    copyStartMoveSpace.setPiece(new SinglePiece(thisStartingSpace.getPiece().getColor()));
-                }
-                else if (thisStartingSpace.getPiece() instanceof King){
-                    copyStartMoveSpace.setPiece(new King(thisStartingSpace.getPiece().getColor()));
-                }
-                Piece piece = this.board[row][col].getPiece();
-                boolean isValid = this.board[row][col].getIsValid();
-                Space newSpace = new Space(flippedRow, flippedCol, piece, isValid);
-                flippedBoard[flippedRow][flippedCol] = newSpace;
+                Space space = new Space(copy.board[row][col]);
+                this.board[row][col] = space;
             }
         }
-        for (int row = 0; row < BOARD_DIM; row++) {
-            System.arraycopy(copy.board[row], 0, this.board[row], 0, BOARD_DIM);
-        }
-        this.moveType = null;
+        this.moveType = copy.moveType;
         this.activePlayerColor = copy.getActivePlayerColor();
     }
 

@@ -45,7 +45,12 @@ public class Space {
     public Space(Space copy) {
         this.rowIdx = copy.rowIdx;
         this.colIdx = copy.colIdx;
-        this.piece = copy.piece;
+        if (copy.piece instanceof SinglePiece) {
+            this.piece = new SinglePiece(copy.piece.getColor());
+        }
+        else if (copy.piece instanceof King) {
+            this.piece = new King(copy.piece.getColor());
+        }
         this.isValid = copy.isValid;
     }
 
