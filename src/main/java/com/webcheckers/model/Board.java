@@ -62,15 +62,15 @@ public class Board implements Iterable<Row> {
                     if (row > BOARD_DIM - 4) {
                         space.setPiece(new SinglePiece(Piece.Color.RED));
                     }
-                    if (row == 4) {
-                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-                    }
-                    else if(row == 2) {
-                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-                    }
-//                    else if (row < 3) {
+//                    if (row == 4) {
 //                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
 //                    }
+//                    else if(row == 2) {
+//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+//                    }
+                    else if (row < 3) {
+                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+                    }
                 }
                 else {
                     space = new Space(row, col, null, false);
@@ -98,7 +98,7 @@ public class Board implements Iterable<Row> {
                 this.board[row][col] = space;
             }
         }
-        this.moveType = copy.moveType;
+        this.moveType = copy.getMoveType();
         this.activePlayerColor = copy.getActivePlayerColor();
     }
 
@@ -448,7 +448,11 @@ public class Board implements Iterable<Row> {
             int row = endPos.getRow();
             int col = endPos.getCell();
             ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
-            if (validateJumpMoves(jumpMoves)) {
+            jumpMoves.removeIf(jumpMove -> !validateJumpMove(jumpMove));
+            for (Move move : moves) {
+                jumpMoves.removeIf(jumpMove -> move.getStart().equals(jumpMove.getEnd()));
+            }
+            if (jumpMoves.size() != 0) {
                 System.out.println("Move submited with another one possible : " + this);
                 return Message.error("Another jump move is possible!");
             }
