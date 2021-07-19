@@ -9,7 +9,8 @@ import com.webcheckers.application.GameWin;
  * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
  */
 public class Game {
-
+    //Id index
+    private static int idIndex = 0;
     // The Red Player.
     private final Player redPlayer;
 
@@ -25,6 +26,8 @@ public class Game {
     // The boolean flag for if this game has ended.
     private boolean isGameOver;
 
+    private final String id;
+
     /**
      * Constructor for Game that contains the Players.
      *
@@ -38,6 +41,8 @@ public class Game {
         this.whitePlayer = whitePlayer;
         this.gameWin = new GameWin(gameCenter, this);
         this.board = new Board(this.gameWin);
+        this.id = "Game" + (++idIndex);
+        System.out.println(id);
     }
 
     /**
@@ -75,6 +80,13 @@ public class Game {
     public GameWin getGameWin() {
         return gameWin;
     }
+
+    /**
+     * A getter for the game id.
+     *
+     * @return The game id.
+     */
+    public String getId() {return id;}
 
     /**
      * A setter method for if the game is over.
