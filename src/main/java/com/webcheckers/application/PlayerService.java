@@ -131,6 +131,7 @@ public class PlayerService {
      *         A move that is to be made.
      */
     public synchronized void addMove(Move move) {
+
         turnMoves.add(move);
     }
 
