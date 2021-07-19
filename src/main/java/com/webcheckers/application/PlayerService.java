@@ -131,7 +131,7 @@ public class PlayerService {
      *         A move that is to be made.
      */
     public synchronized void addMove(Move move) {
-
+        //TODO call addMove
         turnMoves.add(move);
     }
 
@@ -142,6 +142,7 @@ public class PlayerService {
      */
     public synchronized Move removeMove() {
         if (!turnMoves.isEmpty()) {
+            //TODO call removeMove
             int i = turnMoves.size() - 1;
             return turnMoves.remove(i);
         }
