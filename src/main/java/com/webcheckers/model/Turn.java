@@ -28,6 +28,9 @@ public class Turn {
                 return;
             }
         }
+        else{
+            //TODO create new Single Move
+        }
         moves.add(move);
     }
 
