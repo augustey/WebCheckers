@@ -148,6 +148,15 @@ public class PlayerService {
     }
 
     /**
+     * Get the id of the game.
+     *
+     * @return The id of the game.
+     */
+    public String getGameId() {
+        return game.getId();
+    }
+
+    /**
      * Clears the list of moves at the end of a player's turn.
      */
     public synchronized void clearMoves() {
