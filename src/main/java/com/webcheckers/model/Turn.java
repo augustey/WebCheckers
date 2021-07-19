@@ -7,9 +7,12 @@ import java.util.ArrayList;
  */
 public class Turn {
     private ArrayList<Move> moves;
+    private final Board.MoveType moveType;
 
 
-    public Turn(){
+    public Turn(Board.MoveType moveType){
+        //TODO get move type
+        this.moveType = moveType;
         this.moves = new ArrayList<Move>();
 
     }
@@ -19,7 +22,8 @@ public class Turn {
      * @param move The move under consideration
      */
     public void addMove(Move move) {
-        if(move instanceof JumpMove) {//Or get the moveType
+        if(moveType == Board.MoveType.Jump) {
+            //TODO create new jumpMove
             if(moves.contains(move)){
                 return;
             }
@@ -35,14 +39,5 @@ public class Turn {
         moves.remove(i);
 
     }
-
-//    @Override
-//    public boolean equals(Object other) {
-//        if(other.equals())
-//    return true;
-//    }
-
-
-
 
 }
