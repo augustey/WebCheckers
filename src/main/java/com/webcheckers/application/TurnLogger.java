@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class TurnLogger
 {
-    private Map<String, List<String>> turns;
+    private Map<String, List<Board>> turns;
 
     /**
      * Constructor for TurnLogger that initializes the turns Map
@@ -35,13 +35,13 @@ public class TurnLogger
         Gson gson = new GsonBuilder().create();
 
         if(!turns.containsKey(id)) {
-            LinkedList<String> list = new LinkedList<>();
+            LinkedList<Board> list = new LinkedList<>();
             turns.put(id, list);
         }
 
-        String boardJSON = gson.toJson(board);
-        System.out.println(boardJSON);
-        turns.get(id).add(boardJSON);
+        //String boardJSON = gson.toJson(board);
+        //System.out.println(boardJSON);
+        turns.get(id).add(board);
     }
 
     /**
@@ -52,7 +52,7 @@ public class TurnLogger
      *
      * @return List of turns
      */
-    public List<String> getTurns(Game game) {
+    public List<Board> getTurns(Game game) {
         String id = game.getId();
         return turns.get(id);
     }

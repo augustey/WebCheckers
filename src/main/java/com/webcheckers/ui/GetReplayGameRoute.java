@@ -58,10 +58,7 @@ public class GetReplayGameRoute implements Route {
         Game game = gameCenter.getCompletedGame(gameID);
 
         int i = Integer.parseInt(request.queryParams(TURNID_PARAM));
-        List<String> turns = turnLogger.getTurns(game);
-
-        Gson gson = new GsonBuilder().create();
-        Board board = gson.fromJson(turns.get(i), Board.class);
+        List<Board> turns = turnLogger.getTurns(game);
 
         vm.put(TITLE_ATTR, TITLE);
         vm.put(USER_ATTR, player);
@@ -69,7 +66,7 @@ public class GetReplayGameRoute implements Route {
         vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
         vm.put(VIEW_MODE_ATTR, VIEW_MODE);
         vm.put(ACTIVE_COLOR_ATTR, Piece.Color.RED);
-        vm.put(BOARD_VIEW_ATTR, turnLogger.getBoardView(board));
+        vm.put(BOARD_VIEW_ATTR, turnLogger.getBoardView(turns.get(i)));
 
         return templateEngine.render(new ModelAndView(vm, "game.ftl"));
     }
