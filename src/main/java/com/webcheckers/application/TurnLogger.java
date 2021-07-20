@@ -11,14 +11,27 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.List;
 
+/**
+ * Logs turns for games
+ *
+ * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
+ */
 public class TurnLogger
 {
     private Map<String, List<String>> turns;
 
+    /**
+     * Constructor for TurnLogger that initializes the turns Map
+     */
     public TurnLogger() {
         turns = new HashMap<>();
     }
 
+    /**
+     * Logs a json string of the board
+     *
+     * @param playerService
+     */
     public void logTurn(PlayerService playerService) {
         Game game = playerService.getGame();
         Space[][] board = game.getBoard().getBoard();
