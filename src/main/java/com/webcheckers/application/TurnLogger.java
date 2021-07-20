@@ -34,9 +34,13 @@ public class TurnLogger
 
         Gson gson = new GsonBuilder().create();
 
-        turns.computeIfAbsent(id, k -> new LinkedList<>());
+        if(!turns.containsKey(id)) {
+            LinkedList<String> list = new LinkedList<>();
+            turns.put(id, list);
+        }
 
         String boardJSON = gson.toJson(board);
+        System.out.println(boardJSON);
         turns.get(id).add(boardJSON);
     }
 

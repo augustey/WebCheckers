@@ -205,6 +205,8 @@ public class WebServer {
 
         get(REPLAY_URL, new GetReplayPageRoute(templateEngine, gameCenter));
 
+        get(REPLAY_GAME_URL, new GetReplayGameRoute(templateEngine, gameCenter, turnLogger));
+
         post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
 
         post(SIGNOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
