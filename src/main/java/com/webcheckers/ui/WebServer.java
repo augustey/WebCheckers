@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.application.TurnLogger;
 import com.webcheckers.model.Game;
 import spark.TemplateEngine;
 
@@ -65,6 +66,11 @@ public class WebServer {
     public static final String REPLAY_URL = "/replay";
 
     /**
+     * The URL pattern for the replay page in a game
+     */
+    public static final String REPLAY_GAME_URL = REPLAY_URL + GAME_URL;
+
+    /**
      * The URL pattern to request the signin page
      */
     public static final String SIGNIN_URL = "/signin";
@@ -107,6 +113,7 @@ public class WebServer {
     private final PlayerLobby playerLobby;
     private final GameCenter gameCenter;
     private final TemplateEngine templateEngine;
+    private final TurnLogger turnLogger;
     private final Gson gson;
 
     //
@@ -124,15 +131,18 @@ public class WebServer {
      * @throws NullPointerException
      *         If any of the parameters are {@code null}.
      */
-    public WebServer(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine, final Gson gson) {
+    public WebServer(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine, final TurnLogger turnLogger, final Gson gson) {
         // validation
         Objects.requireNonNull(playerLobby, "playerLobby must not be null");
+        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+        Objects.requireNonNull(turnLogger, "turnLogger must not be null");
         Objects.requireNonNull(gson, "gson must not be null");
         //
         this.playerLobby = playerLobby;
         this.gameCenter = gameCenter;
         this.templateEngine = templateEngine;
+        this.turnLogger = turnLogger;
         this.gson = gson;
     }
 
