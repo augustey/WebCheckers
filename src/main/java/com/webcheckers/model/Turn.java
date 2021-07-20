@@ -21,14 +21,16 @@ public class Turn {
      * Adds a move to the turn if it is found to not be jumping over what is already jumped
      * @param move The move under consideration
      */
-    public void addMove(Move move) {
+    public boolean addMove(Move move) {
         //If a JumpMove is required then the move is converted to a JumpMove
         if(moveType == Board.MoveType.Jump) {
             JumpMove jumpMove = new JumpMove(move);
             //This uses the custom equals method in JumpMove to make sure that no piece is jumped twice
             if(!moves.contains(move)){
                 moves.add(jumpMove);
+                return true;
             }
+
 
         }
         //If a SingleMove is required then the move is converted to a SingleMove
@@ -36,7 +38,9 @@ public class Turn {
             //TODO create new Single Move
             SingleMove singleMove = new SingleMove(move);
             moves.add(singleMove);
+            return true;
         }
+        return false;
     }
 
     /**
