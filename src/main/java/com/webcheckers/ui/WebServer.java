@@ -60,6 +60,11 @@ public class WebServer {
     public static final String GAME_URL = "/game";
 
     /**
+     * The URL pattern for the replay page
+     */
+    public static final String REPLAY_URL = "/replay";
+
+    /**
      * The URL pattern to request the signin page
      */
     public static final String SIGNIN_URL = "/signin";
@@ -187,6 +192,8 @@ public class WebServer {
         get(GAME_URL, new GetGameRoute(playerLobby, gameCenter, templateEngine));
 
         get(SIGNIN_URL, new GetSignInRoute(templateEngine));
+
+        get(REPLAY_URL, new GetReplayPageRoute(templateEngine, gameCenter));
 
         post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
 

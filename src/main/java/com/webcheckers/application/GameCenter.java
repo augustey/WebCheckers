@@ -5,6 +5,8 @@ import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,11 +28,14 @@ public class GameCenter {
      */
     private final Map<Player, Game> activeGames;
 
+    private final List<Game> completedGames;
+
     /**
      * Constructor for GameCenter that initializes the active games.
      */
     public GameCenter() {
         this.activeGames = new HashMap<>();
+        this.completedGames = new LinkedList<>();
     }
 
     /**
@@ -104,8 +109,18 @@ public class GameCenter {
         if (isInGame(player1) && isInGame(player2)) {
             activeGames.remove(player1);
             activeGames.remove(player2);
+            completedGames.add(game);
             return true;
         }
         return false;
+    }
+
+    /**
+     * Gets the list of all completed games
+     *
+     * @return the list of completed games
+     */
+    public List<Game> getCompletedGames() {
+        return completedGames;
     }
 }
