@@ -23,15 +23,17 @@ public class Turn {
      */
     public void addMove(Move move) {
         if(moveType == Board.MoveType.Jump) {
-            //TODO create new jumpMove
-            if(moves.contains(move)){
-                return;
+            JumpMove jumpMove = new JumpMove(move);
+            if(!moves.contains(move)){
+                moves.add(jumpMove);
             }
+
         }
         else{
             //TODO create new Single Move
+            SingleMove singleMove = new SingleMove(move);
+            moves.add(singleMove);
         }
-        moves.add(move);
     }
 
     /**

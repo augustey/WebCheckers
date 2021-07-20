@@ -27,6 +27,16 @@ public class JumpMove extends Move {
         this.createJumpPosition();
     }
 
+
+    /**
+     * Constructor for JumpMove that is used to convert a generic Move to JumpMove
+     * @param move Generic Move object
+     */
+    public JumpMove(Move move) {
+        super(move.getStart(), move.getEnd());
+        this.createJumpPosition();
+    }
+
     /**
      * Calculates the jumped over position by performing a midpoint calculation.
      */
