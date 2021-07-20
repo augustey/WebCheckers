@@ -59,9 +59,12 @@ public class GameCenter {
      * @param opponent
      *         The opponent the requesting player selected.
      *
+     * @param turnLogger
+     *          The turn logger for the game
+     *
      * @return The service object containing the newly created game.
      */
-    public Message requestNewGame(Player player, Player opponent) {
+    public Message requestNewGame(Player player, Player opponent, TurnLogger turnLogger) {
         if (opponent == null) {
             return PLAYER_NULL_MSG;
         }
@@ -73,6 +76,8 @@ public class GameCenter {
 
         activeGames.put(player, newGame);
         activeGames.put(opponent, newGame);
+
+        turnLogger.logTurn(newGame); //Log the inital board config for a game
 
         return CREATE_GAME_SUCCESS;
     }

@@ -30,11 +30,11 @@ public class TurnLogger
     /**
      * Logs a json string of the board
      *
-     * @param playerService
+     * @param game
+     *          The game whose turns are being logged
      */
-    public void logTurn(PlayerService playerService) {
-        Game game = playerService.getGame();
-        Space[][] board = game.getBoard().getBoard();
+    public void logTurn(Game game) {
+        Board board = game.getBoard();
         String id = game.getId();
 
         Gson gson = new GsonBuilder().create();
@@ -45,8 +45,16 @@ public class TurnLogger
         turns.get(id).add(boardJSON);
     }
 
-    public List<String> getTurns(PlayerService playerService) {
-        String id = playerService.getGameId();
+    /**
+     * Logs a json string of the board
+     *
+     * @param game
+     *     The game whose turns are being logged
+     *
+     * @return List of turns
+     */
+    public List<String> getTurns(Game game) {
+        String id = game.getId();
         return turns.get(id);
     }
 }
