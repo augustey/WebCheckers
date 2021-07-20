@@ -98,7 +98,7 @@ public class PlayerService {
      * @return The list of moves during the player's turn.
      */
     public List<Move> getTurnMoves() {
-        return turnMoves;
+        return turn.getMoves();
     }
 
     /**

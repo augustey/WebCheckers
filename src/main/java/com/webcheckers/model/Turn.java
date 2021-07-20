@@ -30,8 +30,6 @@ public class Turn {
                 moves.add(jumpMove);
                 return true;
             }
-
-
         }
         //If a SingleMove is required then the move is converted to a SingleMove
         else if(moveType == Board.MoveType.Single){
