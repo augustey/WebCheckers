@@ -19,7 +19,7 @@
     <h3>Played Games</h3>
         <ul>
             <#list gameList as game>
-                 <li><a href="/replay/game?game=${game}">${game}</a></li>
+                 <li><a href="/replay/game?gameID=${game.id}">${game.redPlayer} vs ${game.whitePlayer}</a></li>
             </#list>
         </ul>
 
