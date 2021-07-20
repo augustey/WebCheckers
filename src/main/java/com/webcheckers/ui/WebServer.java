@@ -199,7 +199,7 @@ public class WebServer {
         // Shows the Checkers game Home page.
         get(HOME_URL, new GetHomeRoute(playerLobby, gameCenter, templateEngine));
 
-        get(GAME_URL, new GetGameRoute(playerLobby, gameCenter, templateEngine));
+        get(GAME_URL, new GetGameRoute(playerLobby, gameCenter, turnLogger, templateEngine));
 
         get(SIGNIN_URL, new GetSignInRoute(templateEngine));
 
@@ -211,7 +211,7 @@ public class WebServer {
 
         post(VALIDATEMOVE_URL, new PostValidateMoveRoute());
 
-        post(SUBMITTURN_URL, new PostSubmitTurnRoute());
+        post(SUBMITTURN_URL, new PostSubmitTurnRoute(turnLogger));
 
         post(BACKUPMOVE_URL, new PostBackupMoveRoute());
 

@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 @Tag("Application-tier")
 public class GameCenterTest {
     private GameCenter CuT;
+    private TurnLogger turnLogger;
     private Player player;
     private Player opponent;
     private Player otherPlayer;
@@ -36,7 +37,7 @@ public class GameCenterTest {
      */
     @Test
     public void test_create_game_message1() {
-        Message result = CuT.requestNewGame(player, opponent);
+        Message result = CuT.requestNewGame(player, opponent, turnLogger);
 
         assertSame(result, GameCenter.CREATE_GAME_SUCCESS);
     }
@@ -47,8 +48,8 @@ public class GameCenterTest {
      */
     @Test
     public void test_create_game_message2() {
-        CuT.requestNewGame(player, opponent);
-        Message result = CuT.requestNewGame(otherPlayer, player);
+        CuT.requestNewGame(player, opponent, turnLogger);
+        Message result = CuT.requestNewGame(otherPlayer, player, turnLogger);
 
         assertSame(result, GameCenter.PLAYER_IN_GAME_MSG);
     }
@@ -58,7 +59,7 @@ public class GameCenterTest {
      */
     @Test
     public void test_create_game_message3() {
-        Message result = CuT.requestNewGame(player, null);
+        Message result = CuT.requestNewGame(player, null, turnLogger);
 
         assertSame(result, GameCenter.PLAYER_NULL_MSG);
     }
@@ -68,7 +69,7 @@ public class GameCenterTest {
      */
     @Test
     public void test_inGame() {
-        CuT.requestNewGame(player, opponent);
+        CuT.requestNewGame(player, opponent, turnLogger);
 
         assertTrue(CuT.isInGame(player));
         assertTrue(CuT.isInGame(opponent));
@@ -81,7 +82,7 @@ public class GameCenterTest {
      */
     @Test
     public void test_player_service() {
-        CuT.requestNewGame(player, opponent);
+        CuT.requestNewGame(player, opponent, turnLogger);
         PlayerService playerSvcP = CuT.getPlayerService(player);
         PlayerService playerSvcO = CuT.getPlayerService(opponent);
         PlayerService playerSvcN = CuT.getPlayerService(otherPlayer);
@@ -100,7 +101,7 @@ public class GameCenterTest {
      */
     @Test
     public void test_remove_game() {
-        CuT.requestNewGame(player, opponent);
+        CuT.requestNewGame(player, opponent, turnLogger);
         Game game = new Game(otherPlayer, opponent, CuT);
         Game game2 = new Game(opponent, otherPlayer, CuT);
         Game game3 = new Game(opponent, new Player("f"), CuT);

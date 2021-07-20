@@ -44,7 +44,7 @@ public class PostSubmitTurnRoute implements Route {
         Message message = board.makeMove(moves);
         if(message.getType() == Message.Type.INFO) {
             playerService.clearMoves();
-            turnLogger.logTurn(playerService);
+            turnLogger.logTurn(playerService.getGame());
         }
 
         Gson gson = new GsonBuilder().create();

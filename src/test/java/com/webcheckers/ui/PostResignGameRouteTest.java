@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.GameWin;
 import com.webcheckers.application.PlayerService;
+import com.webcheckers.application.TurnLogger;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
@@ -39,6 +40,7 @@ public class PostResignGameRouteTest
 
     //friendly objects
     private GameCenter gameCenter;
+    private TurnLogger turnLogger;
     private PlayerService playerService;
     private Game game;
     private GameWin gameWin;
@@ -59,9 +61,10 @@ public class PostResignGameRouteTest
         response = mock(Response.class);
 
         gameCenter = new GameCenter();
+        turnLogger = new TurnLogger();
         player = new Player("Player");
         opponent = new Player("Opponent");
-        gameCenter.requestNewGame(player, opponent);
+        gameCenter.requestNewGame(player, opponent, turnLogger);
         playerService = gameCenter.getPlayerService(player);
         game = playerService.getGame();
         gameWin = game.getGameWin();

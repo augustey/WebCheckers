@@ -2,14 +2,9 @@ package com.webcheckers.application;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.webcheckers.model.Board;
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Space;
+import com.webcheckers.model.*;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.List;
+import java.util.*;
 
 /**
  * Logs turns for games
@@ -56,5 +51,18 @@ public class TurnLogger
     public List<String> getTurns(Game game) {
         String id = game.getId();
         return turns.get(id);
+    }
+
+    /**
+     * A getter method for the board view.
+     *
+     * @return A board view object.
+     */
+    public synchronized BoardView getBoardView(Board board) {
+        Iterator<Row> boardView;
+
+        boardView = board.iterator();
+
+        return new BoardView(boardView);
     }
 }

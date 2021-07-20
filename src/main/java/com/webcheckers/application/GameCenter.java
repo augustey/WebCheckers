@@ -28,14 +28,14 @@ public class GameCenter {
      */
     private final Map<Player, Game> activeGames;
 
-    private final List<Game> completedGames;
+    private final Map<String, Game> completedGames;
 
     /**
      * Constructor for GameCenter that initializes the active games.
      */
     public GameCenter() {
         this.activeGames = new HashMap<>();
-        this.completedGames = new LinkedList<>();
+        this.completedGames = new HashMap<>();
     }
 
     /**
@@ -114,18 +114,35 @@ public class GameCenter {
         if (isInGame(player1) && isInGame(player2)) {
             activeGames.remove(player1);
             activeGames.remove(player2);
-            completedGames.add(game);
+            completedGames.put(game.getId(), game);
             return true;
         }
         return false;
     }
 
     /**
-     * Gets the list of all completed games
+     * Gets a game from the completedGames Map
+     *
+     * @param id
+     *         Game id as a String
+     *
+     * @return the requested game
+     */
+    public Game getCompletedGame(String id) {
+        return completedGames.get(id);
+    }
+
+    /**
+     * Gets a list of completed games
      *
      * @return the list of completed games
      */
-    public List<Game> getCompletedGames() {
-        return completedGames;
+    public List<Game> getCompletedGames()
+    {
+        List<Game> games = new LinkedList<>();
+        for(String key : completedGames.keySet()) {
+            games.add(completedGames.get(key));
+        }
+        return games;
     }
 }

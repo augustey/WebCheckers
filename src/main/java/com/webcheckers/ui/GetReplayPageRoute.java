@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The UI Controller to GET the Home page.
+ * The UI Controller to GET the Replay page.
  *
  * @author <a href='mailto:jrl9984@rit.edu'>Jim Logan</a>
  */

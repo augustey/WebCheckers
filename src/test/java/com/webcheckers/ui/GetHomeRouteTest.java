@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.PlayerService;
+import com.webcheckers.application.TurnLogger;
 import com.webcheckers.model.Player;
 
 import com.webcheckers.util.Message;
@@ -32,6 +33,7 @@ public class GetHomeRouteTest {
 
     // Friendly Objects
     private PlayerLobby playerLobby;
+    private TurnLogger turnLogger;
     private GameCenter gameCenter;
     private Player player1;
     private Player player2;
@@ -64,6 +66,7 @@ public class GetHomeRouteTest {
         player2 = new Player(PLAYER_NAME_2);
         playerLobby = new PlayerLobby();
         gameCenter = new GameCenter();
+        turnLogger = new TurnLogger();
         // Creating the CuT.
         CuT = new GetHomeRoute(playerLobby, gameCenter, engine);
     }
@@ -135,7 +138,7 @@ public class GetHomeRouteTest {
     public void test_player_home_game_not_ended() {
         // Arrange the test scenario: There is a player signed into the web app.
         playerLobby.signIn(player1);
-        gameCenter.requestNewGame(player1, player2);
+        gameCenter.requestNewGame(player1, player2, turnLogger);
         PlayerService playerService = gameCenter.getPlayerService(player1);
         playerService.getGame().setGameOver(false);
         Message message = Message.info(MESSAGE);
@@ -172,7 +175,7 @@ public class GetHomeRouteTest {
     public void test_player_home_game_ended() {
         // Arrange the test scenario: There is a player signed into the web app.
         playerLobby.signIn(player1);
-        gameCenter.requestNewGame(player1, player2);
+        gameCenter.requestNewGame(player1, player2, turnLogger);
         PlayerService playerService = gameCenter.getPlayerService(player1);
         playerService.getGame().setGameOver(true);
         Message message = Message.info(MESSAGE);
