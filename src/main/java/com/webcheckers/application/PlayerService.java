@@ -27,6 +27,9 @@ public class PlayerService {
     // The list of moves made by a player.
     private final List<Move> turnMoves;
 
+    //Represents the current turn
+    private Turn turn;
+
     /**
      * Constructor for PlayerService.
      *
@@ -41,6 +44,7 @@ public class PlayerService {
         this.whitePlayer = game.getWhitePlayer();
         this.game = game;
         this.turnMoves = new ArrayList<>();
+        this.turn = new Turn(game.getBoard().getMoveType());//TODO make this not shit
     }
 
     /**
@@ -152,7 +156,8 @@ public class PlayerService {
     /**
      * Clears the list of moves at the end of a player's turn.
      */
-    public synchronized void clearMoves() {
+    public synchronized void clearMoves() {//TODO have it create a new TURN instead
+        turn = new Turn(game.getBoard().getMoveType());//TODO make this not shit
         turnMoves.clear();
     }
 }
