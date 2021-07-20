@@ -137,31 +137,37 @@ public class Board implements Iterable<Row> {
     }
 
     /**
+     * Generates all the possible moves that a user can make when trying to make a move on the UI.
+     */
+    private void generatePossibleMoves() {
+        for (int row = 0; row < BOARD_DIM; row++) {
+            for (int col = 0; col < BOARD_DIM; col++) {
+                Piece piece = this.board[row][col].getPiece();
+                if (piece != null && piece.getColor() == activePlayerColor) {
+                    if (moveType == MoveType.Jump) {
+                        ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
+                        jumpMoves.removeIf(jumpMove -> !validateJumpMove(jumpMove));
+                        possibleMoves.addAll(jumpMoves);
+                    }
+                    else if (moveType == MoveType.Single) {
+                        ArrayList<SingleMove> singleMoves = new ArrayList<>(piece.allSingleMoves(row, col));
+                        singleMoves.removeIf(singleMove -> !validateSingleMove(singleMove));
+                        possibleMoves.addAll(singleMoves);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Verifies if a move is valid and could be executed.
      *
      * @return True if a move is valid, else, false.
      */
     public boolean isPossibleMove(Move move) {
-        System.out.println("isPossibleMove : \n" + this);
         determineMoveType();
         if (possibleMoves.isEmpty()) {
-            for (int row = 0; row < BOARD_DIM; row++) {
-                for (int col = 0; col < BOARD_DIM; col++) {
-                    Piece piece = this.board[row][col].getPiece();
-                    if (piece != null && piece.getColor() == activePlayerColor) {
-                        if (moveType == MoveType.Jump) {
-                            ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
-                            jumpMoves.removeIf(jumpMove -> !validateJumpMove(jumpMove));
-                            possibleMoves.addAll(jumpMoves);
-                        }
-                        else if (moveType == MoveType.Single) {
-                            ArrayList<SingleMove> singleMoves = new ArrayList<>(piece.allSingleMoves(row, col));
-                            singleMoves.removeIf(singleMove -> !validateSingleMove(singleMove));
-                            possibleMoves.addAll(singleMoves);
-                        }
-                    }
-                }
-            }
+            generatePossibleMoves();
         }
         if (!possibleMoves.contains(move)) {
             if (moveType == MoveType.Jump && this.startJumpPos != null) {
@@ -175,8 +181,6 @@ public class Board implements Iterable<Row> {
                     copyStartMoveSpace.setPiece(new King(thisStartingSpace.getPiece().getColor()));
                 }
                 else {
-                    System.out.println(thisStartingSpace.getPiece());
-                    //TODO FIX BUG ISSUE
                     return false;
                 }
                 ArrayList<JumpMove> jumpMoves = copyStartMoveSpace.getPiece().allJumps(moveStart.getRow(), moveStart.getCell());
@@ -185,7 +189,6 @@ public class Board implements Iterable<Row> {
                 return possibleMoves.contains(move);
             }
         }
-        System.out.println("isPossibleMove end : \n" + this);
         if (possibleMoves.contains(move)) {
             if (moveType == MoveType.Jump) {
                 this.startJumpPos = move.getStart();
@@ -460,7 +463,7 @@ public class Board implements Iterable<Row> {
                 jumpMoves.removeIf(jumpMove -> move.getStart().equals(jumpMove.getEnd()));
             }
             if (jumpMoves.size() != 0) {
-                System.out.println("Move submited with another one possible : " + this);
+                //System.out.println("Move submited with another one possible : " + this);
                 return Message.error("Another jump move is possible!");
             }
         }

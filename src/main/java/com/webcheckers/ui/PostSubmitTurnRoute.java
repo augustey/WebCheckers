@@ -38,7 +38,7 @@ public class PostSubmitTurnRoute implements Route {
 
         Board board = playerService.getGame().getBoard();
         ArrayList<Move> moves = (ArrayList<Move>) playerService.getTurnMoves();
-        System.out.println("PostSubmitTurn: \n" +board);
+        //System.out.println("PostSubmitTurn: \n" +board);
         Message message = board.makeMove( moves);
         if(message.getType() == Message.Type.INFO) { //If the move was made successfully
             playerService.clearMoves();

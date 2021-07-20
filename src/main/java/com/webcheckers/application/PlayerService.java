@@ -137,7 +137,7 @@ public class PlayerService {
      */
     public synchronized void addMove(Move move) {
         //TODO call addMove
-        System.out.println("turnMoves: " + turnMoves);
+        //System.out.println("turnMoves: " + turnMoves);
         turn.addMove(move);
         turnMoves.add(move);
     }
