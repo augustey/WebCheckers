@@ -22,13 +22,16 @@ public class Turn {
      * @param move The move under consideration
      */
     public void addMove(Move move) {
+        //If a JumpMove is required then the move is converted to a JumpMove
         if(moveType == Board.MoveType.Jump) {
             JumpMove jumpMove = new JumpMove(move);
+            //This uses the custom equals method to make sure that no piece is jumped twice
             if(!moves.contains(move)){
                 moves.add(jumpMove);
             }
 
         }
+        //If a SingleMove is required then the move is converted to a SingleMove
         else{
             //TODO create new Single Move
             SingleMove singleMove = new SingleMove(move);
