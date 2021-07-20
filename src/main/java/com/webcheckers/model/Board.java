@@ -233,6 +233,7 @@ public class Board implements Iterable<Row> {
      * @return The move type.
      */
     public MoveType getMoveType() {
+        determineMoveType();
         return moveType;
     }
 
@@ -396,10 +397,10 @@ public class Board implements Iterable<Row> {
      * @return A message if the moves were valid, or an error if there is another jump move possible.
      */
     public Message makeMove(ArrayList<Move> moves) {
-        System.out.println("makeMove: " + moves);
-        System.out.println(this);
-        // Determine what move type the user can make.
-        determineMoveType();
+//        System.out.println("makeMove: " + moves);
+//        System.out.println(this);
+//        // Determine what move type the user can make.
+//        determineMoveType();
         // Handles the win condition where there are no possible moves.
         if (moveType == MoveType.Blocked) {
             gameWin.checkBlockedGameOver(activePlayerColor);

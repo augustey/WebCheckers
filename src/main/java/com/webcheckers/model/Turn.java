@@ -22,11 +22,14 @@ public class Turn {
      * @param move The move under consideration
      */
     public boolean addMove(Move move) {
+        System.out.println("Moves: " + moves);
+        System.out.println(moveType);
         //If a JumpMove is required then the move is converted to a JumpMove
         if(moveType == Board.MoveType.Jump) {
             JumpMove jumpMove = new JumpMove(move);
             //This uses the custom equals method in JumpMove to make sure that no piece is jumped twice
             if(!moves.contains(move)){
+                System.out.println("not contained");
                 moves.add(jumpMove);
                 return true;
             }
