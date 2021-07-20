@@ -81,4 +81,14 @@ public class JumpMove extends Move {
         }
         return false;
     }
+
+    /**
+     * String representation of a JumpMove object.
+     *
+     * @return The JumpMove string.
+     */
+    @Override
+    public String toString() {
+        return "JumpMove{" + "start=" + super.getStart() + ", jumped=" + jumped + ", end=" + super.getEnd() + "}";
+    }
 }
