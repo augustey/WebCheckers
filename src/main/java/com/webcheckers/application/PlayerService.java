@@ -137,7 +137,7 @@ public class PlayerService {
     public synchronized void addMove(Move move) {
         //TODO call addMove
         turn.addMove(move);
-        turnMoves.add(move);
+//        turnMoves.add(move);
     }
 
     /**
@@ -149,8 +149,8 @@ public class PlayerService {
         if (!turnMoves.isEmpty()) {
             //TODO call removeMove
             turn.removeMove();
-            int i = turnMoves.size() - 1;
-            return turnMoves.remove(i);
+//            int i = turnMoves.size() - 1;
+//            return turnMoves.remove(i);
         }
         return null;
     }
@@ -160,6 +160,6 @@ public class PlayerService {
      */
     public synchronized void clearMoves() {//TODO have it create a new TURN instead
         turn = new Turn(game.getBoard().getMoveType());//TODO make this not shit
-        turnMoves.clear();
+//        turnMoves.clear();
     }
 }
