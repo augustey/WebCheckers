@@ -45,4 +45,12 @@ public class Turn {
 
     }
 
+    /**
+     * Getter method for collection of moves that make up the turn
+     * @return
+     */
+    public ArrayList<Move> getMoves() {
+        return moves;
+    }
+
 }
