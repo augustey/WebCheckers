@@ -42,7 +42,6 @@ public class Game {
         this.gameWin = new GameWin(gameCenter, this);
         this.board = new Board(this.gameWin);
         this.id = "Game" + (++idIndex);
-        System.out.println(id);
     }
 
     /**
