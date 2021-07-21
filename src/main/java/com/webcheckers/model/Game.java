@@ -40,7 +40,7 @@ public class Game {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.gameWin = new GameWin(gameCenter, this);
-        this.board = new Board(this.gameWin);
+        this.board = BoardConfig.newBoard(this.gameWin, redPlayer.getName());
         this.id = "Game" + (++idIndex);
     }
 
