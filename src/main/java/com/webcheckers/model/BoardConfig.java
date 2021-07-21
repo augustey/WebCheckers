@@ -29,8 +29,10 @@ public class BoardConfig {
                 generateKing(board);
                 break;
             case CHAIN_JUMP:
+                generateChainJump(board);
                 break;
             case SINGLE_JUMP:
+                generateSingleJump(board);
                 break;
         }
 
@@ -54,5 +56,28 @@ public class BoardConfig {
 
         boardArr[1][2].setPiece(boardArr[5][6].getPiece());
         boardArr[5][6].setPiece(null);
+    }
+
+    /**
+     * Alter a board to a configuration where red has a 2x jump move on their turn.
+     * @param board The board to change (Assumed to be in initial configuration)
+     */
+    public static void generateChainJump(Board board) {
+        Space[][] boardArr = board.getBoard();
+
+        boardArr[4][5].setPiece(boardArr[2][3].getPiece());
+        boardArr[2][3].setPiece(boardArr[1][2].getPiece());
+        boardArr[1][2].setPiece(null);
+    }
+
+    /**
+     * Alter a board to a configuration where red has a 1x jump move on their turn.
+     * @param board The board to change (Assumed to be in initial configuration)
+     */
+    public static void generateSingleJump(Board board) {
+        Space[][] boardArr = board.getBoard();
+
+        boardArr[4][5].setPiece(boardArr[2][3].getPiece());
+        boardArr[2][3].setPiece(null);
     }
 }
