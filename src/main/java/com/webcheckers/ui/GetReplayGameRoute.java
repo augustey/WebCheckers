@@ -6,7 +6,6 @@ import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.TurnLogger;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
-import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -16,6 +15,11 @@ import java.util.Map;
 
 import static com.webcheckers.ui.GetHomeRoute.PLAYER_KEY;
 
+/**
+ * The UI Controller to GET the Replay Game page.
+ *
+ * @author <a href='mailto:jrl9984@rit.edu'>Jim Logan</a>
+ */
 public class GetReplayGameRoute implements Route {
 
     private final TemplateEngine templateEngine;
@@ -44,13 +48,34 @@ public class GetReplayGameRoute implements Route {
 
     public static final String VIEW_NAME = "game.ftl";
 
-
+    /**
+     * Constructor for GetReplayGameRoute
+     *
+     * @param templateEngine
+     *          The HTML template rendering engine.
+     *
+     * @param gameCenter
+     *          The GameCenter that stores active games
+     *
+     * @param turnLogger
+     *          The turnLogger used to store turns of a game
+     */
     public GetReplayGameRoute(TemplateEngine templateEngine, GameCenter gameCenter, TurnLogger turnLogger) {
         this.templateEngine = templateEngine;
         this.gameCenter = gameCenter;
         this.turnLogger = turnLogger;
     }
 
+    /**
+     * Render the WebCheckers Replay Game page.
+     *
+     * @param request
+     *         The HTTP request.
+     * @param response
+     *         The HTTP response.
+     *
+     * @return The rendered HTML for the Replay Game page.
+     */
     @Override
     public Object handle(Request request, Response response) {
         Session httpSession = request.session();

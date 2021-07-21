@@ -29,12 +29,34 @@ public class GetReplayPageRoute implements Route {
 
     private static final String TITLE = "Replay";
 
+    /**
+     * Create the Spark Route (UI controller) to handle all {@code GET /replay} HTTP requests.
+     *
+     * @param templateEngine
+     *          The HTML template rendering engine.
+     *
+     * @param gameCenter
+     *          The GameCenter that stores active games
+     *
+     * @param turnLogger
+     *          The turnLogger used to store turns of a game
+     */
     public GetReplayPageRoute(final TemplateEngine templateEngine, final GameCenter gameCenter, final TurnLogger turnLogger) {
         this.templateEngine = templateEngine;
         this.gameCenter = gameCenter;
         this.turnLogger = turnLogger;
     }
 
+    /**
+     * Render the WebCheckers Home page.
+     *
+     * @param request
+     *         The HTTP request.
+     * @param response
+     *         The HTTP response.
+     *
+     * @return The rendered HTML for the Replay page.
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
         Session httpSession = request.session();

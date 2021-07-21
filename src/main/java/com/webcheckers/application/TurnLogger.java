@@ -76,18 +76,54 @@ public class TurnLogger
         return new BoardView(boardView);
     }
 
+    /**
+     * Adds a player to the reviewing map
+     *
+     * @param player
+     *          player that is added to the map
+     *
+     * @param game
+     *          game that is added to the map
+     */
     public synchronized void startReview(Player player, Game game) {
         reviewing.put(player, game);
     }
 
+    /**
+     * Determines if player is currently reviewing a game
+     *
+     * @param player
+     *          player that is being checked
+     *
+     * @return true if the player is reviewing
+     */
     public synchronized boolean isReviewing(Player player) {
         return reviewing.containsKey(player);
     }
 
+    /**
+     * Gets the game based on the player
+     *
+     * @param player
+     *          player that is reviewing the game
+     *
+     * @return game that is being reviewed
+     */
     public synchronized Game getGame(Player player) {
         return reviewing.get(player);
     }
 
+    /**
+     * Removes the player and game from review
+     *
+     * @param player
+     *          player that is being removed
+     *
+     * @param game
+     *          game that is being removed
+     *
+     * @return true if player was successfully removed
+     */
     public synchronized boolean stopReview(Player player, Game game) {
         return reviewing.remove(player, game);
     }

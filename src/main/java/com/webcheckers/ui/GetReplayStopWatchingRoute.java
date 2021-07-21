@@ -11,17 +11,38 @@ import spark.Session;
 
 import static com.webcheckers.ui.GetHomeRoute.PLAYER_KEY;
 
+/**
+ * The UI Controller to GET the ReplayStopWatching page.
+ *
+ * @author <a href='mailto:jrl9984@rit.edu'>Jim Logan</a>
+ */
 public class GetReplayStopWatchingRoute implements Route
 {
     public static final String TURNID_PARAM = "turn";
 
     private TurnLogger turnLogger;
 
+    /**
+     * Create the Spark Route (UI controller) to handle all {@code GET /replay/stopWatching} HTTP requests.
+     *
+     * @param turnLogger
+     *         The turnLogger used to store turns of a game
+     */
     public GetReplayStopWatchingRoute(TurnLogger turnLogger) {
         this.turnLogger = turnLogger;
     }
 
-
+    /**
+     * Removes players from reviewing a game and redirects to home screen
+     *
+     * @param request
+     *         The HTTP request.
+     *
+     * @param response
+     *         The HTTP response.
+     *
+     * @return null
+     */
     @Override
     public Object handle(Request request, Response response)
     {
