@@ -51,7 +51,7 @@ public class PostReplayNextTurnRoute implements Route
             httpSession.attribute(TURNID_PARAM, i);
         } catch (Exception e) {
             e.printStackTrace();
-            message = Message.error("An error has occured getting the turn index");
+            message = Message.error("An error has occurred getting the turn index");
         }
 
         Gson gson = new GsonBuilder().create();
