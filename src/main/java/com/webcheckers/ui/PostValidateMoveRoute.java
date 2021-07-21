@@ -44,18 +44,22 @@ public class PostValidateMoveRoute implements Route {
         playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
 
         String JSONMove = request.queryParams("actionData");
-        System.out.println("Created JSONMove: " + JSONMove);
+        //System.out.println("Created JSONMove: " + JSONMove);
         Gson gson = new GsonBuilder().create();
 
         Move move = gson.fromJson(JSONMove, Move.class);
 
         Board board = playerService.getGame().getBoard();
-        System.out.println("Converted Move: " + move);
+        //System.out.println("Converted Move: " + move);
         Message valid;
         //System.out.println("PostValidateMoveRoute Before: \n" + board);
         if (board.isPossibleMove(move)) {
-            valid = Message.info("Move was made successfully!");
-            playerService.addMove(move);
+            if (playerService.addMove(move)) {
+                valid = Message.info("Move was made successfully!");
+            }
+            else {
+                valid = Message.error("Move was unable to be made!");
+            }
         }
         else {
             valid = Message.error("Move was unable to be made!");

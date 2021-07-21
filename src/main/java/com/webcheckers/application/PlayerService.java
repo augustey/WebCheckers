@@ -135,11 +135,14 @@ public class PlayerService {
      * @param move
      *         A move that is to be made.
      */
-    public synchronized void addMove(Move move) {
+    public synchronized boolean addMove(Move move) {
         //TODO call addMove
         //System.out.println("turnMoves: " + turnMoves);
-        turn.addMove(move);
-        turnMoves.add(move);
+        if (turn.addMove(move)) {
+            turnMoves.add(move);
+            return true;
+        }
+        return false;
     }
 
     /**

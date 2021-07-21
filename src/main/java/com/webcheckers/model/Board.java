@@ -165,38 +165,17 @@ public class Board implements Iterable<Row> {
      * @return True if a move is valid, else, false.
      */
     public boolean isPossibleMove(Move move) {
-//        new Move(new Position(1 , 1), new Position(2, 2));
         determineMoveType();
         if (possibleMoves.isEmpty()) {
             generatePossibleMoves();
         }
         if (!possibleMoves.contains(move)) {
-            if (moveType == MoveType.Jump && this.startJumpPos != null) {
-                Position moveStart = move.getStart();
-                Space copyStartMoveSpace = new Space(getSpace(moveStart, new Board(this)));
-                Space thisStartingSpace = new Space(getSpace(this.startJumpPos, this));
-                if (thisStartingSpace.getPiece() instanceof SinglePiece) {
-                    copyStartMoveSpace.setPiece(new SinglePiece(thisStartingSpace.getPiece().getColor()));
-                }
-                else if (thisStartingSpace.getPiece() instanceof King){
-                    copyStartMoveSpace.setPiece(new King(thisStartingSpace.getPiece().getColor()));
-                }
-                else {
-                    return false;
-                }
-                ArrayList<JumpMove> jumpMoves = copyStartMoveSpace.getPiece().allJumps(moveStart.getRow(), moveStart.getCell());
-                jumpMoves.removeIf(jumpMove -> !validateJumpMove(jumpMove));
-                possibleMoves.addAll(jumpMoves);
-                return possibleMoves.contains(move);
-            }
-        }
-        if (possibleMoves.contains(move)) {
             if (moveType == MoveType.Jump) {
-                this.startJumpPos = move.getStart();
+                JumpMove jm = new JumpMove(move);
+                return validateJumpMove(jm);
             }
-            return true;
         }
-        return false;
+        return possibleMoves.contains(move);
     }
 
     /**
