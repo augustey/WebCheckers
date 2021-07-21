@@ -48,9 +48,10 @@ public class BoardConfig {
     public static void generateKing(Board board) {
         Space[][] boardArr = board.getBoard();
 
-        for(int i = 0; i < 2; i++) {
-            for(Space space: boardArr[i]) {
-                space.setPiece(null);
+        for(int r = 0; r < 3; r++) {
+            for(int c = 0; c < boardArr[r].length; c++) {
+                if(r != 0 || c != 5)
+                    boardArr[r][c].setPiece(null);
             }
         }
 
