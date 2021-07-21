@@ -72,7 +72,7 @@ public class GameCenter {
         if (isInGame(opponent)) {
             return PLAYER_IN_GAME_MSG;
         }
-        if(turnLogger.isReviewing(player)) {
+        if(turnLogger.isReviewing(opponent)) {
             return PLAYER_REVIEWING_GAME_MSG;
         }
 

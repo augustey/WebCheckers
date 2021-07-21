@@ -35,6 +35,6 @@ public class PostReplayPreviousTurnRoute implements Route
         Gson gson = new GsonBuilder().create();
 
         message = Message.info("true");
-        return message;
+        return gson.toJson(message);
     }
 }

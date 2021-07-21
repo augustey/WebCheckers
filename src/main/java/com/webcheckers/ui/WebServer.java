@@ -222,7 +222,7 @@ public class WebServer {
 
         get(REPLAY_GAME_URL, new GetReplayGameRoute(templateEngine, gameCenter, turnLogger));
 
-        //get(REPLAY_STOP_WATCHING_URL);
+        get(REPLAY_STOP_WATCHING_URL, new GetReplayStopWatchingRoute(turnLogger));
 
         post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
 
