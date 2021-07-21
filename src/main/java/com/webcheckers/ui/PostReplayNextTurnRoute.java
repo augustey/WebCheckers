@@ -44,10 +44,13 @@ public class PostReplayNextTurnRoute implements Route
         try {
             int i = httpSession.attribute(TURNID_PARAM);
 
+            System.out.println(i);
+
             i++;
 
             httpSession.attribute(TURNID_PARAM, i);
         } catch (Exception e) {
+            e.printStackTrace();
             message = Message.error("An error has occured getting the turn index");
         }
 

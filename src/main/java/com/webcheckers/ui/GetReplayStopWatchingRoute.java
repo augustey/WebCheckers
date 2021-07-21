@@ -10,6 +10,7 @@ import spark.Route;
 import spark.Session;
 
 import static com.webcheckers.ui.GetHomeRoute.PLAYER_KEY;
+import static spark.Spark.halt;
 
 /**
  * The UI Controller to GET the ReplayStopWatching page.
@@ -47,20 +48,20 @@ public class GetReplayStopWatchingRoute implements Route
     public Object handle(Request request, Response response)
     {
         Session httpSession = request.session();
+        httpSession.removeAttribute(TURNID_PARAM);
 
-        try {
-            Player player = httpSession.attribute(PLAYER_KEY);
-            Game game = turnLogger.getGame(player);
 
-            httpSession.removeAttribute(TURNID_PARAM);
+        Player player = httpSession.attribute(PLAYER_KEY);
+        Game game = turnLogger.getGame(player);
 
-            if(turnLogger.stopReview(player, game)) {
-                response.redirect(WebServer.HOME_URL);
-            }
-        } catch (Exception e) {
+
+        if(turnLogger.stopReview(player, game)){
+            response.redirect(WebServer.HOME_URL);
+            halt();
+        } else {
             return Message.error("Unable to stop watching");
         }
-
         return null;
     }
 }
+

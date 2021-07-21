@@ -149,4 +149,14 @@ public class GameCenter {
         }
         return games;
     }
+
+    /**
+     * Gets a map of completed games
+     *
+     * @return the list of completed games
+     */
+    public Map<String, Game> getCompletedGamesMap()
+    {
+        return completedGames;
+    }
 }

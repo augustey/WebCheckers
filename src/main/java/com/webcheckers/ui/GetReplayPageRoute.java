@@ -58,7 +58,7 @@ public class GetReplayPageRoute implements Route {
      * @return The rendered HTML for the Replay page.
      */
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) {
         Session httpSession = request.session();
 
         final Map<String, Object> vm = new HashMap<>();
@@ -67,6 +67,7 @@ public class GetReplayPageRoute implements Route {
 
         if(turnLogger.isReviewing(player)) {
             response.redirect(WebServer.REPLAY_GAME_URL + "?gameID=" + turnLogger.getGame(player).getId());
+            halt();
         }
 
         vm.put(TITLE_ATTR, TITLE);

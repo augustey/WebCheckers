@@ -14,6 +14,7 @@ import java.util.concurrent.CyclicBarrier;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("Application-tier")
+@Tag("replay")
 public class TurnLoggerTest
 {
     private TurnLogger CuT;

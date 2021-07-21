@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.webcheckers.ui.GetHomeRoute.PLAYER_KEY;
+import static spark.Spark.halt;
 
 /**
  * The UI Controller to GET the Replay Game page.
@@ -87,8 +88,9 @@ public class GetReplayGameRoute implements Route {
         Game game = gameCenter.getCompletedGame(gameID);
 
         Player player = httpSession.attribute(PLAYER_KEY);
-        if(player == null || game == null || gameID == null) {
+        if(player == null || gameID == null) {
             response.redirect(WebServer.HOME_URL);
+            halt();
         }
         if(!turnLogger.isReviewing(player)) {
             turnLogger.startReview(player, game);
