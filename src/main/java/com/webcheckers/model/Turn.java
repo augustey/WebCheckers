@@ -30,13 +30,17 @@ public class Turn {
         if(moveType == Board.MoveType.Jump) {
             JumpMove jumpMove = new JumpMove(move);
             //This uses the custom equals method in JumpMove to make sure that no piece is jumped twice
-            if(!moves.contains(move)){
+
+            if(!moves.contains(move)) {
                 //System.out.println("not contained");
                 moves.add(jumpMove);
-                System.out.println(moves);
-                System.out.println("Size: " + moves.size());
+//                System.out.println(moves);
+//                System.out.println("Size: " + moves.size());
+
+
                 return true;
             }
+
         }
         //If a SingleMove is required then the move is converted to a SingleMove
         else if(moveType == Board.MoveType.Single){
@@ -51,11 +55,10 @@ public class Turn {
     /**
      * Removes the last move in the turn
      */
-    public void removeMove() {
-        int i = moves.size() - 1;
-        moves.remove(i);
-
-    }
+        public void removeMove() {
+            int i = moves.size() - 1;
+            moves.remove(i);
+        }
 
     /**
      * Getter method for collection of moves that make up the turn
@@ -66,3 +69,6 @@ public class Turn {
     }
 
 }
+
+
+

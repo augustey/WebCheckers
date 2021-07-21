@@ -6,7 +6,7 @@ import java.util.Objects;
  * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
  * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
  */
-public  class Move {
+public class Move {
 
     // The start position.
     private final Position start;
@@ -55,7 +55,7 @@ public  class Move {
      */
     @Override
     public boolean equals(Object other) {
-        System.out.println("Move equals");
+//        System.out.println("Move equals");
         if (this == other) {
             return true;
         }

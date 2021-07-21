@@ -84,7 +84,7 @@ public class JumpMove extends Move {
     }
 //    @Override
 //    public int hashCode(){
-//        return jumped.getCell() + jumped.getRow() * 8;
+//        return jumped.getRow() * 8 + jumped.getCell();
 //    }
 
 
