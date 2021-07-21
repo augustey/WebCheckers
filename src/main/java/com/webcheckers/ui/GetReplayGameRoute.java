@@ -87,6 +87,9 @@ public class GetReplayGameRoute implements Route {
         Game game = gameCenter.getCompletedGame(gameID);
 
         Player player = httpSession.attribute(PLAYER_KEY);
+        if(player == null || game == null || gameID == null) {
+            response.redirect(WebServer.HOME_URL);
+        }
         if(!turnLogger.isReviewing(player)) {
             turnLogger.startReview(player, game);
         }

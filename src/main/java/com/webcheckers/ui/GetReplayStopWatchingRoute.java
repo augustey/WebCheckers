@@ -55,7 +55,7 @@ public class GetReplayStopWatchingRoute implements Route
             httpSession.removeAttribute(TURNID_PARAM);
 
             if(turnLogger.stopReview(player, game)) {
-                response.redirect("/");
+                response.redirect(WebServer.HOME_URL);
             }
         } catch (Exception e) {
             return Message.error("Unable to stop watching");
