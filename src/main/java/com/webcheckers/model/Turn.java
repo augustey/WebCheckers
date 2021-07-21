@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 /**
  * This class is for storing the moves that make up a turn
+ *
+ * @author <a href = 'mailto:whd8254@rit.edu'>William Dabney</a>
  */
 public class Turn {
     private ArrayList<Move> moves;
@@ -31,6 +33,8 @@ public class Turn {
             if(!moves.contains(move)){
                 //System.out.println("not contained");
                 moves.add(jumpMove);
+                System.out.println(moves);
+                System.out.println("Size: " + moves.size());
                 return true;
             }
         }

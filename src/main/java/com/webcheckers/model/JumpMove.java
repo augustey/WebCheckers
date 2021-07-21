@@ -71,6 +71,7 @@ public class JumpMove extends Move {
      */
     @Override
     public boolean equals(Object other) {
+        System.out.println("equals========================");
         if (this == other) {
             return true;
         }
@@ -81,6 +82,12 @@ public class JumpMove extends Move {
         }
         return false;
     }
+//    @Override
+//    public int hashCode(){
+//        return jumped.getCell() + jumped.getRow() * 8;
+//    }
+
+
 
     /**
      * String representation of a JumpMove object.

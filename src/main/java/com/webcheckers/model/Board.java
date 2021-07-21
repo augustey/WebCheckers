@@ -2,7 +2,7 @@ package com.webcheckers.model;
 
 import com.webcheckers.application.GameWin;
 import com.webcheckers.util.Message;
-//import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -165,6 +165,7 @@ public class Board implements Iterable<Row> {
      * @return True if a move is valid, else, false.
      */
     public boolean isPossibleMove(Move move) {
+//        new Move(new Position(1 , 1), new Position(2, 2));
         determineMoveType();
         if (possibleMoves.isEmpty()) {
             generatePossibleMoves();
@@ -400,10 +401,6 @@ public class Board implements Iterable<Row> {
      * @return A message if the moves were valid, or an error if there is another jump move possible.
      */
     public Message makeMove(ArrayList<Move> moves) {
-//        System.out.println("makeMove: " + moves);
-//        System.out.println(this);
-//        // Determine what move type the user can make.
-//        determineMoveType();
         // Handles the win condition where there are no possible moves.
         if (moveType == MoveType.Blocked) {
             gameWin.checkBlockedGameOver(activePlayerColor);
@@ -414,7 +411,6 @@ public class Board implements Iterable<Row> {
         // Create the board to make the moves on.
         Board copy = new Board(this);
 
-//        Board copy = this;
         // Establish the end position and space.
         Position endPos = null;
         Space endSpace = null;
@@ -424,32 +420,15 @@ public class Board implements Iterable<Row> {
             endPos = curMove.getEnd();
             Space startSpace = getSpace(startPos, copy);
             endSpace = getSpace(endPos, copy);
-            Piece piece = startSpace.getPiece();
-            int row = startPos.getRow();
-            int col = startPos.getCell();
+
             // Perform a single move.
-            if (moveType == MoveType.Single) {
-                ArrayList<SingleMove> singleMoves = new ArrayList<>(piece.allSingleMoves(row, col));
-                if (singleMoves.contains(curMove)) {
-                    int index = singleMoves.indexOf(curMove);
-                    SingleMove singleMove = singleMoves.get(index);
-                    if (validateSingleMove(singleMove)) {
-                        copy.executeSingleMove(startSpace, endSpace);
-                    }
-                }
+            if (curMove instanceof SingleMove) {
+                copy.executeSingleMove(startSpace, endSpace);
             }
             // Perform jump move.
             else {
-                ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
-                if (jumpMoves.contains(curMove)) {
-                    int index = jumpMoves.indexOf(curMove);
-                    JumpMove jumpMove = jumpMoves.get(index);
-                    if (validateJumpMove(jumpMove)) {
-                        Space jumpedSpace = getSpace(jumpMove.getJumpedPosition(), copy);
-                        copy.executeJumpMove(startSpace, jumpedSpace, endSpace);
-//                        System.out.println(copy);
-                    }
-                }
+                Space jumpedSpace = getSpace(((JumpMove) curMove).getJumpedPosition(), copy);
+                copy.executeJumpMove(startSpace, jumpedSpace, endSpace);
             }
         }
         // Check if another jump move is still possible.
@@ -463,7 +442,6 @@ public class Board implements Iterable<Row> {
                 jumpMoves.removeIf(jumpMove -> move.getStart().equals(jumpMove.getEnd()));
             }
             if (jumpMoves.size() != 0) {
-                //System.out.println("Move submited with another one possible : " + this);
                 return Message.error("Another jump move is possible!");
             }
         }
@@ -480,7 +458,7 @@ public class Board implements Iterable<Row> {
         for (int row = 0; row < BOARD_DIM; row++) {
             System.arraycopy(copy.board[row], 0, this.board[row], 0, BOARD_DIM);
         }
-//        System.out.println(this);
+
         // Flip the board orientation for the next player.
         flip();
         // Check the win condition for blocked moves.
@@ -578,20 +556,20 @@ public class Board implements Iterable<Row> {
 //
 //            Move move = new Move(new Position(startRow, startCol), new Position(endRow, endCol));
 
-        Move move = new Move(new Position(5, 0), new Position(3, 2));
+        Move move = new JumpMove(new Position(5, 0), new Position(3, 2));
 
         ArrayList<Move> moves = new ArrayList<>();
         moves.add(move);
 
-        Move move1 = new Move(new Position(3, 2), new Position(1, 4));
+        Move move1 = new JumpMove(new Position(3, 2), new Position(1, 4));
         moves.add(move1);
         makeMove(moves);
             System.out.println(this);
 //        }
     }
 
-    //public static void main(String[] args) {
-    //    GameWin gameWin = mock(GameWin.class);
-        //new Board(gameWin);
-    //}
+    public static void main(String[] args) {
+        GameWin gameWin = mock(GameWin.class);
+        new Board(gameWin);
+    }
 }
