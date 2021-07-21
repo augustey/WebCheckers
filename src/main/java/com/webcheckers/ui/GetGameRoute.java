@@ -42,6 +42,7 @@ public class GetGameRoute implements Route {
     public static final String WHITE_PLAYER_ATTR = "whitePlayer";
     public static final String ACTIVE_COLOR_ATTR = "activeColor";
     public static final String BOARD_VIEW_ATTR = "board";
+    public static final String MODE_OPTS_ATTR = "modeOptionsAsJSON";
 
     // Freemarker values.
     public static final String TITLE = "Checkers";
@@ -122,7 +123,7 @@ public class GetGameRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
         Gson gson = new GsonBuilder().create();
 
-        vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+        vm.put(MODE_OPTS_ATTR, gson.toJson(modeOptions));
         vm.put(TITLE_ATTR, TITLE);
         vm.put(USER_ATTR, player);
         vm.put(RED_PLAYER_ATTR, playerService.getRedPlayer());

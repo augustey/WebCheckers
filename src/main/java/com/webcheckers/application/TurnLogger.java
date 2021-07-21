@@ -14,12 +14,14 @@ import java.util.*;
 public class TurnLogger
 {
     private Map<String, List<Board>> turns;
+    private Set<Player> reviewing;
 
     /**
      * Constructor for TurnLogger that initializes the turns Map
      */
     public TurnLogger() {
         turns = new HashMap<>();
+        reviewing = new HashSet<>();
     }
 
     /**
@@ -32,16 +34,13 @@ public class TurnLogger
         Board board = game.getBoard();
         String id = game.getId();
 
-        Gson gson = new GsonBuilder().create();
-
         if(!turns.containsKey(id)) {
             LinkedList<Board> list = new LinkedList<>();
+            list.add(new Board());
             turns.put(id, list);
         }
 
-        //String boardJSON = gson.toJson(board);
-        //System.out.println(boardJSON);
-        turns.get(id).add(board);
+        turns.get(id).add(new Board(board));
     }
 
     /**
@@ -68,5 +67,17 @@ public class TurnLogger
         boardView = board.iterator();
 
         return new BoardView(boardView);
+    }
+
+    public synchronized void startReview(Player player) {
+        reviewing.add(player);
+    }
+
+    public synchronized boolean isReviewing(Player player) {
+        return reviewing.contains(player);
+    }
+
+    public synchronized boolean stopReview(Player player) {
+        return reviewing.remove(player);
     }
 }

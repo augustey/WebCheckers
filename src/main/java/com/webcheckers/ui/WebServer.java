@@ -71,6 +71,21 @@ public class WebServer {
     public static final String REPLAY_GAME_URL = REPLAY_URL + GAME_URL;
 
     /**
+     * The URL pattern for the next turn in replay
+     */
+    public static final String REPLAY_STOP_WATCHING_URL = REPLAY_URL + "/stopWatching";
+
+    /**
+     * The URL pattern for the next turn in replay
+     */
+    public static final String REPLAY_NEXT_TURN_URL = REPLAY_URL + "/nextTurn";
+
+    /**
+     * The URL pattern for the next turn in replay
+     */
+    public static final String REPLAY_PREVIOUS_TURN_URL = REPLAY_URL + "/previousTurn";
+
+    /**
      * The URL pattern to request the signin page
      */
     public static final String SIGNIN_URL = "/signin";
@@ -207,6 +222,8 @@ public class WebServer {
 
         get(REPLAY_GAME_URL, new GetReplayGameRoute(templateEngine, gameCenter, turnLogger));
 
+        //get(REPLAY_STOP_WATCHING_URL);
+
         post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
 
         post(SIGNOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
@@ -220,6 +237,10 @@ public class WebServer {
         post(RESIGNGAME_URL, new PostResignGameRoute());
 
         post(CHECKTURN_URL, new PostCheckTurnRoute());
+
+        post(REPLAY_NEXT_TURN_URL, new PostReplayNextTurnRoute());
+
+        post(REPLAY_PREVIOUS_TURN_URL, new PostReplayPreviousTurnRoute());
 
         //
         LOG.config("WebServer is initialized.");

@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.webcheckers.ui.GetHomeRoute.PLAYER_KEY;
+
 public class GetReplayGameRoute implements Route {
 
     private final TemplateEngine templateEngine;
@@ -32,6 +34,9 @@ public class GetReplayGameRoute implements Route {
     public static final String WHITE_PLAYER_ATTR = "whitePlayer";
     public static final String ACTIVE_COLOR_ATTR = "activeColor";
     public static final String BOARD_VIEW_ATTR = "board";
+    public static final String MODE_OPTS_ATTR = "modeOptionsAsJSON";
+    private static final String NEXT = "hasNext";
+    private static final String PREV = "hasPrevious";
 
     // Freemarker values.
     public static final String TITLE = "Checkers";
@@ -51,14 +56,38 @@ public class GetReplayGameRoute implements Route {
         Session httpSession = request.session();
 
         final Map<String, Object> vm = new HashMap<>();
+        final Map<String, Object> modeOptions = new HashMap<>();
 
-        Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
+        Player player = httpSession.attribute(PLAYER_KEY);
+        if(!turnLogger.isReviewing(player)) {
+            turnLogger.startReview(player);
+        }
 
         String gameID = request.queryParams(GAMEID_PARAM);
         Game game = gameCenter.getCompletedGame(gameID);
 
-        int i = Integer.parseInt(request.queryParams(TURNID_PARAM));
+        int i;
+        if(httpSession.attribute(TURNID_PARAM) == null) {
+            i = 0;
+            httpSession.attribute(TURNID_PARAM, i);
+        } else
+        {
+           i = httpSession.attribute(TURNID_PARAM);
+        }
+
         List<Board> turns = turnLogger.getTurns(game);
+
+        //Determine if there are turns before or after the current turn
+        modeOptions.put(NEXT, true);
+        modeOptions.put(PREV, true);
+        if(i == 0) {
+            modeOptions.put(PREV, false);
+        }
+        if(i == turns.size() - 1) {
+            modeOptions.put(NEXT, false);
+        }
+
+        Gson gson = new GsonBuilder().create();
 
         vm.put(TITLE_ATTR, TITLE);
         vm.put(USER_ATTR, player);
@@ -67,7 +96,8 @@ public class GetReplayGameRoute implements Route {
         vm.put(VIEW_MODE_ATTR, VIEW_MODE);
         vm.put(ACTIVE_COLOR_ATTR, Piece.Color.RED);
         vm.put(BOARD_VIEW_ATTR, turnLogger.getBoardView(turns.get(i)));
+        vm.put(MODE_OPTS_ATTR, gson.toJson(modeOptions));
 
-        return templateEngine.render(new ModelAndView(vm, "game.ftl"));
+        return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
 }

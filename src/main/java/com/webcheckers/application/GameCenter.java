@@ -19,6 +19,7 @@ public class GameCenter {
     // Error messages.
     public static final Message PLAYER_NULL_MSG = Message.error("That player does not exist.");
     public static final Message PLAYER_IN_GAME_MSG = Message.error("That player is already in a game.");
+    public static final Message PLAYER_REVIEWING_GAME_MSG = Message.error("That player is reviewing a game.");
 
     // Information messages.
     public static final Message CREATE_GAME_SUCCESS = Message.info("New game was created.");
@@ -70,6 +71,9 @@ public class GameCenter {
         }
         if (isInGame(opponent)) {
             return PLAYER_IN_GAME_MSG;
+        }
+        if(turnLogger.isReviewing(player)) {
+            return PLAYER_REVIEWING_GAME_MSG;
         }
 
         Game newGame = new Game(player, opponent, this);

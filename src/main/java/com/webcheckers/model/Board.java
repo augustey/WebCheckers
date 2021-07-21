@@ -44,6 +44,22 @@ public class Board implements Iterable<Row> {
         this.gameWin = gameWin;
         this.activePlayerColor = Piece.Color.RED;
         this.board = new Space[BOARD_DIM][BOARD_DIM];
+        generateBoard();
+        //ptuiDebug();
+    }
+
+    /**
+     * Constructor for the board class that builds the board
+     */
+    public Board() {
+        gameWin = null;
+        this.activePlayerColor = Piece.Color.RED;
+        this.board = new Space[BOARD_DIM][BOARD_DIM];
+        generateBoard();
+        //ptuiDebug();
+    }
+
+    public void generateBoard() {
         for (int row = 0; row < BOARD_DIM; row++) {
             for (int col = 0; col < BOARD_DIM; col++) {
                 Space space;
@@ -62,7 +78,6 @@ public class Board implements Iterable<Row> {
                 this.board[row][col] = space;
             }
         }
-        //ptuiDebug();
     }
 
     /**
