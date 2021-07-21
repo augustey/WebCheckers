@@ -9,7 +9,6 @@ import com.webcheckers.application.GameWin;
  */
 public class BoardConfig {
     //Different usernames for redPlayer that correspond to different board configurations
-    //Feel free to change them to more creative ones
     public static final String KING = "king";
     public static final String CHAIN_JUMP = "chainjump";
     public static final String SINGLE_JUMP = "singlejump";
