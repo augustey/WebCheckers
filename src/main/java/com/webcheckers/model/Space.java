@@ -109,7 +109,7 @@ public class Space {
             Space otherSpace = (Space) other;
             return otherSpace.rowIdx == rowIdx &&
                     otherSpace.colIdx == colIdx &&
-                    otherSpace.piece.equals(piece) &&
+                    otherSpace.piece == piece &&
                     otherSpace.isValid == isValid;
         }
         return false;

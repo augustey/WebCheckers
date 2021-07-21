@@ -41,6 +41,7 @@ public class PlayerServiceTest
         gameCenter = new GameCenter();
         player = new Player("Player");
         opponent = new Player("Opponent");
+        turnLogger = new TurnLogger();
         gameCenter.requestNewGame(player, opponent, turnLogger);
 
         //Setup CuT

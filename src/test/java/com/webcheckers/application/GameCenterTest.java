@@ -30,6 +30,7 @@ public class GameCenterTest {
         player = new Player("Player");
         opponent = new Player("Opponent");
         otherPlayer = new Player("OtherPlayer");
+        turnLogger = new TurnLogger();
     }
 
     /**

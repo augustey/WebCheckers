@@ -32,7 +32,7 @@ public class TurnLogger
         Board board = game.getBoard();
         String id = game.getId();
 
-        if(!turns.containsKey(id)) {
+        if(!turns.containsKey(id) || turns.get(id) == null) {
             LinkedList<Board> list = new LinkedList<>();
             list.add(new Board());
             turns.put(id, list);
@@ -47,6 +47,7 @@ public class TurnLogger
         }
 
         board1.flip();
+
     }
 
     /**
@@ -126,5 +127,25 @@ public class TurnLogger
      */
     public synchronized boolean stopReview(Player player, Game game) {
         return reviewing.remove(player, game);
+    }
+
+    /**
+     * Getter for reviewing
+     *
+     * @return reviewing
+     */
+    public Map<Player, Game> getReviewing()
+    {
+        return reviewing;
+    }
+
+    /**
+     * Getter for turns
+     *
+     * @return turns
+     */
+    public Map<String, List<Board>> getTurns()
+    {
+        return turns;
     }
 }
