@@ -59,7 +59,7 @@ public class BoardConfig {
     }
 
     /**
-     * Alter a board to a configuration where red has a 3x jump move on their turn.
+     * Alter a board to a configuration where red has a 2x jump move on their turn.
      * @param board The board to change (Assumed to be in initial configuration)
      */
     public static void generateChainJump(Board board) {
