@@ -63,7 +63,7 @@ public class GameCenter {
      * @param turnLogger
      *          The turn logger for the game
      *
-     * @return The service object containing the newly created game.
+     * @return A message detailing the result of the action.
      */
     public Message requestNewGame(Player player, Player opponent, TurnLogger turnLogger) {
         if (opponent == null) {
@@ -92,7 +92,7 @@ public class GameCenter {
      * @param player
      *         The requesting player.
      *
-     * @return PlayerService object containing the players game if it exists.
+     * @return PlayerService object containing the player's game if it exists.
      */
     public PlayerService getPlayerService(Player player) {
         if (!isInGame(player)) {
