@@ -66,8 +66,7 @@ public class BoardConfig {
     public static void generateChainJump(Board board) {
         Space[][] boardArr = board.getBoard();
 
-        boardArr[4][5].setPiece(boardArr[2][3].getPiece());
-        boardArr[2][3].setPiece(boardArr[1][2].getPiece());
+        boardArr[4][5].setPiece(boardArr[1][2].getPiece());
         boardArr[1][2].setPiece(null);
     }
 
