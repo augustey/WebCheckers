@@ -36,6 +36,7 @@ public class TurnLogger
             LinkedList<Board> list = new LinkedList<>();
             list.add(new Board());
             turns.put(id, list);
+            return;
         }
 
         List<Board> list = turns.get(id);
