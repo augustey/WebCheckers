@@ -44,7 +44,9 @@ public class PlayerService {
         this.whitePlayer = game.getWhitePlayer();
         this.game = game;
         this.turnMoves = new ArrayList<>();
-        this.turn = new Turn(game.getBoard().getMoveType());//TODO make this not shit
+//        this.turn = new Turn(game.getBoard().getMoveType());//TODO make this not shit
+        this.turn = new Turn(game.getBoard());//TODO make this not shit
+
     }
 
     /**
@@ -138,11 +140,8 @@ public class PlayerService {
     public synchronized boolean addMove(Move move) {
         //TODO call addMove
         //System.out.println("turnMoves: " + turnMoves);
-        if (turn.addMove(move)) {
-            turnMoves.add(move);
-            return true;
-        }
-        return false;
+        //            turnMoves.add(move);
+        return turn.addMove(move);
     }
 
     /**
@@ -151,20 +150,23 @@ public class PlayerService {
      * @return A move that was removed.
      */
     public synchronized Move removeMove() {
-        if (!turnMoves.isEmpty()) {
+//        if (!turnMoves.isEmpty()) {
             //TODO call removeMove
-            turn.removeMove();
-            int i = turnMoves.size() - 1;
-            return turnMoves.remove(i);
-        }
-        return null;
+            return turn.removeMove();
+//            int i = turnMoves.size() - 1;
+//            return turnMoves.remove(i);
+//        }
+//        return null;
     }
 
     /**
      * Clears the list of moves at the end of a player's turn.
      */
     public synchronized void clearMoves() {//TODO have it create a new TURN instead
-        turn = new Turn(game.getBoard().getMoveType());//TODO make this not shit
-        turnMoves.clear();
+        System.out.println("clearMoves: " + game.getBoard().getMoveType());
+//        this.turn = new Turn(game.getBoard().getMoveType());//TODO make this not shit
+        this.turn = new Turn(game.getBoard());//TODO make this not shit
+
+//        turnMoves.clear();
     }
 }

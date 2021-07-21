@@ -381,6 +381,9 @@ public class Board implements Iterable<Row> {
      */
     public Message makeMove(ArrayList<Move> moves) {
         // Handles the win condition where there are no possible moves.
+
+        System.out.println("makeMove: " + moves);
+
         if (moveType == MoveType.Blocked) {
             gameWin.checkBlockedGameOver(activePlayerColor);
         }

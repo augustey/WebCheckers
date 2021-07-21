@@ -9,12 +9,14 @@ import java.util.ArrayList;
  */
 public class Turn {
     private ArrayList<Move> moves;
-    private final Board.MoveType moveType;
+    private Board board;
+//    private Board.MoveType moveType;
 
-
-    public Turn(Board.MoveType moveType){
+    public Turn(Board board){
         //TODO get move type
-        this.moveType = moveType;
+        this.board = board;
+//        this.moveType = moveType;
+//        System.out.println("Turn constuctor: " + moveType);
         this.moves = new ArrayList<Move>();
 
     }
@@ -25,14 +27,15 @@ public class Turn {
      */
     public boolean addMove(Move move) {
         //System.out.println("Moves: " + moves);
-        System.out.println("Turn moveType: " + moveType);
+
+//        System.out.println("Turn moveType: " + moveType);
         //If a JumpMove is required then the move is converted to a JumpMove
-        if(moveType == Board.MoveType.Jump) {
+        if(board.getMoveType() == Board.MoveType.Jump) {
             JumpMove jumpMove = new JumpMove(move);
             //This uses the custom equals method in JumpMove to make sure that no piece is jumped twice
 
             if(!moves.contains(jumpMove)) {
-                //System.out.println("not contained");
+                System.out.println("not contained");
                 moves.add(jumpMove);
 //                System.out.println(moves);
 //                System.out.println("Size: " + moves.size());
@@ -43,7 +46,8 @@ public class Turn {
 
         }
         //If a SingleMove is required then the move is converted to a SingleMove
-        else if(moveType == Board.MoveType.Single){
+        else if(board.getMoveType()  == Board.MoveType.Single){
+            System.out.println("got to single");
             //TODO create new Single Move
             SingleMove singleMove = new SingleMove(move);
             moves.add(singleMove);
@@ -55,9 +59,9 @@ public class Turn {
     /**
      * Removes the last move in the turn
      */
-        public void removeMove() {
+        public Move removeMove() {
             int i = moves.size() - 1;
-            moves.remove(i);
+            return moves.remove(i);
         }
 
     /**
