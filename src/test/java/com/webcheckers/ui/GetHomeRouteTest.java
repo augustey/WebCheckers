@@ -68,7 +68,7 @@ public class GetHomeRouteTest {
         gameCenter = new GameCenter();
         turnLogger = new TurnLogger();
         // Creating the CuT.
-        CuT = new GetHomeRoute(playerLobby, gameCenter, engine);
+        CuT = new GetHomeRoute(playerLobby, gameCenter, engine, turnLogger);
     }
 
     /**

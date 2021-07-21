@@ -1,7 +1,9 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.application.TurnLogger;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -25,12 +27,18 @@ public class GetReplayStopWatchingRoute implements Route
     {
         Session httpSession = request.session();
 
-        Player player = httpSession.attribute(PLAYER_KEY);
+        try {
+            Player player = httpSession.attribute(PLAYER_KEY);
+            Game game = turnLogger.getGame(player);
 
-        httpSession.removeAttribute(TURNID_PARAM);
-        turnLogger.stopReview(player);
+            httpSession.removeAttribute(TURNID_PARAM);
 
-        response.redirect("/");
+            if(turnLogger.stopReview(player, game)) {
+                response.redirect("/");
+            }
+        } catch (Exception e) {
+            return Message.error("Unable to stop watching");
+        }
 
         return null;
     }

@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.PlayerService;
+import com.webcheckers.application.TurnLogger;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -41,6 +42,8 @@ public class GetHomeRoute implements Route {
     private final GameCenter gameCenter;
     // The template engine.
     private final TemplateEngine templateEngine;
+    // The Turn Logger which holds players reviewing a game
+    private final TurnLogger turnLogger;
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
@@ -48,10 +51,11 @@ public class GetHomeRoute implements Route {
      * @param templateEngine
      *         The HTML template rendering engine.
      */
-    public GetHomeRoute(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine) {
+    public GetHomeRoute(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine, final TurnLogger turnLogger) {
         this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
         this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
+        this.turnLogger = Objects.requireNonNull(turnLogger, "turnLogger is required");
 
         LOG.config("GetHomeRoute is initialized.");
     }
@@ -78,6 +82,13 @@ public class GetHomeRoute implements Route {
             Player player = httpSession.attribute(PLAYER_KEY);
             vm.put(PLAYER_KEY, player);
             vm.put(PLAYERSET_KEY, playerLobby.getPlayerSet());
+
+            //If the player is reviewing a game redirect to the review
+            if(turnLogger.isReviewing(player)) {
+                response.redirect(WebServer.REPLAY_GAME_URL + "?gameID=" + turnLogger.getGame(player).getId());
+                halt();
+                return null;
+            }
 
             PlayerService playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
 

@@ -212,13 +212,13 @@ public class WebServer {
         //// code clean; using small classes.
 
         // Shows the Checkers game Home page.
-        get(HOME_URL, new GetHomeRoute(playerLobby, gameCenter, templateEngine));
+        get(HOME_URL, new GetHomeRoute(playerLobby, gameCenter, templateEngine, turnLogger));
 
         get(GAME_URL, new GetGameRoute(playerLobby, gameCenter, turnLogger, templateEngine));
 
         get(SIGNIN_URL, new GetSignInRoute(templateEngine));
 
-        get(REPLAY_URL, new GetReplayPageRoute(templateEngine, gameCenter));
+        get(REPLAY_URL, new GetReplayPageRoute(templateEngine, gameCenter, turnLogger));
 
         get(REPLAY_GAME_URL, new GetReplayGameRoute(templateEngine, gameCenter, turnLogger));
 

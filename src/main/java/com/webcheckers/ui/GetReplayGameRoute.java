@@ -58,13 +58,13 @@ public class GetReplayGameRoute implements Route {
         final Map<String, Object> vm = new HashMap<>();
         final Map<String, Object> modeOptions = new HashMap<>();
 
-        Player player = httpSession.attribute(PLAYER_KEY);
-        if(!turnLogger.isReviewing(player)) {
-            turnLogger.startReview(player);
-        }
-
         String gameID = request.queryParams(GAMEID_PARAM);
         Game game = gameCenter.getCompletedGame(gameID);
+
+        Player player = httpSession.attribute(PLAYER_KEY);
+        if(!turnLogger.isReviewing(player)) {
+            turnLogger.startReview(player, game);
+        }
 
         int i;
         if(httpSession.attribute(TURNID_PARAM) == null) {
@@ -94,7 +94,7 @@ public class GetReplayGameRoute implements Route {
         vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
         vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
         vm.put(VIEW_MODE_ATTR, VIEW_MODE);
-        vm.put(ACTIVE_COLOR_ATTR, Piece.Color.RED);
+        vm.put(ACTIVE_COLOR_ATTR, game.getBoard().getActivePlayerColor());
         vm.put(BOARD_VIEW_ATTR, turnLogger.getBoardView(turns.get(i)));
         vm.put(MODE_OPTS_ATTR, gson.toJson(modeOptions));
 

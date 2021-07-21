@@ -1,6 +1,7 @@
 package com.webcheckers.model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * The Piece class is responsible for containing the outlined functionality for any Piece object that extends.
@@ -79,5 +80,34 @@ public abstract class Piece {
      */
     public Type getType() {
         return type;
+    }
+
+    /**
+     * equals method for piece
+     *
+     * @param o
+     *       the other object this piece is being compared to
+     *
+     * @return true if they are equal
+     */
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return color == piece.color &&
+                type == piece.type;
+    }
+
+    /**
+     * Generates a hash for this piece
+     *
+     * @return the hash for this piece
+     */
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(color, type);
     }
 }

@@ -1,7 +1,5 @@
 package com.webcheckers.application;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.webcheckers.model.*;
 
 import java.util.*;
@@ -14,14 +12,14 @@ import java.util.*;
 public class TurnLogger
 {
     private Map<String, List<Board>> turns;
-    private Set<Player> reviewing;
+    private Map<Player, Game> reviewing;
 
     /**
      * Constructor for TurnLogger that initializes the turns Map
      */
     public TurnLogger() {
         turns = new HashMap<>();
-        reviewing = new HashSet<>();
+        reviewing = new HashMap<>();
     }
 
     /**
@@ -40,7 +38,15 @@ public class TurnLogger
             turns.put(id, list);
         }
 
-        turns.get(id).add(new Board(board));
+        List<Board> list = turns.get(id);
+        Board board1 = list.get(list.size() - 1);
+        board1.flip();
+
+        if(!board.toString().equals(board1.toString())) { //No duplicate consecutive turns
+            turns.get(id).add(new Board(board));
+        }
+
+        board1.flip();
     }
 
     /**
@@ -64,20 +70,25 @@ public class TurnLogger
     public synchronized BoardView getBoardView(Board board) {
         Iterator<Row> boardView;
 
+        if(board.getActivePlayerColor() == Piece.Color.WHITE) board.flip();
         boardView = board.iterator();
 
         return new BoardView(boardView);
     }
 
-    public synchronized void startReview(Player player) {
-        reviewing.add(player);
+    public synchronized void startReview(Player player, Game game) {
+        reviewing.put(player, game);
     }
 
     public synchronized boolean isReviewing(Player player) {
-        return reviewing.contains(player);
+        return reviewing.containsKey(player);
     }
 
-    public synchronized boolean stopReview(Player player) {
-        return reviewing.remove(player);
+    public synchronized Game getGame(Player player) {
+        return reviewing.get(player);
+    }
+
+    public synchronized boolean stopReview(Player player, Game game) {
+        return reviewing.remove(player, game);
     }
 }
