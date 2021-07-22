@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webcheckers.application.PlayerService;
 import com.webcheckers.model.Board;
+import com.webcheckers.model.JumpMove;
 import com.webcheckers.model.Move;
 import com.webcheckers.util.Message;
 import spark.*;
@@ -43,24 +44,29 @@ public class PostValidateMoveRoute implements Route {
         playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
 
         String JSONMove = request.queryParams("actionData");
-
+        //System.out.println("Created JSONMove: " + JSONMove);
         Gson gson = new GsonBuilder().create();
 
         Move move = gson.fromJson(JSONMove, Move.class);
 
         Board board = playerService.getGame().getBoard();
-
+        //System.out.println("Converted Move: " + move);
         Message valid;
-        if (board.getPossibleMoves().contains(move)) {
-            valid = Message.info("Move was made successfully!");
-            playerService.addMove(move);
+        //System.out.println("PostValidateMoveRoute Before: \n" + board);
+        if (board.isPossibleMove(move)) {
+            if (playerService.addMove(move)) {
+                valid = Message.info("Move was made successfully!");
+            }
+            else {
+                valid = Message.error("Move was unable to be made!");
+            }
         }
         else {
             valid = Message.error("Move was unable to be made!");
         }
 
         System.out.println(gson.toJson(valid));
-
+        //System.out.println("PostValidateMoveRoute After: \n" + board);
         return gson.toJson(valid);
     }
 }

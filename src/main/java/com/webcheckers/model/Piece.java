@@ -106,8 +106,16 @@ public abstract class Piece {
      * @return the hash for this piece
      */
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(color, type);
+    }
+  
+     * String representation of a Piece object.
+     *
+     * @return The Piece string.
+     */
+    @Override
+    public String toString() {
+        return "Piece{" + "type=" + type + ", color=" + color + "}";
     }
 }

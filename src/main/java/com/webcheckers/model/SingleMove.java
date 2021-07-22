@@ -20,4 +20,12 @@ public class SingleMove extends Move {
     public SingleMove(Position start, Position end) {
         super(start, end);
     }
+
+    /**
+     * Constructor for SingleMove used to convert generic Move object to SingleMove
+     * @param move
+     */
+    public SingleMove(Move move){
+        super(move.getStart(), move.getEnd());
+    }
 }

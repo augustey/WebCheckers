@@ -55,6 +55,7 @@ public class Move {
      */
     @Override
     public boolean equals(Object other) {
+//        System.out.println("Move equals");
         if (this == other) {
             return true;
         }
@@ -63,6 +64,7 @@ public class Move {
             return Objects.equals(start, move.start) &&
                     Objects.equals(end, move.end);
         }
+
         return false;
     }
 

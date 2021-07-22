@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.util.Objects;
+
 /**
  * The JumpMove class is responsible for handling the logic for a jump move and extending the functionality of a Move
  * object.
@@ -25,6 +27,16 @@ public class JumpMove extends Move {
         this.createJumpPosition();
     }
 
+
+    /**
+     * Constructor for JumpMove that is used to convert a generic Move to JumpMove
+     * @param move Generic Move object
+     */
+    public JumpMove(Move move) {
+        super(move.getStart(), move.getEnd());
+        this.createJumpPosition();
+    }
+
     /**
      * Calculates the jumped over position by performing a midpoint calculation.
      */
@@ -47,5 +59,43 @@ public class JumpMove extends Move {
      */
     public Position getJumpedPosition() {
         return this.jumped;
+    }
+
+    /**
+     * Equals method that compares two Move objects together
+     * Used to compare move, simpleMove and jumpMove
+     * @param other
+     *         The other move object.
+     *
+     * @return True if the move objects are equal, else, false.
+     */
+    @Override
+    public boolean equals(Object other) {
+        System.out.println("equals========================");
+        if (this == other) {
+            return true;
+        }
+        else if (other instanceof JumpMove) {
+            JumpMove move = (JumpMove) other;
+            return Objects.equals(jumped, move.jumped) || (Objects.equals(getStart(), move.getStart()) &&
+                    Objects.equals(getEnd(), move.getStart()));
+        }
+        return false;
+    }
+//    @Override
+//    public int hashCode(){
+//        return jumped.getRow() * 8 + jumped.getCell();
+//    }
+
+
+
+    /**
+     * String representation of a JumpMove object.
+     *
+     * @return The JumpMove string.
+     */
+    @Override
+    public String toString() {
+        return "JumpMove{" + "start=" + super.getStart() + ", jumped=" + jumped + ", end=" + super.getEnd() + "}";
     }
 }
