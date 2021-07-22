@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class TurnLogger
 {
-    private Map<String, List<Board>> turns;
+    private Map<String, List<String>> turns;
     private Map<Player, Game> reviewing;
 
     /**
@@ -29,26 +29,22 @@ public class TurnLogger
      *          The game whose turns are being logged
      */
     public void logTurn(Game game) {
-        Board board = game.getBoard();
+        Board board = new Board(game.getBoard()); //Create copy of the board
         String id = game.getId();
 
+
         if(!turns.containsKey(id) || turns.get(id) == null) {
-            LinkedList<Board> list = new LinkedList<>();
-            list.add(new Board());
+            LinkedList<String> list = new LinkedList<>();
+            System.out.println("New Board");
             turns.put(id, list);
-            return;
         }
 
-        List<Board> list = turns.get(id);
-        Board board1 = list.get(list.size() - 1);
-        board1.flip();
 
-        if(!board.toString().equals(board1.toString())) { //No duplicate consecutive turns
-            turns.get(id).add(new Board(board));
-        }
+        List<String> list = turns.get(id);
 
-        board1.flip();
-
+        list.add(board.toString());
+        System.out.println("logged");
+        System.out.println(list.get(list.size() - 1));
     }
 
     /**
@@ -59,7 +55,7 @@ public class TurnLogger
      *
      * @return List of turns
      */
-    public List<Board> getTurns(Game game) {
+    public List<String> getTurns(Game game) {
         String id = game.getId();
         return turns.get(id);
     }
@@ -73,6 +69,7 @@ public class TurnLogger
         Iterator<Row> boardView;
 
         if(board.getActivePlayerColor() == Piece.Color.WHITE) board.flip();
+
         boardView = board.iterator();
 
         return new BoardView(boardView);
@@ -145,7 +142,7 @@ public class TurnLogger
      *
      * @return turns
      */
-    public Map<String, List<Board>> getTurns()
+    public Map<String, List<String>> getTurns()
     {
         return turns;
     }

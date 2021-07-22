@@ -81,7 +81,7 @@ public class GameCenter {
         activeGames.put(player, newGame);
         activeGames.put(opponent, newGame);
 
-        turnLogger.logTurn(newGame); //Log the inital board config for a game
+        turnLogger.logTurn(newGame); //log starting board
 
         return CREATE_GAME_SUCCESS;
     }

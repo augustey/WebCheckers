@@ -65,6 +65,8 @@ public class GetReplayGameRouteTest
         playerService = gameCenter.getPlayerService(player);
         game = playerService.getGame();
 
+        turnLogger.logTurn(game);
+
         gameCenter.getCompletedGamesMap().put(game.getId(), game);
 
         when(request.queryParams(GetReplayGameRoute.GAMEID_PARAM)).thenReturn(game.getId());

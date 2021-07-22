@@ -79,7 +79,7 @@ public class PostReplayNextTurnRouteTest
 
     @Test
     public void test_session_fail() {
-        Message message = Message.error("An error has occured getting the turn index");
+        Message message = Message.error("An error has occurred getting the turn index");
         String expected = gson.toJson(message);
 
         String actual = (String) CuT.handle(request, response);

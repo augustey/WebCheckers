@@ -49,7 +49,7 @@ public class TurnLoggerTest
             CuT.getTurns().put(s, null);
         }
 
-        List<Board> turns = CuT.getTurns(game);
+        List<String> turns = CuT.getTurns(game);
 
         assertNull(turns);
     }
@@ -60,7 +60,7 @@ public class TurnLoggerTest
         expected.add(game.getBoard());
         expected.add(game.getBoard());
 
-        List<Board> actual = CuT.getTurns(game);
+        List<String> actual = CuT.getTurns(game);
 
         for(int i = 0; i < actual.size(); i++) {
             assertEquals(expected.get(i).toString(), actual.get(i).toString());
@@ -69,23 +69,9 @@ public class TurnLoggerTest
 
     @Test
     public void test_logTurn() {
-        int expectedSize = 3;
+        int expectedSize = 2;
 
         CuT.logTurn(game);
-
-        int actualSize = CuT.getTurns(game).size();
-
-        assertEquals(expectedSize, actualSize);
-    }
-
-    @Test
-    public void test_logTurn_clone() {
-        int expectedSize = 3;
-
-        CuT.logTurn(game);
-        game.getBoard().flip();
-        CuT.logTurn(game);
-        game.getBoard().flip();
 
         int actualSize = CuT.getTurns(game).size();
 

@@ -6,6 +6,7 @@ import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.TurnLogger;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -105,7 +106,14 @@ public class GetReplayGameRoute implements Route {
            i = httpSession.attribute(TURNID_PARAM);
         }
 
-        List<Board> turns = turnLogger.getTurns(game);
+        List<String> turns = turnLogger.getTurns(game);
+
+        System.out.println("size:" + turns.get(0));
+
+        Board board = Board.fromString(turns.get(i));
+        if(i % 2 != 0) {
+            board.flip();
+        }
 
         //Determine if there are turns before or after the current turn
         modeOptions.put(NEXT, true);
@@ -124,8 +132,8 @@ public class GetReplayGameRoute implements Route {
         vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
         vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
         vm.put(VIEW_MODE_ATTR, VIEW_MODE);
-        vm.put(ACTIVE_COLOR_ATTR, game.getBoard().getActivePlayerColor());
-        vm.put(BOARD_VIEW_ATTR, turnLogger.getBoardView(turns.get(i)));
+        vm.put(ACTIVE_COLOR_ATTR, board.getActivePlayerColor());
+        vm.put(BOARD_VIEW_ATTR, turnLogger.getBoardView(board));
         vm.put(MODE_OPTS_ATTR, gson.toJson(modeOptions));
 
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));

@@ -526,6 +526,46 @@ public class Board implements Iterable<Row> {
         return Arrays.hashCode(board);
     }
 
+    /**
+     * Creates a board from a string
+     *
+     * @param strBoard
+     *          board String
+     */
+    public static Board fromString(String strBoard) {
+        Board board = new Board();
+
+        Space[][] arr = board.getBoard();
+
+        String[] tokens = strBoard.split("\n");
+
+        for(int i =0 ; i < board.BOARD_DIM; i++) {
+            for(int j =0 ; j < board.BOARD_DIM; j++) {
+                char[] cTokens = tokens[i].toCharArray();
+
+                switch (cTokens[j]) {
+                    case '_':
+                        arr[i][j].setPiece(null);
+                        break;
+                    case 'r':
+                        arr[i][j].setPiece(new SinglePiece(Piece.Color.RED));
+                        break;
+                    case 'w':
+                        arr[i][j].setPiece(new SinglePiece(Piece.Color.WHITE));
+                        break;
+                    case 'R':
+                        arr[i][j].setPiece(new King(Piece.Color.RED));
+                        break;
+                    case 'W':
+                        arr[i][j].setPiece(new King(Piece.Color.WHITE));
+                        break;
+                }
+            }
+        }
+
+        return board;
+    }
+
     //    public void ptuiDebug() {
 //        System.out.println("Enter in start pos and end pos on separate lines");
 //        System.out.println("Start:row col");
