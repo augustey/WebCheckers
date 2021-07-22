@@ -8,6 +8,7 @@ import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -123,6 +124,7 @@ public class GetReplayGameRoute implements Route {
         }
         if(i == turns.size() - 1) {
             modeOptions.put(NEXT, false);
+            vm.put("message", Message.info("You've reached the end of the game.\n" + game.getWinner() + " was victorious"));
         }
 
         Gson gson = new GsonBuilder().create();

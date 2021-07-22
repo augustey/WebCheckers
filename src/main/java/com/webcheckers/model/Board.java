@@ -2,12 +2,10 @@ package com.webcheckers.model;
 
 import com.webcheckers.application.GameWin;
 import com.webcheckers.util.Message;
-import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Scanner;
 
 /**
  * The board class is responsible for handling all functionality related to the board during a game.
@@ -637,10 +635,5 @@ public class Board implements Iterable<Row> {
         makeMove(moves);
             System.out.println(this);
 //        }
-    }
-
-    public static void main(String[] args) {
-        GameWin gameWin = mock(GameWin.class);
-        new Board(gameWin);
     }
 }
