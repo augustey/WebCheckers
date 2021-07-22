@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.application.TurnLogger;
 import com.webcheckers.model.Game;
 import spark.TemplateEngine;
 
@@ -60,6 +61,31 @@ public class WebServer {
     public static final String GAME_URL = "/game";
 
     /**
+     * The URL pattern for the replay page
+     */
+    public static final String REPLAY_URL = "/replay";
+
+    /**
+     * The URL pattern for the replay page in a game
+     */
+    public static final String REPLAY_GAME_URL = REPLAY_URL + GAME_URL;
+
+    /**
+     * The URL pattern for the next turn in replay
+     */
+    public static final String REPLAY_STOP_WATCHING_URL = REPLAY_URL + "/stopWatching";
+
+    /**
+     * The URL pattern for the next turn in replay
+     */
+    public static final String REPLAY_NEXT_TURN_URL = REPLAY_URL + "/nextTurn";
+
+    /**
+     * The URL pattern for the next turn in replay
+     */
+    public static final String REPLAY_PREVIOUS_TURN_URL = REPLAY_URL + "/previousTurn";
+
+    /**
      * The URL pattern to request the signin page
      */
     public static final String SIGNIN_URL = "/signin";
@@ -102,6 +128,7 @@ public class WebServer {
     private final PlayerLobby playerLobby;
     private final GameCenter gameCenter;
     private final TemplateEngine templateEngine;
+    private final TurnLogger turnLogger;
     private final Gson gson;
 
     //
@@ -119,15 +146,18 @@ public class WebServer {
      * @throws NullPointerException
      *         If any of the parameters are {@code null}.
      */
-    public WebServer(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine, final Gson gson) {
+    public WebServer(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine, final TurnLogger turnLogger, final Gson gson) {
         // validation
         Objects.requireNonNull(playerLobby, "playerLobby must not be null");
+        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+        Objects.requireNonNull(turnLogger, "turnLogger must not be null");
         Objects.requireNonNull(gson, "gson must not be null");
         //
         this.playerLobby = playerLobby;
         this.gameCenter = gameCenter;
         this.templateEngine = templateEngine;
+        this.turnLogger = turnLogger;
         this.gson = gson;
     }
 
@@ -182,11 +212,17 @@ public class WebServer {
         //// code clean; using small classes.
 
         // Shows the Checkers game Home page.
-        get(HOME_URL, new GetHomeRoute(playerLobby, gameCenter, templateEngine));
+        get(HOME_URL, new GetHomeRoute(playerLobby, gameCenter, templateEngine, turnLogger));
 
-        get(GAME_URL, new GetGameRoute(playerLobby, gameCenter, templateEngine));
+        get(GAME_URL, new GetGameRoute(playerLobby, gameCenter, turnLogger, templateEngine));
 
         get(SIGNIN_URL, new GetSignInRoute(templateEngine));
+
+        get(REPLAY_URL, new GetReplayPageRoute(templateEngine, gameCenter, turnLogger));
+
+        get(REPLAY_GAME_URL, new GetReplayGameRoute(templateEngine, gameCenter, turnLogger));
+
+        get(REPLAY_STOP_WATCHING_URL, new GetReplayStopWatchingRoute(turnLogger));
 
         post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
 
@@ -194,13 +230,17 @@ public class WebServer {
 
         post(VALIDATEMOVE_URL, new PostValidateMoveRoute());
 
-        post(SUBMITTURN_URL, new PostSubmitTurnRoute());
+        post(SUBMITTURN_URL, new PostSubmitTurnRoute(turnLogger));
 
         post(BACKUPMOVE_URL, new PostBackupMoveRoute());
 
         post(RESIGNGAME_URL, new PostResignGameRoute());
 
         post(CHECKTURN_URL, new PostCheckTurnRoute());
+
+        post(REPLAY_NEXT_TURN_URL, new PostReplayNextTurnRoute());
+
+        post(REPLAY_PREVIOUS_TURN_URL, new PostReplayPreviousTurnRoute());
 
         //
         LOG.config("WebServer is initialized.");

@@ -9,6 +9,7 @@ import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * Testing suite for Piece
@@ -54,4 +55,33 @@ public class PieceTest {
 
         assertEquals(Piece.Type.KING, piece.getType());
     }
+
+    /**
+     * Test that shows a peice can be compared to another
+     */
+    @Test
+    public void ctor_equals() {
+        King piece = new King(Piece.Color.RED);
+        King piece1 = new King(Piece.Color.RED);
+        King piece2 = new King(Piece.Color.WHITE);
+
+        assertEquals(piece, piece1);
+        assertEquals(piece, piece);
+        assertNotEquals(piece, piece2);
+        assertNotEquals(piece, new Player("fail"));
+    }
+
+    /**
+     * Test that shows a piece can generate a hashcode
+     */
+    @Test
+    public void ctor_hash() {
+        King piece = new King(Piece.Color.RED);
+        int expected = Objects.hash(piece.getColor(), piece.getType());
+
+        int actual = piece.hashCode();
+
+        assertEquals(expected, actual);
+    }
+
 }

@@ -5,6 +5,8 @@ import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,6 +19,7 @@ public class GameCenter {
     // Error messages.
     public static final Message PLAYER_NULL_MSG = Message.error("That player does not exist.");
     public static final Message PLAYER_IN_GAME_MSG = Message.error("That player is already in a game.");
+    public static final Message PLAYER_REVIEWING_GAME_MSG = Message.error("That player is reviewing a game.");
 
     // Information messages.
     public static final Message CREATE_GAME_SUCCESS = Message.info("New game was created.");
@@ -26,11 +29,14 @@ public class GameCenter {
      */
     private final Map<Player, Game> activeGames;
 
+    private final Map<String, Game> completedGames;
+
     /**
      * Constructor for GameCenter that initializes the active games.
      */
     public GameCenter() {
         this.activeGames = new HashMap<>();
+        this.completedGames = new HashMap<>();
     }
 
     /**
@@ -54,20 +60,28 @@ public class GameCenter {
      * @param opponent
      *         The opponent the requesting player selected.
      *
-     * @return The service object containing the newly created game.
+     * @param turnLogger
+     *          The turn logger for the game
+     *
+     * @return A message detailing the result of the action.
      */
-    public Message requestNewGame(Player player, Player opponent) {
+    public Message requestNewGame(Player player, Player opponent, TurnLogger turnLogger) {
         if (opponent == null) {
             return PLAYER_NULL_MSG;
         }
         if (isInGame(opponent)) {
             return PLAYER_IN_GAME_MSG;
         }
+        if(turnLogger.isReviewing(opponent)) {
+            return PLAYER_REVIEWING_GAME_MSG;
+        }
 
         Game newGame = new Game(player, opponent, this);
 
         activeGames.put(player, newGame);
         activeGames.put(opponent, newGame);
+
+        turnLogger.logTurn(newGame); //log starting board
 
         return CREATE_GAME_SUCCESS;
     }
@@ -78,7 +92,7 @@ public class GameCenter {
      * @param player
      *         The requesting player.
      *
-     * @return PlayerService object containing the players game if it exists.
+     * @return PlayerService object containing the player's game if it exists.
      */
     public PlayerService getPlayerService(Player player) {
         if (!isInGame(player)) {
@@ -104,8 +118,45 @@ public class GameCenter {
         if (isInGame(player1) && isInGame(player2)) {
             activeGames.remove(player1);
             activeGames.remove(player2);
+            completedGames.put(game.getId(), game);
             return true;
         }
         return false;
+    }
+
+    /**
+     * Gets a game from the completedGames Map
+     *
+     * @param id
+     *         Game id as a String
+     *
+     * @return the requested game
+     */
+    public Game getCompletedGame(String id) {
+        return completedGames.get(id);
+    }
+
+    /**
+     * Gets a list of completed games
+     *
+     * @return the list of completed games
+     */
+    public List<Game> getCompletedGames()
+    {
+        List<Game> games = new LinkedList<>();
+        for(String key : completedGames.keySet()) {
+            games.add(completedGames.get(key));
+        }
+        return games;
+    }
+
+    /**
+     * Gets a map of completed games
+     *
+     * @return the list of completed games
+     */
+    public Map<String, Game> getCompletedGamesMap()
+    {
+        return completedGames;
     }
 }

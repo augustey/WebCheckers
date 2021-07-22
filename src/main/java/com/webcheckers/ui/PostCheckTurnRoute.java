@@ -47,10 +47,10 @@ public class PostCheckTurnRoute implements Route {
 
         Message message;
 
-        if (playerService.getPlayer().equals(playerService.getRedPlayer()) && board.getActivePlayerColor() == Piece.Color.RED) {
+        if (playerService.getPlayer().equals(playerService.getRedPlayer()) && board.getActivePlayerColor() == Piece.Color.RED || playerService.getGame().isGameOver()) {
             message = Message.info("true");
         }
-        else if (playerService.getPlayer().equals(playerService.getWhitePlayer()) && board.getActivePlayerColor() == Piece.Color.WHITE) {
+        else if (playerService.getPlayer().equals(playerService.getWhitePlayer()) && board.getActivePlayerColor() == Piece.Color.WHITE || playerService.getGame().isGameOver()) {
             message = Message.info("true");
         }
         else {

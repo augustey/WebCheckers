@@ -19,6 +19,7 @@ public class GameWinTest
     private GameWin CuT;
 
     //friendly objects
+    private TurnLogger turnLogger;
     private GameCenter gameCenter;
     private Player player1;
     private Player player2;
@@ -34,7 +35,8 @@ public class GameWinTest
         player1 = new Player("1");
         player2 = new Player("2");
         gameCenter = new GameCenter();
-        gameCenter.requestNewGame(player1, player2);
+        turnLogger = new TurnLogger();
+        gameCenter.requestNewGame(player1, player2, turnLogger);
         playerService = gameCenter.getPlayerService(player1);
         game = playerService.getGame();
 

@@ -24,6 +24,7 @@ public class PlayerServiceTest
 
     //friendly objects
     //BoardView
+    private TurnLogger turnLogger;
     private GameCenter gameCenter;
     private Board board;
     private Player player;
@@ -40,7 +41,8 @@ public class PlayerServiceTest
         gameCenter = new GameCenter();
         player = new Player("Player");
         opponent = new Player("Opponent");
-        gameCenter.requestNewGame(player, opponent);
+        turnLogger = new TurnLogger();
+        gameCenter.requestNewGame(player, opponent, turnLogger);
 
         //Setup CuT
         CuT = gameCenter.getPlayerService(player);

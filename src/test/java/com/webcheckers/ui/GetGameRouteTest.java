@@ -4,6 +4,8 @@ import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.PlayerService;
 import static org.junit.jupiter.api.Assertions.*;
+
+import com.webcheckers.application.TurnLogger;
 import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +40,7 @@ public class GetGameRouteTest {
     private Session session;
     private Response response;
     private PlayerLobby playerLobby;
+    private TurnLogger turnLogger;
     private TemplateEngine engine;
 
     /**
@@ -71,8 +74,9 @@ public class GetGameRouteTest {
         engine = mock(TemplateEngine.class);
 
         gameCenter = new GameCenter();
+        turnLogger = new TurnLogger();
 
-        CuT = new GetGameRoute(playerLobby, gameCenter, engine);
+        CuT = new GetGameRoute(playerLobby, gameCenter, turnLogger, engine);
     }
 
     /**
@@ -110,7 +114,7 @@ public class GetGameRouteTest {
      */
     @Test
     public void test_opponent_in_game() {
-        gameCenter.requestNewGame(otherPlayer, opponent);
+        gameCenter.requestNewGame(otherPlayer, opponent, turnLogger);
         when(session.attribute(GetHomeRoute.PLAYER_KEY)).thenReturn(player);
         when(session.attribute(GetGameRoute.PLAYER_SERVICE_KEY)).thenReturn(null);
         when(request.queryParams(GetGameRoute.OPPONENT_PARAM)).thenReturn(opponent.getName());
@@ -130,7 +134,7 @@ public class GetGameRouteTest {
      */
     @Test
     public void test_opponent_null() {
-        gameCenter.requestNewGame(otherPlayer, opponent);
+        gameCenter.requestNewGame(otherPlayer, opponent, turnLogger);
         when(session.attribute(GetHomeRoute.PLAYER_KEY)).thenReturn(player);
         when(session.attribute(GetGameRoute.PLAYER_SERVICE_KEY)).thenReturn(null);
         when(request.queryParams(GetGameRoute.OPPONENT_PARAM)).thenReturn("doesnotexist");
@@ -150,7 +154,7 @@ public class GetGameRouteTest {
      */
     @Test
     public void test_player_null() {
-        gameCenter.requestNewGame(otherPlayer, opponent);
+        gameCenter.requestNewGame(otherPlayer, opponent, turnLogger);
         when(session.attribute(GetHomeRoute.PLAYER_KEY)).thenReturn(null);
 
         try {
@@ -168,7 +172,7 @@ public class GetGameRouteTest {
      */
     @Test
     public void test_player_in_game() {
-        gameCenter.requestNewGame(player, opponent);
+        gameCenter.requestNewGame(player, opponent, turnLogger);
         PlayerService playerService = gameCenter.getPlayerService(player);
 
         when(session.attribute(GetHomeRoute.PLAYER_KEY)).thenReturn(player);

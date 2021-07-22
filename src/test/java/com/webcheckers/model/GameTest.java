@@ -31,6 +31,20 @@ public class GameTest {
     }
 
     /**
+     * Test the id for each game
+     */
+    @Test
+    public void test_game_id() {
+        int start = Integer.parseInt((new Game(player, opponent, gameCenter)).getId().substring(4));
+
+        for(int i = start; i < start + 5; i++) {
+            CuT = new Game(player, opponent, gameCenter);
+
+            assertEquals("Game" + (i + 1), CuT.getId());
+        }
+    }
+
+    /**
      * Test getters returns right player when player is red
      */
     @Test

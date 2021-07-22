@@ -2,10 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.webcheckers.application.GameCenter;
-import com.webcheckers.application.GameWin;
-import com.webcheckers.application.PlayerLobby;
-import com.webcheckers.application.PlayerService;
+import com.webcheckers.application.*;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
@@ -29,6 +26,7 @@ public class GetGameRoute implements Route {
     private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
     private final GameCenter gameCenter;
+    private final TurnLogger turnLogger;
 
     // Used to send opponents name when selected in the list.
     public static final String OPPONENT_PARAM = "opponent";
@@ -44,6 +42,7 @@ public class GetGameRoute implements Route {
     public static final String WHITE_PLAYER_ATTR = "whitePlayer";
     public static final String ACTIVE_COLOR_ATTR = "activeColor";
     public static final String BOARD_VIEW_ATTR = "board";
+    public static final String MODE_OPTS_ATTR = "modeOptionsAsJSON";
 
     // Freemarker values.
     public static final String TITLE = "Checkers";
@@ -57,9 +56,10 @@ public class GetGameRoute implements Route {
      * @param templateEngine
      *         Template engine used to render views.
      */
-    public GetGameRoute(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine) {
+    public GetGameRoute(final PlayerLobby playerLobby, final GameCenter gameCenter, final TurnLogger turnLogger, final TemplateEngine templateEngine) {
         this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
         this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
+        this.turnLogger = turnLogger;
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         LOG.config("GetGameRoute is initialized.");
     }
@@ -96,7 +96,7 @@ public class GetGameRoute implements Route {
             String opponentName = request.queryParams(OPPONENT_PARAM);
             Player opponent = playerLobby.getPlayer(opponentName);
 
-            Message result = gameCenter.requestNewGame(player, opponent);
+            Message result = gameCenter.requestNewGame(player, opponent, turnLogger);
             System.out.println(result);
 
             if (result.getType() == Message.Type.INFO) {
@@ -123,7 +123,7 @@ public class GetGameRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
         Gson gson = new GsonBuilder().create();
 
-        vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+        vm.put(MODE_OPTS_ATTR, gson.toJson(modeOptions));
         vm.put(TITLE_ATTR, TITLE);
         vm.put(USER_ATTR, player);
         vm.put(RED_PLAYER_ATTR, playerService.getRedPlayer());
