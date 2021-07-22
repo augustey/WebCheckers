@@ -44,8 +44,8 @@ public class PlayerService {
         this.whitePlayer = game.getWhitePlayer();
         this.game = game;
         this.turnMoves = new ArrayList<>();
-        this.turn = new Turn(game.getBoard().getMoveType());//TODO make this not shit
-//        this.turn = new Turn(game.getBoard());//TODO make this not shit
+        //this.turn = new Turn(game.getBoard().getMoveType());//TODO make this not shit
+        this.turn = new Turn(game.getBoard());//TODO make this not shit
 
     }
 
@@ -164,8 +164,8 @@ public class PlayerService {
      */
     public synchronized void clearMoves() {//TODO have it create a new TURN instead
         System.out.println("clearMoves: " + game.getBoard().getMoveType());
-        this.turn = new Turn(game.getBoard().getMoveType());//TODO make this not shit
-//        this.turn = new Turn(game.getBoard());//TODO make this not shit
+        //this.turn = new Turn(game.getBoard().getMoveType());//TODO make this not shit
+        this.turn = new Turn(game.getBoard());//TODO make this not shit
 
 //        turnMoves.clear();
     }

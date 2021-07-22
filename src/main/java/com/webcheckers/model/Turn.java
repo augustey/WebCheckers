@@ -10,14 +10,20 @@ import java.util.ArrayList;
  */
 public class Turn {
     private ArrayList<Move> moves;
-    private final Board.MoveType moveType;
+    private Board board;
+    //private final Board.MoveType moveType;
 
-    public Turn(Board.MoveType moveType){
-        switch (moveType) {
-            case Jump: this.moveType = Board.MoveType.Jump; break;
-            case Single: this.moveType = Board.MoveType.Single; break;
-            default: this.moveType = Board.MoveType.Blocked; break;
-        }
+//    public Turn(Board.MoveType moveType){
+//        switch (moveType) {
+//            case Jump: this.moveType = Board.MoveType.Jump; break;
+//            case Single: this.moveType = Board.MoveType.Single; break;
+//            default: this.moveType = Board.MoveType.Blocked; break;
+//        }
+//        this.moves = new ArrayList<>();
+//    }
+
+    public Turn(Board board){
+        this.board = board;
         this.moves = new ArrayList<>();
     }
 
@@ -30,7 +36,7 @@ public class Turn {
 
 //        System.out.println("Turn moveType: " + moveType);
         //If a JumpMove is required then the move is converted to a JumpMove
-        if(moveType == Board.MoveType.Jump) {
+        if(board.getMoveType() == Board.MoveType.Jump) {
             JumpMove jumpMove = new JumpMove(move);
             //This uses the custom equals method in JumpMove to make sure that no piece is jumped twice
 
@@ -43,7 +49,7 @@ public class Turn {
             }
         }
         //If a SingleMove is required then the move is converted to a SingleMove
-        else if(moveType  == Board.MoveType.Single){
+        else if(board.getMoveType() == Board.MoveType.Single){
             System.out.println("got to single");
             //TODO create new Single Move
             SingleMove singleMove = new SingleMove(move);
