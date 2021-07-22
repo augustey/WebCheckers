@@ -109,7 +109,8 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(color, type);
     }
-  
+
+    /**
      * String representation of a Piece object.
      *
      * @return The Piece string.
