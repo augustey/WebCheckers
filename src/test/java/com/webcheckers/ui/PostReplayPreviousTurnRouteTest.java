@@ -21,6 +21,12 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 
+
+/**
+ * Testing suite for PostReplayPreviousTurnRoute
+ *
+ * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
+ */
 @Tag("UI-tier")
 @Tag("replay")
 public class PostReplayPreviousTurnRouteTest
@@ -70,6 +76,9 @@ public class PostReplayPreviousTurnRouteTest
         CuT = new PostReplayPreviousTurnRoute();
     }
 
+    /**
+     * Test for standard session
+     */
     @Test
     public void test_session() {
         when(session.attribute(PostReplayNextTurnRoute.TURNID_PARAM)).thenReturn(5);
@@ -81,6 +90,9 @@ public class PostReplayPreviousTurnRouteTest
         assertEquals(expected, actual);
     }
 
+    /**
+     * Test for when the session fails
+     */
     @Test
     public void test_session_fail() {
         Message message = Message.error("An error has occured getting the turn index");

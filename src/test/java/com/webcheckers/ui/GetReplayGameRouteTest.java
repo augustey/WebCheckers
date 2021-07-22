@@ -23,6 +23,11 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 
+/**
+ * Testing suite for GetReplayGameRoute
+ *
+ * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
+ */
 @Tag("UI-tier")
 @Tag("replay")
 public class GetReplayGameRouteTest
@@ -137,6 +142,9 @@ public class GetReplayGameRouteTest
         testHelper.assertViewName(GetGameRoute.VIEW_NAME);
     }
 
+    /**
+     * Test for a standard session when there is a next turn
+     */
     @Test
     public void test_session() {
         TemplateEngineTester testHelper = new TemplateEngineTester();
@@ -164,6 +172,9 @@ public class GetReplayGameRouteTest
         testHelper.assertViewName(GetGameRoute.VIEW_NAME);
     }
 
+    /**
+     * Test for a standard session when there is a previous turn
+     */
     @Test
     public void test_session_2() {
         TemplateEngineTester testHelper = new TemplateEngineTester();

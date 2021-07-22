@@ -16,6 +16,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+/**
+ * Testing suite for GetReplayStopWatchingRoute
+ *
+ * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
+ */
 @Tag("UI-tier")
 @Tag("replay")
 public class GetReplayStopWatchingRouteTest
@@ -64,6 +69,9 @@ public class GetReplayStopWatchingRouteTest
         CuT = new GetReplayStopWatchingRoute(turnLogger);
     }
 
+    /**
+     * Test for standard session
+     */
     @Test
     public void test_session() {
         try {
@@ -74,6 +82,9 @@ public class GetReplayStopWatchingRouteTest
         }
     }
 
+    /**
+     * Test for when the session fails
+     */
     @Test
     public void test_session_invalid() {
         when(session.attribute(GetHomeRoute.PLAYER_KEY)).thenReturn(null);

@@ -17,6 +17,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+/**
+ * Testing suite for GetReplayPageRoute
+ *
+ * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
+ */
 @Tag("UI-tier")
 @Tag("replay")
 public class GetReplayPageRouteTest

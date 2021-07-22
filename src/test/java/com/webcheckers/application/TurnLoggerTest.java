@@ -1,18 +1,20 @@
 package com.webcheckers.application;
 
 import com.webcheckers.model.*;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CyclicBarrier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing suite for TurnLogger
+ *
+ * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
+ */
 @Tag("Application-tier")
 @Tag("replay")
 public class TurnLoggerTest
@@ -26,6 +28,9 @@ public class TurnLoggerTest
     private PlayerService playerService;
     private Game game;
 
+    /**
+     * Setup for each test
+     */
     @BeforeEach
     public void SetUp() {
 
@@ -40,6 +45,9 @@ public class TurnLoggerTest
         game = playerService.getGame();
     }
 
+    /**
+     * Test for when getTurns is null
+     */
     @Test
     public void test_getTurns_null() {
         for(String s : CuT.getTurns().keySet()) {
@@ -54,6 +62,9 @@ public class TurnLoggerTest
         assertNull(turns);
     }
 
+    /**
+     * Test for getting turns
+     */
     @Test
     public void test_getTurns() {
         List<Board> expected = new LinkedList<>();
@@ -67,6 +78,9 @@ public class TurnLoggerTest
         }
     }
 
+    /**
+     * Test for logTurn
+     */
     @Test
     public void test_logTurn() {
         int expectedSize = 2;
@@ -78,6 +92,9 @@ public class TurnLoggerTest
         assertEquals(expectedSize, actualSize);
     }
 
+    /**
+     * Test for getBoardView
+     */
     @Test
     public void test_getBoardView() {
         BoardView expected = new BoardView(game.getBoard().iterator());
@@ -87,6 +104,9 @@ public class TurnLoggerTest
         assertEquals(expected, actual);
     }
 
+    /**
+     * Test for getBoardView when the board needs to be flipped
+     */
     @Test
     public void test_getBoardView_flip() {
         game.getBoard().flip();
@@ -98,6 +118,9 @@ public class TurnLoggerTest
         assertEquals(expected, actual);
     }
 
+    /**
+     * Test for startReview
+     */
     @Test
     public void test_startReview() {
         int expectedSize = 1;
@@ -109,6 +132,9 @@ public class TurnLoggerTest
         assertEquals(actualSize, expectedSize);
     }
 
+    /**
+     * Test for isReviewing
+     */
     @Test
     public void test_isReviwing() {
         CuT.startReview(player, game);
@@ -120,6 +146,9 @@ public class TurnLoggerTest
         assertFalse(result2);
     }
 
+    /**
+     * Test for stopReview
+     */
     @Test
     public void test_stopReview() {
         int expectedSize = 0;

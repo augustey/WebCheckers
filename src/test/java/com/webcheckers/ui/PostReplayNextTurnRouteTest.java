@@ -14,11 +14,14 @@ import org.junit.jupiter.api.Test;
 import spark.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 
+/**
+ * Testing suite for PostReplayNextTurnRoute
+ *
+ * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
+ */
 @Tag("UI-tier")
 @Tag("replay")
 public class PostReplayNextTurnRouteTest
@@ -66,6 +69,9 @@ public class PostReplayNextTurnRouteTest
         CuT = new PostReplayNextTurnRoute();
     }
 
+    /**
+     * Test for standard valid session
+     */
     @Test
     public void test_session() {
         when(session.attribute(PostReplayNextTurnRoute.TURNID_PARAM)).thenReturn(5);
@@ -77,6 +83,9 @@ public class PostReplayNextTurnRouteTest
         assertEquals(expected, actual);
     }
 
+    /**
+     * Test for when the session fails
+     */
     @Test
     public void test_session_fail() {
         Message message = Message.error("An error has occurred getting the turn index");
