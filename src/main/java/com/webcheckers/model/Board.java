@@ -82,9 +82,14 @@ public class Board implements Iterable<Row> {
 //                    else if (row < 3) {
 //                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
 //                    }
+                    // TODO Test SinglePiece jumping bug.
                     if (row > BOARD_DIM - 3) {
-                        space.setPiece(new King(Piece.Color.RED));
+                        space.setPiece(new SinglePiece(Piece.Color.RED));
                     }
+                    // TODO Test King jumping.
+//                    if (row > BOARD_DIM - 3) {
+//                        space.setPiece(new King(Piece.Color.RED));
+//                    }
                     else if (row == 5) {
                         space.setPiece(new SinglePiece(Piece.Color.WHITE));
                     }
