@@ -55,8 +55,7 @@ public class BoardTest {
                     if(row > 0) {
                         space.setPiece(new SinglePiece(Piece.Color.RED));
                     }
-                    else
-                    {
+                    else {
                         space.setPiece(null);
                     }
                 }
@@ -93,10 +92,10 @@ public class BoardTest {
                     if (row == 4) {
                         space.setPiece(new SinglePiece(Piece.Color.WHITE));
                     }
-                    else if(row == 2) {
+                    else if (row == 2) {
                         space.setPiece(new SinglePiece(Piece.Color.WHITE));
                     }
-                    else if(row < 3) {
+                    else if (row < 3) {
                         space.setPiece(null);
                     }
                 }
@@ -125,7 +124,7 @@ public class BoardTest {
      */
     @Test
     public void ctor_determineMoveTypeSingle() {
-        CuTGeneralBoard.determineMoveType();
+        System.out.println(CuTGeneralBoard);
         assertEquals(Board.MoveType.Single, CuTGeneralBoard.getMoveType());
     }
 
@@ -134,7 +133,7 @@ public class BoardTest {
      */
     @Test
     public void ctor_determineMoveTypeJump() {
-        CuTJump.determineMoveType();
+        System.out.println(CuTJump);
         assertEquals(Board.MoveType.Jump, CuTJump.getMoveType());
     }
 
@@ -143,7 +142,6 @@ public class BoardTest {
      */
     @Test
     public void ctor_determineMoveTypeBlocked() {
-        CuTBlocked.determineMoveType();
         assertEquals(Board.MoveType.Blocked, CuTBlocked.getMoveType());
     }
 
@@ -162,7 +160,7 @@ public class BoardTest {
      * succesfully exicutes a single move
      */
     @Test
-    public void ctor_makeMoveSingleMove(){
+    public void ctor_makeMoveSingleMove() {
         //Single move
         Board startBoard = new Board(CuTGeneralBoard);
         Position end = new Position(4, 1);
@@ -174,19 +172,17 @@ public class BoardTest {
 //        assertNotEquals(startBoard.toString(), board.toString());
         CuTGeneralBoard.flip();
         assertSame(CuTGeneralBoard.getSpace(end, CuTGeneralBoard).getPiece().getColor(), Piece.Color.RED);
-
-
     }
 
     /**
      * checks if a jumpMove with no chain jump is exicuted succesfully
      */
     @Test
-    public void ctor_makeMoveJump(){
+    public void ctor_makeMoveJump() {
         //JumpMove
         //TODO need to create a board that has a singleJump avalible
         Position end = new Position(3, 2);
-        Move jumpMove = new Move(new Position(5, 0),end);
+        Move jumpMove = new Move(new Position(5, 0), end);
         ArrayList<Move> jumpMoves = new ArrayList<>();
         jumpMoves.add(jumpMove);
         CuTJump.makeMove(jumpMoves);
@@ -198,11 +194,11 @@ public class BoardTest {
     }
 
     /**
-     * Checks if you try to jump with another jump avalible it will reject the move
-     * and if you then all further jumps it will then succesfully exicute turn
+     * Checks if you try to jump with another jump avalible it will reject the move and if you then all further jumps it
+     * will then succesfully exicute turn
      */
     @Test
-    public void ctor_makeMoveChainJump(){
+    public void ctor_makeMoveChainJump() {
         //TODO need to create a board that a chain jump is avalible
         Position end = new Position(3, 2);
         Position start = new Position(5, 0);
@@ -225,11 +221,11 @@ public class BoardTest {
      * Checks that if the player is determined to blocked no move is made and game is over.
      */
     @Test
-    public void ctor_MakeMoveBlocked(){
+    public void ctor_MakeMoveBlocked() {
         //TODO need to create a board that is blocked
         String startString = CuTBlocked.toString();
         Position end = new Position(4, 1);
-        Position start = new Position(5,0);
+        Position start = new Position(5, 0);
         Move move = new Move(start, end);
         ArrayList<Move> moves = new ArrayList<>();
         CuTBlocked.makeMove(moves);//caught by first if statement
@@ -243,13 +239,17 @@ public class BoardTest {
      *
      */
     @Test
-    public void ctor_KingingPeice() {
+    public void ctor_KingingPiece() {
+        System.out.println(CuTKing);
+        Position start = new Position(1, 0);
         Position end = new Position(0, 1);
-
-        SingleMove move = new SingleMove(new Position(1, 0), end);
+        SingleMove move = new SingleMove(start, end);
         ArrayList<Move> moves = new ArrayList<>();
+        moves.add(move);
+        CuTKing.determineMoveType();
         CuTKing.makeMove(moves);//caught by first if statement
-        assertTrue(CuTKing.getSpace(end, CuTKing).getPiece() instanceof King);
+        CuTKing.flip();
+        assertEquals(Piece.Type.KING, CuTKing.getSpace(end, CuTKing).getPiece().getType());
     }
 
     /**
@@ -257,7 +257,7 @@ public class BoardTest {
      */
     @Test
     public void ctor_getActiveColor() {
-        assertEquals(Piece.Color.RED , CuTGeneralBoard.getActivePlayerColor());
+        assertEquals(Piece.Color.RED, CuTGeneralBoard.getActivePlayerColor());
     }
 
     /**
@@ -266,7 +266,7 @@ public class BoardTest {
     @Test
     public void ctor_setActiveColor() {
         CuTGeneralBoard.setActivePlayerColor(Piece.Color.WHITE);
-        assertEquals(Piece.Color.WHITE , CuTGeneralBoard.getActivePlayerColor());
+        assertEquals(Piece.Color.WHITE, CuTGeneralBoard.getActivePlayerColor());
     }
 
     /**

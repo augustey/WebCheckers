@@ -76,29 +76,29 @@ public class Board implements Iterable<Row> {
                 Space space;
                 if (col % 2 + row % 2 == 1) {
                     space = new Space(row, col, null, true);
-//                    if (row > BOARD_DIM - 4) {
-//                        space.setPiece(new SinglePiece(Piece.Color.RED));
-//                    }
-//                    else if (row < 3) {
-//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-//                    }
-                    // TODO Test SinglePiece jumping bug.
-                    if (row > BOARD_DIM - 3) {
+                    if (row > BOARD_DIM - 4) {
                         space.setPiece(new SinglePiece(Piece.Color.RED));
                     }
+                    else if (row < 3) {
+                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+                    }
+                    // TODO Test SinglePiece jumping bug.
+//                    if (row > BOARD_DIM - 3) {
+//                        space.setPiece(new SinglePiece(Piece.Color.RED));
+//                    }
                     // TODO Test King jumping.
 //                    if (row > BOARD_DIM - 3) {
 //                        space.setPiece(new King(Piece.Color.RED));
 //                    }
-                    else if (row == 5) {
-                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-                    }
-                    else if(row == 3) {
-                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-                    }
-                    else if(row == 1) {
-                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-                    }
+//                    else if (row == 5) {
+//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+//                    }
+//                    else if(row == 3) {
+//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+//                    }
+//                    else if(row == 1) {
+//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+//                    }
                 }
                 else {
                     space = new Space(row, col, null, false);
