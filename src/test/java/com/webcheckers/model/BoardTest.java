@@ -125,7 +125,7 @@ public class BoardTest {
      */
     @Test
     public void ctor_determineMoveTypeSingle() {
-        System.out.println(CuTGeneralBoard);
+//        System.out.println(CuTGeneralBoard);
         assertEquals(Board.MoveType.Single, CuTGeneralBoard.getMoveType());
     }
 
@@ -134,7 +134,7 @@ public class BoardTest {
      */
     @Test
     public void ctor_determineMoveTypeJump() {
-        System.out.println(CuTJump);
+//        System.out.println(CuTJump);
         assertEquals(Board.MoveType.Jump, CuTJump.getMoveType());
     }
 
@@ -163,15 +163,15 @@ public class BoardTest {
     @Test
     public void ctor_makeMoveSingleMove() {
         //Single move
-//        Board startBoard = new Board(CuTGeneralBoard);
-//        Position end = new Position(4, 1);
-//        Move singleMove = new Move(new Position(5, 0), end);
-//        ArrayList<Move> singleMoves = new ArrayList<>();
-//        singleMoves.add(singleMove);
-//        CuTGeneralBoard.makeMove(singleMoves);
-//        System.out.println(CuTGeneralBoard.toString());
-//        assertNotEquals(startBoard.toString(), board.toString());
-//        CuTGeneralBoard.flip();
+        Board startBoard = new Board(CuTGeneralBoard);
+        Position end = new Position(4, 1);
+        Move singleMove = new SingleMove(new Position(5, 0), end);
+        ArrayList<Move> singleMoves = new ArrayList<>();
+        singleMoves.add(singleMove);
+        CuTGeneralBoard.makeMove(singleMoves);
+
+        CuTGeneralBoard.flip();
+        assertSame(CuTJump.getSpace(end, CuTGeneralBoard).getPiece().getColor(), Piece.Color.RED);
 //        assertSame(CuTGeneralBoard.getSpace(end, CuTGeneralBoard).getPiece().getColor(), Piece.Color.RED);
     }
 
@@ -182,15 +182,15 @@ public class BoardTest {
     public void ctor_makeMoveJump() {
         //JumpMove
         //TODO need to create a board that has a singleJump avalible
-//        Position end = new Position(3, 2);
-//        Move jumpMove = new Move(new Position(5, 0), end);
-//        ArrayList<Move> jumpMoves = new ArrayList<>();
-//        jumpMoves.add(jumpMove);
-//        CuTJump.makeMove(jumpMoves);
-//
-//        System.out.println(CuTJump);
-//        CuTJump.flip();
-//        assertSame(CuTJump.getSpace(end, CuTJump).getPiece().getColor(), Piece.Color.RED);
+        Position end = new Position(3, 2);
+        Move jumpMove = new JumpMove(new Position(5, 0), end);
+        ArrayList<Move> jumpMoves = new ArrayList<>();
+        jumpMoves.add(jumpMove);
+        CuTJump.makeMove(jumpMoves);
+
+        System.out.println(CuTJump);
+        CuTJump.flip();
+        assertSame(CuTJump.getSpace(end, CuTJump).getPiece().getColor(), Piece.Color.RED);
         //TODO show the it was exicuted
     }
 
@@ -201,47 +201,47 @@ public class BoardTest {
     @Test
     public void ctor_makeMoveChainJump() {
         //TODO need to create a board that a chain jump is avalible
-//        Position end = new Position(3, 2);
-//        Position start = new Position(5, 0);
-//        Move jumpMove = new Move(start, end);
-//        ArrayList<Move> jumpMoves = new ArrayList<>();
-//        jumpMoves.add(jumpMove);
-//        CuTChainJump.makeMove(jumpMoves);//should fail
-//        System.out.println(CuTChainJump);
-//        assertSame(CuTChainJump.getSpace(start, CuTChainJump).getPiece().getColor(), Piece.Color.RED);//another jump is avalible
-//        end = new Position(1, 4);
-        //TODO show that it failed
-//        Move jumpMove1 = new Move(new Position(3, 2), end);
-//        jumpMoves.add(jumpMove1);
-//        CuTChainJump.makeMove(jumpMoves);
-//        CuTChainJump.flip();
-//        assertSame(CuTChainJump.getSpace(end, CuTChainJump).getPiece().getColor(), Piece.Color.RED);
+        Position end = new Position(3, 2);
+        Position start = new Position(5, 0);
+
+        Move jumpMove = new JumpMove(start, end);
+
+        ArrayList<Move> jumpMoves = new ArrayList<>();
+        jumpMoves.add(jumpMove);
+        CuTChainJump.makeMove(jumpMoves);//should fail
+        System.out.println(CuTChainJump);
+        assertSame(CuTChainJump.getSpace(start, CuTChainJump).getPiece().getColor(), Piece.Color.RED);//another jump is avalible
+        end = new Position(1, 4);
+        Move jumpMove1 = new JumpMove(new Position(3, 2), end);
+        jumpMoves.add(jumpMove1);
+        CuTChainJump.makeMove(jumpMoves);
+        assertSame(CuTChainJump.getSpace(end, CuTChainJump).getPiece().getColor(), Piece.Color.RED);
     }
 
-    /**
-     * Checks that if the player is determined to blocked no move is made and game is over.
-     */
-    @Test
-    public void ctor_MakeMoveBlocked() {
-        //TODO need to create a board that is blocked
-//        String startString = CuTBlocked.toString();
-//        Position end = new Position(4, 1);
-//        Position start = new Position(5, 0);
-//        Move move = new Move(start, end);
-//        ArrayList<Move> moves = new ArrayList<>();
-//        CuTBlocked.makeMove(moves);//caught by first if statement
+//    /**
+//     * Checks that if the player is determined to blocked no move is made and game is over.
+//     */
+//    @Test
+//    public void ctor_MakeMoveBlocked() {
+//        //TODO need to create a board that is blocked
+////        String startString = CuTBlocked.toString();
+////        Position end = new Position(4, 1);
+////        Position start = new Position(5, 0);
+////        Move move = new Move(start, end);
+////        ArrayList<Move> moves = new ArrayList<>();
+////        CuTBlocked.makeMove(moves);//caught by first if statement
 //        System.out.println(CuTBlocked);
-//
-//        assertEquals(startString, CuTBlocked.toString());
-        //TODO show that it did not exicute
-    }
+////
+////        assertEquals(startString, CuTBlocked.toString());
+//        //TODO show that it did not exicute
+//    }
 
     /**
      *
      */
     @Test
     public void ctor_KingingPiece() {
-        System.out.println(CuTKing);
+//        System.out.println(CuTKing);
         Position start = new Position(1, 0);
         Position end = new Position(0, 1);
         SingleMove move = new SingleMove(start, end);
@@ -251,6 +251,8 @@ public class BoardTest {
         CuTKing.makeMove(moves);//caught by first if statement
         CuTKing.flip();
         assertEquals(Piece.Type.KING, CuTKing.getSpace(end, CuTKing).getPiece().getType());
+//        System.out.println(CuTKing);
+
     }
 
     /**
