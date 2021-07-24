@@ -24,6 +24,8 @@ import static spark.Spark.halt;
 public class GetReplayGameRoute implements Route {
 
     private final TemplateEngine templateEngine;
+
+    // The application attributes.
     private final GameCenter gameCenter;
     private final TurnLogger turnLogger;
 
@@ -45,21 +47,18 @@ public class GetReplayGameRoute implements Route {
 
     // Freemarker values.
     public static final String TITLE = "Checkers";
-    public static final String VIEW_MODE = "REPLAY"; //TODO: Add enumeration
-
+    public static final String VIEW_MODE = "REPLAY";
     public static final String VIEW_NAME = "game.ftl";
 
     /**
      * Constructor for GetReplayGameRoute
      *
      * @param templateEngine
-     *          The HTML template rendering engine.
-     *
+     *         The HTML template rendering engine.
      * @param gameCenter
-     *          The GameCenter that stores active games
-     *
+     *         The GameCenter that stores active games
      * @param turnLogger
-     *          The turnLogger used to store turns of a game
+     *         The turnLogger used to store turns of a game
      */
     public GetReplayGameRoute(TemplateEngine templateEngine, GameCenter gameCenter, TurnLogger turnLogger) {
         this.templateEngine = templateEngine;
@@ -88,21 +87,21 @@ public class GetReplayGameRoute implements Route {
         Game game = gameCenter.getCompletedGame(gameID);
 
         Player player = httpSession.attribute(PLAYER_KEY);
-        if(player == null || gameID == null) {
+        if (player == null || gameID == null) {
             response.redirect(WebServer.HOME_URL);
             halt();
         }
-        if(!turnLogger.isReplaying(player)) {
+        if (!turnLogger.isReplaying(player)) {
             turnLogger.startReplay(player, game);
         }
 
         int i;
-        if(httpSession.attribute(TURNID_PARAM) == null) {
+        if (httpSession.attribute(TURNID_PARAM) == null) {
             i = 0;
             httpSession.attribute(TURNID_PARAM, i);
-        } else
-        {
-           i = httpSession.attribute(TURNID_PARAM);
+        }
+        else {
+            i = httpSession.attribute(TURNID_PARAM);
         }
 
         List<String> turns = turnLogger.getTurns(game);
@@ -110,17 +109,17 @@ public class GetReplayGameRoute implements Route {
         System.out.println("size:" + turns.get(0));
 
         Board board = Board.fromString(turns.get(i));
-        if(i % 2 != 0) {
+        if (i % 2 != 0) {
             board.flip();
         }
 
         //Determine if there are turns before or after the current turn
         modeOptions.put(NEXT, true);
         modeOptions.put(PREV, true);
-        if(i == 0) {
+        if (i == 0) {
             modeOptions.put(PREV, false);
         }
-        if(i == turns.size() - 1) {
+        if (i == turns.size() - 1) {
             modeOptions.put(NEXT, false);
         }
 

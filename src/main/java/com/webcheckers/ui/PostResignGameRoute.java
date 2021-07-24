@@ -19,7 +19,7 @@ public class PostResignGameRoute implements Route {
     private PlayerService playerService;
 
     /**
-     * Constructor for ostCheckTurnRoute
+     * Constructor for PostCheckTurnRoute.
      */
     public PostResignGameRoute() {
     }
@@ -38,20 +38,16 @@ public class PostResignGameRoute implements Route {
     public Object handle(Request request, Response response) {
         final Session httpSession = request.session();
         Gson gson = new GsonBuilder().create();
-
         playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
         Game game = playerService.getGame();
         GameWin gameWin = game.getGameWin();
-
         Message message;
-
         if (gameWin.checkResignGameOver(playerService.getPlayer())) {
             message = Message.info(gameWin.getGameOverMessage());
         }
         else {
             message = Message.error("Game was unable to be ended.");
         }
-
         return gson.toJson(message);
     }
 }

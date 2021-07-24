@@ -50,20 +50,14 @@ public class PostSignOutRoute implements Route {
     public Object handle(Request request, Response response) {
         final Session httpSession = request.session();
         final Map<String, Object> vm = new HashMap<>();
-
         Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
         playerLobby.signOut(player);
         httpSession.removeAttribute(GetHomeRoute.PLAYER_KEY);
-
         vm.put(TITLE_ATTR, GetHomeRoute.TITLE);
-
         int count = playerLobby.getPlayerSet().size();
         vm.put(GetHomeRoute.ONLINE_COUNT_ATTR, count);
-
         vm.put(MESSAGE_KEY, GetHomeRoute.WELCOME_MSG);
-
         response.redirect("/");
-
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
 }
