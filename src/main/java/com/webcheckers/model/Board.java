@@ -63,8 +63,9 @@ public class Board implements Iterable<Row> {
      * Constructor for the board class that builds the board
      */
     public Board() {
-        gameWin = null;
+        this.gameWin = null;
         this.activePlayerColor = Piece.Color.RED;
+        this.possibleMoves = new ArrayList<>();
         this.board = new Space[BOARD_DIM][BOARD_DIM];
         generateBoard();
         //ptuiDebug();
@@ -143,13 +144,15 @@ public class Board implements Iterable<Row> {
                 if (piece != null && piece.getColor() == activePlayerColor) {
                     // Find the jump moves if possible and return if found.
                     ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
-                    if (validateJumpMoves(jumpMoves)) {
+                    jumpMoves.removeIf(jumpMove -> !validateJumpMove(jumpMove));
+                    if (!jumpMoves.isEmpty()) {
                         moveType = MoveType.Jump;
                         return;
                     }
                     // Find the single moves if there are any.
                     ArrayList<SingleMove> singleMoves = new ArrayList<>(piece.allSingleMoves(row, col));
-                    if (validateSingleMoves(singleMoves)) {
+                    singleMoves.removeIf(singleMove -> !validateSingleMove(singleMove));
+                    if (!singleMoves.isEmpty()) {
                         moveType = MoveType.Single;
                     }
                 }
@@ -186,6 +189,7 @@ public class Board implements Iterable<Row> {
      * @return True if a move is valid, else, false.
      */
     public boolean isPossibleMove(Move move) {
+        System.out.println(move);
         determineMoveType();
         if (possibleMoves.isEmpty()) {
             generatePossibleMoves();
@@ -198,6 +202,7 @@ public class Board implements Iterable<Row> {
                         return jm.getStart().getRow() != 0;
                     }
                 }
+                System.out.println("Validate the jump move: " + validateJumpMove(jm));
                 return validateJumpMove(jm);
             }
         }
@@ -263,25 +268,6 @@ public class Board implements Iterable<Row> {
     }
 
     /**
-     * Validates the determined singlemoves to establish the active player's move type.
-     *
-     * @param moves
-     *         A list of single moves.
-     *
-     * @return True if any move in the list is a valid single move, else, false.
-     */
-    public boolean validateSingleMoves(ArrayList<SingleMove> moves) {
-        for (int i = 0; i < moves.size(); i++) {
-            SingleMove move = moves.get(i);
-
-            if (validateSingleMove(move)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Validates a singular single move.
      *
      * @param move
@@ -302,23 +288,6 @@ public class Board implements Iterable<Row> {
     }
 
     /**
-     * Validates the determined jumpMoves to establish the active player's move type.
-     *
-     * @param moves
-     *         A list of jump moves.
-     *
-     * @return True if any move in the list is a valid jump move, else, false.
-     */
-    public boolean validateJumpMoves(ArrayList<JumpMove> moves) {
-        for (JumpMove move : moves) {
-            if (validateJumpMove(move)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Validates a singular jump move.
      *
      * @param move
@@ -327,12 +296,24 @@ public class Board implements Iterable<Row> {
      * @return True if the jump move is valid, else, false.
      */
     private boolean validateJumpMove(JumpMove move) {
+        Position start = move.getStart();
+        int startRow = start.getRow();
+        int startCol = start.getCell();
         Position end = move.getEnd();
         int endRow = end.getRow();
         int endCol = end.getCell();
+        double slope = 1.0 * (endCol - startCol) / (endRow - startRow);
+        if (Math.abs(slope) != 1.0) {
+            return false;
+        }
         Position jumped = move.getJumpedPosition();
         try {
             if (getSpace(jumped, this).getPiece().getColor() != activePlayerColor) {
+                if (startJumpPos != null) {
+                    if (getSpace(startJumpPos, this).getPiece().equals(this.board[endRow][endCol].getPiece())) {
+                        return true;
+                    }
+                }
                 return this.board[endRow][endCol].isValid();
             }
         }
@@ -413,9 +394,6 @@ public class Board implements Iterable<Row> {
      */
     public Message makeMove(ArrayList<Move> moves) {
         // Handles the win condition where there are no possible moves.
-
-        System.out.println("makeMove: " + moves);
-
         if (moveType == MoveType.Blocked) {
             gameWin.checkBlockedGameOver(activePlayerColor);
         }
@@ -656,7 +634,10 @@ public class Board implements Iterable<Row> {
     }
 
     public static void main(String[] args) {
-        GameWin gameWin = mock(GameWin.class);
-        new Board(gameWin);
+        Board board = new Board();
+        System.out.println(board);
+        JumpMove jumpMove = new JumpMove(new Position(4, 1), new Position(6, 3));
+        System.out.println(jumpMove);
+        System.out.println(board.isPossibleMove(jumpMove));
     }
 }
