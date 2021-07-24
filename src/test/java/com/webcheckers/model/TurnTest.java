@@ -55,7 +55,7 @@ public class TurnTest {
      */
     @Test
     public void addSingleMoveTest(){
-        Turn turn = new Turn(CuTGeneralBoard);
+        Turn turn = new Turn(CuTGeneralBoard.getMoveType());
         Move move = new Move(new Position(5 , 0), new Position(4, 1));
         turn.addMove(move);
         assertTrue(turn.removeMove() instanceof SingleMove);
@@ -67,7 +67,7 @@ public class TurnTest {
      */
     @Test
     public void addJumpMoveTest(){
-        Turn turn = new Turn(CuTJump);
+        Turn turn = new Turn(CuTJump.getMoveType());
         Move move = new Move(new Position(5 , 0), new Position(4, 1));
         turn.addMove(move);
         assertTrue(turn.removeMove() instanceof JumpMove);
@@ -79,7 +79,7 @@ public class TurnTest {
      */
     @Test
     public void removeMoveTest() {
-        Turn turn = new Turn(CuTJump);
+        Turn turn = new Turn(CuTJump.getMoveType());
         Move move = new Move(new Position(5 , 0), new Position(4, 1));
         turn.addMove(move);
         turn.removeMove();
@@ -91,7 +91,7 @@ public class TurnTest {
      */
     @Test
     public void getMovesTest() {
-        Turn turn = new Turn(CuTJump);
+        Turn turn = new Turn(CuTJump.getMoveType());
         Move move = new Move(new Position(5 , 0), new Position(4, 1));
         turn.addMove(move);
         assertEquals(1, turn.getMoves().size());
