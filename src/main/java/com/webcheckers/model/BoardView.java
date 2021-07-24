@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class BoardView implements Iterable<Row> {
 
-    // BoardView's iterator.
+    // The BoardView's iterator.
     private final Iterator<Row> iterator;
 
     /**
@@ -36,9 +36,9 @@ public class BoardView implements Iterable<Row> {
      * Equals method that compares two boardViews together.
      *
      * @param other
-     *         The other boardview object.
+     *         The other boardView object.
      *
-     * @return True if the boardview objects are equal, else, false.
+     * @return True if the boardView objects are equal, else, false.
      */
     @Override
     public boolean equals(Object other) {

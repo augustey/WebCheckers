@@ -8,20 +8,20 @@ package com.webcheckers.model;
  */
 public class Space {
 
-    // The row index a space is in
+    // The row index a space is in.
     private final int rowIdx;
 
-    // The cell index a space is in a row
+    // The cell index a space is in a row.
     private final int colIdx;
 
-    // If a valid space for pieces
+    // If a valid space for pieces.
     private final boolean isValid;
 
-    // A piece that is on that space, if any
+    // A piece that is on that space, if any.
     private Piece piece;
 
     /**
-     * Constructor for creating a Space object
+     * Constructor for creating a Space object.
      *
      * @param colIdx
      *         The index of this space (a cell within a row) within the board.

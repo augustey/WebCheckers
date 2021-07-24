@@ -10,10 +10,11 @@ import java.util.*;
  * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
  */
 public class TurnLogger {
-    // Map of Turns
+
+    // Map of Turns.
     private Map<String, List<String>> turns;
 
-    // Map of Games for replay
+    // Map of Games for replay.
     private Map<Player, Game> replay;
 
     /**
@@ -25,7 +26,7 @@ public class TurnLogger {
     }
 
     /**
-     * Log a json string of the board
+     * Log a json string of the board.
      *
      * @param game
      *         The game whose turns are being logged
@@ -73,12 +74,12 @@ public class TurnLogger {
     }
 
     /**
-     * Adds a player to the reviewing map
+     * Adds a player to the reviewing map.
      *
      * @param player
-     *         player that is added to the map
+     *         The player that is added to the map.
      * @param game
-     *         game that is added to the map
+     *         The game that is added to the map.
      */
     public synchronized void startReplay(Player player, Game game) {
         replay.put(player, game);
@@ -102,19 +103,19 @@ public class TurnLogger {
      * @param player
      *         The player that is reviewing the game.
      *
-     * @return The game that is being reviewed
+     * @return The game that is being reviewed.
      */
     public synchronized Game getGame(Player player) {
         return replay.get(player);
     }
 
     /**
-     * Removes the player and game from review
+     * Removes the player and game from review.
      *
      * @param player
-     *         player that is being removed
+     *         The player that is being removed.
      * @param game
-     *         game that is being removed
+     *         The game that is being removed.
      *
      * @return True if player was successfully removed, else, false.
      */

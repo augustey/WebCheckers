@@ -86,13 +86,12 @@ public abstract class Piece {
      * equals method for piece
      *
      * @param o
-     *       the other object this piece is being compared to
+     *         the other object this piece is being compared to
      *
      * @return true if they are equal
      */
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;

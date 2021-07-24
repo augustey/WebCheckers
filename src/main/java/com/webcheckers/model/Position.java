@@ -10,10 +10,10 @@ import java.util.Objects;
 public class Position {
 
     // The position row value.
-    private int row;
+    private final int row;
 
     // The position cell value.
-    private int cell;
+    private final int cell;
 
     /**
      * Constructor for Position.

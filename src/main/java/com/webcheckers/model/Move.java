@@ -46,8 +46,8 @@ public class Move {
     }
 
     /**
-     * Equals method that compares two Move objects together
-     * Used to compare move, simpleMove and jumpMove
+     * Equals method that compares two Move objects together.
+     *
      * @param other
      *         The other move object.
      *
@@ -64,7 +64,6 @@ public class Move {
             return Objects.equals(start, move.start) &&
                     Objects.equals(end, move.end);
         }
-
         return false;
     }
 
