@@ -55,11 +55,18 @@ public class Turn {
         return moves;
     }
 
+    /**
+     * Resets the collection of moves to empty
+     */
     public void clearTurnMoves() {
         moves.clear();
     }
 
-    public void setMoveType(Board.MoveType mt) {
-        this.moveType = mt;
+    /**
+     * Sets the move type
+     * @param moveType
+     */
+    public void setMoveType(Board.MoveType moveType) {
+        this.moveType = moveType;
     }
 }

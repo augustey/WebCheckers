@@ -75,7 +75,7 @@ public class TurnTest {
     }
 
     /**
-     * This tests removing a test
+     * This tests removing a move
      */
     @Test
     public void removeMoveTest() {
@@ -95,5 +95,28 @@ public class TurnTest {
         Move move = new Move(new Position(5 , 0), new Position(4, 1));
         turn.addMove(move);
         assertEquals(1, turn.getMoves().size());
+    }
+
+    /**
+     * This tests clearing all moves
+     */
+    @Test
+    public void clearTurnMovesTest() {
+        Turn turn = new Turn(CuTJump.getMoveType());
+        Move move = new Move(new Position(5 , 0), new Position(4, 1));
+        turn.addMove(move);
+        turn.clearTurnMoves();
+        assertEquals(0, turn.getMoves().size());
+    }
+    /**
+     * This tests changing a movetype
+     */
+    @Test
+    public void setMoveTypeTest() {
+        Turn turn = new Turn(CuTJump.getMoveType());
+        Move move = new Move(new Position(5 , 0), new Position(4, 1));
+        turn.setMoveType(Board.MoveType.Single);
+        turn.addMove(move);
+        assertTrue(turn.removeMove() instanceof SingleMove);
     }
 }
