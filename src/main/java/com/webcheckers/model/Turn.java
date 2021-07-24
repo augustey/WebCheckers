@@ -10,20 +10,11 @@ import java.util.ArrayList;
  */
 public class Turn {
     private ArrayList<Move> moves;
-    private Board board;
-    //private final Board.MoveType moveType;
+    //private Board board;
+    private Board.MoveType moveType;
 
-//    public Turn(Board.MoveType moveType){
-//        switch (moveType) {
-//            case Jump: this.moveType = Board.MoveType.Jump; break;
-//            case Single: this.moveType = Board.MoveType.Single; break;
-//            default: this.moveType = Board.MoveType.Blocked; break;
-//        }
-//        this.moves = new ArrayList<>();
-//    }
-
-    public Turn(Board board){
-        this.board = board;
+    public Turn(Board.MoveType moveType){
+        this.moveType = moveType;
         this.moves = new ArrayList<>();
     }
 
@@ -32,26 +23,15 @@ public class Turn {
      * @param move The move under consideration
      */
     public boolean addMove(Move move) {
-        //System.out.println("Moves: " + moves);
-
-//        System.out.println("Turn moveType: " + moveType);
-        //If a JumpMove is required then the move is converted to a JumpMove
-        if(board.getMoveType() == Board.MoveType.Jump) {
+        if(moveType == Board.MoveType.Jump) {
             JumpMove jumpMove = new JumpMove(move);
             //This uses the custom equals method in JumpMove to make sure that no piece is jumped twice
-
             if(!moves.contains(jumpMove)) {
-                System.out.println("not contained");
                 moves.add(jumpMove);
-//                System.out.println(moves);
-//                System.out.println("Size: " + moves.size());
                 return true;
             }
         }
-        //If a SingleMove is required then the move is converted to a SingleMove
-        else if(board.getMoveType() == Board.MoveType.Single){
-            System.out.println("got to single");
-            //TODO create new Single Move
+        else if(moveType == Board.MoveType.Single){
             SingleMove singleMove = new SingleMove(move);
             moves.add(singleMove);
             return true;
@@ -73,5 +53,13 @@ public class Turn {
      */
     public ArrayList<Move> getMoves() {
         return moves;
+    }
+
+    public void clearTurnMoves() {
+        moves.clear();
+    }
+
+    public void setMoveType(Board.MoveType mt) {
+        this.moveType = mt;
     }
 }

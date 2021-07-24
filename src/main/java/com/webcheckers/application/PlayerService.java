@@ -24,9 +24,6 @@ public class PlayerService {
     // The single game between the two players.
     private final Game game;
 
-    // The list of moves made by a player.
-    private final List<Move> turnMoves;
-
     //Represents the current turn
     private Turn turn;
 
@@ -43,10 +40,7 @@ public class PlayerService {
         this.redPlayer = game.getRedPlayer();
         this.whitePlayer = game.getWhitePlayer();
         this.game = game;
-        this.turnMoves = new ArrayList<>();
-        //this.turn = new Turn(game.getBoard().getMoveType());//TODO make this not shit
-        this.turn = new Turn(game.getBoard());//TODO make this not shit
-
+        this.turn = new Turn(game.getBoard().getMoveType());
     }
 
     /**
@@ -104,6 +98,10 @@ public class PlayerService {
         return turn.getMoves();
     }
 
+    public Turn getTurn() {
+        return turn;
+    }
+
     /**
      * A getter method for the board view.
      *
@@ -138,9 +136,6 @@ public class PlayerService {
      *         A move that is to be made.
      */
     public synchronized boolean addMove(Move move) {
-        //TODO call addMove
-        //System.out.println("turnMoves: " + turnMoves);
-        //            turnMoves.add(move);
         return turn.addMove(move);
     }
 
@@ -150,13 +145,7 @@ public class PlayerService {
      * @return A move that was removed.
      */
     public synchronized Move removeMove() {
-//        if (!turnMoves.isEmpty()) {
-            //TODO call removeMove
-            return turn.removeMove();
-//            int i = turnMoves.size() - 1;
-//            return turnMoves.remove(i);
-//        }
-//        return null;
+        return turn.removeMove();
     }
 
     /**
@@ -172,10 +161,6 @@ public class PlayerService {
      * Clears the list of moves at the end of a player's turn.
      */
     public synchronized void clearMoves() {//TODO have it create a new TURN instead
-        System.out.println("clearMoves: " + game.getBoard().getMoveType());
-        //this.turn = new Turn(game.getBoard().getMoveType());//TODO make this not shit
-        this.turn = new Turn(game.getBoard());//TODO make this not shit
-
-//        turnMoves.clear();
+        turn.clearTurnMoves();
     }
 }
