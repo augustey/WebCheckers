@@ -51,7 +51,7 @@ public class TurnTest {
     }
 
     /**
-     *
+     * This test adding a singleMove
      */
     @Test
     public void addSingleMoveTest(){
@@ -63,7 +63,7 @@ public class TurnTest {
     }
 
     /**
-     *
+     * This tests a jumpMove
      */
     @Test
     public void addJumpMoveTest(){
@@ -75,7 +75,7 @@ public class TurnTest {
     }
 
     /**
-     *
+     * This tests removing a test
      */
     @Test
     public void removeMoveTest() {
@@ -87,14 +87,13 @@ public class TurnTest {
     }
 
     /**
-     *
+     * This tests getting the moves that make up the turn
      */
     @Test
     public void getMovesTest() {
         Turn turn = new Turn(CuTJump);
         Move move = new Move(new Position(5 , 0), new Position(4, 1));
         turn.addMove(move);
-//        assertEquals();
-        System.out.println(turn.getMoves());
+        assertEquals(1, turn.getMoves().size());
     }
 }
