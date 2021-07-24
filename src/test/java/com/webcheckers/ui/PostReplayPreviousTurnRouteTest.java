@@ -71,7 +71,7 @@ public class PostReplayPreviousTurnRouteTest
         gameCenter.requestNewGame(player, opponenet, turnLogger);
         playerService = gameCenter.getPlayerService(player);
         game = playerService.getGame();
-        turnLogger.startReview(player, game);
+        turnLogger.startReplay(player, game);
 
         CuT = new PostReplayPreviousTurnRoute();
     }

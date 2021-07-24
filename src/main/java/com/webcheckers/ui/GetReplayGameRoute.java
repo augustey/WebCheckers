@@ -6,7 +6,6 @@ import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.TurnLogger;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
-import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -93,8 +92,8 @@ public class GetReplayGameRoute implements Route {
             response.redirect(WebServer.HOME_URL);
             halt();
         }
-        if(!turnLogger.isReviewing(player)) {
-            turnLogger.startReview(player, game);
+        if(!turnLogger.isReplaying(player)) {
+            turnLogger.startReplay(player, game);
         }
 
         int i;

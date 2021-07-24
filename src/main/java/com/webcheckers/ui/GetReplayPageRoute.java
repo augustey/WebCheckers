@@ -7,7 +7,6 @@ import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -65,7 +64,7 @@ public class GetReplayPageRoute implements Route {
 
         Player player = httpSession.attribute(PLAYER_KEY);
 
-        if(turnLogger.isReviewing(player)) {
+        if(turnLogger.isReplaying(player)) {
             response.redirect(WebServer.REPLAY_GAME_URL + "?gameID=" + turnLogger.getGame(player).getId());
             halt();
         }

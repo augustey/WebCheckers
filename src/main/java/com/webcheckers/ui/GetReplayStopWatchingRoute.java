@@ -55,7 +55,7 @@ public class GetReplayStopWatchingRoute implements Route
         Game game = turnLogger.getGame(player);
 
 
-        if(turnLogger.stopReview(player, game)){
+        if(turnLogger.stopReplay(player, game)){
             response.redirect(WebServer.HOME_URL);
             halt();
         } else {
