@@ -57,13 +57,16 @@ public class Board implements Iterable<Row> {
     }
 
     /**
-     * Constructor for the board class that builds the board
+     * Constructor for the board class that builds the board.
+     * Used only for generating the strings used for Replaying games.
      */
     public Board() {
         this.gameWin = null;
         this.activePlayerColor = Piece.Color.RED;
         this.possibleMoves = new ArrayList<>();
         this.board = new Space[BOARD_DIM][BOARD_DIM];
+        this.startJumpPos = null;
+        this.moveType = null;
         generateBoard();
     }
 
@@ -90,10 +93,10 @@ public class Board implements Iterable<Row> {
                     else if (row == 5) {
                         space.setPiece(new SinglePiece(Piece.Color.WHITE));
                     }
-                    else if(row == 3) {
+                    else if (row == 3) {
                         space.setPiece(new SinglePiece(Piece.Color.WHITE));
                     }
-                    else if(row == 1) {
+                    else if (row == 1) {
                         space.setPiece(new SinglePiece(Piece.Color.WHITE));
                     }
                 }
@@ -185,7 +188,6 @@ public class Board implements Iterable<Row> {
      * @return True if a move is valid, else, false.
      */
     public boolean isPossibleMove(Move move) {
-        System.out.println(move);
         determineMoveType();
         if (possibleMoves.isEmpty()) {
             generatePossibleMoves();
@@ -193,7 +195,6 @@ public class Board implements Iterable<Row> {
         if (!possibleMoves.contains(move)) {
             if (moveType == MoveType.Jump && this.startJumpPos != null) {
                 JumpMove jm = new JumpMove(move);
-                System.out.println("Validate the jump move: " + validateJumpMove(jm));
                 if (getSpace(startJumpPos, this).getPiece() instanceof SinglePiece) {
                     if (validateJumpMove(jm)) {
                         return jm.getStart().getRow() != 0;
