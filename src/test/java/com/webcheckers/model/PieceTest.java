@@ -84,4 +84,13 @@ public class PieceTest {
         assertEquals(expected, actual);
     }
 
+    /**
+     * Test that the toSting is working correctly
+     */
+    @Test
+    public void toStingTest() {
+        King piece = new King(Piece.Color.RED);
+        assertEquals("Piece{type=KING, color=RED}", piece.toString());
+    }
+
 }
