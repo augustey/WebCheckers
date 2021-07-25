@@ -161,7 +161,7 @@ public class BoardTest {
         Board copy = new Board(CuTGeneralBoard);
         copy.flip();
         copy.flip();
-        assertEquals(CuTGeneralBoard, copy);
+        assertEquals(CuTGeneralBoard.toString(), copy.toString());
     }
 
     /**
