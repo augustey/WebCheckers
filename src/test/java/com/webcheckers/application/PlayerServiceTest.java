@@ -17,6 +17,7 @@ import java.util.List;
  * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
  */
 @Tag("Application-tier")
+@Tag("player-service")
 public class PlayerServiceTest
 {
     //Component under Test
@@ -125,6 +126,8 @@ public class PlayerServiceTest
     @Test
     public void test_getBoardView()
     {
+        Board board = new Board();
+
         Iterator<Row> bv = board.iterator();
         BoardView expected = new BoardView(bv);
 
@@ -139,6 +142,7 @@ public class PlayerServiceTest
     @Test
     public void test_getBoardView_flipped()
     {
+        Board board = new Board();
         CuT = new PlayerService(opponent, game);
 
         board.flip();
@@ -190,7 +194,7 @@ public class PlayerServiceTest
     @Test
     public void test_addMove()
     {
-        move = new Move(new Position(5,0), new Position(4,1));
+        move = new SingleMove(new Position(5,0), new Position(4,1));
         int expectedSize = 1;
         List<Move> moves = CuT.getTurnMoves();
 
@@ -198,7 +202,7 @@ public class PlayerServiceTest
 
 
         assertSame(expectedSize, moves.size());
-        assertSame(move, moves.get(0));
+        assertEquals(move, moves.get(0));
     }
 
     /**
@@ -207,9 +211,9 @@ public class PlayerServiceTest
     @Test
     public void test_addMoveMultiple()
     {
-        move = new Move(new Position(5,0), new Position(4,1));
-        Move move1 = new Move(new Position(5,2), new Position(4,1));
-        Move move2 = new Move(new Position(5,2), new Position(4,3));
+        move = new SingleMove(new Position(5,0), new Position(4,1));
+        Move move1 = new SingleMove(new Position(5,2), new Position(4,1));
+        Move move2 = new SingleMove(new Position(5,2), new Position(4,3));
         int expectedSize = 3;
         List<Move> moves = CuT.getTurnMoves();
 
@@ -218,9 +222,9 @@ public class PlayerServiceTest
         CuT.addMove(move2);
 
         assertSame(expectedSize, moves.size());
-        assertSame(move, moves.get(0));
-        assertSame(move1, moves.get(1));
-        assertSame(move2, moves.get(2));
+        assertEquals(move, moves.get(0));
+        assertEquals(move1, moves.get(1));
+        assertEquals(move2, moves.get(2));
     }
 
     /**
@@ -229,7 +233,7 @@ public class PlayerServiceTest
     @Test
     public void test_removeMove()
     {
-        move = new Move(new Position(5,0), new Position(4,1));
+        move = new SingleMove(new Position(5,0), new Position(4,1));
         int expectedSize = 0;
         List<Move> moves = CuT.getTurnMoves();
         CuT.addMove(move);
@@ -237,7 +241,7 @@ public class PlayerServiceTest
         Move actual = CuT.removeMove();
 
         assertSame(expectedSize, moves.size());
-        assertSame(move, actual);
+        assertEquals(move, actual);
     }
 
     /**
@@ -246,9 +250,9 @@ public class PlayerServiceTest
     @Test
     public void test_removeMoveMultiple()
     {
-        move = new Move(new Position(5,0), new Position(4,1));
-        Move move1 = new Move(new Position(5,2), new Position(4,1));
-        Move move2 = new Move(new Position(5,2), new Position(4,3));
+        move = new SingleMove(new Position(5,0), new Position(4,1));
+        Move move1 = new SingleMove(new Position(5,2), new Position(4,1));
+        Move move2 = new SingleMove(new Position(5,2), new Position(4,3));
         int expectedSize = 0;
         List<Move> moves = CuT.getTurnMoves();
         CuT.addMove(move);
@@ -260,9 +264,9 @@ public class PlayerServiceTest
         Move actual2 = CuT.removeMove();
 
         assertSame(expectedSize, moves.size());
-        assertSame(move2, actual);
-        assertSame(move1, actual1);
-        assertSame(move, actual2);
+        assertEquals(move2, actual);
+        assertEquals(move1, actual1);
+        assertEquals(move, actual2);
     }
 
     /**
@@ -274,8 +278,7 @@ public class PlayerServiceTest
         int expectedSize = 0;
         List<Move> moves = CuT.getTurnMoves();
 
-        Move actual = CuT.removeMove();
-
+        assertThrows(IndexOutOfBoundsException.class, () -> CuT.removeMove());
         assertSame(expectedSize, moves.size());
     }
 

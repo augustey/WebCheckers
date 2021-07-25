@@ -124,10 +124,11 @@ public class Space {
         }
         else if (other instanceof Space) {
             Space otherSpace = (Space) other;
-            return otherSpace.rowIdx == rowIdx &&
-                    otherSpace.colIdx == colIdx &&
-                    otherSpace.piece == piece &&
-                    otherSpace.isValid == isValid;
+            if(otherSpace.rowIdx == rowIdx && otherSpace.colIdx == colIdx && otherSpace.isValid == isValid) {
+                if((otherSpace.piece == null && this.piece == null) || (otherSpace.piece.equals(this.piece))) {
+                    return true;
+                }
+            }
         }
         return false;
     }
