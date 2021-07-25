@@ -27,10 +27,11 @@ public class JumpMove extends Move {
         this.createJumpPosition();
     }
 
-
     /**
      * Constructor for JumpMove that is used to convert a generic Move to JumpMove
-     * @param move Generic Move object
+     *
+     * @param move
+     *         A generic Move object.
      */
     public JumpMove(Move move) {
         super(move.getStart(), move.getEnd());
@@ -62,8 +63,8 @@ public class JumpMove extends Move {
     }
 
     /**
-     * Equals method that compares two Move objects together
-     * Used to compare move, simpleMove and jumpMove
+     * Equals method that compares two JumpMove objects.
+     *
      * @param other
      *         The other move object.
      *
@@ -71,7 +72,6 @@ public class JumpMove extends Move {
      */
     @Override
     public boolean equals(Object other) {
-        System.out.println("equals========================");
         if (this == other) {
             return true;
         }
@@ -82,12 +82,6 @@ public class JumpMove extends Move {
         }
         return false;
     }
-//    @Override
-//    public int hashCode(){
-//        return jumped.getRow() * 8 + jumped.getCell();
-//    }
-
-
 
     /**
      * String representation of a JumpMove object.

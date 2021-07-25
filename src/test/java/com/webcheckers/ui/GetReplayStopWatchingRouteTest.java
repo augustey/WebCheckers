@@ -62,7 +62,7 @@ public class GetReplayStopWatchingRouteTest
         gameCenter.requestNewGame(player, opponenet, turnLogger);
         playerService = gameCenter.getPlayerService(player);
         game = playerService.getGame();
-        turnLogger.startReview(player, game);
+        turnLogger.startReplay(player, game);
 
         when(session.attribute(GetHomeRoute.PLAYER_KEY)).thenReturn(player);
 

@@ -14,11 +14,13 @@ import java.util.ArrayList;
 public class PostSubmitTurnRoute implements Route {
 
     // The player service.
-    private TurnLogger turnLogger;
     private PlayerService playerService;
 
+    // The turn logger.
+    private final TurnLogger turnLogger;
+
     /**
-     * Constructor for PostSubmitTurnRoute
+     * Constructor for PostSubmitTurnRoute.
      */
     public PostSubmitTurnRoute(final TurnLogger turnLogger) {
         this.turnLogger = turnLogger;
@@ -38,19 +40,14 @@ public class PostSubmitTurnRoute implements Route {
     public Object handle(Request request, Response response) {
         final Session httpSession = request.session();
         playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
-
         Board board = playerService.getGame().getBoard();
         ArrayList<Move> moves = (ArrayList<Move>) playerService.getTurnMoves();
-
-        //System.out.println("PostSubmitTurn: \n" +board);
         Message message = board.makeMove(moves);
         if(message.getType() == Message.Type.INFO) { //If the move was made successfully
             turnLogger.logTurn(playerService.getGame());
             playerService.clearMoves();
         }
-
         Gson gson = new GsonBuilder().create();
-
         return gson.toJson(message);
     }
 }

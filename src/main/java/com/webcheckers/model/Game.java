@@ -9,8 +9,10 @@ import com.webcheckers.application.GameWin;
  * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
  */
 public class Game {
-    //Id index
+
+    // The ID Index.
     private static int idIndex = 0;
+
     // The Red Player.
     private final Player redPlayer;
 

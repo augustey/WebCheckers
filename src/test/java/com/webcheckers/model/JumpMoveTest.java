@@ -33,7 +33,7 @@ public class JumpMoveTest {
      * Test that JumpMove is generated with out failure.
      */
     @Test
-    public void ctor_jumpMove() {
+    public void jumpMoveTest() {
         assertEquals(new Position(-1 , -1), jumpMove.getJumpedPosition());
     }
 
@@ -41,8 +41,16 @@ public class JumpMoveTest {
      * Test that the jumped position getter is working
      */
     @Test
-    public void ctor_getJumpedPosition() {
+    public void getJumpedPositionTest() {
         assertEquals(new Position(-1 , -1), jumpMove.getJumpedPosition());
 
+    }
+
+    /**
+     * Test that the toSting is working correctly
+     */
+    @Test
+    public void toStingTest() {
+        assertEquals("JumpMove{start=Position{row=0, cell=0}, jumped=Position{row=-1, cell=-1}, end=Position{row=-2, cell=-2}}", jumpMove.toString());
     }
 }

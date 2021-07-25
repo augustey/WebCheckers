@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 import com.webcheckers.application.GameWin;
 import com.webcheckers.util.Message;
+
 import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
@@ -56,18 +57,17 @@ public class Board implements Iterable<Row> {
         this.possibleMoves = new ArrayList<>();
         this.board = new Space[BOARD_DIM][BOARD_DIM];
         generateBoard();
-        //ptuiDebug();
     }
 
     /**
      * Constructor for the board class that builds the board
      */
     public Board() {
-        gameWin = null;
+        this.gameWin = null;
         this.activePlayerColor = Piece.Color.RED;
+        this.possibleMoves = new ArrayList<>();
         this.board = new Space[BOARD_DIM][BOARD_DIM];
         generateBoard();
-        //ptuiDebug();
     }
 
     public void generateBoard() {
@@ -82,8 +82,13 @@ public class Board implements Iterable<Row> {
                     else if (row < 3) {
                         space.setPiece(new SinglePiece(Piece.Color.WHITE));
                     }
+                    // TODO Test SinglePiece jumping bug.
 //                    if (row > BOARD_DIM - 3) {
 //                        space.setPiece(new SinglePiece(Piece.Color.RED));
+//                    }
+                    // TODO Test King jumping.
+//                    if (row > BOARD_DIM - 3) {
+//                        space.setPiece(new King(Piece.Color.RED));
 //                    }
 //                    else if (row == 5) {
 //                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
@@ -138,13 +143,15 @@ public class Board implements Iterable<Row> {
                 if (piece != null && piece.getColor() == activePlayerColor) {
                     // Find the jump moves if possible and return if found.
                     ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
-                    if (validateJumpMoves(jumpMoves)) {
+                    jumpMoves.removeIf(jumpMove -> !validateJumpMove(jumpMove));
+                    if (!jumpMoves.isEmpty()) {
                         moveType = MoveType.Jump;
                         return;
                     }
                     // Find the single moves if there are any.
                     ArrayList<SingleMove> singleMoves = new ArrayList<>(piece.allSingleMoves(row, col));
-                    if (validateSingleMoves(singleMoves)) {
+                    singleMoves.removeIf(singleMove -> !validateSingleMove(singleMove));
+                    if (!singleMoves.isEmpty()) {
                         moveType = MoveType.Single;
                     }
                 }
@@ -181,17 +188,30 @@ public class Board implements Iterable<Row> {
      * @return True if a move is valid, else, false.
      */
     public boolean isPossibleMove(Move move) {
+        System.out.println(move);
         determineMoveType();
         if (possibleMoves.isEmpty()) {
             generatePossibleMoves();
         }
         if (!possibleMoves.contains(move)) {
-            if (moveType == MoveType.Jump) {
+            if (moveType == MoveType.Jump && this.startJumpPos != null) {
                 JumpMove jm = new JumpMove(move);
+                if (getSpace(startJumpPos, this).getPiece() instanceof SinglePiece) {
+                    if (validateJumpMove(jm)) {
+                        return jm.getStart().getRow() != 0;
+                    }
+                }
+                System.out.println("Validate the jump move: " + validateJumpMove(jm));
                 return validateJumpMove(jm);
             }
         }
-        return possibleMoves.contains(move);
+        if (possibleMoves.contains(move)) {
+            if (moveType == MoveType.Jump) {
+                this.startJumpPos = move.getStart();
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -247,25 +267,6 @@ public class Board implements Iterable<Row> {
     }
 
     /**
-     * Validates the determined singlemoves to establish the active player's move type.
-     *
-     * @param moves
-     *         A list of single moves.
-     *
-     * @return True if any move in the list is a valid single move, else, false.
-     */
-    public boolean validateSingleMoves(ArrayList<SingleMove> moves) {
-        for (int i = 0; i < moves.size(); i++) {
-            SingleMove move = moves.get(i);
-
-            if (validateSingleMove(move)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Validates a singular single move.
      *
      * @param move
@@ -286,23 +287,6 @@ public class Board implements Iterable<Row> {
     }
 
     /**
-     * Validates the determined jumpMoves to establish the active player's move type.
-     *
-     * @param moves
-     *         A list of jump moves.
-     *
-     * @return True if any move in the list is a valid jump move, else, false.
-     */
-    public boolean validateJumpMoves(ArrayList<JumpMove> moves) {
-        for (JumpMove move : moves) {
-            if (validateJumpMove(move)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Validates a singular jump move.
      *
      * @param move
@@ -311,12 +295,24 @@ public class Board implements Iterable<Row> {
      * @return True if the jump move is valid, else, false.
      */
     private boolean validateJumpMove(JumpMove move) {
+        Position start = move.getStart();
+        int startRow = start.getRow();
+        int startCol = start.getCell();
         Position end = move.getEnd();
         int endRow = end.getRow();
         int endCol = end.getCell();
+        double slope = 1.0 * (endCol - startCol) / (endRow - startRow);
+        if (Math.abs(slope) != 1.0) {
+            return false;
+        }
         Position jumped = move.getJumpedPosition();
         try {
             if (getSpace(jumped, this).getPiece().getColor() != activePlayerColor) {
+                if (startJumpPos != null) {
+                    if (getSpace(startJumpPos, this).getPiece().equals(this.board[endRow][endCol].getPiece())) {
+                        return true;
+                    }
+                }
                 return this.board[endRow][endCol].isValid();
             }
         }
@@ -397,9 +393,6 @@ public class Board implements Iterable<Row> {
      */
     public Message makeMove(ArrayList<Move> moves) {
         // Handles the win condition where there are no possible moves.
-
-        System.out.println("makeMove: " + moves);
-
         if (moveType == MoveType.Blocked) {
             gameWin.checkBlockedGameOver(activePlayerColor);
         }
@@ -408,7 +401,6 @@ public class Board implements Iterable<Row> {
         }
         // Create the board to make the moves on.
         Board copy = new Board(this);
-
         // Establish the end position and space.
         Position endPos = null;
         Space endSpace = null;
@@ -456,7 +448,6 @@ public class Board implements Iterable<Row> {
         for (int row = 0; row < BOARD_DIM; row++) {
             System.arraycopy(copy.board[row], 0, this.board[row], 0, BOARD_DIM);
         }
-
         // Flip the board orientation for the next player.
         flip();
         // Check the win condition for blocked moves.
@@ -528,18 +519,16 @@ public class Board implements Iterable<Row> {
         return textBoard.toString();
     }
 
-
     /**
      * equals method for board
      *
      * @param o
-     *          the other object being compared to this board
+     *         the other object being compared to this board
      *
      * @return true if they are equal
      */
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Board board1 = (Board) o;
@@ -552,8 +541,7 @@ public class Board implements Iterable<Row> {
      * @return the hashcode generated by the Arrays class
      */
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Arrays.hashCode(board);
     }
 
@@ -561,19 +549,15 @@ public class Board implements Iterable<Row> {
      * Creates a board from a string
      *
      * @param strBoard
-     *          board String
+     *         board String
      */
     public static Board fromString(String strBoard) {
         Board board = new Board();
-
         Space[][] arr = board.getBoard();
-
         String[] tokens = strBoard.split("\n");
-
-        for(int i =0 ; i < board.BOARD_DIM; i++) {
-            for(int j =0 ; j < board.BOARD_DIM; j++) {
+        for (int i = 0; i < board.BOARD_DIM; i++) {
+            for (int j = 0; j < board.BOARD_DIM; j++) {
                 char[] cTokens = tokens[i].toCharArray();
-
                 switch (cTokens[j]) {
                     case '_':
                         arr[i][j].setPiece(null);
@@ -593,54 +577,6 @@ public class Board implements Iterable<Row> {
                 }
             }
         }
-
         return board;
-    }
-
-    //    public void ptuiDebug() {
-//        System.out.println("Enter in start pos and end pos on separate lines");
-//        System.out.println("Start:row col");
-//        System.out.println("End:row col");
-    public void ptuiDebug() {
-        System.out.println("Enter in start pos and end pos on separate lines");
-        System.out.println("Start:row col");
-        System.out.println("End:row col");
-//        Scanner scan = new Scanner(System.in);
-        String start;
-        String end;
-
-        int startRow;
-        int startCol;
-        int endRow;
-        int endCol;
-//        while(true){
-//        System.out.println(this);
-//            start = scan.nextLine();
-//            end = scan.nextLine();
-//
-//            String[] startCords = start.split(" ");
-//            startRow = Integer.parseInt(startCords[0]);
-//            startCol = Integer.parseInt(startCords[1]);
-//            String[] endCords = end.split(" ");
-//            endRow = Integer.parseInt(endCords[0]);
-//            endCol = Integer.parseInt(endCords[1]);
-//
-//            Move move = new Move(new Position(startRow, startCol), new Position(endRow, endCol));
-
-        Move move = new JumpMove(new Position(5, 0), new Position(3, 2));
-
-        ArrayList<Move> moves = new ArrayList<>();
-        moves.add(move);
-
-        Move move1 = new JumpMove(new Position(3, 2), new Position(1, 4));
-        moves.add(move1);
-        makeMove(moves);
-            System.out.println(this);
-//        }
-    }
-
-    public static void main(String[] args) {
-        GameWin gameWin = mock(GameWin.class);
-        new Board(gameWin);
     }
 }

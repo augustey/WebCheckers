@@ -7,7 +7,6 @@ import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,26 +19,27 @@ import static spark.Spark.halt;
  * @author <a href='mailto:jrl9984@rit.edu'>Jim Logan</a>
  */
 public class GetReplayPageRoute implements Route {
+
     private final TemplateEngine templateEngine;
+
+    // The application attributes.
     private final GameCenter gameCenter;
     private final TurnLogger turnLogger;
 
+    // Attribute Keys
     private static final String TITLE_ATTR = "title";
     private static final String GAMELIST_ATTR = "gameList";
-
     private static final String TITLE = "Replay";
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /replay} HTTP requests.
      *
      * @param templateEngine
-     *          The HTML template rendering engine.
-     *
+     *         The HTML template rendering engine.
      * @param gameCenter
-     *          The GameCenter that stores active games
-     *
+     *         The GameCenter that stores active games.
      * @param turnLogger
-     *          The turnLogger used to store turns of a game
+     *         The turnLogger used to store turns of a game.
      */
     public GetReplayPageRoute(final TemplateEngine templateEngine, final GameCenter gameCenter, final TurnLogger turnLogger) {
         this.templateEngine = templateEngine;
@@ -60,23 +60,16 @@ public class GetReplayPageRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         Session httpSession = request.session();
-
         final Map<String, Object> vm = new HashMap<>();
-
         Player player = httpSession.attribute(PLAYER_KEY);
-
-        if(turnLogger.isReviewing(player)) {
+        if (turnLogger.isReplaying(player)) {
             response.redirect(WebServer.REPLAY_GAME_URL + "?gameID=" + turnLogger.getGame(player).getId());
             halt();
         }
-
         vm.put(TITLE_ATTR, TITLE);
         vm.put(PLAYER_KEY, player);
-
         List<Game> list = gameCenter.getCompletedGames();
-
         vm.put(GAMELIST_ATTR, list);
-
         return templateEngine.render(new ModelAndView(vm, "replay.ftl"));
     }
 }

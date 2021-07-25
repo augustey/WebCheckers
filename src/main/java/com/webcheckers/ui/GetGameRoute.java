@@ -16,14 +16,17 @@ import java.util.logging.Logger;
 import static spark.Spark.halt;
 
 /**
- * UI controller to get the game route.
+ * The UI controller to get the game route.
  *
  * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
+ * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
  */
 public class GetGameRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
     private final TemplateEngine templateEngine;
+
+    // The application attributes.
     private final PlayerLobby playerLobby;
     private final GameCenter gameCenter;
     private final TurnLogger turnLogger;
@@ -46,8 +49,7 @@ public class GetGameRoute implements Route {
 
     // Freemarker values.
     public static final String TITLE = "Checkers";
-    public static final String VIEW_MODE = "PLAY"; //TODO: Add enumeration
-
+    public static final String VIEW_MODE = "PLAY";
     public static final String VIEW_NAME = "game.ftl";
 
     /**
@@ -128,7 +130,7 @@ public class GetGameRoute implements Route {
         vm.put(USER_ATTR, player);
         vm.put(RED_PLAYER_ATTR, playerService.getRedPlayer());
         vm.put(WHITE_PLAYER_ATTR, playerService.getWhitePlayer());
-        vm.put(VIEW_MODE_ATTR, VIEW_MODE); //TODO: Add enumeration
+        vm.put(VIEW_MODE_ATTR, VIEW_MODE);
         vm.put(ACTIVE_COLOR_ATTR, playerService.getActivePlayerColor());
         vm.put(BOARD_VIEW_ATTR, playerService.getBoardView());
 
