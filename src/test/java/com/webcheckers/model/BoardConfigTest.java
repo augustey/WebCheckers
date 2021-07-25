@@ -41,6 +41,7 @@ public class BoardConfigTest {
         backdoors.add(BoardConfig.NO_PIECES);
         backdoors.add(BoardConfig.CHAIN_JUMP);
         backdoors.add(BoardConfig.BLOCKED);
+        backdoors.add(BoardConfig.KING_CHAIN);
     }
 
     /**

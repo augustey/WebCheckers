@@ -14,6 +14,7 @@ public class BoardConfig {
     public static final String SINGLE_JUMP = "singlejump";
     public static final String NO_PIECES = "nopieces";
     public static final String BLOCKED = "blocked";
+    public static final String KING_CHAIN = "kingchain";
 
     /**
      * Generate a board configuration based on a string.
@@ -40,6 +41,9 @@ public class BoardConfig {
                 break;
             case BLOCKED:
                 generateBlocked(board);
+                break;
+            case KING_CHAIN:
+                generateKingChainJump(board);
                 break;
         }
 
@@ -79,6 +83,23 @@ public class BoardConfig {
                     boardArr[2 * i + 1][space.getColIdx()+(i%2 == 0 ? -1:0)].setPiece(space.getPiece());
                     space.setPiece(null);
                 }
+            }
+        }
+    }
+
+    /**
+     * Alter a board to a configuration where red has a king chain jump on their turn.
+     * @param board The board to change (Assumed to be in initial configuration)
+     */
+    public static void generateKingChainJump(Board board) {
+        Space[][] boardArr = board.getBoard();
+
+        generateChainJump(board);
+
+        for(int i = 6; i < 8; i++) {
+            for(Space space: boardArr[i]) {
+                if(space.getPiece() != null)
+                    space.setPiece(new King(Piece.Color.RED));
             }
         }
     }
