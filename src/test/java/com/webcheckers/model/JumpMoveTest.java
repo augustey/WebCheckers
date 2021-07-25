@@ -72,8 +72,13 @@ public class JumpMoveTest {
         assertNotEquals(CuT, jm1);
         // Test with the same jumped position
         JumpMove jm2 = new JumpMove(new Position(0, 3), new Position(2, 1));
-        System.out.println(jm2.getJumpedPosition());
         assertEquals(CuT, jm2);
+        // Test with the same move but different object
+        JumpMove jm3 = new JumpMove(new Position(0, 1), new Position(2, 3));
+        assertEquals(CuT, jm3);
+        // Test completely wrong jump object.
+        JumpMove jm4 = new JumpMove(new Position(0, 3), new Position(2, 3));
+        assertNotEquals(CuT, jm4);
         // Test equals with a different object
         GameCenter gameCenter = new GameCenter();
         assertNotEquals(CuT, gameCenter);
