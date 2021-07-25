@@ -64,10 +64,11 @@ public class PieceTest {
         King piece = new King(Piece.Color.RED);
         King piece1 = new King(Piece.Color.RED);
         King piece2 = new King(Piece.Color.WHITE);
-
+        SinglePiece sp1 = new SinglePiece(Piece.Color.RED);
         assertEquals(piece, piece1);
         assertEquals(piece, piece);
         assertNotEquals(piece, piece2);
+        assertNotEquals(sp1, piece1);
         assertNotEquals(piece, new Player("fail"));
     }
 
