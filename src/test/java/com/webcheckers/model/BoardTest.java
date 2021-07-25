@@ -296,5 +296,11 @@ public class BoardTest {
         assertEquals(Board.MoveType.Jump, CuTJump.getMoveType());
     }
 
-
+    /**
+     * Test the isPossibleMove method.
+     */
+    @Test
+    public void ctor_isPossibleMove() {
+        // Test the isPossibleMove
+    }
 }
