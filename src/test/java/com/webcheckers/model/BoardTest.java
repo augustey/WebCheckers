@@ -161,7 +161,7 @@ public class BoardTest {
         Board copy = new Board(CuTGeneralBoard);
         copy.flip();
         copy.flip();
-        assertEquals(CuTGeneralBoard.toString(), copy.toString());
+        assertEquals(CuTGeneralBoard, copy);
     }
 
     /**
@@ -169,13 +169,11 @@ public class BoardTest {
      */
     @Test
     public void ctor_makeMoveSingleMove() {
-        Board startBoard = new Board(CuTGeneralBoard);
         Position end = new Position(4, 1);
         Move singleMove = new SingleMove(new Position(5, 0), end);
         ArrayList<Move> singleMoves = new ArrayList<>();
         singleMoves.add(singleMove);
         CuTGeneralBoard.makeMove(singleMoves);
-
         CuTGeneralBoard.flip();
         assertSame(CuTJump.getSpace(end, CuTGeneralBoard).getPiece().getColor(), Piece.Color.RED);
     }
@@ -190,7 +188,6 @@ public class BoardTest {
         ArrayList<Move> jumpMoves = new ArrayList<>();
         jumpMoves.add(jumpMove);
         CuTJump.makeMove(jumpMoves);
-
         System.out.println(CuTJump);
         CuTJump.flip();
         assertSame(CuTJump.getSpace(end, CuTJump).getPiece().getColor(), Piece.Color.RED);
@@ -249,7 +246,7 @@ public class BoardTest {
         SingleMove move = new SingleMove(start, end);
         ArrayList<Move> moves = new ArrayList<>();
         moves.add(move);
-        CuTKing.determineMoveType();
+        CuTKing.getMoveType();
         CuTKing.makeMove(moves);//caught by first if statement
         CuTKing.flip();
         assertEquals(Piece.Type.KING, CuTKing.getSpace(end, CuTKing).getPiece().getType());
@@ -298,4 +295,6 @@ public class BoardTest {
         assertEquals(Board.MoveType.Blocked, CuTBlocked.getMoveType());
         assertEquals(Board.MoveType.Jump, CuTJump.getMoveType());
     }
+
+
 }
