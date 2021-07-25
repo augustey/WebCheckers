@@ -19,20 +19,29 @@ import java.util.ArrayList;
  */
 
 @Tag("Model-tier")
+
 public class BoardTest {
 
+    /**
+     * The component-under-test (CuT).
+     */
     private Board CuTGeneralBoard;
     private Board CuTJump;
     private Board CuTChainJump;
     private Board CuTBlocked;
     private Board CuTKing;
 
+    // Mock objects.
     private GameWin gameWin;
 
+    /**
+     * Setup the new mock object for the unit tests.
+     */
     @BeforeEach
     public void setUp() {
-        //this sets up the normal starting board
+        // Setup the mock object.
         gameWin = mock(GameWin.class);
+        // Generate the boards.
         CuTGeneralBoard = new Board(gameWin);
         CuTJump = new Board(gameWin);
         generateJumpableBoard();
@@ -125,7 +134,6 @@ public class BoardTest {
      */
     @Test
     public void ctor_determineMoveTypeSingle() {
-//        System.out.println(CuTGeneralBoard);
         assertEquals(Board.MoveType.Single, CuTGeneralBoard.getMoveType());
     }
 
@@ -134,7 +142,6 @@ public class BoardTest {
      */
     @Test
     public void ctor_determineMoveTypeJump() {
-//        System.out.println(CuTJump);
         assertEquals(Board.MoveType.Jump, CuTJump.getMoveType());
     }
 
@@ -162,7 +169,6 @@ public class BoardTest {
      */
     @Test
     public void ctor_makeMoveSingleMove() {
-        //Single move
         Board startBoard = new Board(CuTGeneralBoard);
         Position end = new Position(4, 1);
         Move singleMove = new SingleMove(new Position(5, 0), end);
@@ -172,7 +178,6 @@ public class BoardTest {
 
         CuTGeneralBoard.flip();
         assertSame(CuTJump.getSpace(end, CuTGeneralBoard).getPiece().getColor(), Piece.Color.RED);
-//        assertSame(CuTGeneralBoard.getSpace(end, CuTGeneralBoard).getPiece().getColor(), Piece.Color.RED);
     }
 
     /**
@@ -180,8 +185,6 @@ public class BoardTest {
      */
     @Test
     public void ctor_makeMoveJump() {
-        //JumpMove
-        //TODO need to create a board that has a singleJump avalible
         Position end = new Position(3, 2);
         Move jumpMove = new JumpMove(new Position(5, 0), end);
         ArrayList<Move> jumpMoves = new ArrayList<>();
@@ -191,7 +194,6 @@ public class BoardTest {
         System.out.println(CuTJump);
         CuTJump.flip();
         assertSame(CuTJump.getSpace(end, CuTJump).getPiece().getColor(), Piece.Color.RED);
-        //TODO show the it was exicuted
     }
 
     /**
@@ -251,8 +253,6 @@ public class BoardTest {
         CuTKing.makeMove(moves);//caught by first if statement
         CuTKing.flip();
         assertEquals(Piece.Type.KING, CuTKing.getSpace(end, CuTKing).getPiece().getType());
-//        System.out.println(CuTKing);
-
     }
 
     /**
@@ -277,8 +277,25 @@ public class BoardTest {
      */
     @Test
     public void ctor_getBoard() {
-        CuTGeneralBoard.getBoard();
+        assertNotNull(CuTGeneralBoard.getBoard());
     }
 
+    /**
+     * Checks that getting a space.
+     */
+    @Test
+    public void ctor_getSpace() {
+        Position pos = new Position(3, 2);
+        assertNotNull(CuTGeneralBoard.getSpace(pos, CuTGeneralBoard));
+    }
 
+    /**
+     * Checks that getting the board's moveType.
+     */
+    @Test
+    public void ctor_getMoveType() {
+        assertEquals(Board.MoveType.Single, CuTGeneralBoard.getMoveType());
+        assertEquals(Board.MoveType.Blocked, CuTBlocked.getMoveType());
+        assertEquals(Board.MoveType.Jump, CuTJump.getMoveType());
+    }
 }
