@@ -99,9 +99,7 @@ public class Board implements Iterable<Row> {
 //                    else if (row == 1) {
 //                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
 //                    }
-                    if(row == 0) {
-                        space.setPiece(null);
-                    }
+
                 }
                 else {
                     space = new Space(row, col, null, false);
