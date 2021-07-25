@@ -40,7 +40,8 @@ public class Space {
     /**
      * Copy constructor for space.
      *
-     * @param copy A Space to copy.
+     * @param copy
+     *         A Space to copy.
      */
     public Space(Space copy) {
         this.rowIdx = copy.rowIdx;
@@ -124,8 +125,8 @@ public class Space {
         }
         else if (other instanceof Space) {
             Space otherSpace = (Space) other;
-            if(otherSpace.rowIdx == rowIdx && otherSpace.colIdx == colIdx && otherSpace.isValid == isValid) {
-                if((otherSpace.piece == null && this.piece == null) || (otherSpace.piece.equals(this.piece))) {
+            if (otherSpace.rowIdx == rowIdx && otherSpace.colIdx == colIdx && otherSpace.isValid == isValid) {
+                if ((otherSpace.piece == null && this.piece == null) || (otherSpace.piece.equals(this.piece))) {
                     return true;
                 }
             }
