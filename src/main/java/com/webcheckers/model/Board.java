@@ -76,29 +76,29 @@ public class Board implements Iterable<Row> {
                 Space space;
                 if (col % 2 + row % 2 == 1) {
                     space = new Space(row, col, null, true);
-                    if (row > BOARD_DIM - 4) {
-                        space.setPiece(new SinglePiece(Piece.Color.RED));
-                    }
-                    else if (row < 3) {
-                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-                    }
+//                    if (row > BOARD_DIM - 4) {
+//                        space.setPiece(new SinglePiece(Piece.Color.RED));
+//                    }
+//                    else if (row < 3) {
+//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+//                    }
                     // TODO Test SinglePiece jumping bug.
 //                    if (row > BOARD_DIM - 3) {
 //                        space.setPiece(new SinglePiece(Piece.Color.RED));
 //                    }
                     // TODO Test King jumping.
-//                    if (row > BOARD_DIM - 3) {
-//                        space.setPiece(new King(Piece.Color.RED));
-//                    }
-//                    else if (row == 5) {
-//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-//                    }
-//                    else if(row == 3) {
-//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-//                    }
-//                    else if(row == 1) {
-//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-//                    }
+                    if (row > BOARD_DIM - 3) {
+                        space.setPiece(new King(Piece.Color.RED));
+                    }
+                    else if (row == 5) {
+                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+                    }
+                    else if(row == 3) {
+                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+                    }
+                    else if(row == 1) {
+                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+                    }
                 }
                 else {
                     space = new Space(row, col, null, false);
@@ -196,12 +196,17 @@ public class Board implements Iterable<Row> {
         if (!possibleMoves.contains(move)) {
             if (moveType == MoveType.Jump && this.startJumpPos != null) {
                 JumpMove jm = new JumpMove(move);
+                System.out.println("Validate the jump move: " + validateJumpMove(jm));
                 if (getSpace(startJumpPos, this).getPiece() instanceof SinglePiece) {
                     if (validateJumpMove(jm)) {
                         return jm.getStart().getRow() != 0;
                     }
                 }
-                System.out.println("Validate the jump move: " + validateJumpMove(jm));
+                if (!validateJumpMove(jm)) {
+                    if (startJumpPos != null) {
+                        return jm.getEnd().equals(startJumpPos);
+                    }
+                }
                 return validateJumpMove(jm);
             }
         }
@@ -308,11 +313,6 @@ public class Board implements Iterable<Row> {
         Position jumped = move.getJumpedPosition();
         try {
             if (getSpace(jumped, this).getPiece().getColor() != activePlayerColor) {
-                if (startJumpPos != null) {
-                    if (getSpace(startJumpPos, this).getPiece().equals(this.board[endRow][endCol].getPiece())) {
-                        return true;
-                    }
-                }
                 return this.board[endRow][endCol].isValid();
             }
         }
