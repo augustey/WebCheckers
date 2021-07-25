@@ -57,13 +57,16 @@ public class Board implements Iterable<Row> {
     }
 
     /**
-     * Constructor for the board class that builds the board
+     * Constructor for the board class that builds the board.
+     * Used only for generating the strings used for Replaying games.
      */
     public Board() {
         this.gameWin = null;
         this.activePlayerColor = Piece.Color.RED;
         this.possibleMoves = new ArrayList<>();
         this.board = new Space[BOARD_DIM][BOARD_DIM];
+        this.startJumpPos = null;
+        this.moveType = null;
         generateBoard();
     }
 
@@ -73,29 +76,29 @@ public class Board implements Iterable<Row> {
                 Space space;
                 if (col % 2 + row % 2 == 1) {
                     space = new Space(row, col, null, true);
-//                    if (row > BOARD_DIM - 4) {
-//                        space.setPiece(new SinglePiece(Piece.Color.RED));
-//                    }
-//                    else if (row < 3) {
-//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-//                    }
+                    if (row > BOARD_DIM - 4) {
+                        space.setPiece(new SinglePiece(Piece.Color.RED));
+                    }
+                    else if (row < 3) {
+                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+                    }
                     // TODO Test SinglePiece jumping bug.
 //                    if (row > BOARD_DIM - 3) {
 //                        space.setPiece(new SinglePiece(Piece.Color.RED));
 //                    }
                     // TODO Test King jumping.
-                    if (row > BOARD_DIM - 3) {
-                        space.setPiece(new King(Piece.Color.RED));
-                    }
-                    else if (row == 5) {
-                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-                    }
-                    else if(row == 3) {
-                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-                    }
-                    else if(row == 1) {
-                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
-                    }
+//                    if (row > BOARD_DIM - 3) {
+//                        space.setPiece(new King(Piece.Color.RED));
+//                    }
+//                    else if (row == 5) {
+//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+//                    }
+//                    else if (row == 3) {
+//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+//                    }
+//                    else if (row == 1) {
+//                        space.setPiece(new SinglePiece(Piece.Color.WHITE));
+//                    }
                 }
                 else {
                     space = new Space(row, col, null, false);
@@ -132,7 +135,7 @@ public class Board implements Iterable<Row> {
      * @throws ArrayIndexOutOfBoundsException
      *         Throws if the array is indexed out of bounds
      */
-    public void determineMoveType() throws ArrayIndexOutOfBoundsException {
+    private void determineMoveType() throws ArrayIndexOutOfBoundsException {
         moveType = MoveType.Blocked;
         for (int row = 0; row < BOARD_DIM; row++) {
             for (int col = 0; col < BOARD_DIM; col++) {
@@ -185,7 +188,6 @@ public class Board implements Iterable<Row> {
      * @return True if a move is valid, else, false.
      */
     public boolean isPossibleMove(Move move) {
-        System.out.println(move);
         determineMoveType();
         if (possibleMoves.isEmpty()) {
             generatePossibleMoves();
@@ -193,7 +195,6 @@ public class Board implements Iterable<Row> {
         if (!possibleMoves.contains(move)) {
             if (moveType == MoveType.Jump && this.startJumpPos != null) {
                 JumpMove jm = new JumpMove(move);
-                System.out.println("Validate the jump move: " + validateJumpMove(jm));
                 if (getSpace(startJumpPos, this).getPiece() instanceof SinglePiece) {
                     if (validateJumpMove(jm)) {
                         return jm.getStart().getRow() != 0;
@@ -341,7 +342,7 @@ public class Board implements Iterable<Row> {
      * @param end
      *         The end space.
      */
-    public void executeSingleMove(Space start, Space end) {
+    private void executeSingleMove(Space start, Space end) {
         end.setPiece(start.getPiece());
         start.setPiece(null);
     }
@@ -356,7 +357,7 @@ public class Board implements Iterable<Row> {
      * @param end
      *         The end space.
      */
-    public void executeJumpMove(Space start, Space jumped, Space end) {
+    private void executeJumpMove(Space start, Space jumped, Space end) {
         end.setPiece(start.getPiece());
         jumped.setPiece(null);
         start.setPiece(null);
@@ -517,25 +518,29 @@ public class Board implements Iterable<Row> {
     }
 
     /**
-     * equals method for board
+     * Equals method that compares two Boards together.
      *
-     * @param o
-     *         the other object being compared to this board
+     * @param other
+     *         The other board object.
      *
-     * @return true if they are equal
+     * @return True if the board objects are equal, else, false.
      */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Board board1 = (Board) o;
-        return Arrays.equals(board, board1.board);
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        else if (other instanceof Board) {
+            Board board1 = (Board) other;
+            return Arrays.equals(board, board1.board);
+        }
+        return false;
     }
 
     /**
-     * hash code method for board
+     * Creates a hashcode due to overriding equals method.
      *
-     * @return the hashcode generated by the Arrays class
+     * @return A unique hashcode.
      */
     @Override
     public int hashCode() {
