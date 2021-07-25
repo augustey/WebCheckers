@@ -70,6 +70,27 @@ public class Board implements Iterable<Row> {
         generateBoard();
     }
 
+    /**
+     * Copy constructor used for performing moves and for communicating the board to the UI.
+     *
+     * @param copy
+     *         The other board to copy from.
+     */
+    public Board(Board copy) {
+        this.gameWin = copy.gameWin;
+        this.startJumpPos = null;
+        this.possibleMoves = new ArrayList<>(copy.possibleMoves);
+        this.board = new Space[BOARD_DIM][BOARD_DIM];
+        for (int row = 0; row < BOARD_DIM; row++) {
+            for (int col = 0; col < BOARD_DIM; col++) {
+                Space space = new Space(copy.board[row][col]);
+                this.board[row][col] = space;
+            }
+        }
+        this.moveType = copy.getMoveType();
+        this.activePlayerColor = copy.getActivePlayerColor();
+    }
+
     public void generateBoard() {
         for (int row = 0; row < BOARD_DIM; row++) {
             for (int col = 0; col < BOARD_DIM; col++) {
@@ -107,27 +128,6 @@ public class Board implements Iterable<Row> {
                 this.board[row][col] = space;
             }
         }
-    }
-
-    /**
-     * Copy constructor used for performing moves and for communicating the board to the UI.
-     *
-     * @param copy
-     *         The other board to copy from.
-     */
-    public Board(Board copy) {
-        this.gameWin = copy.gameWin;
-        this.startJumpPos = null;
-        this.possibleMoves = new ArrayList<>(copy.possibleMoves);
-        this.board = new Space[BOARD_DIM][BOARD_DIM];
-        for (int row = 0; row < BOARD_DIM; row++) {
-            for (int col = 0; col < BOARD_DIM; col++) {
-                Space space = new Space(copy.board[row][col]);
-                this.board[row][col] = space;
-            }
-        }
-        this.moveType = copy.getMoveType();
-        this.activePlayerColor = copy.getActivePlayerColor();
     }
 
     /**

@@ -48,8 +48,12 @@ public class Turn {
      * Removes the last move in the turn.
      */
     public Move removeMove() {
-        int i = moves.size() - 1;
-        return moves.remove(i);
+        try {
+            int i = moves.size() - 1;
+            return moves.remove(i);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     /**

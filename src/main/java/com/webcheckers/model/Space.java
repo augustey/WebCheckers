@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.util.Objects;
+
 /**
  * The Space class is responsible for handling piece placement.
  *
@@ -126,9 +128,7 @@ public class Space {
         else if (other instanceof Space) {
             Space otherSpace = (Space) other;
             if (otherSpace.rowIdx == rowIdx && otherSpace.colIdx == colIdx && otherSpace.isValid == isValid) {
-                if ((otherSpace.piece == null && this.piece == null) || (otherSpace.piece.equals(this.piece))) {
-                    return true;
-                }
+                return (otherSpace.piece == null && this.piece == null) || (Objects.equals(otherSpace.piece, this.piece));
             }
         }
         return false;

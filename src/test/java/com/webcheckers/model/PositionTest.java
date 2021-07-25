@@ -64,13 +64,13 @@ public class PositionTest {
      */
     @Test
     public void position_equals_test() {
-        assertTrue(CuT.equals(CuT));
+        assertEquals(CuT, CuT);
         // Test equals with a different position object
         Position position = new Position(1, 2);
-        assertFalse(CuT.equals(position));
+        assertNotEquals(CuT, position);
         // Test equals with a different object
         GameCenter gameCenter = new GameCenter();
-        assertFalse(CuT.equals(gameCenter));
+        assertNotEquals(CuT, gameCenter);
     }
 
     /**
@@ -79,9 +79,7 @@ public class PositionTest {
     @Test
     public void to_string_test() {
         String expected = "Position{row=2, cell=5}";
-
         String actual = CuT.toString();
-
         assertEquals(expected, actual);
     }
 }

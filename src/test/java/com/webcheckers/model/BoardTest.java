@@ -165,7 +165,7 @@ public class BoardTest {
     }
 
     /**
-     * succesfully exicutes a single move
+     * Successfully executes a single move.
      */
     @Test
     public void ctor_makeMoveSingleMove() {
@@ -179,7 +179,7 @@ public class BoardTest {
     }
 
     /**
-     * checks if a jumpMove with no chain jump is exicuted succesfully
+     * checks if a jumpMove with no chain jump is executed successfully.
      */
     @Test
     public void ctor_makeMoveJump() {
@@ -194,12 +194,11 @@ public class BoardTest {
     }
 
     /**
-     * Checks if you try to jump with another jump avalible it will reject the move and if you then all further jumps it
-     * will then succesfully exicute turn
+     * Checks if you try to jump with another jump available it will reject the move and if you then all further jumps
+     * it will then successfully execute a turn.
      */
     @Test
     public void ctor_makeMoveChainJump() {
-        //TODO need to create a board that a chain jump is avalible
         Position end = new Position(3, 2);
         Position start = new Position(5, 0);
 
@@ -208,8 +207,7 @@ public class BoardTest {
         ArrayList<Move> jumpMoves = new ArrayList<>();
         jumpMoves.add(jumpMove);
         CuTChainJump.makeMove(jumpMoves);//should fail
-        System.out.println(CuTChainJump);
-        assertSame(CuTChainJump.getSpace(start, CuTChainJump).getPiece().getColor(), Piece.Color.RED);//another jump is avalible
+        assertSame(CuTChainJump.getSpace(start, CuTChainJump).getPiece().getColor(), Piece.Color.RED);
         end = new Position(1, 4);
         Move jumpMove1 = new JumpMove(new Position(3, 2), end);
         jumpMoves.add(jumpMove1);
@@ -236,11 +234,10 @@ public class BoardTest {
 //    }
 
     /**
-     *
+     * Testing kinging a piece.
      */
     @Test
     public void ctor_KingingPiece() {
-//        System.out.println(CuTKing);
         Position start = new Position(1, 0);
         Position end = new Position(0, 1);
         SingleMove move = new SingleMove(start, end);
@@ -296,5 +293,28 @@ public class BoardTest {
         assertEquals(Board.MoveType.Jump, CuTJump.getMoveType());
     }
 
+    /**
+     * Test the isPossibleMove method.
+     */
+    @Test
+    public void ctor_isPossibleMove() {
+        // Test a single move in general board.
+        Position start1 = new Position(5, 0);
+        Position end1 = new Position(4, 1);
+        SingleMove sm1 = new SingleMove(start1, end1);
+        assertTrue(CuTGeneralBoard.isPossibleMove(sm1));
+        // Test a jump move in jumpable board.
+        Position start2 = new Position(5, 0);
+        Position end2 = new Position(3, 2);
+        JumpMove jm1 = new JumpMove(start2, end2);
+        assertTrue(CuTJump.isPossibleMove(jm1));
+        // Test a jump move in chain jump board.
+        Position start3 = new Position(3, 2);
+        Position end3 = new Position(1, 4);
+        JumpMove jm2 = new JumpMove(start3, end3);
+        assertTrue(CuTChainJump.isPossibleMove(jm1));
+        assertTrue(CuTChainJump.isPossibleMove(jm2));
+        //
 
+    }
 }

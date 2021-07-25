@@ -132,6 +132,13 @@ game and renders the exit button. When clicked, the button then directs the play
 button also appears whenever the game ends, such as when one player runs out of pieces, or when a player cannot make any
 moves.
 
+After a game is completed, the player is directed back to the home screen, and from there they can select the replay 
+link in the navigation bar. From there, they can select a game that was previously played. Selecting the link brings the 
+player to the game, where the only options they have are to press three buttons. Pressing the next button advances the 
+game along one turn. Pressing the previous button precedes the game one turn. Pressing the exit button returns the 
+player to the home screen. If there are no turns following or preceding the current turn, then the respective buttons 
+are unable to be pressed.
+
 ### UI Tier
 
 The UI tier of the application contains all the HTTP view components for the webserver. The first route that is called

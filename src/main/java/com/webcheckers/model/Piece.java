@@ -85,18 +85,22 @@ public abstract class Piece {
     /**
      * equals method for piece
      *
-     * @param o
+     * @param other
      *         the other object this piece is being compared to
      *
      * @return true if they are equal
      */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Piece piece = (Piece) o;
-        return color == piece.color &&
-                type == piece.type;
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        else if (other instanceof Piece) {
+            Piece piece = (Piece) other;
+            return color == piece.color &&
+                    type == piece.type;
+        }
+        return false;
     }
 
     /**
