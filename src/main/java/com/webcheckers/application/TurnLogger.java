@@ -5,55 +5,54 @@ import com.webcheckers.model.*;
 import java.util.*;
 
 /**
- * Logs turns for games
+ * The TurnLogger class is responsible for logging turns during a game.
  *
  * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
  */
-public class TurnLogger
-{
+public class TurnLogger {
+
+    // Map of Turns.
     private Map<String, List<String>> turns;
-    private Map<Player, Game> reviewing;
+
+    // Map of Games for replay.
+    private Map<Player, Game> replay;
 
     /**
-     * Constructor for TurnLogger that initializes the turns Map
+     * Constructor for TurnLogger that initializes the Map of turns and games.
      */
     public TurnLogger() {
-        turns = new HashMap<>();
-        reviewing = new HashMap<>();
+        this.turns = new HashMap<>();
+        this.replay = new HashMap<>();
     }
 
     /**
-     * Logs a json string of the board
+     * Log a json string of the board.
      *
      * @param game
-     *          The game whose turns are being logged
+     *         The game whose turns are being logged
      */
     public void logTurn(Game game) {
-        Board board = new Board(game.getBoard()); //Create copy of the board
+        // Create a copy of the board
+        Board board = new Board(game.getBoard());
         String id = game.getId();
-
-
-        if(!turns.containsKey(id) || turns.get(id) == null) {
+        if (!turns.containsKey(id) || turns.get(id) == null) {
             LinkedList<String> list = new LinkedList<>();
             System.out.println("New Board");
             turns.put(id, list);
         }
-
-
         List<String> list = turns.get(id);
-
         list.add(board.toString());
         System.out.println("logged");
         System.out.println(list.get(list.size() - 1));
     }
 
     /**
-     * Logs a json string of the board
+     * Log a json string of the board.
      *
      * @param game
-     *     The game whose turns are being logged
+     *         The game whose turns are being logged.
      *
-     * @return List of turns
+     * @return The list of turns.
      */
     public List<String> getTurns(Game game) {
         String id = game.getId();
@@ -67,83 +66,78 @@ public class TurnLogger
      */
     public synchronized BoardView getBoardView(Board board) {
         Iterator<Row> boardView;
-
-        if(board.getActivePlayerColor() == Piece.Color.WHITE) board.flip();
-
+        if (board.getActivePlayerColor() == Piece.Color.WHITE) {
+            board.flip();
+        }
         boardView = board.iterator();
-
         return new BoardView(boardView);
     }
 
     /**
-     * Adds a player to the reviewing map
+     * Adds a player to the reviewing map.
      *
      * @param player
-     *          player that is added to the map
-     *
+     *         The player that is added to the map.
      * @param game
-     *          game that is added to the map
+     *         The game that is added to the map.
      */
-    public synchronized void startReview(Player player, Game game) {
-        reviewing.put(player, game);
+    public synchronized void startReplay(Player player, Game game) {
+        replay.put(player, game);
     }
 
     /**
-     * Determines if player is currently reviewing a game
+     * Determines if player is currently reviewing a game.
      *
      * @param player
-     *          player that is being checked
+     *         The player that is being checked.
      *
-     * @return true if the player is reviewing
+     * @return True if the player is reviewing, else, false.
      */
-    public synchronized boolean isReviewing(Player player) {
-        return reviewing.containsKey(player);
+    public synchronized boolean isReplaying(Player player) {
+        return replay.containsKey(player);
     }
 
     /**
-     * Gets the game based on the player
+     * A getter method for the game based on the player.
      *
      * @param player
-     *          player that is reviewing the game
+     *         The player that is reviewing the game.
      *
-     * @return game that is being reviewed
+     * @return The game that is being reviewed.
      */
     public synchronized Game getGame(Player player) {
-        return reviewing.get(player);
+        return replay.get(player);
     }
 
     /**
-     * Removes the player and game from review
+     * Removes the player and game from review.
      *
      * @param player
-     *          player that is being removed
-     *
+     *         The player that is being removed.
      * @param game
-     *          game that is being removed
+     *         The game that is being removed.
      *
-     * @return true if player was successfully removed
+     * @return True if player was successfully removed, else, false.
      */
-    public synchronized boolean stopReview(Player player, Game game) {
-        return reviewing.remove(player, game);
+    public synchronized boolean stopReplay(Player player, Game game) {
+        return replay.remove(player, game);
     }
 
     /**
-     * Getter for reviewing
+     * A getter for replay map of games.
      *
-     * @return reviewing
+     * @return The map of games to replay.
      */
-    public Map<Player, Game> getReviewing()
-    {
-        return reviewing;
+    public Map<Player, Game> getReplay() {
+        return replay;
     }
 
     /**
-     * Getter for turns
+     * A getter method for turns map.
      *
-     * @return turns
+     * @return The map of turns.
      */
-    public Map<String, List<String>> getTurns()
-    {
+    public Map<String, List<String>> getTurns() {
         return turns;
     }
 }

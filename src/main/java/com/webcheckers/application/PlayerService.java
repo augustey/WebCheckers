@@ -9,6 +9,7 @@ import java.util.*;
  *
  * @author <a href = 'mailto:yaa6681@rit.edu'>Yaqim Auguste</a>
  * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
+ * @author <a href = 'mailto:nmr3095@rit.edu'>Neel Raj</a>
  */
 public class PlayerService {
 
@@ -24,8 +25,8 @@ public class PlayerService {
     // The single game between the two players.
     private final Game game;
 
-    //Represents the current turn
-    private Turn turn;
+    // The PlayerService's turn.
+    private final Turn turn;
 
     /**
      * Constructor for PlayerService.
@@ -71,7 +72,7 @@ public class PlayerService {
     }
 
     /**
-     * A helper getter method for the active player color.
+     * A getter method for the active player color.
      *
      * @return The active player color.
      */
@@ -89,15 +90,19 @@ public class PlayerService {
     }
 
     /**
-     * A getter method for list of moves during the player's turn.
+     * A getter method for list of moves in the turn.
      *
-     * @return The list of moves during the player's turn.
+     * @return The list of moves during the turn.
      */
     public List<Move> getTurnMoves() {
-//        return turnMoves;
         return turn.getMoves();
     }
 
+    /**
+     * A getter method for the turn object.
+     *
+     * @return The Turn.
+     */
     public Turn getTurn() {
         return turn;
     }
@@ -130,7 +135,7 @@ public class PlayerService {
     }
 
     /**
-     * Adds a move to the list of moves in the player's turn.
+     * Adds a move to the turn.
      *
      * @param move
      *         A move that is to be made.
@@ -140,7 +145,7 @@ public class PlayerService {
     }
 
     /**
-     * Removes the last made move from the list of moves.
+     * Removes the last move in the turn.
      *
      * @return A move that was removed.
      */
@@ -149,7 +154,7 @@ public class PlayerService {
     }
 
     /**
-     * Get the id of the game.
+     * A getter method for the id of the game.
      *
      * @return The id of the game.
      */
@@ -158,9 +163,9 @@ public class PlayerService {
     }
 
     /**
-     * Clears the list of moves at the end of a player's turn.
+     * Clears the list of moves for the turn.
      */
-    public synchronized void clearMoves() {//TODO have it create a new TURN instead
+    public synchronized void clearMoves() {
         turn.clearTurnMoves();
     }
 }

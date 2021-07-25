@@ -84,7 +84,7 @@ public class GetHomeRoute implements Route {
             vm.put(PLAYERSET_KEY, playerLobby.getPlayerSet());
 
             //If the player is reviewing a game redirect to the review
-            if(turnLogger.isReviewing(player)) {
+            if (turnLogger.isReplaying(player)) {
                 response.redirect(WebServer.REPLAY_GAME_URL + "?gameID=" + turnLogger.getGame(player).getId());
                 halt();
                 return null;

@@ -29,7 +29,9 @@ public class JumpMove extends Move {
 
     /**
      * Constructor for JumpMove that is used to convert a generic Move to JumpMove
-     * @param move Generic Move object
+     *
+     * @param move
+     *         A generic Move object.
      */
     public JumpMove(Move move) {
         super(move.getStart(), move.getEnd());
@@ -61,8 +63,8 @@ public class JumpMove extends Move {
     }
 
     /**
-     * Equals method that compares two Move objects together
-     * Used to compare move, simpleMove and jumpMove
+     * Equals method that compares two JumpMove objects.
+     *
      * @param other
      *         The other move object.
      *

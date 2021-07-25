@@ -47,12 +47,9 @@ public class GetSignInRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         final Map<String, Object> vm = new HashMap<>();
-
         vm.put(TITLE_ATTR, TITLE);
-
         vm.put(PostSignInRoute.NOT_VALID_USERNAME, false);
         vm.put(PostSignInRoute.SIGNED_IN, false);
-
         return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
     }
 }

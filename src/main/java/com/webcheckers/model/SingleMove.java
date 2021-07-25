@@ -22,10 +22,12 @@ public class SingleMove extends Move {
     }
 
     /**
-     * Constructor for SingleMove used to convert generic Move object to SingleMove
+     * Constructor for SingleMove used to convert generic Move object to SingleMove.
+     *
      * @param move
+     *         A generic move.
      */
-    public SingleMove(Move move){
+    public SingleMove(Move move) {
         super(move.getStart(), move.getEnd());
     }
 }
