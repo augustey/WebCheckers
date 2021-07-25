@@ -77,7 +77,7 @@ public class GameTest {
     public void test_board_pieces() {
         CuT = new Game(player, opponent, gameCenter);
         assertEquals(12, CuT.getGameWin().checkPieceCount(CuT.getBoard(), Piece.Color.RED));
-        assertEquals(12, CuT.getGameWin().checkPieceCount(CuT.getBoard(), Piece.Color.WHITE));
+        assertEquals(8, CuT.getGameWin().checkPieceCount(CuT.getBoard(), Piece.Color.WHITE));
     }
 
     /**
