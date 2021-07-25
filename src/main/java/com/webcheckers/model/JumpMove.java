@@ -78,7 +78,7 @@ public class JumpMove extends Move {
         else if (other instanceof JumpMove) {
             JumpMove move = (JumpMove) other;
             return Objects.equals(jumped, move.jumped) || (Objects.equals(getStart(), move.getStart()) &&
-                    Objects.equals(getEnd(), move.getStart()));
+                    Objects.equals(getEnd(), move.getEnd()));
         }
         return false;
     }

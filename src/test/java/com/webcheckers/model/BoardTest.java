@@ -236,7 +236,7 @@ public class BoardTest {
 //    }
 
     /**
-     *
+     * Testing kinging a piece.
      */
     @Test
     public void ctor_KingingPiece() {
