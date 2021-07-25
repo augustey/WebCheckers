@@ -3,12 +3,9 @@ package com.webcheckers.model;
 import com.webcheckers.application.GameWin;
 import com.webcheckers.util.Message;
 
-import static org.mockito.Mockito.mock;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Scanner;
 
 /**
  * The board class is responsible for handling all functionality related to the board during a game.
