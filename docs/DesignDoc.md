@@ -236,10 +236,7 @@ Moreover, the team’s architectural separation can be improved on. The Model sh
 
 ## Testing
 
-The testing for this product was done using the JUnit framework and with JaCoCo in order to generate coverage reports.
-Additional testing tools such as mockito were used in order to write tests for the UI components. Tests were created for
-each class in order to achieve as much coverage as possible. Tests for the first sprint were done over time, while tests
-for sprint two were written as each new class was created, in order to ensure proper functionality.
+As of the end of Sprint 3, all nine user stories (two from Sprint 3 five from Sprint 2 and two from Sprint 1) have all met their acceptance criteria tests. None have failed their acceptance criteria. All user stories have been tested.
 
 ### Acceptance Testing
 
