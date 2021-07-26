@@ -48,17 +48,21 @@ public class GetReplayStopWatchingRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         Session httpSession = request.session();
+
         httpSession.removeAttribute(TURNID_PARAM);
         Player player = httpSession.attribute(PLAYER_KEY);
+
         Game game = turnLogger.getGame(player);
-        if (turnLogger.stopReplay(player, game)) {
+        boolean stop = turnLogger.stopReplay(player, game);
+
+        if (stop) {
             response.redirect(WebServer.HOME_URL);
             halt();
+            return null;
         }
         else {
             return Message.error("Unable to stop watching");
         }
-        return null;
     }
 }
 
