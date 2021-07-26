@@ -1,9 +1,9 @@
-package com.webcheckers.model;
+package com.webcheckers.application;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
-import com.webcheckers.application.GameWin;
+import com.webcheckers.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Tag;
  * @author <a href = 'mailto:whd8254@g.rit.edu'>William Dabney</a>
  */
 
-@Tag("Model-tier")
+@Tag("Application-tier")
 public class TurnTest {
 
     private Board CuTGeneralBoard;

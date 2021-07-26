@@ -31,7 +31,7 @@ public class Board implements Iterable<Row> {
     /**
      * Enum that shows the different types of moves.
      */
-    enum MoveType {Jump, Single, Blocked}
+    public enum MoveType {Jump, Single, Blocked}
 
     // The current move type in the board.
     private MoveType moveType;

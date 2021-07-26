@@ -1,4 +1,9 @@
-package com.webcheckers.model;
+package com.webcheckers.application;
+
+import com.webcheckers.model.Board;
+import com.webcheckers.model.JumpMove;
+import com.webcheckers.model.Move;
+import com.webcheckers.model.SingleMove;
 
 import java.util.ArrayList;
 
