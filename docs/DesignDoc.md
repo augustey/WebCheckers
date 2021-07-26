@@ -84,10 +84,8 @@ This section describes the application domain.
 
 ![The WebCheckers Domain Model](domain_model.png)
 
-A User signs in by entering the login information. They can sign out, spectate a game or can join a checkers game with
-another player / AI. During the game either player may resign which ends the game. The checkers game uses a board, which
-is made up of spaces that can be dark or light, to play the game. The Spaces can hold pieces; the player can move their
-corresponding pieces.
+A User signs in by entering the login information. They can sign out, spectate a game or can join a checkers game with another player / AI. During the game either player may resign which ends the game. The checkers game uses a board, which is made up of spaces that can be dark or light, to play the game. The Spaces can hold pieces; the player can move their corresponding pieces. After a game is done the user can review the game.
+
 
 ## Architecture and Design
 
