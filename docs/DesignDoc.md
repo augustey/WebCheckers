@@ -259,3 +259,11 @@ methods we would try as soon as possible to fix the tests to accommodate for the
 we wanted to have 90% coverage for the server and each individual component in order to ensure proper functionality.
 Some anomalies that occurred with testing happened with switch statements, as all branches were unable to be covered due
 to a lack of need for a default case. As it stands right now, our code coverage is currently at 90%.
+
+### Code Metrics
+
+One of the metrics we used to analyze the project was with the complexity metrics, which measures the lines of codes in 
+a particular method. We found that when analyzing using this metric, that some of the methods in board are too complex,
+in particular makeMove and getPossibleMoves. Because of this one improvment we could make because of these metrics is to
+lower the complexity of these methods by splitting them into smaller more meaningful methods, and have repeating code added
+to their own methods.
