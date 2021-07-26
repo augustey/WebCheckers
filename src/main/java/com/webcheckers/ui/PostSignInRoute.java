@@ -28,8 +28,8 @@ public class PostSignInRoute implements Route {
     public static final String NON_ALPHANUMERIC_USERNAME = "The name you entered contains a non alphanumeric character";
 
     // State.
-    private PlayerLobby playerLobby;
-    private TemplateEngine templateEngine;
+    private final PlayerLobby playerLobby;
+    private final TemplateEngine templateEngine;
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code POST /signin} HTTP requests.
@@ -60,14 +60,10 @@ public class PostSignInRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         final Session httpSession = request.session();
-
         final Map<String, Object> vm = new HashMap<>();
-
         final String nameString = request.queryParams(USERNAME_PARAM);
         Player player = new Player(nameString);
-
         vm.put(GetSignInRoute.TITLE_ATTR, GetSignInRoute.TITLE);
-
         switch (playerLobby.signIn(player)) {
             case NON_UNIQUE:
                 vm.put(SIGNED_IN, false);
@@ -86,7 +82,6 @@ public class PostSignInRoute implements Route {
                 vm.put(NOT_VALID_USERNAME, true);
                 vm.put(INVALID_MESSAGE, NON_ALPHANUMERIC_USERNAME);
         }
-
         return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
     }
 }

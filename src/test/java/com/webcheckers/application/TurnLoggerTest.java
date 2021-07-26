@@ -125,9 +125,9 @@ public class TurnLoggerTest
     public void test_startReview() {
         int expectedSize = 1;
 
-        CuT.startReview(player, game);
+        CuT.startReplay(player, game);
 
-        int actualSize = CuT.getReviewing().size();
+        int actualSize = CuT.getReplay().size();
 
         assertEquals(actualSize, expectedSize);
     }
@@ -137,10 +137,10 @@ public class TurnLoggerTest
      */
     @Test
     public void test_isReviwing() {
-        CuT.startReview(player, game);
+        CuT.startReplay(player, game);
 
-        boolean result1 = CuT.isReviewing(player);
-        boolean result2 = CuT.isReviewing(opponent);
+        boolean result1 = CuT.isReplaying(player);
+        boolean result2 = CuT.isReplaying(opponent);
 
         assertTrue(result1);
         assertFalse(result2);
@@ -152,11 +152,11 @@ public class TurnLoggerTest
     @Test
     public void test_stopReview() {
         int expectedSize = 0;
-        CuT.startReview(player, game);
+        CuT.startReplay(player, game);
 
-        boolean result = CuT.stopReview(player, game);
+        boolean result = CuT.stopReplay(player, game);
 
-        int actualSize = CuT.getReviewing().size();
+        int actualSize = CuT.getReplay().size();
 
         assertEquals(actualSize, expectedSize);
         assertTrue(result);

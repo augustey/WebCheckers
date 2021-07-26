@@ -13,12 +13,11 @@ import spark.Session;
  *
  * @author <a href='mailto:jrl9984@rit.edu'>Jim Logan</a>
  */
-public class PostReplayPreviousTurnRoute implements Route
-{
+public class PostReplayPreviousTurnRoute implements Route {
     public static final String TURNID_PARAM = "turn";
 
     /**
-     * Constructor for PostReplayPreviousTurnRoute
+     * Constructor for PostReplayPreviousTurnRoute.
      */
     public PostReplayPreviousTurnRoute() {
 
@@ -32,27 +31,22 @@ public class PostReplayPreviousTurnRoute implements Route
      * @param response
      *         The HTTP response.
      *
-     * @return JSON message for success
+     * @return JSON message for success.
      */
     @Override
-    public Object handle(Request request, Response response)
-    {
+    public Object handle(Request request, Response response) {
         Session httpSession = request.session();
-
         Message message;
         message = Message.info("true");
         try {
             int i = httpSession.attribute(TURNID_PARAM);
-
             i--;
-
             httpSession.attribute(TURNID_PARAM, i);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             message = Message.error("An error has occured getting the turn index");
         }
-
         Gson gson = new GsonBuilder().create();
-
         return gson.toJson(message);
     }
 }

@@ -10,7 +10,7 @@ import com.webcheckers.util.Message;
 import spark.*;
 
 /**
- * UI component that is called whenever a move is made on the board
+ * The UI component that is called whenever a move is made on the board
  *
  * @author <a href = 'mailto:jrl9984@rit.edu'>Jim Logan</a>
  */
@@ -20,7 +20,7 @@ public class PostValidateMoveRoute implements Route {
     private PlayerService playerService;
 
     /**
-     * Creates a new PostValidateMoveRoute
+     * Creates a new PostValidateMoveRoute.
      */
     public PostValidateMoveRoute() {
         playerService = null;
@@ -40,19 +40,13 @@ public class PostValidateMoveRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         final Session httpSession = request.session();
-
         playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
-
         String JSONMove = request.queryParams("actionData");
-        //System.out.println("Created JSONMove: " + JSONMove);
         Gson gson = new GsonBuilder().create();
-
         Move move = gson.fromJson(JSONMove, Move.class);
-
         Board board = playerService.getGame().getBoard();
-        //System.out.println("Converted Move: " + move);
+        playerService.getTurn().setMoveType(board.getMoveType());
         Message valid;
-        //System.out.println("PostValidateMoveRoute Before: \n" + board);
         if (board.isPossibleMove(move)) {
             if (playerService.addMove(move)) {
                 valid = Message.info("Move was made successfully!");
@@ -64,9 +58,7 @@ public class PostValidateMoveRoute implements Route {
         else {
             valid = Message.error("Move was unable to be made!");
         }
-
         System.out.println(gson.toJson(valid));
-        //System.out.println("PostValidateMoveRoute After: \n" + board);
         return gson.toJson(valid);
     }
 }

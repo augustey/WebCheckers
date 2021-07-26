@@ -53,6 +53,20 @@ public class SpaceTest {
     }
 
     /**
+     * Test that the Space copy constructor works without failing.
+     */
+    @Test
+    public void copy_test() {
+        // Test copy constructor
+        Space copy = new Space(CuT);
+        assertEquals(copy, CuT);
+        // Test copy constructor with different piece
+        CuT.setPiece(new King(Piece.Color.RED));
+        copy = new Space(CuT);
+        assertEquals(copy, CuT);
+    }
+
+    /**
      * Test the colIdx getter in Space.
      */
     @Test
@@ -117,21 +131,21 @@ public class SpaceTest {
      */
     @Test
     public void space_equals_test() {
-        assertTrue(CuT.equals(CuT));
+        assertEquals(CuT, CuT);
         // Test for differing pieces
         Space other = new Space(ROW_VALUE, COL_VALUE, piece, IS_VALID);
-        assertFalse(CuT.equals(other));
+        assertNotEquals(CuT, other);
         // Test for differing validity
         other = new Space(ROW_VALUE, COL_VALUE, null, !IS_VALID);
-        assertFalse(CuT.equals(other));
+        assertNotEquals(CuT, other);
         // Test for differing row values
         other = new Space(1, COL_VALUE, piece, IS_VALID);
-        assertFalse(CuT.equals(other));
+        assertNotEquals(CuT, other);
         // Test for differing col values
         other = new Space(ROW_VALUE, 2, piece, IS_VALID);
-        assertFalse(CuT.equals(other));
+        assertNotEquals(CuT, other);
         // Test if the other object is not a space.
         GameCenter gameCenter = new GameCenter();
-        assertFalse(CuT.equals(gameCenter));
+        assertNotEquals(CuT, gameCenter);
     }
 }

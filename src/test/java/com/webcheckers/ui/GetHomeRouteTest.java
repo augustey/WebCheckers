@@ -4,6 +4,7 @@ import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.PlayerService;
 import com.webcheckers.application.TurnLogger;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
 import com.webcheckers.util.Message;
@@ -12,9 +13,11 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 /**
  * The unit test suite for the {@link GetHomeRoute} component.
@@ -23,7 +26,7 @@ import static org.mockito.Mockito.when;
  */
 
 @Tag("UI-tier")
-
+@Tag("home")
 public class GetHomeRouteTest {
 
     // Constants for testing.
@@ -37,8 +40,10 @@ public class GetHomeRouteTest {
     private GameCenter gameCenter;
     private Player player1;
     private Player player2;
+    private Game game;
 
     // Mock Objects
+    private String redirectURL;
     private TemplateEngine engine;
     private Request request;
     private Session session;
@@ -61,12 +66,15 @@ public class GetHomeRouteTest {
         response = mock(Response.class);
         engine = mock(TemplateEngine.class);
 
+        doAnswer(inv -> redirectURL = inv.getArgument(0)).when(response).redirect(anyString());
+
         // Build the friendly objects.
         player1 = new Player(PLAYER_NAME_1);
         player2 = new Player(PLAYER_NAME_2);
         playerLobby = new PlayerLobby();
         gameCenter = new GameCenter();
         turnLogger = new TurnLogger();
+
         // Creating the CuT.
         CuT = new GetHomeRoute(playerLobby, gameCenter, engine, turnLogger);
     }
@@ -203,5 +211,64 @@ public class GetHomeRouteTest {
         testHelper.assertViewModelAttribute(GetHomeRoute.PLAYERSET_KEY, playerLobby.getPlayerSet());
         testHelper.assertViewModelAttribute(GetHomeRoute.ONLINE_COUNT_ATTR, 1);
         testHelper.assertViewModelAttribute(GetHomeRoute.MESSAGE_KEY, message);
+    }
+
+    /**
+     * Test the route to see if the page redirects if you're in a game
+     */
+    @Test
+    public void test_player_home_game_active() {
+        // Arrange the test scenario: There is a player signed into the web app.
+        playerLobby.signIn(player1);
+        gameCenter.requestNewGame(player1, player2, turnLogger);
+        Message message = Message.info(MESSAGE);
+
+        when(request.session().attribute(GetHomeRoute.PLAYER_KEY)).thenReturn(player1);
+        when(request.session().attribute(GetGameRoute.PLAYER_SERVICE_KEY)).thenReturn(null);
+        when(request.session().attribute(GetHomeRoute.MESSAGE_KEY)).thenReturn(message);
+        // To analyze what the Route created in the View-Model map you need
+        // to be able to extract the argument to the TemplateEngine.render method.
+        // Mock up the 'render' method by supplying a Mockito 'Answer' object
+        // that captures the ModelAndView data passed to the template engine.
+
+        // Invoke the test
+
+        try {
+            CuT.handle(request, response);
+            fail("Route did not halt");
+        } catch (HaltException e) {
+            assertEquals(redirectURL, WebServer.GAME_URL);
+        }
+    }
+
+    /**
+     * Test the route to see if the page redirects if you're in a game
+     */
+    @Test
+    public void test_player_home_in_replay() {
+        // Arrange the test scenario: There is a player signed into the web app.
+        playerLobby.signIn(player1);
+        gameCenter.requestNewGame(player1, player2, turnLogger);
+        PlayerService playerService = gameCenter.getPlayerService(player1);
+        turnLogger.startReplay(player1, playerService.getGame());
+
+        Message message = Message.info(MESSAGE);
+
+        when(request.session().attribute(GetHomeRoute.PLAYER_KEY)).thenReturn(player1);
+        when(request.session().attribute(GetGameRoute.PLAYER_SERVICE_KEY)).thenReturn(null);
+        when(request.session().attribute(GetHomeRoute.MESSAGE_KEY)).thenReturn(message);
+        // To analyze what the Route created in the View-Model map you need
+        // to be able to extract the argument to the TemplateEngine.render method.
+        // Mock up the 'render' method by supplying a Mockito 'Answer' object
+        // that captures the ModelAndView data passed to the template engine.
+
+        // Invoke the test
+
+        try {
+            CuT.handle(request, response);
+            fail("Route did not halt");
+        } catch (HaltException e) {
+            assertEquals(redirectURL, WebServer.REPLAY_GAME_URL + "?gameID=" + turnLogger.getGame(player1).getId());
+        }
     }
 }

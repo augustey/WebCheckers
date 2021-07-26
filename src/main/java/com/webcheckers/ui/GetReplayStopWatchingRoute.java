@@ -17,17 +17,19 @@ import static spark.Spark.halt;
  *
  * @author <a href='mailto:jrl9984@rit.edu'>Jim Logan</a>
  */
-public class GetReplayStopWatchingRoute implements Route
-{
+public class GetReplayStopWatchingRoute implements Route {
+
+    // Attribute Keys
     public static final String TURNID_PARAM = "turn";
 
-    private TurnLogger turnLogger;
+    // The application attributes.
+    private final TurnLogger turnLogger;
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /replay/stopWatching} HTTP requests.
      *
      * @param turnLogger
-     *         The turnLogger used to store turns of a game
+     *         The turnLogger used to store turns of a game.
      */
     public GetReplayStopWatchingRoute(TurnLogger turnLogger) {
         this.turnLogger = turnLogger;
@@ -38,30 +40,29 @@ public class GetReplayStopWatchingRoute implements Route
      *
      * @param request
      *         The HTTP request.
-     *
      * @param response
      *         The HTTP response.
      *
-     * @return null
+     * @return An error message or null.
      */
     @Override
-    public Object handle(Request request, Response response)
-    {
+    public Object handle(Request request, Response response) {
         Session httpSession = request.session();
+
         httpSession.removeAttribute(TURNID_PARAM);
-
-
         Player player = httpSession.attribute(PLAYER_KEY);
+
         Game game = turnLogger.getGame(player);
+        boolean stop = turnLogger.stopReplay(player, game);
 
-
-        if(turnLogger.stopReview(player, game)){
+        if (stop) {
             response.redirect(WebServer.HOME_URL);
             halt();
-        } else {
+            return null;
+        }
+        else {
             return Message.error("Unable to stop watching");
         }
-        return null;
     }
 }
 

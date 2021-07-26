@@ -18,11 +18,11 @@ import spark.Session;
  */
 public class PostCheckTurnRoute implements Route {
 
-    // The player service
+    // The player service.
     private PlayerService playerService;
 
     /**
-     * Constructor for ostCheckTurnRoute
+     * Constructor for PostCheckTurnRoute.
      */
     public PostCheckTurnRoute() {
     }
@@ -42,11 +42,8 @@ public class PostCheckTurnRoute implements Route {
         final Session httpSession = request.session();
         playerService = httpSession.attribute(GetGameRoute.PLAYER_SERVICE_KEY);
         Board board = playerService.getGame().getBoard();
-
         Gson gson = new GsonBuilder().create();
-
         Message message;
-
         if (playerService.getPlayer().equals(playerService.getRedPlayer()) && board.getActivePlayerColor() == Piece.Color.RED || playerService.getGame().isGameOver()) {
             message = Message.info("true");
         }
@@ -56,7 +53,6 @@ public class PostCheckTurnRoute implements Route {
         else {
             message = Message.info("false");
         }
-
         return gson.toJson(message);
     }
 }

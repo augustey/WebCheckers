@@ -12,6 +12,9 @@ public class BoardConfig {
     public static final String KING = "king";
     public static final String CHAIN_JUMP = "chainjump";
     public static final String SINGLE_JUMP = "singlejump";
+    public static final String NO_PIECES = "nopieces";
+    public static final String BLOCKED = "blocked";
+    public static final String KING_CHAIN = "kingchain";
 
     /**
      * Generate a board configuration based on a string.
@@ -32,6 +35,15 @@ public class BoardConfig {
                 break;
             case SINGLE_JUMP:
                 generateSingleJump(board);
+                break;
+            case NO_PIECES:
+                generateNoPieces(board);
+                break;
+            case BLOCKED:
+                generateBlocked(board);
+                break;
+            case KING_CHAIN:
+                generateKingChainJump(board);
                 break;
         }
 
@@ -59,24 +71,83 @@ public class BoardConfig {
     }
 
     /**
-     * Alter a board to a configuration where red has a 2x jump move on their turn.
+     * Alter a board to a configuration where red has a chain jump on their turn.
      * @param board The board to change (Assumed to be in initial configuration)
      */
     public static void generateChainJump(Board board) {
         Space[][] boardArr = board.getBoard();
 
-        boardArr[4][5].setPiece(boardArr[1][2].getPiece());
-        boardArr[1][2].setPiece(null);
+        for(int i = 2; i >= 0; i--) {
+            for (Space space : boardArr[i]) {
+                if(space.getPiece() != null) {
+                    boardArr[2 * i + 1][space.getColIdx()+(i%2 == 0 ? -1:0)].setPiece(space.getPiece());
+                    space.setPiece(null);
+                }
+            }
+        }
     }
 
     /**
-     * Alter a board to a configuration where red has a 1x jump move on their turn.
+     * Alter a board to a configuration where red has a king chain jump on their turn.
      * @param board The board to change (Assumed to be in initial configuration)
+     */
+    public static void generateKingChainJump(Board board) {
+        Space[][] boardArr = board.getBoard();
+
+        generateChainJump(board);
+
+        for(int i = 6; i < 8; i++) {
+            for(Space space: boardArr[i]) {
+                if(space.getPiece() != null)
+                    space.setPiece(new King(Piece.Color.RED));
+            }
+        }
+    }
+
+    /**
+     * Alter a board to a configuration where red has multiple single jumps o their turn.
      */
     public static void generateSingleJump(Board board) {
         Space[][] boardArr = board.getBoard();
 
-        boardArr[4][5].setPiece(boardArr[2][3].getPiece());
-        boardArr[2][3].setPiece(null);
+        for(Space space: boardArr[2]) {
+            boardArr[4][space.getColIdx()].setPiece(space.getPiece());
+            space.setPiece(null);
+        }
+    }
+
+    /**
+     * Alter a board to a configuration where white has one piece left.
+     * @param board The board to change (Assumed to be in initial configuration)
+     */
+    public static void generateNoPieces(Board board) {
+        Space[][] boardArr = board.getBoard();
+
+        for(int r = 0; r < 3; r++) {
+            for(Space space: boardArr[r]) {
+                space.setPiece(null);
+            }
+        }
+
+        boardArr[4][3].setPiece(new SinglePiece(Piece.Color.WHITE));
+    }
+
+    /**
+     * Alter a board to a configuration where white cannot make any valid moves.
+     * @param board The board to change (Assumed to be in initial configuration)
+     */
+    public static void generateBlocked(Board board) {
+        Space[][] boardArr = board.getBoard();
+
+        for(Space[] row: boardArr) {
+            for(Space space: row) {
+                space.setPiece(null);
+            }
+        }
+
+        boardArr[0][7].setPiece(new SinglePiece(Piece.Color.WHITE));
+        boardArr[1][6].setPiece(new King(Piece.Color.RED));
+        boardArr[2][5].setPiece(new King(Piece.Color.RED));
+        boardArr[0][3].setPiece(new King(Piece.Color.RED));
     }
 }

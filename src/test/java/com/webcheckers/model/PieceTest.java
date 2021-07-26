@@ -64,10 +64,11 @@ public class PieceTest {
         King piece = new King(Piece.Color.RED);
         King piece1 = new King(Piece.Color.RED);
         King piece2 = new King(Piece.Color.WHITE);
-
+        SinglePiece sp1 = new SinglePiece(Piece.Color.RED);
         assertEquals(piece, piece1);
         assertEquals(piece, piece);
         assertNotEquals(piece, piece2);
+        assertNotEquals(sp1, piece1);
         assertNotEquals(piece, new Player("fail"));
     }
 
@@ -82,6 +83,15 @@ public class PieceTest {
         int actual = piece.hashCode();
 
         assertEquals(expected, actual);
+    }
+
+    /**
+     * Test that the toSting is working correctly
+     */
+    @Test
+    public void toStingTest() {
+        King piece = new King(Piece.Color.RED);
+        assertEquals("Piece{type=KING, color=RED}", piece.toString());
     }
 
 }
