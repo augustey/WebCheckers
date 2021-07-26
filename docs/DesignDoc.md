@@ -195,7 +195,7 @@ for games to be replayed at a later time.
 
 ### Model Tier
 
-The model tier consists of 14 classes that make up different aspects of the game: Position, Move (JumpMove and
+The model tier consists of 13 classes that make up different aspects of the game: Position, Move (JumpMove and
 SingleMove), Piece (SinglePiece and King), Space, Row, Board, Boardview, Game, and Player. Across these classes, the
 model holds information about the web application’s state and helps communicate that to the other tiers.
 
@@ -227,18 +227,12 @@ monitoring the status of the game. The Player represents a Player on the web app
 
 ### Design Improvements
 
-For Sprint 3, the team has decided on several design improvements. The Board class is currently at above 400 lines of
-code. As a result, the size of the Board class leads the team to conclude that many of the assigned responsibilities of
-Board can be reassigned to other classes. Specifically, the functionality for making a move on the board can be done in
-either the PlayerService or Game classes. Additionally, the validation functionality for moves can be moved to the
-respective move classes.
+The team has decided on several design would be beneficiul improvements. The Board class is currently at above 500 lines of code. As a result, the size of the Board class leads the team to conclude that many of the assigned responsibilities of Board can be reassigned to other classes. Specifically, the validation functionality for moves can be moved to the respective move classes.
 
-The model tier has 14 different classes which leads the team to conclude that it is possible that some of the classes as
-well as their assigned functionality could be relocated.
+The model tier has 13 different classes which leads the team to conclude that it is possible that some of the classes as well as their assigned functionality could be relocated.
 
-Moreover, the team’s architectural separation can be improved on. The Model should be responsible for maintaining and
-holding information about the game. There are instances in the Model where there is information being communicated to
-the UI whereas the Application should be handling that.
+Moreover, the team’s architectural separation can be improved on. The Model should be responsible for maintaining and holding information about the game. There are instances in the Model where there is information being communicated to the UI whereas the Application should be handling that.
+
 
 ## Testing
 
