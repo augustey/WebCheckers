@@ -85,19 +85,22 @@ public abstract class Piece {
     /**
      * equals method for piece
      *
-     * @param o
-     *       the other object this piece is being compared to
+     * @param other
+     *         the other object this piece is being compared to
      *
      * @return true if they are equal
      */
     @Override
-    public boolean equals(Object o)
-    {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Piece piece = (Piece) o;
-        return color == piece.color &&
-                type == piece.type;
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        else if (other instanceof Piece) {
+            Piece piece = (Piece) other;
+            return color == piece.color &&
+                    type == piece.type;
+        }
+        return false;
     }
 
     /**
@@ -106,8 +109,17 @@ public abstract class Piece {
      * @return the hash for this piece
      */
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(color, type);
+    }
+
+    /**
+     * String representation of a Piece object.
+     *
+     * @return The Piece string.
+     */
+    @Override
+    public String toString() {
+        return "Piece{" + "type=" + type + ", color=" + color + "}";
     }
 }

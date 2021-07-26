@@ -36,7 +36,8 @@ public class PlayerLobby {
      * @param player
      *         The player that was entered.
      *
-     * @return Whether the player sign-in was a success, or if the player entered a non-unique or non alphanumeric name.
+     * @return True if the player sign-in was a success, else if the player entered a non-unique or non alphanumeric
+     * name, false.
      */
     public synchronized SignInResult signIn(Player player) {
         if (!verifyAlphanumeric(player.getName())) {
@@ -75,7 +76,7 @@ public class PlayerLobby {
      * @param str
      *         String that is being checked.
      *
-     * @return True if the string contains a letter or a digit.
+     * @return True if the string contains a letter or a digit, else, false.
      */
     private boolean verifyAlphanumeric(String str) {
         char[] a = str.toCharArray();

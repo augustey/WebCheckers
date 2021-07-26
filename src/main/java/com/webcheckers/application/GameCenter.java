@@ -45,7 +45,7 @@ public class GameCenter {
      * @param player
      *         The player to search for.
      *
-     * @return Whether the specified player is in a game of checkers or not.
+     * @return True if the specified player is in a game of checkers, else, false.
      */
     public boolean isInGame(Player player) {
         return activeGames.containsKey(player);
@@ -59,9 +59,8 @@ public class GameCenter {
      *         The requesting player.
      * @param opponent
      *         The opponent the requesting player selected.
-     *
      * @param turnLogger
-     *          The turn logger for the game
+     *         The turn logger for the game
      *
      * @return A message detailing the result of the action.
      */
@@ -72,7 +71,7 @@ public class GameCenter {
         if (isInGame(opponent)) {
             return PLAYER_IN_GAME_MSG;
         }
-        if(turnLogger.isReviewing(opponent)) {
+        if (turnLogger.isReplaying(opponent)) {
             return PLAYER_REVIEWING_GAME_MSG;
         }
 
@@ -87,12 +86,12 @@ public class GameCenter {
     }
 
     /**
-     * Get a PlayerService object representing the users active game if it exists.
+     * A getter method for the PlayerService object representing the users active game if it exists.
      *
      * @param player
      *         The requesting player.
      *
-     * @return PlayerService object containing the player's game if it exists.
+     * @return A PlayerService object containing the player's game if it exists.
      */
     public PlayerService getPlayerService(Player player) {
         if (!isInGame(player)) {
@@ -125,38 +124,36 @@ public class GameCenter {
     }
 
     /**
-     * Gets a game from the completedGames Map
+     * A getter method for a completed game.
      *
      * @param id
-     *         Game id as a String
+     *         The Game id as a String to get.
      *
-     * @return the requested game
+     * @return The requested game.
      */
     public Game getCompletedGame(String id) {
         return completedGames.get(id);
     }
 
     /**
-     * Gets a list of completed games
+     * A getter method for the list of games.
      *
-     * @return the list of completed games
+     * @return The list of completed games.
      */
-    public List<Game> getCompletedGames()
-    {
+    public List<Game> getCompletedGames() {
         List<Game> games = new LinkedList<>();
-        for(String key : completedGames.keySet()) {
+        for (String key : completedGames.keySet()) {
             games.add(completedGames.get(key));
         }
         return games;
     }
 
     /**
-     * Gets a map of completed games
+     * A getter method for the map of completed games.
      *
-     * @return the list of completed games
+     * @return The map of completed games.
      */
-    public Map<String, Game> getCompletedGamesMap()
-    {
+    public Map<String, Game> getCompletedGamesMap() {
         return completedGames;
     }
 }

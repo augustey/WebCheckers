@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.util.Objects;
+
 /**
  * The Space class is responsible for handling piece placement.
  *
@@ -8,20 +10,20 @@ package com.webcheckers.model;
  */
 public class Space {
 
-    // The row index a space is in
+    // The row index a space is in.
     private final int rowIdx;
 
-    // The cell index a space is in a row
+    // The cell index a space is in a row.
     private final int colIdx;
 
-    // If a valid space for pieces
+    // If a valid space for pieces.
     private final boolean isValid;
 
-    // A piece that is on that space, if any
+    // A piece that is on that space, if any.
     private Piece piece;
 
     /**
-     * Constructor for creating a Space object
+     * Constructor for creating a Space object.
      *
      * @param colIdx
      *         The index of this space (a cell within a row) within the board.
@@ -35,6 +37,24 @@ public class Space {
         this.colIdx = colIdx;
         this.piece = piece;
         this.isValid = isValid;
+    }
+
+    /**
+     * Copy constructor for space.
+     *
+     * @param copy
+     *         A Space to copy.
+     */
+    public Space(Space copy) {
+        this.rowIdx = copy.rowIdx;
+        this.colIdx = copy.colIdx;
+        if (copy.piece instanceof SinglePiece) {
+            this.piece = new SinglePiece(copy.piece.getColor());
+        }
+        else if (copy.piece instanceof King) {
+            this.piece = new King(copy.piece.getColor());
+        }
+        this.isValid = copy.isValid;
     }
 
     /**
@@ -107,10 +127,9 @@ public class Space {
         }
         else if (other instanceof Space) {
             Space otherSpace = (Space) other;
-            return otherSpace.rowIdx == rowIdx &&
-                    otherSpace.colIdx == colIdx &&
-                    otherSpace.piece == piece &&
-                    otherSpace.isValid == isValid;
+            if (otherSpace.rowIdx == rowIdx && otherSpace.colIdx == colIdx && otherSpace.isValid == isValid) {
+                return (otherSpace.piece == null && this.piece == null) || (Objects.equals(otherSpace.piece, this.piece));
+            }
         }
         return false;
     }

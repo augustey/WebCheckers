@@ -113,7 +113,7 @@ public class GetReplayPageRouteTest
         TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
 
-        turnLogger.startReview(player, game);
+        turnLogger.startReplay(player, game);
         // Invoke the test
         try {
             CuT.handle(request, response);

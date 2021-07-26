@@ -84,10 +84,8 @@ This section describes the application domain.
 
 ![The WebCheckers Domain Model](domain_model.png)
 
-A User signs in by entering the login information. They can sign out, spectate a game or can join a checkers game with
-another player / AI. During the game either player may resign which ends the game. The checkers game uses a board, which
-is made up of spaces that can be dark or light, to play the game. The Spaces can hold pieces; the player can move their
-corresponding pieces.
+A User signs in by entering the login information. They can sign out, spectate a game or can join a checkers game with another player / AI. During the game either player may resign which ends the game. The checkers game uses a board, which is made up of spaces that can be dark or light, to play the game. The Spaces can hold pieces; the player can move their corresponding pieces. After a game is done the user can review the game.
+
 
 ## Architecture and Design
 
@@ -131,6 +129,13 @@ challenged to a game. When entering their respective states either player can se
 game and renders the exit button. When clicked, the button then directs the players back to the home screen. The exit
 button also appears whenever the game ends, such as when one player runs out of pieces, or when a player cannot make any
 moves.
+
+After a game is completed, the player is directed back to the home screen, and from there they can select the replay 
+link in the navigation bar. From there, they can select a game that was previously played. Selecting the link brings the 
+player to the game, where the only options they have are to press three buttons. Pressing the next button advances the 
+game along one turn. Pressing the previous button precedes the game one turn. Pressing the exit button returns the 
+player to the home screen. If there are no turns following or preceding the current turn, then the respective buttons 
+are unable to be pressed.
 
 ### UI Tier
 
@@ -190,7 +195,7 @@ for games to be replayed at a later time.
 
 ### Model Tier
 
-The model tier consists of 14 classes that make up different aspects of the game: Position, Move (JumpMove and
+The model tier consists of 13 classes that make up different aspects of the game: Position, Move (JumpMove and
 SingleMove), Piece (SinglePiece and King), Space, Row, Board, Boardview, Game, and Player. Across these classes, the
 model holds information about the web application’s state and helps communicate that to the other tiers.
 
@@ -222,25 +227,16 @@ monitoring the status of the game. The Player represents a Player on the web app
 
 ### Design Improvements
 
-For Sprint 3, the team has decided on several design improvements. The Board class is currently at above 400 lines of
-code. As a result, the size of the Board class leads the team to conclude that many of the assigned responsibilities of
-Board can be reassigned to other classes. Specifically, the functionality for making a move on the board can be done in
-either the PlayerService or Game classes. Additionally, the validation functionality for moves can be moved to the
-respective move classes.
+The team has decided on several design would be beneficiul improvements. The Board class is currently at above 500 lines of code. As a result, the size of the Board class leads the team to conclude that many of the assigned responsibilities of Board can be reassigned to other classes. Specifically, the validation functionality for moves can be moved to the respective move classes.
 
-The model tier has 14 different classes which leads the team to conclude that it is possible that some of the classes as
-well as their assigned functionality could be relocated.
+The model tier has 13 different classes which leads the team to conclude that it is possible that some of the classes as well as their assigned functionality could be relocated.
 
-Moreover, the team’s architectural separation can be improved on. The Model should be responsible for maintaining and
-holding information about the game. There are instances in the Model where there is information being communicated to
-the UI whereas the Application should be handling that.
+Moreover, the team’s architectural separation can be improved on. The Model should be responsible for maintaining and holding information about the game. There are instances in the Model where there is information being communicated to the UI whereas the Application should be handling that.
+
 
 ## Testing
 
-The testing for this product was done using the JUnit framework and with JaCoCo in order to generate coverage reports.
-Additional testing tools such as mockito were used in order to write tests for the UI components. Tests were created for
-each class in order to achieve as much coverage as possible. Tests for the first sprint were done over time, while tests
-for sprint two were written as each new class was created, in order to ensure proper functionality.
+As of the end of Sprint 3, all nine user stories (two from Sprint 3 five from Sprint 2 and two from Sprint 1) have all met their acceptance criteria tests. None have failed their acceptance criteria. All user stories have been tested.
 
 ### Acceptance Testing
 
