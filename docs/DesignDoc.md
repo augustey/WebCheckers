@@ -185,11 +185,12 @@ the class that controls and keeps track of active games and which players are in
 new game withspecific players, and is able to create a PlayerService application tier class. The PlayerService class holds
 information specific to the player. For instance, there are methods that add moves to a list for the player’s current
 turn. On the simpler side of the application tier components there is PlayerLobby. PlayerLobby simply keeps track of
-players that are signed in to the web server, and makes sure that no duplicate or invalid names are present. The final
+players that are signed in to the web server, and makes sure that no duplicate or invalid names are present. The next
 application tier class is GameWin. GameWin contains the functionality to trigger the end of a game. It contains multiple
 methods relating to the way a game can end, such as no valid moves able to be made, no pieces on the board, or
-resignation. TurnLogger logs all of the board configurations at the end of each turn. Becuase of this, TurnLogger allows
-for games to be replayed at a later time.
+resignation. TurnLogger logs all of the board configurations at the end of each turn. Because of this, TurnLogger allows
+for games to be replayed at a later time. The final application tier class is Turn, which holds all of the moves for the
+current turn of the game.
 
 ![UML chart for application](application_uml.png)
 
