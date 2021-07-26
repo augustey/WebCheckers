@@ -148,7 +148,7 @@ public class GetHomeRouteTest {
         playerLobby.signIn(player1);
         gameCenter.requestNewGame(player1, player2, turnLogger);
         PlayerService playerService = gameCenter.getPlayerService(player1);
-        playerService.getGame().setGameOver(false);
+        playerService.getGame().setGameOver(false, player1);
         Message message = Message.info(MESSAGE);
 
         when(request.session().attribute(GetHomeRoute.PLAYER_KEY)).thenReturn(player1);
@@ -185,7 +185,7 @@ public class GetHomeRouteTest {
         playerLobby.signIn(player1);
         gameCenter.requestNewGame(player1, player2, turnLogger);
         PlayerService playerService = gameCenter.getPlayerService(player1);
-        playerService.getGame().setGameOver(true);
+        playerService.getGame().setGameOver(true, player1);
         Message message = Message.info(MESSAGE);
 
         when(request.session().attribute(GetHomeRoute.PLAYER_KEY)).thenReturn(player1);

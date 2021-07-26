@@ -19,6 +19,8 @@ public class Game {
     // The White Player.
     private final Player whitePlayer;
 
+    private Player winner;
+
     // The checkers board.
     private final Board board;
 
@@ -94,9 +96,23 @@ public class Game {
      *
      * @param gameOver
      *         A boolean flag for if the game is over.
+     *
+     * @param winner
+     *         The player who won
      */
-    public void setGameOver(boolean gameOver) {
+    public void setGameOver(boolean gameOver, Player winner) {
         isGameOver = gameOver;
+        this.winner = winner;
+    }
+
+    /**
+     * A getter for winner
+     *
+     * @return the winner
+     */
+    public Player getWinner()
+    {
+        return winner;
     }
 
     /**

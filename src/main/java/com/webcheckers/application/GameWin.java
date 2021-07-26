@@ -27,6 +27,9 @@ public class GameWin {
     // The game over message string.
     private String gameOverMessage;
 
+    //Winner of the game
+    private Player winner;
+
     // The game over flag from the game object.
     private boolean isGameOver;
 
@@ -45,7 +48,7 @@ public class GameWin {
      * @return True if the game was removed, else, false.
      */
     public boolean triggerGameOver() {
-        game.setGameOver(true);
+        game.setGameOver(true, winner);
         isGameOver = true;
         return gameCenter.removeGame(game);
     }
@@ -91,9 +94,11 @@ public class GameWin {
     public boolean checkPieceGameOver(Board board, Piece.Color activePlayerColor) {
         if (activePlayerColor == Piece.Color.RED) {
             this.gameOverMessage = String.format(PIECES_CAPTURED, game.getWhitePlayer(), game.getWhitePlayer());
+            winner = game.getWhitePlayer();
         }
         else {
             this.gameOverMessage = String.format(PIECES_CAPTURED, game.getRedPlayer(), game.getRedPlayer());
+            winner = game.getRedPlayer();
         }
         if (checkPieceCount(board, activePlayerColor) == 0) {
             return triggerGameOver();
@@ -112,9 +117,11 @@ public class GameWin {
     public boolean checkBlockedGameOver(Piece.Color activePlayerColor) {
         if (activePlayerColor == Piece.Color.RED) {
             this.gameOverMessage = String.format(PIECES_BLOCKED, game.getRedPlayer(), game.getWhitePlayer());
+            winner = game.getWhitePlayer();
         }
         else {
             this.gameOverMessage = String.format(PIECES_BLOCKED, game.getWhitePlayer(), game.getRedPlayer());
+            winner = game.getRedPlayer();
         }
         return triggerGameOver();
     }
@@ -130,9 +137,11 @@ public class GameWin {
     public boolean checkResignGameOver(Player player) {
         if (player.equals(game.getRedPlayer())) {
             this.gameOverMessage = String.format(PLAYER_RESIGNED, player, game.getWhitePlayer());
+            winner = game.getWhitePlayer();
         }
         else {
             this.gameOverMessage = String.format(PLAYER_RESIGNED, player, game.getRedPlayer());
+            winner = game.getRedPlayer();
         }
         return triggerGameOver();
     }
