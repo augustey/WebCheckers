@@ -288,6 +288,11 @@ public class Board implements Iterable<Row> {
         int endRow = end.getRow();
         int endCol = end.getCell();
         double slope = 1.0 * (endCol - startCol) / (endRow - startRow);
+        if (endRow > startRow) {
+            if (startJumpPos != null && getSpace(startJumpPos, this).getPiece() instanceof SinglePiece) {
+                return false;
+            }
+        }
         if (Math.abs(slope) != 1.0) {
             return false;
         }
