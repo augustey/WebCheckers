@@ -14,6 +14,7 @@ import com.webcheckers.model.Player;
 public class GameWin {
 
     // Game Over Message Strings.
+    private final String GAME_OVER = "%s has lost, %s is the winner!";
     private final String PIECES_CAPTURED = "%s has captured all pieces! %s is the winner!";
     private final String PIECES_BLOCKED = "%s has all of their pieces blocked! %s is the winner!";
     private final String PLAYER_RESIGNED = "%s has resigned. %s is the winner!";
@@ -93,11 +94,11 @@ public class GameWin {
      */
     public boolean checkPieceGameOver(Board board, Piece.Color activePlayerColor) {
         if (activePlayerColor == Piece.Color.RED) {
-            this.gameOverMessage = String.format(PIECES_CAPTURED, game.getWhitePlayer(), game.getWhitePlayer());
+            this.gameOverMessage = String.format(GAME_OVER, game.getWhitePlayer(), game.getWhitePlayer());
             winner = game.getWhitePlayer();
         }
         else {
-            this.gameOverMessage = String.format(PIECES_CAPTURED, game.getRedPlayer(), game.getRedPlayer());
+            this.gameOverMessage = String.format(GAME_OVER, game.getRedPlayer(), game.getRedPlayer());
             winner = game.getRedPlayer();
         }
         if (checkPieceCount(board, activePlayerColor) == 0) {
@@ -116,11 +117,11 @@ public class GameWin {
      */
     public boolean checkBlockedGameOver(Piece.Color activePlayerColor) {
         if (activePlayerColor == Piece.Color.RED) {
-            this.gameOverMessage = String.format(PIECES_BLOCKED, game.getRedPlayer(), game.getWhitePlayer());
+            this.gameOverMessage = String.format(GAME_OVER, game.getRedPlayer(), game.getWhitePlayer());
             winner = game.getWhitePlayer();
         }
         else {
-            this.gameOverMessage = String.format(PIECES_BLOCKED, game.getWhitePlayer(), game.getRedPlayer());
+            this.gameOverMessage = String.format(GAME_OVER, game.getWhitePlayer(), game.getRedPlayer());
             winner = game.getRedPlayer();
         }
         return triggerGameOver();
