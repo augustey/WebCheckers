@@ -40,7 +40,6 @@ public class PostReplayNextTurnRoute implements Route {
         message = Message.info("true");
         try {
             int i = httpSession.attribute(TURNID_PARAM);
-            System.out.println(i);
             i++;
             httpSession.attribute(TURNID_PARAM, i);
         }

@@ -99,7 +99,6 @@ public class GetGameRoute implements Route {
             Player opponent = playerLobby.getPlayer(opponentName);
 
             Message result = gameCenter.requestNewGame(player, opponent, turnLogger);
-            System.out.println(result);
 
             if (result.getType() == Message.Type.INFO) {
                 playerService = gameCenter.getPlayerService(player);

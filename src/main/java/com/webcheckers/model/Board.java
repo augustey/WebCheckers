@@ -382,9 +382,6 @@ public class Board implements Iterable<Row> {
         if (moveType == MoveType.Blocked) {
             gameWin.checkBlockedGameOver(activePlayerColor);
         }
-        else if (moveType == MoveType.Single && moves.size() != 1) {
-            //TODO: throws error singleMoves can only be one in magnitude
-        }
         // Create the board to make the moves on.
         Board copy = new Board(this);
         // Establish the end position and space.

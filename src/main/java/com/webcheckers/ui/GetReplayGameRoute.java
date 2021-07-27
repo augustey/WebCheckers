@@ -107,8 +107,6 @@ public class GetReplayGameRoute implements Route {
 
         List<String> turns = turnLogger.getTurns(game);
 
-        System.out.println("size:" + turns.get(0));
-
         Board board = Board.fromString(turns.get(i));
         if (i % 2 != 0) {
             board.flip();

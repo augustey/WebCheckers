@@ -37,13 +37,10 @@ public class TurnLogger {
         String id = game.getId();
         if (!turns.containsKey(id) || turns.get(id) == null) {
             LinkedList<String> list = new LinkedList<>();
-            System.out.println("New Board");
             turns.put(id, list);
         }
         List<String> list = turns.get(id);
         list.add(board.toString());
-        System.out.println("logged");
-        System.out.println(list.get(list.size() - 1));
     }
 
     /**

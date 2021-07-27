@@ -58,7 +58,6 @@ public class PostValidateMoveRoute implements Route {
         else {
             valid = Message.error("Move was unable to be made!");
         }
-        System.out.println(gson.toJson(valid));
         return gson.toJson(valid);
     }
 }
