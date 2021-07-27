@@ -294,12 +294,17 @@ public class Board implements Iterable<Row> {
             }
         }
         if (Math.abs(slope) != 1.0) {
+
             return false;
         }
+//        else if(end.equals(startJumpPos))
+//        {
+//            return true;
+//        }
         Position jumped = move.getJumpedPosition();
         try {
             if (getSpace(jumped, this).getPiece().getColor() != activePlayerColor) {
-                return this.board[endRow][endCol].isValid();
+                return this.board[endRow][endCol].isValid() || end.equals(startJumpPos);
             }
         }
         catch (Exception e) {
@@ -411,7 +416,7 @@ public class Board implements Iterable<Row> {
             int col = endPos.getCell();
             ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
             System.out.println("Before: " + jumpMoves);
-            jumpMoves.removeIf(jumpMove -> !validateJumpMove(jumpMove));
+//            jumpMoves.removeIf(jumpMove -> !copy.validateJumpMove(jumpMove));
             System.out.println("After: " + jumpMoves);
             for (Move move : moves) {
                 jumpMoves.removeIf(jumpMove -> move.getStart().equals(jumpMove.getEnd()));
