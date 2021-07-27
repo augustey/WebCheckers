@@ -281,6 +281,8 @@ public class Board implements Iterable<Row> {
      * @return True if the jump move is valid, else, false.
      */
     private boolean validateJumpMove(JumpMove move) {
+//        System.out.println(this);
+//        System.out.println(startJumpPos);
         Position start = move.getStart();
         int startRow = start.getRow();
         int startCol = start.getCell();
@@ -297,14 +299,12 @@ public class Board implements Iterable<Row> {
 
             return false;
         }
-//        else if(end.equals(startJumpPos))
-//        {
-//            return true;
-//        }
+
         Position jumped = move.getJumpedPosition();
         try {
             if (getSpace(jumped, this).getPiece().getColor() != activePlayerColor) {
-                return this.board[endRow][endCol].isValid() || end.equals(startJumpPos);
+                System.out.println(this.board[endRow][endCol].isValid());
+                return this.board[endRow][endCol].isValid();
             }
         }
         catch (Exception e) {
@@ -416,11 +416,11 @@ public class Board implements Iterable<Row> {
             int col = endPos.getCell();
             ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
             System.out.println("Before: " + jumpMoves);
-//            jumpMoves.removeIf(jumpMove -> !copy.validateJumpMove(jumpMove));
+            jumpMoves.removeIf(jumpMove -> !copy.validateJumpMove(jumpMove));
             System.out.println("After: " + jumpMoves);
-            for (Move move : moves) {
-                jumpMoves.removeIf(jumpMove -> move.getStart().equals(jumpMove.getEnd()));
-            }
+//            for (Move move : moves) {
+//                jumpMoves.removeIf(jumpMove -> move.getStart().equals(jumpMove.getEnd()));
+//            }
             if (jumpMoves.size() != 0) {
                 return Message.error("Another jump move is possible!");
             }
