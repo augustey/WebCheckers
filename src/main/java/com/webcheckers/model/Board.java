@@ -15,7 +15,6 @@ import java.util.Iterator;
  */
 public class Board implements Iterable<Row> {
 
-
     // The length and width of a checkers board.
     public final int BOARD_DIM = 8;
 
@@ -281,8 +280,6 @@ public class Board implements Iterable<Row> {
      * @return True if the jump move is valid, else, false.
      */
     private boolean validateJumpMove(JumpMove move) {
-//        System.out.println(this);
-//        System.out.println(startJumpPos);
         Position start = move.getStart();
         int startRow = start.getRow();
         int startCol = start.getCell();
@@ -299,11 +296,9 @@ public class Board implements Iterable<Row> {
 
             return false;
         }
-
         Position jumped = move.getJumpedPosition();
         try {
             if (getSpace(jumped, this).getPiece().getColor() != activePlayerColor) {
-                System.out.println(this.board[endRow][endCol].isValid());
                 return this.board[endRow][endCol].isValid();
             }
         }
@@ -415,12 +410,7 @@ public class Board implements Iterable<Row> {
             int row = endPos.getRow();
             int col = endPos.getCell();
             ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
-            System.out.println("Before: " + jumpMoves);
             jumpMoves.removeIf(jumpMove -> !copy.validateJumpMove(jumpMove));
-            System.out.println("After: " + jumpMoves);
-//            for (Move move : moves) {
-//                jumpMoves.removeIf(jumpMove -> move.getStart().equals(jumpMove.getEnd()));
-//            }
             if (jumpMoves.size() != 0) {
                 return Message.error("Another jump move is possible!");
             }

@@ -15,8 +15,6 @@ public class GameWin {
 
     // Game Over Message Strings.
     private final String GAME_OVER = "%s has lost, %s is the winner!";
-    private final String PIECES_CAPTURED = "%s has captured all pieces! %s is the winner!";
-    private final String PIECES_BLOCKED = "%s has all of their pieces blocked! %s is the winner!";
     private final String PLAYER_RESIGNED = "%s has resigned. %s is the winner!";
 
     // The GameCenter object managing the game.
