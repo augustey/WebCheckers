@@ -109,7 +109,7 @@ public class GameWinTest
     @Test
     public void test_checkPieceGameOver_red()
     {
-        String expected = "2 has captured all pieces! 2 is the winner!";
+        String expected = "2 has lost, 2 is the winner!";
         clearColor(game.getBoard(), Piece.Color.RED);
 
         boolean result = CuT.checkPieceGameOver(game.getBoard(), Piece.Color.RED);
@@ -125,7 +125,7 @@ public class GameWinTest
     @Test
     public void test_checkPieceGameOver_white()
     {
-        String expected = "1 has captured all pieces! 1 is the winner!";
+        String expected = "1 has lost, 1 is the winner!";
         clearColor(game.getBoard(), Piece.Color.WHITE);
 
         boolean result = CuT.checkPieceGameOver(game.getBoard(), Piece.Color.WHITE);
@@ -141,7 +141,7 @@ public class GameWinTest
     @Test
     public void test_checkBlockedGameOver_red()
     {
-        String expected = "1 has all of their pieces blocked! 2 is the winner!";
+        String expected = "1 has lost, 2 is the winner!";
 
         boolean result = CuT.checkBlockedGameOver(Piece.Color.RED);
         String actual = CuT.getGameOverMessage();
@@ -156,7 +156,7 @@ public class GameWinTest
     @Test
     public void test_checkBlockedGameOver_white()
     {
-        String expected = "2 has all of their pieces blocked! 1 is the winner!";
+        String expected = "2 has lost, 1 is the winner!";
 
         boolean result = CuT.checkBlockedGameOver(Piece.Color.WHITE);
         String actual = CuT.getGameOverMessage();
