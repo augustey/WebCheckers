@@ -410,7 +410,9 @@ public class Board implements Iterable<Row> {
             int row = endPos.getRow();
             int col = endPos.getCell();
             ArrayList<JumpMove> jumpMoves = new ArrayList<>(piece.allJumps(row, col));
+            System.out.println("Before: " + jumpMoves);
             jumpMoves.removeIf(jumpMove -> !validateJumpMove(jumpMove));
+            System.out.println("After: " + jumpMoves);
             for (Move move : moves) {
                 jumpMoves.removeIf(jumpMove -> move.getStart().equals(jumpMove.getEnd()));
             }
